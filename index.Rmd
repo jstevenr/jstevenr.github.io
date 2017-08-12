@@ -1,0 +1,31 @@
+---
+name: "j00sr"
+title: "J Steven Raquel (@j00sr)"
+author: "[J Steven Raquel](https://github.com/jstevenr)"
+output:
+  html_document
+
+navbar:  
+  left:
+    - text: "About Me"
+      href: about_me.html
+    - text: "Portfolio"
+      href: portfolio.html
+    - text: "Contact"
+      href: contact.html
+    - text: "Blog"
+      href: blog.html
+
+---
+
+----
+
+# Welcome!
+
+<center>
+<img src="images/LinkedIn.jpg" width="150px">
+</center>  
+
+<br>
+
+My name is J Steven Raquel, aka [j00sr](https://github.com/j00sr). Welcome to my site, where I showcase my projects, which you can find under the **Portfolio** link at the top. You can find out more about me at **About Me**, find how to reach me at **Contact**, or check out my *Blog** (updates pending).
