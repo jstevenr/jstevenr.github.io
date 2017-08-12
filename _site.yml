@@ -1,0 +1,19 @@
+name: "J Steven Raquel"
+navbar:
+  title: "HOME"
+  left:
+    - text: "About Me"
+      href: about_me.html
+    - text: "Portfolio"
+      href: portfolio.html
+    - text: "Contact"
+      href: contact.html
+    - text: "Blog"
+      href: blog.html
+output_dir: "."
+output:
+  html_document:
+    theme: yeti
+    highlight: textmate
+#    include:
+#      after_body: _footer.html
