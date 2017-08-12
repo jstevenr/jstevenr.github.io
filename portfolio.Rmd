@@ -1,0 +1,138 @@
+---
+title: "Portfolio"
+author: "[J Steven Raquel](https://github.com/jstevenr)"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    fig_width: 7
+    
+navbar:  
+  left:
+    - text: "About Me"
+      href: about_me.html
+    - text: "Portfolio"
+      href: portfolio.html
+    - text: "Contact"
+      href: contact.html
+    - text: "Blog"
+      href: blog.html
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+library(ggplot2)
+library(gridExtra)
+library(readr)
+
+```
+
+
+Here you'll find projects that I have worked on / am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces my work. 
+
+----
+
+# IMDB Ratings Over the Decades  
+
+This was a very simple visualization I did to test out some of the abilities of `ggplot2`, an `R` package with some more robust options that go beyond the base level visualization abilities of `R`.  
+
+We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I've gleaned since after doing this. 
+
+
+----
+
+### Subsetting the data
+
+```{r, include = FALSE}
+movies <- read.csv("~/Documents/RStudio Git/IMDB-Ratings-Over-the-Decades/movie_metadata.csv",
+                   stringsAsFactor = TRUE)
+```
+
+```{r, data cleaning}
+# ggplot2, gridExtra, readr are loaded
+# The dataset is loaded as 'movies'
+
+# This subsets the movies to only those which have been voted on by more than 20000 users
+movies <- subset(movies, num_voted_users >= 20000)
+
+# To remove any rows with missing values
+movies <- na.omit(movies)
+
+# Reducing the data.frame to relevant variables
+keeps <- c("imdb_score", "title_year")
+movies <- movies[keeps]
+
+# Subsetting movies into the past four decades
+tens <- subset(movies, title_year >= 2010)
+zeroes <- subset(movies, title_year >= 2000 & title_year < 2010)
+nineties <- subset(movies, title_year >= 1990 & title_year < 2000)
+eighties <- subset(movies, title_year >= 1980 & title_year < 1990)
+```
+
+----
+
+### Plot for 2010-2016
+
+The data for the decade that began in 2010 only goes up until 2016, so naturally it is a smaller subset of data than the rest. 
+
+
+```{r, 2010-present day}
+tens_plot <- ggplot(tens, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
+tens_plot <- tens_plot + theme(legend.position = "none") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
+tens_plot <- tens_plot + labs(title = "2010s Films", x = "Year of Release", y = "IMDB Rating")
+tens_plot
+```
+
+----
+
+### Plot for 2000-2009
+
+
+```{r, 2000-2009}
+zeroes_plot <- ggplot(zeroes, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
+zeroes_plot <- zeroes_plot + theme(legend.position = "none") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
+zeroes_plot <- zeroes_plot + labs(title = "2000s Films", x = "Year of Release", y = "IMDB Rating")
+zeroes_plot
+```
+
+
+----
+
+### Plot for 1990-1999
+
+```{r, 1990-1999}
+nineties_plot <- ggplot(nineties, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
+nineties_plot <- nineties_plot + theme(legend.position = "none") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
+nineties_plot <- nineties_plot + labs(title = "1990s Films", x = "Year of Release", y = "IMDB Rating")
+nineties_plot
+
+```
+
+
+
+----
+
+### Plot for 1980-1989
+
+```{r, 1980-1989}
+eighties_plot <- ggplot(eighties, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
+eighties_plot <- eighties_plot + theme(legend.position = "none") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
+eighties_plot <- eighties_plot + labs(title = "1980s Films", x = "Year of Release", y = "IMDB Rating")
+eighties_plot
+```
+
+----
+
+### Conclusions
+
+Now let's take a look at all four plots in unison and see if we can't conjure any ideas. 
+
+```{r, final}
+grid.arrange(tens_plot, zeroes_plot, nineties_plot, eighties_plot, nrow=2, ncol=2, top = "IMDB Ratings Over the Decades")
+```
+
+From the looks of it, the 1980s was overall a good decade for films. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.
+
+
+----
+Data found on [Kaggle.com](https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset) and drawn from the [Internet Movie Database](imdb.com)
