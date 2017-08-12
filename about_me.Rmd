@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-author: "[J Steven Raquel](https://github.com/j00sr)"
+author: "[J Steven Raquel](https://github.com/jstevenr)"
 output:
   html_document:
     fig_width: 1
