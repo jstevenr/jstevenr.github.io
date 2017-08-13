@@ -2,6 +2,17 @@
 title: "Contact"
 output:
   html_document
+  
+navbar:
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About Me"
+      href: about_me.html
+    - text: "Portfolio"
+      href: portfolio.html
+    - text: "Contact"
+      href: contact.html
 ---
 
 ### How to reach me

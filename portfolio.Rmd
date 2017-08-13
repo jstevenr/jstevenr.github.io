@@ -37,7 +37,7 @@ Here you'll find projects that I have worked on/am working on. Naturally, I thin
 
 This was a very simple visualization I did to test out some of the abilities of `ggplot2`, an `R` package with some more robust options that go beyond the base level visualization abilities of `R`.  
 
-We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I've gleaned since after doing this. 
+We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I've gained since having done this.
 
 
 ----
