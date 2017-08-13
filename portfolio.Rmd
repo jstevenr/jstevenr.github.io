@@ -1,6 +1,5 @@
 ---
 title: "Portfolio"
-author: "[J Steven Raquel](https://github.com/jstevenr)"
 output:
   html_document:
     toc: true
@@ -15,8 +14,6 @@ navbar:
       href: portfolio.html
     - text: "Contact"
       href: contact.html
-    - text: "Blog"
-      href: blog.html
 ---
 
 ```{r, include = FALSE}
@@ -27,6 +24,7 @@ library(readr)
 
 ```
 
+----
 
 Here you'll find projects that I have worked on / am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces my work. 
 

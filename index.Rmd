@@ -1,7 +1,7 @@
 ---
 name: "j00sr"
 title: "J Steven Raquel (@jstevenr)"
-author: "[J Steven Raquel](https://github.com/jstevenr)"
+author: "[find me on GitHub](https://github.com/jstevenr)"
 output:
   html_document
 
@@ -13,8 +13,6 @@ navbar:
       href: portfolio.html
     - text: "Contact"
       href: contact.html
-    - text: "Blog"
-      href: blog.html
 
 ---
 
@@ -28,4 +26,4 @@ navbar:
 
 <br>
 
-My name is J Steven Raquel, aka [jstevenr](https://github.com/jstevenr). Welcome to my site, where I showcase my projects, which you can find under the **Portfolio** link at the top. You can find out more about me at **About Me**, find how to reach me at **Contact**, or check out my *Blog** (updates pending).
+My name is J Steven Raquel, aka [jstevenr](https://github.com/jstevenr). Welcome to my site, where I showcase my projects, which you can find under the **Portfolio** link at the top. You can find out more about me at **About Me**, or how to reach me at **Contact**.

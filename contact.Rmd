@@ -4,6 +4,8 @@ output:
   html_document
 ---
 
+----
+
 ### How to reach me
 
 I can be reached at my email, jsteven.raquel8@gmail.com, and my GitHub profile can be viewed here: https://github.com/jstevenr.

@@ -1,6 +1,5 @@
 ---
 title: "About Me"
-author: "[J Steven Raquel](https://github.com/jstevenr)"
 output:
   html_document:
     fig_width: 1
@@ -13,25 +12,31 @@ navbar:
       href: portfolio.html
     - text: "Contact"
       href: contact.html
-    - text: "Blog"
-      href: blog.html
 ---
 
-## Introduction
+----
+
+### Introduction
 
 My name is J Steven Raquel. I'm an undergraduate at the University of California, Santa Barbara pursuing a degree in Statistical Science with a concentration in Applied Statistics, set to graduate in spring 2018. 
 
 <br>
 
-## Coding
+### Work Experience
 
-My primary language is R. I have extensive experience cleaning data, as well as some in analysis and visualization, although I am always trying to expand on this.
+I have been employed since Sept 2016 as a data intern at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data that comes into the [Arctic Data Center](https://arcticdata.io/), and maintaining the dataset's metadata. 
 
 <br>
 
-## Hobbies
+### Expertise
 
-In my free time, I am an avid gamer. I also have a weekly college radio show called The Company of Lazarus on 91.9 KCSB-FM. 
+My primary language is `R`, and I have extensive experience cleaning data. In my curriculum as an statistics undergrad I have learned how to analyze data as wel. In my job, I work with `EML` or Ecological Metadata Language, a variant of `XML` and a widely used metadata standard for ecological data. 
+
+<br>
+
+### Hobbies
+
+In my free time, I am an avid gamer. I also have a weekly college radio show called *The Company of Lazarus* on [91.9 KCSB-FM](kcsb.org). 
 
 
 ----
