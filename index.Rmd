@@ -1,7 +1,6 @@
 ---
-name: "j00sr"
 title: "J Steven Raquel (@jstevenr)"
-author: "[find me on GitHub](https://github.com/jstevenr)"
+author: "[J Steven Raquel](https://github.com/jstevenr)"
 output:
   html_document
 
@@ -13,7 +12,6 @@ navbar:
       href: portfolio.html
     - text: "Contact"
       href: contact.html
-
 ---
 
 ----
