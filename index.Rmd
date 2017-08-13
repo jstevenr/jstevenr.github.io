@@ -21,7 +21,7 @@ navbar:
 # Welcome!
 
 <center>
-<img src="images/LinkedIn.jpg" width="150px">
+<img src="images/LinkedIn.jpg" width="100px">
 </center>  
 
 <br>
