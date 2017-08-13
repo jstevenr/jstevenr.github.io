@@ -6,6 +6,8 @@ output:
 
 navbar:  
   left:
+    - text: "Home"
+      href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"

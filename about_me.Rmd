@@ -1,11 +1,12 @@
 ---
 title: "About Me"
-author: "[J Steven Raquel](https://github.com/jstevenr)"
 output:
   html_document
     
 navbar:
   left:
+    - text: "Home"
+      href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"
@@ -16,7 +17,7 @@ navbar:
 
 ----
 
-## Introduction
+### Introduction
 
 My name is J Steven Raquel. I'm an undergraduate at the University of California, Santa Barbara pursuing a degree in Statistical Science with a concentration in Applied Statistics, set to graduate in spring 2018. 
 
@@ -37,7 +38,6 @@ My primary language is `R`, and I have extensive experience cleaning data. In my
 ### Hobbies
 
 In my free time, I am an avid gamer. I also have a weekly college radio show called *The Company of Lazarus* on [91.9 KCSB-FM](kcsb.org). 
-----
 
 
 
