@@ -305,47 +305,667 @@ div.tocify {
 <hr />
 <p>Here you’ll find projects that I have worked on/am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces my work.</p>
 <hr />
-<div id="imdb-ratings-over-the-decades" class="section level1">
-<h1>IMDB Ratings Over the Decades</h1>
+<div id="classifying-wine-with-supervised-learning" class="section level1">
+<h1>Classifying wine with supervised learning</h1>
+<p>This machine learning project was done as my final project in PSTAT 131, a class on data mining at UCSB. The ultimate goal was to compare different supervised learning techniques (decision trees, k-Nearest Neighbors, and randomForest) to see what was the most accurate and robust among them. The following packages were utilized in this analysis: <code>class</code>, <code>ROCR</code>, <code>randomForest</code>, <code>tree</code>, <code>plyr</code>, and <code>dplyr</code>.</p>
+<p>The dataset was taken from the <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/">UC Irvine Machine Learning Repository</a>.</p>
+<pre class="r"><code>set.seed(10)
+# Reading in the data the data is loaded as &#39;white&#39;
+sapply(white, function(x) sum(is.na(x)))</code></pre>
+<pre><code>##        fixed.acidity     volatile.acidity          citric.acid 
+##                    0                    0                    0 
+##       residual.sugar            chlorides  free.sulfur.dioxide 
+##                    0                    0                    0 
+## total.sulfur.dioxide              density                   pH 
+##                    0                    0                    0 
+##            sulphates              alcohol              quality 
+##                    0                    0                    0</code></pre>
+<p>A preliminary look at the dataset reveals that there are no missing values.</p>
+<p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis.</p>
+<pre class="r"><code>white.cor &lt;- cor(white[, 1:12])
+white.cor</code></pre>
+<pre><code>##                      fixed.acidity volatile.acidity  citric.acid residual.sugar
+## fixed.acidity           1.00000000      -0.02269729  0.289180698     0.08902070
+## volatile.acidity       -0.02269729       1.00000000 -0.149471811     0.06428606
+## citric.acid             0.28918070      -0.14947181  1.000000000     0.09421162
+## residual.sugar          0.08902070       0.06428606  0.094211624     1.00000000
+## chlorides               0.02308564       0.07051157  0.114364448     0.08868454
+## free.sulfur.dioxide    -0.04939586      -0.09701194  0.094077221     0.29909835
+## total.sulfur.dioxide    0.09106976       0.08926050  0.121130798     0.40143931
+## density                 0.26533101       0.02711385  0.149502571     0.83896645
+## pH                     -0.42585829      -0.03191537 -0.163748211    -0.19413345
+## sulphates              -0.01714299      -0.03572815  0.062330940    -0.02666437
+## alcohol                -0.12088112       0.06771794 -0.075728730    -0.45063122
+## quality                -0.11366283      -0.19472297 -0.009209091    -0.09757683
+##                        chlorides free.sulfur.dioxide total.sulfur.dioxide
+## fixed.acidity         0.02308564       -0.0493958591          0.091069756
+## volatile.acidity      0.07051157       -0.0970119393          0.089260504
+## citric.acid           0.11436445        0.0940772210          0.121130798
+## residual.sugar        0.08868454        0.2990983537          0.401439311
+## chlorides             1.00000000        0.1013923521          0.198910300
+## free.sulfur.dioxide   0.10139235        1.0000000000          0.615500965
+## total.sulfur.dioxide  0.19891030        0.6155009650          1.000000000
+## density               0.25721132        0.2942104109          0.529881324
+## pH                   -0.09043946       -0.0006177961          0.002320972
+## sulphates             0.01676288        0.0592172458          0.134562367
+## alcohol              -0.36018871       -0.2501039415         -0.448892102
+## quality              -0.20993441        0.0081580671         -0.174737218
+##                          density            pH   sulphates     alcohol
+## fixed.acidity         0.26533101 -0.4258582910 -0.01714299 -0.12088112
+## volatile.acidity      0.02711385 -0.0319153683 -0.03572815  0.06771794
+## citric.acid           0.14950257 -0.1637482114  0.06233094 -0.07572873
+## residual.sugar        0.83896645 -0.1941334540 -0.02666437 -0.45063122
+## chlorides             0.25721132 -0.0904394560  0.01676288 -0.36018871
+## free.sulfur.dioxide   0.29421041 -0.0006177961  0.05921725 -0.25010394
+## total.sulfur.dioxide  0.52988132  0.0023209718  0.13456237 -0.44889210
+## density               1.00000000 -0.0935914935  0.07449315 -0.78013762
+## pH                   -0.09359149  1.0000000000  0.15595150  0.12143210
+## sulphates             0.07449315  0.1559514973  1.00000000 -0.01743277
+## alcohol              -0.78013762  0.1214320987 -0.01743277  1.00000000
+## quality              -0.30712331  0.0994272457  0.05367788  0.43557472
+##                           quality
+## fixed.acidity        -0.113662831
+## volatile.acidity     -0.194722969
+## citric.acid          -0.009209091
+## residual.sugar       -0.097576829
+## chlorides            -0.209934411
+## free.sulfur.dioxide   0.008158067
+## total.sulfur.dioxide -0.174737218
+## density              -0.307123313
+## pH                    0.099427246
+## sulphates             0.053677877
+## alcohol               0.435574715
+## quality               1.000000000</code></pre>
+<p>Taking a look at the correlation coefficients <span class="math inline">\(r\)</span> for the predictor variables, we see that <code>density</code> is strongly correlated with <code>residual.sugar</code> (<span class="math inline">\(r = 0.84\)</span>) and <code>alcohol</code> (<span class="math inline">\(r = -0.78\)</span>), and moderately correlated with <code>total.sulfur.dioxide</code> (<span class="math inline">\(r = 0.53\)</span>). <code>free.sulfur.dioxide</code> and <code>total.sulfur.dioxide</code> are also moderately correlated with each other (<span class="math inline">\(r = 0.62\)</span>) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide.</p>
+<p>Aside from that correlations are all very low, including (and especially) <code>quality</code>, the response variable, with the predictors.</p>
+<p>So, we should actually remove the variables <code>residual.sugar</code> and <code>density</code>, as well as <code>total.sulfur.dioxide</code> because if its direct relationship with <code>free.sulfur.dioxide</code>, in order to address problems with multicollinearity. We’re going to withhold removing <code>alcohol</code>, to see the if the initial effect of removing just these three correlated variables is enough to address the issue.</p>
+<pre class="r"><code># removing three predictors
+white2 &lt;- subset(white, select = -c(4, 7, 8))
+cor(white2[, 1:9])</code></pre>
+<pre><code>##                     fixed.acidity volatile.acidity  citric.acid   chlorides
+## fixed.acidity          1.00000000      -0.02269729  0.289180698  0.02308564
+## volatile.acidity      -0.02269729       1.00000000 -0.149471811  0.07051157
+## citric.acid            0.28918070      -0.14947181  1.000000000  0.11436445
+## chlorides              0.02308564       0.07051157  0.114364448  1.00000000
+## free.sulfur.dioxide   -0.04939586      -0.09701194  0.094077221  0.10139235
+## pH                    -0.42585829      -0.03191537 -0.163748211 -0.09043946
+## sulphates             -0.01714299      -0.03572815  0.062330940  0.01676288
+## alcohol               -0.12088112       0.06771794 -0.075728730 -0.36018871
+## quality               -0.11366283      -0.19472297 -0.009209091 -0.20993441
+##                     free.sulfur.dioxide            pH   sulphates     alcohol
+## fixed.acidity             -0.0493958591 -0.4258582910 -0.01714299 -0.12088112
+## volatile.acidity          -0.0970119393 -0.0319153683 -0.03572815  0.06771794
+## citric.acid                0.0940772210 -0.1637482114  0.06233094 -0.07572873
+## chlorides                  0.1013923521 -0.0904394560  0.01676288 -0.36018871
+## free.sulfur.dioxide        1.0000000000 -0.0006177961  0.05921725 -0.25010394
+## pH                        -0.0006177961  1.0000000000  0.15595150  0.12143210
+## sulphates                  0.0592172458  0.1559514973  1.00000000 -0.01743277
+## alcohol                   -0.2501039415  0.1214320987 -0.01743277  1.00000000
+## quality                    0.0081580671  0.0994272457  0.05367788  0.43557472
+##                          quality
+## fixed.acidity       -0.113662831
+## volatile.acidity    -0.194722969
+## citric.acid         -0.009209091
+## chlorides           -0.209934411
+## free.sulfur.dioxide  0.008158067
+## pH                   0.099427246
+## sulphates            0.053677877
+## alcohol              0.435574715
+## quality              1.000000000</code></pre>
+<p>From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue.</p>
+<p>From here on out, we’re also going to want to convert the <code>quality</code> response variable into a binary factor so that we can use the predictors to classify the observations. We’re going to do this by labeling all of the observations that have received an above average (5 out of 10) as “good”, and the rest as “bad”, “bad” really meaning “not good”. This factor of <code>good</code> and <code>bad</code> goes under a new column titled <code>label</code>.</p>
+<p>We’ll remove the <code>quality</code> variable afterwards, since if we use it as an attribute in the predictor, it will skew the results because it is directly correlated to the label.</p>
+<p>It’s important to note that all of these numeric predictor variables (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>, <code>pH</code>, <code>sulphates</code>, <code>alcohol</code>) are not all scaled the same. As such, it’s appropriate to scale them before running any analyses.</p>
+<pre class="r"><code># scaling the 8 numeric attributes
+white_sc &lt;- white2
+white_sc[, c(1:8)] &lt;- scale(white_sc[, c(1:8)])
+
+# converting quality into a binary factor
+for (i in 1:nrow(white_sc)) {
+    if (white_sc$quality[i] &gt; 5) 
+        white_sc$label[i] &lt;- 1 else white_sc$label[i] &lt;- 0
+}
+white_sc$label &lt;- factor(white_sc$label, levels = c(0, 1), labels = c(&quot;bad&quot;, &quot;good&quot;))
+# removing the quality variable
+white_sc$quality &lt;- NULL</code></pre>
+<p>Now we have 8 numeric predictor variables, and one two-level categorical variable (<code>label</code>). We’re going to apply a few different classification methods in order to firstly determine which the best model for predicting is in terms of the relevant variables, and secondly to find the best classification algorithm for this data.</p>
+<p>We’re going to initialize a matrix to easily compare the quality of the different classification methods we’re going to utilize going forward, namely decision trees (with k-fold cross validation to prune the tree), k-nearest neighbor, and randomForest. The ‘full randomForest’ refers to the model using all 8 predictors whereas the ‘small randomForest’ refers to a subset of these predictors, the use of which will become clear when discussing decision trees.</p>
+<pre class="r"><code># initializing a matrix for records
+records &lt;- matrix(NA, nrow = 6, ncol = 3)
+colnames(records) &lt;- c(&quot;Accuracy Rate&quot;, &quot;Error Rate&quot;, &quot;AUC&quot;)
+rownames(records) &lt;- c(&quot;tree&quot;, &quot;pruned.tree&quot;, &quot;k=10 kNN&quot;, &quot;k=35 kNN&quot;, &quot;full.randomForest&quot;, 
+    &quot;small.randomForest&quot;)
+records</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate AUC
+## tree                          NA         NA  NA
+## pruned.tree                   NA         NA  NA
+## k=10 kNN                      NA         NA  NA
+## k=35 kNN                      NA         NA  NA
+## full.randomForest             NA         NA  NA
+## small.randomForest            NA         NA  NA</code></pre>
+<p>In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was.</p>
+<pre class="r"><code># set.seed(10) is loaded using a subset of 1000 obs for the training set
+test_indices &lt;- sample(1:nrow(white_sc), 1000)
+test &lt;- white_sc[test_indices, ]
+train &lt;- white_sc[-test_indices, ]</code></pre>
+<div id="decision-tree" class="section level2">
+<h2>Decision Tree</h2>
+<p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data.</p>
+<p>Of course, we’re going to use <code>label</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
+<pre class="r"><code># library(tree) is loaded predicting the label (good vs bad)
+tree &lt;- tree(formula = label ~ ., data = train, method = &quot;class&quot;, control = tree.control(nobs = nrow(train), 
+    mincut = 5, minsize = 10, mindev = 0.003))
+summary(tree)</code></pre>
+<pre><code>## 
+## Classification tree:
+## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train), 
+##     mincut = 5, minsize = 10, mindev = 0.003), method = &quot;class&quot;)
+## Variables actually used in tree construction:
+## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
+## [4] &quot;sulphates&quot;           &quot;citric.acid&quot;         &quot;fixed.acidity&quot;      
+## Number of terminal nodes:  16 
+## Residual mean deviance:  0.9591 = 3723 / 3882 
+## Misclassification error rate: 0.2324 = 906 / 3898</code></pre>
+<p>So we can see from this summary, that in fact 6 out of the 8 predictors were used in constructing this tree: <code>alcohol</code>, <code>volatile.acidity</code>, <code>free.sulfur.dioxide</code>, <code>sulphates</code>, <code>citric.acid</code>, and <code>fixed.acidity</code>. Now we are actually going to plot the tree to visualize this.</p>
+<pre class="r"><code>plot(tree, type = &quot;uniform&quot;)
+text(tree, pretty = 0, cex = 1, col = &quot;red&quot;)
+title(&quot;Classification Tree (Before Pruning)&quot;)</code></pre>
+<p><img src="portfolio_files/figure-html/plot%20decision%20tree-1.png" width="672" /></p>
+<p>We can see while looking at the tree how often <code>alcohol</code> appears and intuit from that that the amount of alcohol, whether high or low, plays at least some part in the model’s classification of a good wine.</p>
+<p>We can build a confusion matrix after using the data to predict on the test set, and then find the accuracy rate and the error rate.</p>
+<pre class="r"><code># a function that returns the accuracy of a confusion matrix
+class_acc &lt;- function(conf) {
+    sum(diag(conf))/sum(conf)
+}
+
+tree_pred &lt;- predict(tree, test, type = &quot;class&quot;)
+
+# confusion matrix
+tree_conf &lt;- table(pred = tree_pred, true = test$label)
+tree_conf</code></pre>
+<pre><code>##       true
+## pred   bad good
+##   bad  198  122
+##   good 130  550</code></pre>
+<pre class="r"><code># the class_acc() function is defined locally
+tree_acc &lt;- class_acc(tree_conf)
+tree_acc</code></pre>
+<pre><code>## [1] 0.748</code></pre>
+<pre class="r"><code># misclassification error
+tree_err &lt;- 1 - tree_acc
+tree_err</code></pre>
+<pre><code>## [1] 0.252</code></pre>
+<p>With an accuracy rate of <code>0.748</code>, this decision tree model is not superb, but will still classify correctly about 3 out of 4 times.</p>
+<p>As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification).</p>
+<pre class="r"><code># library(ROCR) is loaded getting matrix of predicted class probabilities
+all_tree_probs &lt;- as.data.frame(predict(tree, test, type = &quot;vector&quot;))
+tree_probs &lt;- all_tree_probs[, 2]
+
+tree_roc_pred &lt;- prediction(tree_probs, test$label)
+tree_roc_perf &lt;- performance(tree_roc_pred, &quot;tpr&quot;, &quot;fpr&quot;)
+
+# Plotting the ROC curve for the decision tree
+plot(tree_roc_perf, col = 2, lwd = 3, main = &quot;ROC Curve for tree (before pruning)&quot;)
+abline(0, 1)</code></pre>
+<p><img src="portfolio_files/figure-html/ROC%20curve%20of%20tree-1.png" width="672" /></p>
+<pre class="r"><code># Area under the curve
+tree_auc_perf &lt;- performance(tree_roc_pred, &quot;auc&quot;)
+tree_AUC &lt;- tree_auc_perf@y.values[[1]]
+tree_AUC</code></pre>
+<pre><code>## [1] 0.787554</code></pre>
+<pre class="r"><code># adding to records matrix
+records[1, ] &lt;- c(tree_acc, tree_err, tree_AUC)
+records</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate      AUC
+## tree                       0.748      0.252 0.787554
+## pruned.tree                   NA         NA       NA
+## k=10 kNN                      NA         NA       NA
+## k=35 kNN                      NA         NA       NA
+## full.randomForest             NA         NA       NA
+## small.randomForest            NA         NA       NA</code></pre>
+<p>We see thusly that the area under the curve is <span class="math inline">\(0.788\)</span> which is slightly closer to 1 than 0.5. That is to say that it is more good than bad, but hardly so.</p>
+<div id="k-fold-cross-validation" class="section level3">
+<h3>k-fold Cross Validation</h3>
+<p>We can use k-fold cross-validation, which randomly partitions the dataset into folds of similar size, to see if the tree requires any pruning which can improve the model’s accuracy as well as make it more interpretable for us.</p>
+<p>In k-fold cross validation, we divide the sample into <code>k</code> sub samples, then train the model on <code>k -1</code> samples, leaving one as a holdout sample. We compute validation error on each of these samples, then average the validation error of all of them.</p>
+<p>The idea of cross-validation is that it will sample multiple times from the training set, with different separations. Ultimately, this creates a more robust model i.e. the tree will not be overfit.</p>
+<p>Cross validation will help us find the optimal size for the tree (in terms of number of nodes). We can plot the size against misclassification error to visualize this as well.</p>
+<pre class="r"><code>set.seed(10)
+# 10-fold CV (k = 10) library(tree) is loaded
+cv &lt;- cv.tree(tree, FUN = prune.misclass, K = 10)
+cv</code></pre>
+<pre><code>## $size
+## [1] 16  9  7  5  4  3  1
+## 
+## $dev
+## [1] 1013 1013 1012 1023 1025 1045 1252
+## 
+## $k
+## [1]  -Inf   0.0   4.0   9.5  36.0  71.0 136.0
+## 
+## $method
+## [1] &quot;misclass&quot;
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;prune&quot;         &quot;tree.sequence&quot;</code></pre>
+<pre class="r"><code># Best size
+best.cv &lt;- cv$size[which.min(cv$dev)]
+
+# plotting misclass error as a function of tree size (k)
+plot(cv$size, cv$dev, type = &quot;b&quot;, xlab = &quot;Number of leaves, &#39;best&#39;&quot;, ylab = &quot;Misclassification Error&quot;, 
+    col = &quot;red&quot;, main = &quot;Optimal Tree Size&quot;)
+abline(v = best.cv, lty = 2)</code></pre>
+<p><img src="portfolio_files/figure-html/cross%20validation%20of%20tree-1.png" width="672" /></p>
+<pre class="r"><code>best.cv</code></pre>
+<pre><code>## [1] 7</code></pre>
+<p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
+<pre class="r"><code>tree.pruned &lt;- prune.tree(tree, best = best.cv, method = &quot;misclass&quot;)
+summary(tree.pruned)</code></pre>
+<pre><code>## 
+## Classification tree:
+## snip.tree(tree = tree, nodes = c(4L, 10L, 23L, 7L))
+## Variables actually used in tree construction:
+## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
+## Number of terminal nodes:  7 
+## Residual mean deviance:  1.021 = 3971 / 3891 
+## Misclassification error rate: 0.2345 = 914 / 3898</code></pre>
+<pre class="r"><code>plot(tree.pruned, type = &quot;uniform&quot;)
+title(&quot;Pruned Classification Tree&quot;)
+text(tree.pruned, col = &quot;blue&quot;)</code></pre>
+<p><img src="portfolio_files/figure-html/pruning%20the%20tree-1.png" width="672" /></p>
+<p>Note that after pruning the tree, the only relevant variables used in tree construction are: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. And of course, this tree only has 7 nodes, the best tree size we determined from using cross-validation.</p>
+<p>Now we can apply the same diagnostic methods as before: looking at confusion matrix, accuracy/error rate, the ROC curve and the area underneath it, for the sake of comparison.</p>
+<pre class="r"><code>pruned_pred &lt;- predict(tree.pruned, test, type = &quot;class&quot;)
+# confusion matrix
+pruned_conf &lt;- table(pred = pruned_pred, true = test$label)
+pruned_conf</code></pre>
+<pre><code>##       true
+## pred   bad good
+##   bad  196  119
+##   good 132  553</code></pre>
+<pre class="r"><code>pruned_acc &lt;- class_acc(tree_conf)
+pruned_acc</code></pre>
+<pre><code>## [1] 0.748</code></pre>
+<pre class="r"><code>pruned_err &lt;- 1 - tree_acc
+pruned_err</code></pre>
+<pre><code>## [1] 0.252</code></pre>
+<p>We see that pruning the tree didn’t actually really improve the accuracy rate of the model at all, although it did condense the number of relevant variables. Initially, seeing that accuracy did not improve might give the impression that pruning was not meaningful, but to the contrary, the fact that we were able to prune the tree without losing any accuracy shows that the sole 3 variables we have remaining (<code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>) are just as good as classifying when using a decision tree as when using all 8 predictors.</p>
+<p>The original model being rather complex with as many as 6 predictors runs the risk of over-fitting, which is to say that the data follows the training data too closely and cannot be well generalized to new data. This is why we are inclined to favor a simpler model such as that we found after pruning with cross-validation.</p>
+<pre class="r"><code># ROC Curve with tree object getting matrix of predicted class probabilities
+all_pruned_probs &lt;- as.data.frame(predict(tree.pruned, test, type = &quot;vector&quot;))
+pruned_probs &lt;- all_pruned_probs[, 2]
+
+pruned_roc_pred &lt;- prediction(pruned_probs, test$label)
+pruned_roc_perf &lt;- performance(pruned_roc_pred, &quot;tpr&quot;, &quot;fpr&quot;)
+
+# Plotting the ROC curve for the rpart decision tree
+plot(pruned_roc_perf, col = 2, lwd = 3, main = &quot;ROC Curve for Pruned tree&quot;)
+abline(0, 1)</code></pre>
+<p><img src="portfolio_files/figure-html/ROC%20curve%20of%20pruned%20tree%20and%20AUC-1.png" width="672" /></p>
+<pre class="r"><code>pruned_auc_perf &lt;- performance(pruned_roc_pred, &quot;auc&quot;)
+pruned_AUC &lt;- pruned_auc_perf@y.values[[1]]
+pruned_AUC</code></pre>
+<pre><code>## [1] 0.7557391</code></pre>
+<pre class="r"><code>records[2, ] &lt;- c(pruned_acc, pruned_err, pruned_AUC)
+records</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate       AUC
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                      NA         NA        NA
+## k=35 kNN                      NA         NA        NA
+## full.randomForest             NA         NA        NA
+## small.randomForest            NA         NA        NA</code></pre>
+<p>So while the accuracy and error rates are virtually unchanged, the area under the curve (AUC) has slightly decreased. It’s not a substantial decrease, but one could argue that it has overall made the model worse. Conversely it could be argued that the strength of the model is relatively preserved while reducing the number of variables included. This is good because it gives us a better idea of what the important variables are when it comes to classifying the wines.</p>
+<p>Now we have added both the original and the pruned tree’s respective error rates and AUC’s to the records matrix, and we can proceed to the next method of classification.</p>
+</div>
+</div>
+<div id="k-nearest-neighbors-knn" class="section level2">
+<h2>k-Nearest Neighbors (kNN)</h2>
+<p>We’re now going to apply the k-nearest neighbors method of classification, which is a non-parametric method. k-Nearest neighbors (or kNN) is called a “lazy learning” technique because it goes through the training set every time it predicts a test sample’s label. It finds this label by plotting the test sample in the same dimensional space as the training data, then classifies it based on the “k nearest neighbor(s)”, i.e. if k = 10, then the label of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation.</p>
+<p>Distance is measured in different ways, but by default the <code>knn()</code> function utilized Euclidean distance.</p>
+<p>This is rather problematic because when calculating distance it’s assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes’ relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what’s more we scaled the remaining numeric predictors, which goes in a small way to addressing this.</p>
+<pre class="r"><code>set.seed(10)
+# library(class) is loaded using 20 nearest neighbors
+knn_pred &lt;- knn(train = train[, -9], test = test[, -9], cl = train$label, k = 10, 
+    prob = TRUE)
+
+# confusion matrix
+knn_conf &lt;- table(pred = knn_pred, true = test$label)
+knn_conf</code></pre>
+<pre><code>##       true
+## pred   bad good
+##   bad  192   99
+##   good 136  573</code></pre>
+<pre class="r"><code># accuracy
+knn_acc &lt;- class_acc(knn_conf)
+knn_acc</code></pre>
+<pre><code>## [1] 0.765</code></pre>
+<pre class="r"><code># misclassification error
+knn_err &lt;- 1 - knn_acc
+knn_err</code></pre>
+<pre><code>## [1] 0.235</code></pre>
+<p>So, using 10 nearest neighbors was just a random estimate, and it ended up with another mediocre accuracy rate (<span class="math inline">\(0.765\)</span>) but we can look at the area under the ROC curve (AUC) and look at the strength of the test relative to the methods we have tried so far.</p>
+<pre class="r"><code># Creating the ROC curve for knn library(dplyr) is loaded
+knn_prob &lt;- attr(knn_pred, &quot;prob&quot;)
+knn_prob &lt;- 2 * ifelse(knn_pred == &quot;-1&quot;, 1 - knn_prob, knn_prob) - 1
+knn_roc_pred &lt;- prediction(predictions = knn_prob, labels = test$label)
+knn_roc_perf &lt;- performance(knn_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the KNN ROC curve
+plot(knn_roc_perf, col = 2, lwd = 3, main = &quot;ROC Curve for kNN, k = 10&quot;)
+abline(0, 1)</code></pre>
+<p><img src="portfolio_files/figure-html/ROC%20for%20knn-1.png" width="672" /></p>
+<pre class="r"><code># Area under the knn curve
+knn_auc_perf &lt;- performance(knn_roc_pred, measure = &quot;auc&quot;)
+knn_AUC &lt;- knn_auc_perf@y.values[[1]]
+knn_AUC</code></pre>
+<pre><code>## [1] 0.6791635</code></pre>
+<pre class="r"><code>records[3, ] &lt;- c(knn_acc, knn_err, knn_AUC)
+records</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate       AUC
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
+## k=35 kNN                      NA         NA        NA
+## full.randomForest             NA         NA        NA
+## small.randomForest            NA         NA        NA</code></pre>
+<p>So with an AUC of <span class="math inline">\(0.679\)</span>, this test is not very good. We can look at different values for <span class="math inline">\(k\)</span> and try to find the best one to use and then compare the results from that with these.</p>
+<pre class="r"><code>set.seed(10)
+# library &#39;class&#39; is loaded
+range &lt;- 1:50
+knn_accs &lt;- rep(0, length(range))
+
+# Determining the best k for k-nearest neighbors classification
+for (k in range) {
+    knn_pred &lt;- knn(train = train[, -9], test = test[, -9], cl = train$label, k = k, 
+        prob = TRUE)
+    knn_conf &lt;- table(pred = knn_pred, true = test$label)
+    knn_accs[k] &lt;- class_acc(knn_conf)
+}
+
+# plotting k vs accuracy
+plot(range, knn_accs, xlab = &quot;k&quot;, ylab = &quot;accuracy&quot;, main = &quot;Number of Neighbors (k) vs Test Accuracy&quot;)</code></pre>
+<p><img src="portfolio_files/figure-html/plotting%20k%20vs%20accs-1.png" width="672" /> This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using <span class="math inline">\(k=1\)</span> will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
+<p>Here is the ROC curve demonstrating this.</p>
+<pre class="r"><code>worst_knn_pred &lt;- knn(train = train[, -9], test = test[, -9], cl = train$label, k = 1, 
+    prob = TRUE)
+worst_knn_prob &lt;- attr(worst_knn_pred, &quot;prob&quot;)
+worst_knn_prob &lt;- 2 * ifelse(worst_knn_pred == &quot;-1&quot;, 1 - worst_knn_prob, worst_knn_prob) - 
+    1
+worst_knn_roc_pred &lt;- prediction(predictions = worst_knn_prob, labels = test$label)
+worst_knn_roc_perf &lt;- performance(worst_knn_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the KNN ROC curve
+plot(worst_knn_roc_perf, col = 2, lwd = 3, main = &quot;ROC Curve for kNN, k = 1&quot;)
+abline(0, 1)</code></pre>
+<p><img src="portfolio_files/figure-html/worst%20kNN%20k%20=%201-1.png" width="672" /></p>
+<p>So we think better not to opt for <span class="math inline">\(k=1\)</span> and rather choose some <span class="math inline">\(k\)</span> like 35, which is still decently accurate, and probably less biased.</p>
+<pre class="r"><code># library(knn) is loaded
+new_knn_pred &lt;- knn(train = train[, -9], test = test[, -9], cl = train$label, k = 35, 
+    prob = TRUE)
+
+# confusion matrix
+new_knn_conf &lt;- table(true = test$label, pred = new_knn_pred)
+new_knn_conf</code></pre>
+<pre><code>##       pred
+## true   bad good
+##   bad  179  149
+##   good  96  576</code></pre>
+<pre class="r"><code># accuracy rate
+new_knn_acc &lt;- class_acc(new_knn_conf)
+new_knn_acc</code></pre>
+<pre><code>## [1] 0.755</code></pre>
+<pre class="r"><code># misclassification error rate
+new_knn_err &lt;- 1 - new_knn_acc
+new_knn_err</code></pre>
+<pre><code>## [1] 0.245</code></pre>
+<p>Using <span class="math inline">\(k=35\)</span> gives a slight increase in test accuracy relative to <span class="math inline">\(k=10\)</span>, although it is not very significant. Now let’s look at the ROC curve and the AUC to make our final comparison, both with the <span class="math inline">\(k=10\)</span> model, and the decision trees.</p>
+<pre class="r"><code># Creating the ROC curve for knn library(dplyr) is loaded
+new_knn_prob &lt;- attr(new_knn_pred, &quot;prob&quot;)
+new_knn_prob &lt;- 2 * ifelse(new_knn_pred == &quot;-1&quot;, 1 - new_knn_prob, new_knn_prob) - 
+    1
+new_knn_roc_pred &lt;- prediction(predictions = new_knn_prob, labels = test$label)
+new_knn_roc_perf &lt;- performance(new_knn_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the KNN ROC curve
+plot(new_knn_roc_perf, col = 2, lwd = 3, main = &quot;ROC Curve for kNN, k = 35&quot;)
+abline(0, 1)</code></pre>
+<p><img src="portfolio_files/figure-html/ROC%20for%20knn%20k=35-1.png" width="672" /></p>
+<pre class="r"><code># Area under the knn curve
+new_knn_auc_perf &lt;- performance(new_knn_roc_pred, measure = &quot;auc&quot;)
+new_knn_AUC &lt;- new_knn_auc_perf@y.values[[1]]
+new_knn_AUC</code></pre>
+<pre><code>## [1] 0.7106358</code></pre>
+<pre class="r"><code>records[4, ] &lt;- c(new_knn_acc, new_knn_err, new_knn_AUC)
+records</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate       AUC
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
+## k=35 kNN                   0.755      0.245 0.7106358
+## full.randomForest             NA         NA        NA
+## small.randomForest            NA         NA        NA</code></pre>
+<p>So we see that although we have sacrified some accuracy, the area under the curve has increased somewhat, so it could be argued that the test has improved. What’s more, with a dataset of this dimensionality, it is most likely better to use more neighbors if one can, because otherwise you run the risk of overfitting to the training data (which is why we did not opt for <span class="math inline">\(k=1\)</span>.)</p>
+<p>So we see actually that while kNN is slightly more accurate than decision trees, the area under the ROC curve is worsened which makes it a worse test. Also, kNN is computationally rather expensive and it gets to be very complex when dealing with datasets with high dimensions (this dataset has nearly 5000 rows), so we think to rule out k-nearest neighbors when deciding what the best method of classification is.</p>
+<p>Finally we can move on to the final method of classification, randomForest.</p>
+</div>
+<div id="randomforest" class="section level2">
+<h2>randomForest</h2>
+<p>randomForest is similar to the decision tree method in that it builds trees, hence the name ‘random Forest’. This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that randomForest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
+<pre class="r"><code>### Random Forest using all 8 predictor attributes, on the training set
+rf &lt;- randomForest(formula = label ~ ., data = train, mtry = 8)
+
+print(rf)</code></pre>
+<pre><code>## 
+## Call:
+##  randomForest(formula = label ~ ., data = train, mtry = 8) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 8
+## 
+##         OOB estimate of  error rate: 16.34%
+## Confusion matrix:
+##      bad good class.error
+## bad  939  373   0.2842988
+## good 264 2322   0.1020882</code></pre>
+<pre class="r"><code>varImpPlot(rf, main = &quot;Variable Importance Plot&quot;)</code></pre>
+<p><img src="portfolio_files/figure-html/create%20randomForest-1.png" width="672" /></p>
+<p><code>meanDecreaseGini</code> refers to the “mean decrease in node impurity”. Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself.</p>
+<p>randomForest used all 8 of the predictor variables. This variable importance plot shows how ‘important’ each variable was in determining the classification. We can see that, consistent with the pruned decision tree, that <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code> are the three most important predictors.</p>
+<pre class="r"><code># predicting on the test set
+rf_pred &lt;- predict(rf, test, type = &quot;class&quot;)
+
+# Confusion Matrix
+rf_conf &lt;- table(true = test$label, pred = rf_pred)
+rf_conf</code></pre>
+<pre><code>##       pred
+## true   bad good
+##   bad  235   93
+##   good  81  591</code></pre>
+<pre class="r"><code>rf_acc &lt;- class_acc(rf_conf)
+rf_acc</code></pre>
+<pre><code>## [1] 0.826</code></pre>
+<pre class="r"><code>rf_err &lt;- 1 - rf_acc
+rf_err</code></pre>
+<pre><code>## [1] 0.174</code></pre>
+<p>With an accuracy rate of <code>0.823</code>, this randomForest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far.</p>
+<p>Let’s take a look at the ROC curve and the area underneath it.</p>
+<pre class="r"><code># Building the ROC Curve
+rf_pred &lt;- as.data.frame(predict(rf, newdata = test, type = &quot;prob&quot;))
+rf_pred_probs &lt;- rf_pred[, 2]
+rf_roc_pred &lt;- prediction(rf_pred_probs, test$label)
+rf_perf &lt;- performance(rf_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the curve
+plot(rf_perf, col = 2, lwd = 3, main = &quot;ROC Curve for randomForest with 8 variables&quot;)
+abline(0, 1)</code></pre>
+<p><img src="portfolio_files/figure-html/ROC%20for%20randomForest-1.png" width="672" /></p>
+<pre class="r"><code># Area under the curve
+rf_perf2 &lt;- performance(rf_roc_pred, measure = &quot;auc&quot;)
+rf_AUC &lt;- rf_perf2@y.values[[1]]
+rf_AUC</code></pre>
+<pre><code>## [1] 0.8869796</code></pre>
+<pre class="r"><code>records[5, ] &lt;- c(rf_acc, rf_err, rf_AUC)
+records</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate       AUC
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
+## k=35 kNN                   0.755      0.245 0.7106358
+## full.randomForest          0.826      0.174 0.8869796
+## small.randomForest            NA         NA        NA</code></pre>
+<p>The area under the ROC curve for randomForest is <code>0.887</code>, which is also a strong AUC for a classification model.</p>
+<p>So we see actually that randomForest stands head and shoulders above the other two methods, decision tree and k-nearest neighbors. This is seen in the fact that the accuracy rate, as well as the AUC, are the highest. Judging from this, we can assume that randomForest would be the most likely to correctly classify a wine based off of the attributes and data given.</p>
+<p>Recall that earlier we determined in the decision tree that the relevant variables were: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. While this randomForest model was pretty effective in utilizing all of the 8 predictors, we can take a look at a model using only these 3 as well for the sake of comparison.</p>
+<p>We have established by now that simpler models have a reduced bias and complexity, but higher variance and a higher chance of underfitting, whereas complex models (such as the full model) have the opposite issue. The good thing about randomForest is that it inherently accounts for this “Bias-Variance” tradeoff by introducing randomness with bagging (bootstrap aggregating).</p>
+<p>The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out.</p>
+<pre class="r"><code>rf2 &lt;- randomForest(formula = label ~ alcohol + volatile.acidity + free.sulfur.dioxide, 
+    data = train, mtry = 3)
+# predicting on the test set
+rf_pred2 &lt;- predict(rf2, test, type = &quot;class&quot;)
+
+# Confusion Matrix
+rf_conf2 &lt;- table(test$label, rf_pred2)
+rf_conf2</code></pre>
+<pre><code>##       rf_pred2
+##        bad good
+##   bad  217  111
+##   good  83  589</code></pre>
+<pre class="r"><code>rf_acc2 &lt;- class_acc(rf_conf2)
+rf_acc2</code></pre>
+<pre><code>## [1] 0.806</code></pre>
+<pre class="r"><code>rf_err2 &lt;- 1 - rf_acc2
+rf_err2</code></pre>
+<pre><code>## [1] 0.194</code></pre>
+<pre class="r"><code># Building the ROC Curve
+rf_pred2 &lt;- as.data.frame(predict(rf2, test, type = &quot;prob&quot;))
+rf_pred_probs2 &lt;- rf_pred2[, 2]
+rf_roc_pred2 &lt;- prediction(rf_pred_probs2, test$label)
+rf_perf2 &lt;- performance(rf_roc_pred2, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the curve
+plot(rf_perf2, col = 2, lwd = 3, main = &quot;ROC Curve for randomForest with 3 variables&quot;)
+abline(0, 1)</code></pre>
+<p><img src="portfolio_files/figure-html/smaller%20randomForest%20with%20ROC%20and%20AUC-1.png" width="672" /></p>
+<pre class="r"><code># Area under the curve
+rf_perf22 &lt;- performance(rf_roc_pred2, measure = &quot;auc&quot;)
+rf_AUC2 &lt;- rf_perf22@y.values[[1]]
+rf_AUC2</code></pre>
+<pre><code>## [1] 0.8455443</code></pre>
+<pre class="r"><code>records[6, ] &lt;- c(rf_acc2, rf_err2, rf_AUC2)
+records</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate       AUC
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
+## k=35 kNN                   0.755      0.245 0.7106358
+## full.randomForest          0.826      0.174 0.8869796
+## small.randomForest         0.806      0.194 0.8455443</code></pre>
+<p>The accuracy rate has actually decreased, as well as the area under the curve, but not significantly. We’re managed to actually preserve the strength of the model, both in relation to the tree and knn methods, but also relative to the original application of randomForest with all of the predictors.</p>
+<p>As such, we can opt to utilize this much smaller model for classification instead if we are concerned about complexity and bias. Having said that, because of the randomization introduced in the randomForest, it is inherently more robust so subsetting in this manner may even be unnecessary.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>So judging from all of our findings, we have seen that in this case, randomForest is the best algorithm (out of the three we’ve compared) for classifying this wine dataset. So we have answered the question of what among these three classification algorithms is truly the best.</p>
+<p>The decision tree algorithm is useful but ultimately, randomForest is superior version of it since it aggregates many decision trees to create an optimized model that is not susceptible to overfitting. When it comes to interpretability however, a decision tree is preferred. When using a decision tree however it is important to use cross-validation to prune the tree in order to narrow it down to the most important variables.</p>
+<p>Compared to decision trees, the k-nearest neighbor algorithm has a slightly greater accuracy rate but a worse AUC. The decision tree method did however help to narrow down the three most relevant attributes: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. This finding was consistent with when we took a look at the most important variables in the randomForest model.</p>
+<p>We were able to apply this subset of attributes to the randomForest algorithm and come out with a strong model that only utilizes a few independent variables in order to classify at a high success rate. This lends strength to the argument that these three variables are the most relevant when it comes to determining the content of a good wine.</p>
+<p>As far as what these variables’ importance is in reality, is that sulfur dioxide is crucial for killing bacteria in wine when creating it. On the other hand, volatile acidity is an undesired trait in wine that affects flavor, that can be caused by such bacteria. So it makes sense that wine that is high in sulfur dioxide, and low in volatile acidity, is considered good.</p>
+<p>The pending questions that remain are, did we overfit or underfit to the training data when testing these different classification methods? It is also worth determining exactly the threshold for the amounts of these variables such as <code>alcohol</code>, for example finding the optimal amount of alcohol content to create a good wine.</p>
+<p>We would also like to delve more into how best to select some <span class="math inline">\(k\)</span> for kNN that maintains a high level of accuracy while also having a balance between bias and variance without either over or underfitting. We would also posit a similar question for the number of nodes in a decision tree. Finally, is dropping variables in randomForest really necessary, if the randomization inherent in it already accounts for overfitting?</p>
+<p>If we can only compare models that utilize the same set of predictors, then we should look at the pruned classification tree against the randomForest model utilizing the same attributes. We see even there that the randomForest model is superior.</p>
+<p>In conclusion we have found that randomForest is best for binary classification and that alcohol, volatile acidity, and free sulfur dioxide are the most important predictors when attempting to classify a good wine.</p>
+<hr />
+</div>
+</div>
+<div id="visualizing-imdb-ratings" class="section level1">
+<h1>Visualizing IMDB ratings</h1>
 <p>This was a very simple visualization I did to test out some of the abilities of <code>ggplot2</code>, an <code>R</code> package with some more robust options that go beyond the base level visualization abilities of <code>R</code>.</p>
 <p>We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I’ve gained since having done this.</p>
+<p>Data found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a></p>
 <hr />
 <div id="subsetting-the-data" class="section level3">
 <h3>Subsetting the data</h3>
-<pre class="r"><code># ggplot2, gridExtra, readr are loaded
-# The dataset is loaded as &#39;movies&#39;
+<pre class="r"><code># ggplot2, gridExtra, readr are loaded The dataset is loaded as &#39;movies&#39;
+movies &lt;- read.csv(&quot;~/Documents/rstudio-git/imdb-ratings/movie_metadata.csv&quot;, stringsAsFactors = FALSE, 
+    na.strings = c(NA, &quot;NA&quot;), skipNul = TRUE, fill = FALSE)
 
-# This subsets the movies to only those which have been voted on by more than 20000 users
+# This subsets the movies to only those which have been voted on by more than
+# 20000 users
 movies &lt;- subset(movies, num_voted_users &gt;= 20000)
-
 # To remove any rows with missing values
-movies &lt;- na.omit(movies)
+movies &lt;- movies[complete.cases(movies), ]
 
 # Reducing the data.frame to relevant variables
-keeps &lt;- c(&quot;imdb_score&quot;, &quot;title_year&quot;)
-movies &lt;- movies[keeps]
-
-# Subsetting movies into the past four decades
-tens &lt;- subset(movies, title_year &gt;= 2010)
-zeroes &lt;- subset(movies, title_year &gt;= 2000 &amp; title_year &lt; 2010)
-nineties &lt;- subset(movies, title_year &gt;= 1990 &amp; title_year &lt; 2000)
-eighties &lt;- subset(movies, title_year &gt;= 1980 &amp; title_year &lt; 1990)</code></pre>
+keeps &lt;- c(&quot;imdb_score&quot;, &quot;title_year&quot;, &quot;movie_title&quot;, &quot;director_name&quot;)
+movies &lt;- movies[keeps]</code></pre>
 <hr />
 </div>
 <div id="plot-for-2010-2016" class="section level3">
 <h3>Plot for 2010-2016</h3>
 <p>The data for the decade that began in 2010 only goes up until 2016, so naturally it is a smaller subset of data than the rest.</p>
+<p>Let’s take a look at the best and worst films of the decade.</p>
+<pre class="r"><code>tens &lt;- subset(movies, title_year &gt;= 2010)
+tens &lt;- tens[order(tens$imdb_score, decreasing = TRUE), ]
+
+head(tens)</code></pre>
+<pre><code>##      imdb_score title_year            movie_title     director_name
+## 98          8.8       2010             Inception  Christopher Nolan
+## 97          8.6       2014          Interstellar  Christopher Nolan
+## 4           8.5       2012 The Dark Knight Rises  Christopher Nolan
+## 297         8.5       2012      Django Unchained  Quentin Tarantino
+## 3932        8.5       2011               Samsara         Ron Fricke
+## 4029        8.5       2014              Whiplash    Damien Chazelle</code></pre>
+<pre class="r"><code>tail(tens)</code></pre>
+<pre><code>##      imdb_score title_year                     movie_title   director_name
+## 2204        3.5       2010                  Vampires Suck  Jason Friedberg
+## 2211        3.5       2013                  Scary Movie 5   Malcolm D. Lee
+## 515         3.4       2011                  Jack and Jill     Dennis Dugan
+## 2400        3.1       2014                    Left Behind    Vic Armstrong
+## 2569        3.1       2014                    Left Behind    Vic Armstrong
+## 2835        1.6       2011 Justin Bieber: Never Say Never       Jon M. Chu</code></pre>
+<p>Note the fact that the three best films of this 6-year period (as voted by IMDB users) were all by Christopher Nolan! Topping the charts was 2010 blockbuster hit <em>Inception</em>. Also tied for third is my favorite director, Quentin Tarantino with <em>Django Unchained</em>. On the other side of things, the worst film of this period was apparently Justin Bieber’s concert film, <em>Never Say Never</em>.</p>
 <pre class="r"><code>tens_plot &lt;- ggplot(tens, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
-tens_plot &lt;- tens_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
+tens_plot &lt;- tens_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, 
+    hjust = 1)) + scale_y_continuous(breaks = seq(0, 10, 2))
 tens_plot &lt;- tens_plot + labs(title = &quot;2010s Films&quot;, x = &quot;Year of Release&quot;, y = &quot;IMDB Rating&quot;)
 tens_plot</code></pre>
 <p><img src="portfolio_files/figure-html/2010-present%20day-1.png" width="672" /></p>
+<p>Modern films seem to be pretty mediocre across the board (between 6-7), but if nothing else, each year seems to be consistent with the last. The sole high outlier of this decade was the 2010 film <em>Inception</em>, directed by Christopher Nolan.</p>
 <hr />
 </div>
 <div id="plot-for-2000-2009" class="section level3">
 <h3>Plot for 2000-2009</h3>
+<pre class="r"><code>zeroes &lt;- subset(movies, title_year &gt;= 2000 &amp; title_year &lt; 2010)
+zeroes &lt;- zeroes[order(zeroes$imdb_score, decreasing = TRUE), ]
+
+head(zeroes)</code></pre>
+<pre><code>##      imdb_score title_year                                        movie_title
+## 67          9.0       2008                                   The Dark Knight 
+## 340         8.9       2003     The Lord of the Rings: The Return of the King 
+## 271         8.8       2001 The Lord of the Rings: The Fellowship of the Ring 
+## 341         8.7       2002             The Lord of the Rings: The Two Towers 
+## 4030        8.7       2002                                       City of God 
+## 2374        8.6       2001                                     Spirited Away 
+##           director_name
+## 67    Christopher Nolan
+## 340       Peter Jackson
+## 271       Peter Jackson
+## 341       Peter Jackson
+## 4030 Fernando Meirelles
+## 2374     Hayao Miyazaki</code></pre>
+<pre class="r"><code>tail(zeroes)</code></pre>
+<pre><code>##      imdb_score title_year                   movie_title     director_name
+## 2193        2.3       2007                   Epic Movie    Jason Friedberg
+## 2314        2.3       2005            Alone in the Dark           Uwe Boll
+## 320         2.2       2005              Son of the Mask  Lawrence Guterman
+## 2984        2.1       2003         From Justin to Kelly      Robert Iscove
+## 2269        1.9       2008               Disaster Movie    Jason Friedberg
+## 2296        1.9       2004 Superbabies: Baby Geniuses 2          Bob Clark</code></pre>
+<p>Notably, two of the worst films of this decade were by Jason Friedberg, namely the parody films <em>Epic Movie</em> and <em>Disaster Movie</em>. He is also responsible for <em>Vampires Suck</em>, one of the worst rated films of the 2010s.</p>
 <pre class="r"><code>zeroes_plot &lt;- ggplot(zeroes, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
-zeroes_plot &lt;- zeroes_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
+zeroes_plot &lt;- zeroes_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, 
+    hjust = 1)) + scale_y_continuous(breaks = seq(0, 10, 2))
 zeroes_plot &lt;- zeroes_plot + labs(title = &quot;2000s Films&quot;, x = &quot;Year of Release&quot;, y = &quot;IMDB Rating&quot;)
 zeroes_plot</code></pre>
 <p><img src="portfolio_files/figure-html/2000-2009-1.png" width="672" /></p>
@@ -353,18 +973,85 @@ zeroes_plot</code></pre>
 </div>
 <div id="plot-for-1990-1999" class="section level3">
 <h3>Plot for 1990-1999</h3>
-<pre class="r"><code>nineties_plot &lt;- ggplot(nineties, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
-nineties_plot &lt;- nineties_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
-nineties_plot &lt;- nineties_plot + labs(title = &quot;1990s Films&quot;, x = &quot;Year of Release&quot;, y = &quot;IMDB Rating&quot;)
+<pre class="r"><code>nineties &lt;- subset(movies, title_year &gt;= 1990 &amp; title_year &lt; 2000)
+nineties &lt;- nineties[order(nineties$imdb_score, decreasing = TRUE), ]
+head(nineties)</code></pre>
+<pre><code>##      imdb_score title_year               movie_title     director_name
+## 1938        9.3       1994 The Shawshank Redemption     Frank Darabont
+## 1875        8.9       1993         Schindler&#39;s List   Steven Spielberg
+## 3356        8.9       1994             Pulp Fiction  Quentin Tarantino
+## 684         8.8       1999               Fight Club      David Fincher
+## 837         8.8       1994             Forrest Gump    Robert Zemeckis
+## 655         8.7       1999               The Matrix     Lana Wachowski</code></pre>
+<pre class="r"><code>tail(nineties)</code></pre>
+<pre><code>##      imdb_score title_year                        movie_title
+## 1448        3.8       1994                    Street Fighter 
+## 218         3.7       1997                    Batman &amp; Robin 
+## 268         3.7       1997           Speed 2: Cruise Control 
+## 1661        3.7       1997       Mortal Kombat: Annihilation 
+## 1935        3.3       1997                       Spice World 
+## 3231        3.3       1994 Police Academy: Mission to Moscow 
+##           director_name
+## 1448 Steven E. de Souza
+## 218     Joel Schumacher
+## 268         Jan de Bont
+## 1661   John R. Leonetti
+## 1935         Bob Spiers
+## 3231        Alan Metter</code></pre>
+<p>Three of my favorite films came out in the 1990s and topped this list: <em>Pulp Fiction</em>, <em>Fight Club</em>, and <em>The Matrix</em>. The decade’s top film, <em>The Shawshank Redemption</em>, actually was a box office disappointment because of its direct competition with Tarantino’s film.</p>
+<pre class="r"><code>nineties_plot &lt;- ggplot(nineties, aes(x = factor(title_year), y = imdb_score)) + 
+    geom_boxplot()
+nineties_plot &lt;- nineties_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, 
+    hjust = 1)) + scale_y_continuous(breaks = seq(0, 10, 2))
+nineties_plot &lt;- nineties_plot + labs(title = &quot;1990s Films&quot;, x = &quot;Year of Release&quot;, 
+    y = &quot;IMDB Rating&quot;)
 nineties_plot</code></pre>
 <p><img src="portfolio_files/figure-html/1990-1999-1.png" width="672" /></p>
 <hr />
 </div>
 <div id="plot-for-1980-1989" class="section level3">
 <h3>Plot for 1980-1989</h3>
-<pre class="r"><code>eighties_plot &lt;- ggplot(eighties, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
-eighties_plot &lt;- eighties_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_y_continuous(breaks = seq(0,10,2))
-eighties_plot &lt;- eighties_plot + labs(title = &quot;1980s Films&quot;, x = &quot;Year of Release&quot;, y = &quot;IMDB Rating&quot;)
+<pre class="r"><code>eighties &lt;- subset(movies, title_year &gt;= 1980 &amp; title_year &lt; 1990)
+eighties &lt;- eighties[order(eighties$imdb_score, decreasing = TRUE), ]
+head(eighties)</code></pre>
+<pre><code>##      imdb_score title_year                                     movie_title
+## 2052        8.8       1980 Star Wars: Episode V - The Empire Strikes Back 
+## 2153        8.5       1981                        Raiders of the Lost Ark 
+## 2364        8.5       1985                             Back to the Future 
+## 1537        8.4       1983     Star Wars: Episode VI - Return of the Jedi 
+## 1715        8.4       1984                    Once Upon a Time in America 
+## 2487        8.4       1986                                         Aliens 
+##         director_name
+## 2052   Irvin Kershner
+## 2153 Steven Spielberg
+## 2364  Robert Zemeckis
+## 1537 Richard Marquand
+## 1715     Sergio Leone
+## 2487    James Cameron</code></pre>
+<pre class="r"><code>tail(eighties)</code></pre>
+<pre><code>##      imdb_score title_year                                       movie_title
+## 4230        4.7       1985                 Friday the 13th: A New Beginning 
+## 1694        4.6       1986                                  Howard the Duck 
+## 4185        4.6       1982               Halloween III: Season of the Witch 
+## 3737        4.5       1989 Friday the 13th Part VIII: Jason Takes Manhattan 
+## 2519        3.6       1987                 Superman IV: The Quest for Peace 
+## 2067        2.8       1987                                Jaws: The Revenge 
+##          director_name
+## 4230   Danny Steinmann
+## 1694     Willard Huyck
+## 4185 Tommy Lee Wallace
+## 3737        Rob Hedden
+## 2519   Sidney J. Furie
+## 2067    Joseph Sargent</code></pre>
+<p>Robert Zemeckis, who made the last list in the 90s for <em>Forrest Gump</em>, also topped this decade with one of my favorites, <em>Back to the Future</em>. The two latter films in the original Star Wars trilogy, Episodes V and VI, also topped the list.</p>
+<p>Speaking of sequels however, the worst films of the 80s were several ill-advised sequels to well-known classics, many of which were done without the involvement of original directors or cast members. Of the films here, only <em>Howard the Duck</em> is not a sequel. Notably also is the inclusion of the 5th and 8th <em>Friday the 13th</em> films. <em>Halloween III</em> is the also only film in the series that doesn’t not feature the antagonist Michael Myers.</p>
+<p><em>Jaws: The Revenge</em> was the fourth and final sequel to the series, with only the original film involving Steven Spielberg, who of course directed the 2nd best rated film of this decade, <em>Raiders of the Lost Ark</em> as well as <em>Schindler’s List</em> in the 90s.</p>
+<pre class="r"><code>eighties_plot &lt;- ggplot(eighties, aes(x = factor(title_year), y = imdb_score)) + 
+    geom_boxplot()
+eighties_plot &lt;- eighties_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, 
+    hjust = 1)) + scale_y_continuous(breaks = seq(0, 10, 2))
+eighties_plot &lt;- eighties_plot + labs(title = &quot;1980s Films&quot;, x = &quot;Year of Release&quot;, 
+    y = &quot;IMDB Rating&quot;)
 eighties_plot</code></pre>
 <p><img src="portfolio_files/figure-html/1980-1989-1.png" width="672" /></p>
 <hr />
@@ -372,11 +1059,10 @@ eighties_plot</code></pre>
 <div id="conclusions" class="section level3">
 <h3>Conclusions</h3>
 <p>Now let’s take a look at all four plots in unison and see if we can’t conjure any ideas.</p>
-<pre class="r"><code>grid.arrange(tens_plot, zeroes_plot, nineties_plot, eighties_plot, nrow=2, ncol=2, top = &quot;IMDB Ratings Over the Decades&quot;)</code></pre>
+<pre class="r"><code>grid.arrange(tens_plot, zeroes_plot, nineties_plot, eighties_plot, nrow = 2, ncol = 2, 
+    top = &quot;IMDB Ratings Over the Decades&quot;)</code></pre>
 <p><img src="portfolio_files/figure-html/final-1.png" width="672" /></p>
 <p>From the looks of it, the 1980s was overall a good decade for films. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.</p>
-<hr />
-<p>Data found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a></p>
 </div>
 </div>
 
