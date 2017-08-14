@@ -8,8 +8,6 @@ navbar:
       href: about_me.html
     - text: "Portfolio"
       href: portfolio.html
-    - text: "Contact"
-      href: contact.html
 
 output_dir: "."
 output:

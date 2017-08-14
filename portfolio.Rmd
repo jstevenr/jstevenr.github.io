@@ -1,5 +1,6 @@
 ---
 title: "Portfolio"
+
 output:
   html_document:
     toc: true
@@ -13,8 +14,6 @@ navbar:
       href: about_me.html
     - text: "Portfolio"
       href: portfolio.html
-    - text: "Contact"
-      href: contact.html
 ---
 
 ```{r, include = FALSE}
