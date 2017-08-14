@@ -17,9 +17,11 @@ navbar:
 
 <center><img src="images/banner-beach.png" width="600px"></center>
 
+<br>
+
 # Introduction
 
-My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara pursuing a degree in Statistical Science with a concentration in Applied Statistics, set to graduate in spring 2018. I have been employed since Sept 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data that comes into the [Arctic Data Center](https://arcticdata.io/), and maintaining the dataset's metadata. 
+My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with an ultimate goal of becoming a data scientist. I have been employed since Sept 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data that comes into the [Arctic Data Center](https://arcticdata.io/), and maintaining the dataset's metadata. 
 
 If I am not learning a new programming skill in my free time, then I am probably playing video games, or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM. 
 
@@ -31,7 +33,12 @@ If I am not learning a new programming skill in my free time, then I am probably
 
 ## Resume
 
-<br>
+### Education
+
+* **B.S.**, University of California, Santa Barbara, 2018
+    + Majoring in Statistical Science with a concentration in Applied Statistics
+    + GPA: 3.14
+
 
 ### Skills
 
