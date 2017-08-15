@@ -19,6 +19,6 @@ navbar:
 
 My name is J Steven Raquel, and I am an undergrad at UC Santa Barbara studying statistics, set to graduate in spring of 2018. Welcome to my site, where I showcase my projects, which you can find under the [Portfolio](https://jstevenr.github.io/portfolio.html) link at the top. You can find out more about me at [About Me](https://jstevenr.github.io/about_me.html), including my resume and other useful information, such how to reach me.
 
-I love all things open-source, so this website is hosted in its entirety on [GitHub](https://github.com/jstevenr/website) for curious people to scrutinize. Feel free to poke around my GitHub or on my site here and direct any feedback or inquiries to my email jsteven.raquel8@gmail.com or my Twitter account @[jsteven_r](https://www.twitter.com/jsteven_r).
+I love all things open-source, so this website is hosted in its entirety on [GitHub](https://github.com/jstevenr/jstevenr.github.io) for curious people to scrutinize. Feel free to poke around my GitHub or on my site here and direct any feedback or inquiries to my email jsteven.raquel8@gmail.com or my Twitter account @[jsteven_r](https://www.twitter.com/jsteven_r).
 
 If you know anything about data science, statistics, machine learning, AI, or computer science, *get in touch with me*! Let's talk. I have a lot to learn so I'm eager to get in touch with folks with similar interests.

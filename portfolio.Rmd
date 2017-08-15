@@ -18,7 +18,7 @@ navbar:
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(tidy.opts = list(width.cutoff=80), 
-                      tidy = TRUE, echo = TRUE)
+                      tidy = TRUE, echo = TRUE, cache = TRUE)
 options(width = 80)
 
 library(class)
@@ -59,7 +59,6 @@ First we can look at the correlation matrix of the dataset, to see if any predic
 
 ```{r correlation matrix}
 white.cor <- cor(white[,1:12])
-white.cor
 ```
 
 Taking a look at the correlation coefficients $r$ for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` ($r = 0.84$) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
@@ -71,7 +70,6 @@ So, we should actually remove the variables `residual.sugar` and `density`, as w
 ```{r dropping variables}
 # removing three predictors
 white2 <- subset(white, select = -c(4,7,8))
-cor(white2[,1:9])
 ```
 
 From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue. 
@@ -108,7 +106,6 @@ We're going to initialize a matrix to easily compare the quality of the differen
 records <- matrix(NA, nrow = 6, ncol = 3)
 colnames(records) <- c("Accuracy Rate", "Error Rate", "AUC")
 rownames(records) <- c("tree", "pruned.tree", "k=10 kNN", "k=35 kNN", "full.randomForest", "small.randomForest")
-records
 ```
 
 In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was. 
