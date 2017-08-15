@@ -23,7 +23,7 @@ navbar:
 
 My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with an ultimate goal of becoming a data scientist. I have been employed since Sept 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data that comes into the [Arctic Data Center](https://arcticdata.io/), and maintaining the dataset's metadata. 
 
-If I am not learning a new programming skill in my free time, then I am probably playing video games, or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM. 
+If I am not learning a new programming skill in my free time (currently focused on learning SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM.
 
 * Email: jsteven.raquel8@gmail.com
 * Twitter: @[jsteven_r](https://www.twitter.com/jsteven_r)
@@ -36,20 +36,21 @@ If I am not learning a new programming skill in my free time, then I am probably
 
 ### Education
 
-* **B.S.**, University of California, Santa Barbara, 2018
-    + Majoring in Statistical Science with a concentration in Applied Statistics
+* **Statistical Science B.S.**, University of California, Santa Barbara, 2018
+    + Concentration in Applied Statistics
     + GPA: 3.14
 
 
 ### Skills
 
-* **R** programming language
-    + Data cleaning, analysis, and visualization
-* **Linux**
-    + Familiar with the command line, work in Linux daily
+* **Technical**
+    + R, R Markdown
+    + Linux
+    + Git
+    + XML, EML
 * **Languages**
-    + Spanish fluency
-    + conversational Portuguese
+    + Spanish
+    + Portuguese
 
 ### Past Work Experience
 
@@ -59,7 +60,7 @@ If I am not learning a new programming skill in my free time, then I am probably
 * **San Nicolas Desk Attendant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (Oct 2013 - Oct 2014)
     + Maintained an organized and positive environment for residents of campus housing
 
-### Other Experience
+### Volunteer Experience
 
 * **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Present)
     + Runs a weekly college radio music show titled *The Company of Lazarus*
