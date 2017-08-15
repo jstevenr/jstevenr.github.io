@@ -319,96 +319,12 @@ sapply(white, function(x) sum(is.na(x)))</code></pre>
 ##                    0                    0                    0</code></pre>
 <p>A preliminary look at the dataset reveals that there are no missing values.</p>
 <p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis.</p>
-<pre class="r"><code>white.cor &lt;- cor(white[, 1:12])
-white.cor</code></pre>
-<pre><code>##                      fixed.acidity volatile.acidity  citric.acid residual.sugar
-## fixed.acidity           1.00000000      -0.02269729  0.289180698     0.08902070
-## volatile.acidity       -0.02269729       1.00000000 -0.149471811     0.06428606
-## citric.acid             0.28918070      -0.14947181  1.000000000     0.09421162
-## residual.sugar          0.08902070       0.06428606  0.094211624     1.00000000
-## chlorides               0.02308564       0.07051157  0.114364448     0.08868454
-## free.sulfur.dioxide    -0.04939586      -0.09701194  0.094077221     0.29909835
-## total.sulfur.dioxide    0.09106976       0.08926050  0.121130798     0.40143931
-## density                 0.26533101       0.02711385  0.149502571     0.83896645
-## pH                     -0.42585829      -0.03191537 -0.163748211    -0.19413345
-## sulphates              -0.01714299      -0.03572815  0.062330940    -0.02666437
-## alcohol                -0.12088112       0.06771794 -0.075728730    -0.45063122
-## quality                -0.11366283      -0.19472297 -0.009209091    -0.09757683
-##                        chlorides free.sulfur.dioxide total.sulfur.dioxide
-## fixed.acidity         0.02308564       -0.0493958591          0.091069756
-## volatile.acidity      0.07051157       -0.0970119393          0.089260504
-## citric.acid           0.11436445        0.0940772210          0.121130798
-## residual.sugar        0.08868454        0.2990983537          0.401439311
-## chlorides             1.00000000        0.1013923521          0.198910300
-## free.sulfur.dioxide   0.10139235        1.0000000000          0.615500965
-## total.sulfur.dioxide  0.19891030        0.6155009650          1.000000000
-## density               0.25721132        0.2942104109          0.529881324
-## pH                   -0.09043946       -0.0006177961          0.002320972
-## sulphates             0.01676288        0.0592172458          0.134562367
-## alcohol              -0.36018871       -0.2501039415         -0.448892102
-## quality              -0.20993441        0.0081580671         -0.174737218
-##                          density            pH   sulphates     alcohol
-## fixed.acidity         0.26533101 -0.4258582910 -0.01714299 -0.12088112
-## volatile.acidity      0.02711385 -0.0319153683 -0.03572815  0.06771794
-## citric.acid           0.14950257 -0.1637482114  0.06233094 -0.07572873
-## residual.sugar        0.83896645 -0.1941334540 -0.02666437 -0.45063122
-## chlorides             0.25721132 -0.0904394560  0.01676288 -0.36018871
-## free.sulfur.dioxide   0.29421041 -0.0006177961  0.05921725 -0.25010394
-## total.sulfur.dioxide  0.52988132  0.0023209718  0.13456237 -0.44889210
-## density               1.00000000 -0.0935914935  0.07449315 -0.78013762
-## pH                   -0.09359149  1.0000000000  0.15595150  0.12143210
-## sulphates             0.07449315  0.1559514973  1.00000000 -0.01743277
-## alcohol              -0.78013762  0.1214320987 -0.01743277  1.00000000
-## quality              -0.30712331  0.0994272457  0.05367788  0.43557472
-##                           quality
-## fixed.acidity        -0.113662831
-## volatile.acidity     -0.194722969
-## citric.acid          -0.009209091
-## residual.sugar       -0.097576829
-## chlorides            -0.209934411
-## free.sulfur.dioxide   0.008158067
-## total.sulfur.dioxide -0.174737218
-## density              -0.307123313
-## pH                    0.099427246
-## sulphates             0.053677877
-## alcohol               0.435574715
-## quality               1.000000000</code></pre>
+<pre class="r"><code>white.cor &lt;- cor(white[, 1:12])</code></pre>
 <p>Taking a look at the correlation coefficients <span class="math inline">\(r\)</span> for the predictor variables, we see that <code>density</code> is strongly correlated with <code>residual.sugar</code> (<span class="math inline">\(r = 0.84\)</span>) and <code>alcohol</code> (<span class="math inline">\(r = -0.78\)</span>), and moderately correlated with <code>total.sulfur.dioxide</code> (<span class="math inline">\(r = 0.53\)</span>). <code>free.sulfur.dioxide</code> and <code>total.sulfur.dioxide</code> are also moderately correlated with each other (<span class="math inline">\(r = 0.62\)</span>) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide.</p>
 <p>Aside from that correlations are all very low, including (and especially) <code>quality</code>, the response variable, with the predictors.</p>
 <p>So, we should actually remove the variables <code>residual.sugar</code> and <code>density</code>, as well as <code>total.sulfur.dioxide</code> because if its direct relationship with <code>free.sulfur.dioxide</code>, in order to address problems with multicollinearity. We’re going to withhold removing <code>alcohol</code>, to see the if the initial effect of removing just these three correlated variables is enough to address the issue.</p>
 <pre class="r"><code># removing three predictors
-white2 &lt;- subset(white, select = -c(4, 7, 8))
-cor(white2[, 1:9])</code></pre>
-<pre><code>##                     fixed.acidity volatile.acidity  citric.acid   chlorides
-## fixed.acidity          1.00000000      -0.02269729  0.289180698  0.02308564
-## volatile.acidity      -0.02269729       1.00000000 -0.149471811  0.07051157
-## citric.acid            0.28918070      -0.14947181  1.000000000  0.11436445
-## chlorides              0.02308564       0.07051157  0.114364448  1.00000000
-## free.sulfur.dioxide   -0.04939586      -0.09701194  0.094077221  0.10139235
-## pH                    -0.42585829      -0.03191537 -0.163748211 -0.09043946
-## sulphates             -0.01714299      -0.03572815  0.062330940  0.01676288
-## alcohol               -0.12088112       0.06771794 -0.075728730 -0.36018871
-## quality               -0.11366283      -0.19472297 -0.009209091 -0.20993441
-##                     free.sulfur.dioxide            pH   sulphates     alcohol
-## fixed.acidity             -0.0493958591 -0.4258582910 -0.01714299 -0.12088112
-## volatile.acidity          -0.0970119393 -0.0319153683 -0.03572815  0.06771794
-## citric.acid                0.0940772210 -0.1637482114  0.06233094 -0.07572873
-## chlorides                  0.1013923521 -0.0904394560  0.01676288 -0.36018871
-## free.sulfur.dioxide        1.0000000000 -0.0006177961  0.05921725 -0.25010394
-## pH                        -0.0006177961  1.0000000000  0.15595150  0.12143210
-## sulphates                  0.0592172458  0.1559514973  1.00000000 -0.01743277
-## alcohol                   -0.2501039415  0.1214320987 -0.01743277  1.00000000
-## quality                    0.0081580671  0.0994272457  0.05367788  0.43557472
-##                          quality
-## fixed.acidity       -0.113662831
-## volatile.acidity    -0.194722969
-## citric.acid         -0.009209091
-## chlorides           -0.209934411
-## free.sulfur.dioxide  0.008158067
-## pH                   0.099427246
-## sulphates            0.053677877
-## alcohol              0.435574715
-## quality              1.000000000</code></pre>
+white2 &lt;- subset(white, select = -c(4, 7, 8))</code></pre>
 <p>From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue.</p>
 <p>From here on out, we’re also going to want to convert the <code>quality</code> response variable into a binary factor so that we can use the predictors to classify the observations. We’re going to do this by labeling all of the observations that have received an above average (5 out of 10) as “good”, and the rest as “bad”, “bad” really meaning “not good”. This factor of <code>good</code> and <code>bad</code> goes under a new column titled <code>label</code>.</p>
 <p>We’ll remove the <code>quality</code> variable afterwards, since if we use it as an attribute in the predictor, it will skew the results because it is directly correlated to the label.</p>
@@ -431,15 +347,7 @@ white_sc$quality &lt;- NULL</code></pre>
 records &lt;- matrix(NA, nrow = 6, ncol = 3)
 colnames(records) &lt;- c(&quot;Accuracy Rate&quot;, &quot;Error Rate&quot;, &quot;AUC&quot;)
 rownames(records) &lt;- c(&quot;tree&quot;, &quot;pruned.tree&quot;, &quot;k=10 kNN&quot;, &quot;k=35 kNN&quot;, &quot;full.randomForest&quot;, 
-    &quot;small.randomForest&quot;)
-records</code></pre>
-<pre><code>##                    Accuracy Rate Error Rate AUC
-## tree                          NA         NA  NA
-## pruned.tree                   NA         NA  NA
-## k=10 kNN                      NA         NA  NA
-## k=35 kNN                      NA         NA  NA
-## full.randomForest             NA         NA  NA
-## small.randomForest            NA         NA  NA</code></pre>
+    &quot;small.randomForest&quot;)</code></pre>
 <p>In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was.</p>
 <pre class="r"><code># set.seed(10) is loaded using a subset of 1000 obs for the training set
 test_indices &lt;- sample(1:nrow(white_sc), 1000)
