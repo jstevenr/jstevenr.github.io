@@ -21,11 +21,11 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist. I have been employed since September 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data and metadata that comes into the [Arctic Data Center](https://arcticdata.io/), a repository designed to host ecological data and funded by the National Science Foundation (NSF).
+My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist.  
 
-I have written several functions in `R` based on member functions of the `arcticdatautils`, `EML`, and `dataone` packages (developed by NCEAS) that have since seen use by other staffers to improve their own productivity and workflow.
+I have been employed since September 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data and metadata that comes into the [Arctic Data Center](https://arcticdata.io/), a repository designed to host ecological data and funded by the [National Science Foundation](https://www.nsf.gov/) (NSF).
 
-If I am not learning a new programming skill in my free time (currently focused on learning SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM.
+If I am not learning a new programming skill in my free time (currently focused on learning SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM, titled "The Company of Lazarus".
 
 * Email: jsteven.raquel8@gmail.com
 * Twitter: @[jsteven_r](https://www.twitter.com/jsteven_r)
@@ -34,16 +34,15 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 ----
 
-## Resume
+# Resume
 
-### Education
+## Education
 
 * **Statistical Science B.S.**, University of California, Santa Barbara, 2018
     + Concentration in Applied Statistics
     + GPA: 3.14
 
-
-### Skills
+## Skills
 
 * **Technical**
     + R, R Markdown
@@ -54,7 +53,7 @@ If I am not learning a new programming skill in my free time (currently focused 
     + Spanish
     + Portuguese
 
-### Past Work Experience
+## Past Work Experience
 
 * **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (May 2016 - Sept 2016)
     + Prepared and filed check requests, reimbursement forms, and other documentation
@@ -62,10 +61,10 @@ If I am not learning a new programming skill in my free time (currently focused 
 * **San Nicolas Desk Attendant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (Oct 2013 - Oct 2014)
     + Maintained an organized and positive environment for residents of campus housing
 
-### Volunteer Experience
+## Volunteer Experience
 
 * **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Present)
-    + Runs a weekly college radio music show titled *The Company of Lazarus*
+    + Runs a weekly college radio music show titled [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-1-kcsb-91-9-fm-in-santa-barbara)
 * **Student Mentor**, [Isla Vista Elementary](http://37.60.239.169/~goleta02/islavista/) (Sept 2016 - June 2017)
     + Acted as a mentor and role model for a 6th grade student for a year
 * **Panelist**, UCSB Mental Health Conference, 2016 & 2017

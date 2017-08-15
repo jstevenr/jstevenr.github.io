@@ -31,7 +31,7 @@ library(dplyr)
 
 ----
 
-Here you'll find projects that I have worked on/am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces my work. 
+Here you'll find projects that I have worked on/am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces it. 
 
 ----
 
@@ -585,7 +585,7 @@ This was a very simple visualization I did to test out some of the abilities of 
 
 We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I've gained since having done this.
 
-Data found on [Kaggle.com](https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset) and drawn from the [Internet Movie Database](imdb.com)
+Data was found on [Kaggle.com](https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset) and drawn from the [Internet Movie Database](imdb.com).
 
 ----
 
@@ -683,7 +683,7 @@ Three of my favorite films came out in the 1990s and topped this list: *Pulp Fic
 tail(nineties)
 ```
 
-Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: *Street Fighter*, notably starring Jean Claude van Damme and Kylie Minogue, and *Mortal Kombat: Annhilation*. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan's reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the 'punniest' villain of all time. 
+Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: *Street Fighter*, notably starring Jean Claude van Damme and Kylie Minogue, and *Mortal Kombat: Annihilation*. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan's reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the 'punniest' villain of all time. 
 
 ```{r, 1990-1999}
 nineties_plot <- ggplot(nineties, aes(x = factor(title_year), y = imdb_score)) + geom_boxplot()
@@ -732,10 +732,10 @@ Now let's take a look at all four plots in unison and see if we can't conjure an
 grid.arrange(tens_plot, zeroes_plot, nineties_plot, eighties_plot, nrow=2, ncol=2, top = "IMDB Ratings Over the Decades")
 ```
 
-From the looks of it, the 1980s was overall a good decade for films. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.
+From the looks of it, the 1980s was overall perhaps the best decade for films. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.
 
 Several directors came out strong not only in individual decades, but across them. Christopher Nolan had as many as 4 between 2000 and 2016, with 3 in one decade, and 2 from his Dark Knight Trilogy. Robert Zemeckis and Stephen Spielberg each had one film per decade, and Peter Jackson's Lord of the Rings Trilogy took three of the top spots in the decade it was released.
 
-On the other hand, Jason Friedberg was possibly one of the most panned by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s. 
+On the other hand, Jason Friedberg was possibly the most panned director by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s as voted by IMDB users.
 
 Several of the worst films were sequels to well-known and successful films including horror franchises like *Friday the 13th*, *Halloween*, comedy films like *The Mask*, or the classic that is *Jaws*. Also important to note is that several parody films, including those by Jason Friedberg and the Scary Movie franchise, appeared in the worst film lists. 

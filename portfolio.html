@@ -300,7 +300,7 @@ div.tocify {
 
 
 <hr />
-<p>Here you’ll find projects that I have worked on/am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces my work.</p>
+<p>Here you’ll find projects that I have worked on/am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces it.</p>
 <hr />
 <div id="classifying-wine-with-supervised-learning" class="section level1">
 <h1>Classifying wine with supervised learning</h1>
@@ -787,7 +787,7 @@ records</code></pre>
 <h1>Visualizing IMDB ratings</h1>
 <p>This was a very simple visualization I did to test out some of the abilities of <code>ggplot2</code>, an <code>R</code> package with some more robust options that go beyond the base level visualization abilities of <code>R</code>.</p>
 <p>We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I’ve gained since having done this.</p>
-<p>Data found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a></p>
+<p>Data was found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a>.</p>
 <hr />
 <div id="subsetting-the-data" class="section level3">
 <h3>Subsetting the data</h3>
@@ -904,7 +904,7 @@ head(nineties)</code></pre>
 ## 1661   John R. Leonetti
 ## 1935         Bob Spiers
 ## 3231        Alan Metter</code></pre>
-<p>Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: <em>Street Fighter</em>, notably starring Jean Claude van Damme and Kylie Minogue, and <em>Mortal Kombat: Annhilation</em>. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan’s reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the ‘punniest’ villain of all time.</p>
+<p>Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: <em>Street Fighter</em>, notably starring Jean Claude van Damme and Kylie Minogue, and <em>Mortal Kombat: Annihilation</em>. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan’s reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the ‘punniest’ villain of all time.</p>
 <pre class="r"><code>nineties_plot &lt;- ggplot(nineties, aes(x = factor(title_year), y = imdb_score)) + 
     geom_boxplot()
 nineties_plot &lt;- nineties_plot + theme(legend.position = &quot;none&quot;) + theme(axis.text.x = element_text(angle = 90, 
@@ -968,9 +968,9 @@ eighties_plot</code></pre>
 <pre class="r"><code>grid.arrange(tens_plot, zeroes_plot, nineties_plot, eighties_plot, nrow = 2, ncol = 2, 
     top = &quot;IMDB Ratings Over the Decades&quot;)</code></pre>
 <p><img src="portfolio_files/figure-html/final-1.png" width="672" /></p>
-<p>From the looks of it, the 1980s was overall a good decade for films. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.</p>
+<p>From the looks of it, the 1980s was overall perhaps the best decade for films. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.</p>
 <p>Several directors came out strong not only in individual decades, but across them. Christopher Nolan had as many as 4 between 2000 and 2016, with 3 in one decade, and 2 from his Dark Knight Trilogy. Robert Zemeckis and Stephen Spielberg each had one film per decade, and Peter Jackson’s Lord of the Rings Trilogy took three of the top spots in the decade it was released.</p>
-<p>On the other hand, Jason Friedberg was possibly one of the most panned by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s.</p>
+<p>On the other hand, Jason Friedberg was possibly the most panned director by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s as voted by IMDB users.</p>
 <p>Several of the worst films were sequels to well-known and successful films including horror franchises like <em>Friday the 13th</em>, <em>Halloween</em>, comedy films like <em>The Mask</em>, or the classic that is <em>Jaws</em>. Also important to note is that several parody films, including those by Jason Friedberg and the Scary Movie franchise, appeared in the worst film lists.</p>
 </div>
 </div>
