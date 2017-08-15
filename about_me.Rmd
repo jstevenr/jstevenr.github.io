@@ -21,7 +21,9 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with an ultimate goal of becoming a data scientist. I have been employed since Sept 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data that comes into the [Arctic Data Center](https://arcticdata.io/), and maintaining the dataset's metadata. 
+My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist. I have been employed since September 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data and metadata that comes into the [Arctic Data Center](https://arcticdata.io/), a repository designed to host ecological data and funded by the National Science Foundation (NSF).
+
+I have written several functions in `R` based on member functions of the `arcticdatautils`, `EML`, and `dataone` packages (developed by NCEAS) that have since seen use by other staffers to improve their own productivity and workflow.
 
 If I am not learning a new programming skill in my free time (currently focused on learning SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM.
 
