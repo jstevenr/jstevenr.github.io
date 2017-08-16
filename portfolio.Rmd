@@ -42,11 +42,8 @@ This was done as my final project in PSTAT 131, a class on data mining at UCSB. 
 
 The dataset was taken from the [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/). 
 
-```{r, reading data, include= FALSE}
-white <- read.csv("~/Documents/rstudio-git/wine-classification/winequality-white.csv", sep = ";")
-```
-
-```{r missing values}
+```{r, reading data}
+white <- read.csv("~/Documents/git-workspace/wine-classification/winequality-white.csv", sep = ";")
 set.seed(10)
 # Reading in the data
 # the data is loaded as 'white'
@@ -594,7 +591,7 @@ Data was found on [Kaggle.com](https://www.kaggle.com/deepmatrix/imdb-5000-movie
 ```{r, data cleaning}
 # ggplot2, gridExtra, readr are loaded
 # The dataset is loaded as 'movies'
-movies <- read.csv("~/Documents/rstudio-git/imdb-ratings/movie_metadata.csv",
+movies <- read.csv("~/Documents/git-workspace/imdb-ratings/movie_metadata.csv",
                    stringsAsFactors = FALSE, na.strings = c(NA, "NA"), skipNul = TRUE,
                    fill = FALSE)
 
