@@ -49,7 +49,7 @@ If I am not learning a new programming skill in my free time (currently focused 
 ## Skills
 
 * **Technical**
-    + R, Python, C++, SAS
+    + R
     + Linux
     + Git
     + XML, JSON
