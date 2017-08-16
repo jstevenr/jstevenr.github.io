@@ -45,11 +45,14 @@ If I am not learning a new programming skill in my free time (currently focused 
 ## Skills
 
 * **Technical**
-    + R, R Markdown
+    + R, Python, C++
     + Linux
     + Git
-    + XML, EML
-* **Languages**
+    + XML, JSON
+    + Markdown, LaTeX
+* **Design**
+    + GIMP
+* **Language**
     + Spanish
     + Portuguese
 

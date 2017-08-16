@@ -36,9 +36,9 @@ Here you'll find projects that I have worked on/am working on. Naturally, I thin
 ----
 
 
-# Classifying wine with supervised learning
+# Classifying wine quality
 
-This machine learning project was done as my final project in PSTAT 131, a class on data mining at UCSB. The ultimate goal was to compare different supervised learning techniques (decision trees, k-Nearest Neighbors, and randomForest) to see what was the most accurate and robust among them. The following packages were utilized in this analysis: `class`, `ROCR`, `randomForest`, `tree`, `plyr`, and `dplyr`.
+This was done as my final project in PSTAT 131, a class on data mining at UCSB. The ultimate goal was to compare different **machine learning** techniques, both supervised and unsupervised (decision trees, k-Nearest Neighbors, and randomForest) to see what was the most accurate and robust among them. The following packages were utilized in this analysis: `class`, `ROCR`, `randomForest`, `tree`, `plyr`, and `dplyr`.
 
 The dataset was taken from the [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/). 
 
