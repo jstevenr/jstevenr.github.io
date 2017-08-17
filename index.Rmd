@@ -1,7 +1,10 @@
 ---
 title: "J Steven Raquel"
 output:
-  html_document
+  html_document:
+    includes:
+      in_header: 
+        header.html
 navbar:  
   left:
     - text: "Home"
