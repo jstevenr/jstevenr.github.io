@@ -8,8 +8,8 @@ navbar:
       href: about_me.html
     - text: "Portfolio"
       href: portfolio.html
-
 output_dir: "."
+
 output:
   html_document:
     theme: cosmo

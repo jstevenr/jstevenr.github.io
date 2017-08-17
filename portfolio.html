@@ -8,7 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
-
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
 
 
 <title>Portfolio</title>
@@ -312,7 +314,7 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -331,21 +333,21 @@ div.tocify {
 <p>Here you’ll find projects that I have worked on/am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces it.</p>
 <hr />
 <div id="classifying-wine-quality" class="section level1">
-<h1>Classifying wine quality</h1>
+<h1><span class="header-section-number">1</span> Classifying wine quality</h1>
 <p>This was done as my final project in PSTAT 131, a class on data mining at UCSB. The ultimate goal was to compare different <strong>machine learning</strong> techniques, both supervised and unsupervised (decision trees, k-Nearest Neighbors, and randomForest) to see what was the most accurate and robust among them. The following packages were utilized in this analysis: <code>class</code>, <code>ROCR</code>, <code>randomForest</code>, <code>tree</code>, <code>plyr</code>, and <code>dplyr</code>.</p>
 <p>The dataset was taken from the <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/">UC Irvine Machine Learning Repository</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/git-workspace/wine-classification/winequality-white.csv&quot;</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/git-workspace/wine-classification/winequality-white.csv&quot;</span>,
     <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>)
 <span class="kw">set.seed</span>(<span class="dv">10</span>)
 <span class="co"># Reading in the data the data is loaded as &#39;white&#39;</span>
 <span class="kw">sapply</span>(white, function(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x)))</code></pre></div>
-<pre><code>##        fixed.acidity     volatile.acidity          citric.acid 
-##                    0                    0                    0 
-##       residual.sugar            chlorides  free.sulfur.dioxide 
-##                    0                    0                    0 
-## total.sulfur.dioxide              density                   pH 
-##                    0                    0                    0 
-##            sulphates              alcohol              quality 
+<pre><code>##        fixed.acidity     volatile.acidity          citric.acid
+##                    0                    0                    0
+##       residual.sugar            chlorides  free.sulfur.dioxide
+##                    0                    0                    0
+## total.sulfur.dioxide              density                   pH
+##                    0                    0                    0
+##            sulphates              alcohol              quality
 ##                    0                    0                    0</code></pre>
 <p>A preliminary look at the dataset reveals that there are no missing values.</p>
 <p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis.</p>
@@ -365,7 +367,7 @@ white_sc[, <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">
 
 <span class="co"># converting quality into a binary factor</span>
 for (i in <span class="dv">1</span>:<span class="kw">nrow</span>(white_sc)) {
-    if (white_sc$quality[i] &gt;<span class="st"> </span><span class="dv">5</span>) 
+    if (white_sc$quality[i] &gt;<span class="st"> </span><span class="dv">5</span>)
         white_sc$label[i] &lt;-<span class="st"> </span><span class="dv">1</span> else white_sc$label[i] &lt;-<span class="st"> </span><span class="dv">0</span>
 }
 white_sc$label &lt;-<span class="st"> </span><span class="kw">factor</span>(white_sc$label, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>))
@@ -376,7 +378,7 @@ white_sc$quality &lt;-<span class="st"> </span><span class="ot">NULL</span></cod
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># initializing a matrix for records</span>
 records &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)
 <span class="kw">colnames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Accuracy Rate&quot;</span>, <span class="st">&quot;Error Rate&quot;</span>, <span class="st">&quot;AUC&quot;</span>)
-<span class="kw">rownames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tree&quot;</span>, <span class="st">&quot;pruned.tree&quot;</span>, <span class="st">&quot;k=10 kNN&quot;</span>, <span class="st">&quot;k=35 kNN&quot;</span>, <span class="st">&quot;full.randomForest&quot;</span>, 
+<span class="kw">rownames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tree&quot;</span>, <span class="st">&quot;pruned.tree&quot;</span>, <span class="st">&quot;k=10 kNN&quot;</span>, <span class="st">&quot;k=35 kNN&quot;</span>, <span class="st">&quot;full.randomForest&quot;</span>,
     <span class="st">&quot;small.randomForest&quot;</span>)</code></pre></div>
 <p>In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set.seed(10) is loaded using a subset of 1000 obs for the training set</span>
@@ -384,22 +386,22 @@ test_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span 
 test &lt;-<span class="st"> </span>white_sc[test_indices, ]
 train &lt;-<span class="st"> </span>white_sc[-test_indices, ]</code></pre></div>
 <div id="decision-tree" class="section level2">
-<h2>Decision Tree</h2>
+<h2><span class="header-section-number">1.1</span> Decision Tree</h2>
 <p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data.</p>
 <p>Of course, we’re going to use <code>label</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(tree) is loaded predicting the label (good vs bad)</span>
-tree &lt;-<span class="st"> </span><span class="kw">tree</span>(<span class="dt">formula =</span> label ~<span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>, <span class="dt">control =</span> <span class="kw">tree.control</span>(<span class="dt">nobs =</span> <span class="kw">nrow</span>(train), 
+tree &lt;-<span class="st"> </span><span class="kw">tree</span>(<span class="dt">formula =</span> label ~<span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>, <span class="dt">control =</span> <span class="kw">tree.control</span>(<span class="dt">nobs =</span> <span class="kw">nrow</span>(train),
     <span class="dt">mincut =</span> <span class="dv">5</span>, <span class="dt">minsize =</span> <span class="dv">10</span>, <span class="dt">mindev =</span> <span class="fl">0.003</span>))
 <span class="kw">summary</span>(tree)</code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Classification tree:
-## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train), 
+## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train),
 ##     mincut = 5, minsize = 10, mindev = 0.003), method = &quot;class&quot;)
 ## Variables actually used in tree construction:
 ## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
-## [4] &quot;sulphates&quot;           &quot;citric.acid&quot;         &quot;fixed.acidity&quot;      
-## Number of terminal nodes:  16 
-## Residual mean deviance:  0.9591 = 3723 / 3882 
+## [4] &quot;sulphates&quot;           &quot;citric.acid&quot;         &quot;fixed.acidity&quot;
+## Number of terminal nodes:  16
+## Residual mean deviance:  0.9591 = 3723 / 3882
 ## Misclassification error rate: 0.2324 = 906 / 3898</code></pre>
 <p>So we can see from this summary, that in fact 6 out of the 8 predictors were used in constructing this tree: <code>alcohol</code>, <code>volatile.acidity</code>, <code>free.sulfur.dioxide</code>, <code>sulphates</code>, <code>citric.acid</code>, and <code>fixed.acidity</code>. Now we are actually going to plot the tree to visualize this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tree, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)
@@ -460,7 +462,7 @@ records</code></pre></div>
 ## small.randomForest            NA         NA       NA</code></pre>
 <p>We see thusly that the area under the curve is <span class="math inline">\(0.788\)</span> which is slightly closer to 1 than 0.5. That is to say that it is more good than bad, but hardly so.</p>
 <div id="k-fold-cross-validation" class="section level3">
-<h3>k-fold Cross Validation</h3>
+<h3><span class="header-section-number">1.1.1</span> k-fold Cross Validation</h3>
 <p>We can use k-fold cross-validation, which randomly partitions the dataset into folds of similar size, to see if the tree requires any pruning which can improve the model’s accuracy as well as make it more interpretable for us.</p>
 <p>In k-fold cross validation, we divide the sample into <code>k</code> sub samples, then train the model on <code>k -1</code> samples, leaving one as a holdout sample. We compute validation error on each of these samples, then average the validation error of all of them.</p>
 <p>The idea of cross-validation is that it will sample multiple times from the training set, with different separations. Ultimately, this creates a more robust model i.e. the tree will not be overfit.</p>
@@ -471,23 +473,23 @@ cv &lt;-<span class="st"> </span><span class="kw">cv.tree</span>(tree, <span cla
 cv</code></pre></div>
 <pre><code>## $size
 ## [1] 16  9  7  5  4  3  1
-## 
+##
 ## $dev
 ## [1] 1013 1013 1012 1023 1025 1045 1252
-## 
+##
 ## $k
 ## [1]  -Inf   0.0   4.0   9.5  36.0  71.0 136.0
-## 
+##
 ## $method
 ## [1] &quot;misclass&quot;
-## 
+##
 ## attr(,&quot;class&quot;)
 ## [1] &quot;prune&quot;         &quot;tree.sequence&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Best size</span>
 best.cv &lt;-<span class="st"> </span>cv$size[<span class="kw">which.min</span>(cv$dev)]
 
 <span class="co"># plotting misclass error as a function of tree size (k)</span>
-<span class="kw">plot</span>(cv$size, cv$dev, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of leaves, &#39;best&#39;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Misclassification Error&quot;</span>, 
+<span class="kw">plot</span>(cv$size, cv$dev, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of leaves, &#39;best&#39;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Misclassification Error&quot;</span>,
     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Optimal Tree Size&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">v =</span> best.cv, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="portfolio_files/figure-html/cross%20validation%20of%20tree-1.png" width="672" /></p>
@@ -496,13 +498,13 @@ best.cv &lt;-<span class="st"> </span>cv$size[<span class="kw">which.min</span>(
 <p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree.pruned &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree, <span class="dt">best =</span> best.cv, <span class="dt">method =</span> <span class="st">&quot;misclass&quot;</span>)
 <span class="kw">summary</span>(tree.pruned)</code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Classification tree:
 ## snip.tree(tree = tree, nodes = c(4L, 10L, 23L, 7L))
 ## Variables actually used in tree construction:
 ## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
-## Number of terminal nodes:  7 
-## Residual mean deviance:  1.021 = 3971 / 3891 
+## Number of terminal nodes:  7
+## Residual mean deviance:  1.021 = 3971 / 3891
 ## Misclassification error rate: 0.2345 = 914 / 3898</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tree.pruned, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)
 <span class="kw">title</span>(<span class="st">&quot;Pruned Classification Tree&quot;</span>)
@@ -555,13 +557,13 @@ records</code></pre></div>
 </div>
 </div>
 <div id="k-nearest-neighbors-knn" class="section level2">
-<h2>k-Nearest Neighbors (kNN)</h2>
+<h2><span class="header-section-number">1.2</span> k-Nearest Neighbors (kNN)</h2>
 <p>We’re now going to apply the k-nearest neighbors method of classification, which is a non-parametric method. k-Nearest neighbors (or kNN) is called a “lazy learning” technique because it goes through the training set every time it predicts a test sample’s label. It finds this label by plotting the test sample in the same dimensional space as the training data, then classifies it based on the “k nearest neighbor(s)”, i.e. if k = 10, then the label of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation.</p>
 <p>Distance is measured in different ways, but by default the <code>knn()</code> function utilized Euclidean distance.</p>
 <p>This is rather problematic because when calculating distance it’s assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes’ relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what’s more we scaled the remaining numeric predictors, which goes in a small way to addressing this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)
 <span class="co"># library(class) is loaded using 20 nearest neighbors</span>
-knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> <span class="dv">10</span>, 
+knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> <span class="dv">10</span>,
     <span class="dt">prob =</span> <span class="ot">TRUE</span>)
 
 <span class="co"># confusion matrix</span>
@@ -612,7 +614,7 @@ knn_accs &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="
 
 <span class="co"># Determining the best k for k-nearest neighbors classification</span>
 for (k in range) {
-    knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> k, 
+    knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> k,
         <span class="dt">prob =</span> <span class="ot">TRUE</span>)
     knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> knn_pred, <span class="dt">true =</span> test$label)
     knn_accs[k] &lt;-<span class="st"> </span><span class="kw">class_acc</span>(knn_conf)
@@ -622,7 +624,7 @@ for (k in range) {
 <span class="kw">plot</span>(range, knn_accs, <span class="dt">xlab =</span> <span class="st">&quot;k&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;accuracy&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Number of Neighbors (k) vs Test Accuracy&quot;</span>)</code></pre></div>
 <p><img src="portfolio_files/figure-html/plotting%20k%20vs%20accs-1.png" width="672" /> This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using <span class="math inline">\(k=1\)</span> will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
 <p>Here is the ROC curve demonstrating this.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">worst_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> <span class="dv">1</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">worst_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> <span class="dv">1</span>,
     <span class="dt">prob =</span> <span class="ot">TRUE</span>)
 worst_knn_prob &lt;-<span class="st"> </span><span class="kw">attr</span>(worst_knn_pred, <span class="st">&quot;prob&quot;</span>)
 worst_knn_prob &lt;-<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">ifelse</span>(worst_knn_pred ==<span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span> -<span class="st"> </span>worst_knn_prob, worst_knn_prob) -<span class="st"> </span>
@@ -636,7 +638,7 @@ worst_knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</s
 <p><img src="portfolio_files/figure-html/worst%20kNN%20k%20=%201-1.png" width="672" /></p>
 <p>So we think better not to opt for <span class="math inline">\(k=1\)</span> and rather choose some <span class="math inline">\(k\)</span> like 35, which is still decently accurate, and probably less biased.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(knn) is loaded</span>
-new_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> <span class="dv">35</span>, 
+new_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, -<span class="dv">9</span>], <span class="dt">test =</span> test[, -<span class="dv">9</span>], <span class="dt">cl =</span> train$label, <span class="dt">k =</span> <span class="dv">35</span>,
     <span class="dt">prob =</span> <span class="ot">TRUE</span>)
 
 <span class="co"># confusion matrix</span>
@@ -685,19 +687,19 @@ records</code></pre></div>
 <p>Finally we can move on to the final method of classification, randomForest.</p>
 </div>
 <div id="randomforest" class="section level2">
-<h2>randomForest</h2>
+<h2><span class="header-section-number">1.3</span> randomForest</h2>
 <p>randomForest is similar to the decision tree method in that it builds trees, hence the name ‘random Forest’. This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that randomForest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Random Forest using all 8 predictor attributes, on the training set
 rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label ~<span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">mtry =</span> <span class="dv">8</span>)
 
 <span class="kw">print</span>(rf)</code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Call:
-##  randomForest(formula = label ~ ., data = train, mtry = 8) 
+##  randomForest(formula = label ~ ., data = train, mtry = 8)
 ##                Type of random forest: classification
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 8
-## 
+##
 ##         OOB estimate of  error rate: 16.34%
 ## Confusion matrix:
 ##      bad good class.error
@@ -754,7 +756,7 @@ records</code></pre></div>
 <p>Recall that earlier we determined in the decision tree that the relevant variables were: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. While this randomForest model was pretty effective in utilizing all of the 8 predictors, we can take a look at a model using only these 3 as well for the sake of comparison.</p>
 <p>We have established by now that simpler models have a reduced bias and complexity, but higher variance and a higher chance of underfitting, whereas complex models (such as the full model) have the opposite issue. The good thing about randomForest is that it inherently accounts for this “Bias-Variance” tradeoff by introducing randomness with bagging (bootstrap aggregating).</p>
 <p>The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf2 &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label ~<span class="st"> </span>alcohol +<span class="st"> </span>volatile.acidity +<span class="st"> </span>free.sulfur.dioxide, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf2 &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label ~<span class="st"> </span>alcohol +<span class="st"> </span>volatile.acidity +<span class="st"> </span>free.sulfur.dioxide,
     <span class="dt">data =</span> train, <span class="dt">mtry =</span> <span class="dv">3</span>)
 <span class="co"># predicting on the test set</span>
 rf_pred2 &lt;-<span class="st"> </span><span class="kw">predict</span>(rf2, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)
@@ -800,7 +802,7 @@ records</code></pre></div>
 <p>As such, we can opt to utilize this much smaller model for classification instead if we are concerned about complexity and bias. Having said that, because of the randomization introduced in the randomForest, it is inherently more robust so subsetting in this manner may even be unnecessary.</p>
 </div>
 <div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
+<h2><span class="header-section-number">1.4</span> Conclusion</h2>
 <p>So judging from all of our findings, we have seen that in this case, randomForest is the best algorithm (out of the three we’ve compared) for classifying this wine dataset. So we have answered the question of what among these three classification algorithms is truly the best.</p>
 <p>The decision tree algorithm is useful but ultimately, randomForest is superior version of it since it aggregates many decision trees to create an optimized model that is not susceptible to overfitting. When it comes to interpretability however, a decision tree is preferred. When using a decision tree however it is important to use cross-validation to prune the tree in order to narrow it down to the most important variables.</p>
 <p>Compared to decision trees, the k-nearest neighbor algorithm has a slightly greater accuracy rate but a worse AUC. The decision tree method did however help to narrow down the three most relevant attributes: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. This finding was consistent with when we took a look at the most important variables in the randomForest model.</p>
@@ -814,15 +816,15 @@ records</code></pre></div>
 </div>
 </div>
 <div id="visualizing-imdb-ratings" class="section level1">
-<h1>Visualizing IMDB ratings</h1>
+<h1><span class="header-section-number">2</span> Visualizing IMDB ratings</h1>
 <p>This was a very simple visualization I did to test out some of the abilities of <code>ggplot2</code>, an <code>R</code> package with some more robust options that go beyond the base level visualization abilities of <code>R</code>.</p>
 <p>We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I’ve gained since having done this.</p>
 <p>Data was found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a>.</p>
 <hr />
-<div id="subsetting-the-data" class="section level3">
-<h3>Subsetting the data</h3>
+<div id="subsetting-the-data" class="section level2">
+<h2><span class="header-section-number">2.1</span> Subsetting the data</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggplot2, gridExtra, readr are loaded The dataset is loaded as &#39;movies&#39;</span>
-movies &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/git-workspace/imdb-ratings/movie_metadata.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, 
+movies &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/git-workspace/imdb-ratings/movie_metadata.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>,
     <span class="dt">na.strings =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&quot;NA&quot;</span>), <span class="dt">skipNul =</span> <span class="ot">TRUE</span>, <span class="dt">fill =</span> <span class="ot">FALSE</span>)
 
 <span class="co"># This subsets the movies to only those which have been voted on by more than</span>
@@ -836,8 +838,8 @@ keeps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&
 movies &lt;-<span class="st"> </span>movies[keeps]</code></pre></div>
 <hr />
 </div>
-<div id="the-10s" class="section level3">
-<h3>The 10s</h3>
+<div id="the-10s" class="section level2">
+<h2><span class="header-section-number">2.2</span> The 10s</h2>
 <p>The data for the decade that began in 2010 only goes up until 2016, so naturally it is a smaller subset of data than the rest.</p>
 <p>Let’s take a look at the best and worst films of the decade.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tens &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">2010</span>)
@@ -861,7 +863,7 @@ tens &lt;-<span class="st"> </span>tens[<span class="kw">order</span>(tens$imdb_
 ## 2835        1.6       2011 Justin Bieber: Never Say Never       Jon M. Chu</code></pre>
 <p>On the other side of things, the worst film of this period was apparently Justin Bieber’s concert film, <em>Never Say Never</em>. Two parody films topped the list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tens_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tens, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +<span class="st"> </span><span class="kw">geom_boxplot</span>()
-tens_plot &lt;-<span class="st"> </span>tens_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, 
+tens_plot &lt;-<span class="st"> </span>tens_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,
     <span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">2</span>))
 tens_plot &lt;-<span class="st"> </span>tens_plot +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;2010s Films&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Year of Release&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;IMDB Rating&quot;</span>)
 tens_plot</code></pre></div>
@@ -869,8 +871,8 @@ tens_plot</code></pre></div>
 <p>Modern films seem to be pretty mediocre across the board (between 6-7), but if nothing else, each year seems to be consistent with the last. The sole high outlier of this decade was the 2010 film <em>Inception</em>, directed by Christopher Nolan.</p>
 <hr />
 </div>
-<div id="the-00s" class="section level3">
-<h3>The 00s</h3>
+<div id="the-00s" class="section level2">
+<h2><span class="header-section-number">2.3</span> The 00s</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zeroes &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">2000</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">2010</span>)
 zeroes &lt;-<span class="st"> </span>zeroes[<span class="kw">order</span>(zeroes$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), ]
 <span class="kw">head</span>(zeroes)</code></pre></div>
@@ -899,15 +901,15 @@ zeroes &lt;-<span class="st"> </span>zeroes[<span class="kw">order</span>(zeroes
 ## 2296        1.9       2004 Superbabies: Baby Geniuses 2          Bob Clark</code></pre>
 <p>Notably, two of the worst films of this decade were by Jason Friedberg, namely the parody films <em>Epic Movie</em> and <em>Disaster Movie</em>. He is also responsible for <em>Vampires Suck</em>, one of the worst rated films of the 2010s.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zeroes_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(zeroes, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +<span class="st"> </span><span class="kw">geom_boxplot</span>()
-zeroes_plot &lt;-<span class="st"> </span>zeroes_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, 
+zeroes_plot &lt;-<span class="st"> </span>zeroes_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,
     <span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">2</span>))
 zeroes_plot &lt;-<span class="st"> </span>zeroes_plot +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;2000s Films&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Year of Release&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;IMDB Rating&quot;</span>)
 zeroes_plot</code></pre></div>
 <p><img src="portfolio_files/figure-html/2000-2009-1.png" width="672" /></p>
 <hr />
 </div>
-<div id="the-90s" class="section level3">
-<h3>The 90s</h3>
+<div id="the-90s" class="section level2">
+<h2><span class="header-section-number">2.4</span> The 90s</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nineties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">1990</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">2000</span>)
 nineties &lt;-<span class="st"> </span>nineties[<span class="kw">order</span>(nineties$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), ]
 <span class="kw">head</span>(nineties)</code></pre></div>
@@ -937,16 +939,16 @@ nineties &lt;-<span class="st"> </span>nineties[<span class="kw">order</span>(ni
 <p>Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: <em>Street Fighter</em>, notably starring Jean Claude van Damme and Kylie Minogue, and <em>Mortal Kombat: Annihilation</em>. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan’s reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the ‘punniest’ villain of all time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nineties_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(nineties, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_boxplot</span>()
-nineties_plot &lt;-<span class="st"> </span>nineties_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, 
+nineties_plot &lt;-<span class="st"> </span>nineties_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,
     <span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">2</span>))
-nineties_plot &lt;-<span class="st"> </span>nineties_plot +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;1990s Films&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Year of Release&quot;</span>, 
+nineties_plot &lt;-<span class="st"> </span>nineties_plot +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;1990s Films&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Year of Release&quot;</span>,
     <span class="dt">y =</span> <span class="st">&quot;IMDB Rating&quot;</span>)
 nineties_plot</code></pre></div>
 <p><img src="portfolio_files/figure-html/1990-1999-1.png" width="672" /></p>
 <hr />
 </div>
-<div id="the-80s" class="section level3">
-<h3>The 80s</h3>
+<div id="the-80s" class="section level2">
+<h2><span class="header-section-number">2.5</span> The 80s</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eighties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">1980</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">1990</span>)
 eighties &lt;-<span class="st"> </span>eighties[<span class="kw">order</span>(eighties$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), ]
 <span class="kw">head</span>(eighties)</code></pre></div>
@@ -984,18 +986,18 @@ eighties &lt;-<span class="st"> </span>eighties[<span class="kw">order</span>(ei
 <p><em>Jaws: The Revenge</em> was the fourth and final sequel to the series, with only the original film involving Steven Spielberg, who of course directed the 2nd best rated film of this decade, <em>Raiders of the Lost Ark</em> as well as <em>Schindler’s List</em> in the 90s.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eighties_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(eighties, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_boxplot</span>()
-eighties_plot &lt;-<span class="st"> </span>eighties_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, 
+eighties_plot &lt;-<span class="st"> </span>eighties_plot +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,
     <span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">2</span>))
-eighties_plot &lt;-<span class="st"> </span>eighties_plot +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;1980s Films&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Year of Release&quot;</span>, 
+eighties_plot &lt;-<span class="st"> </span>eighties_plot +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;1980s Films&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Year of Release&quot;</span>,
     <span class="dt">y =</span> <span class="st">&quot;IMDB Rating&quot;</span>)
 eighties_plot</code></pre></div>
 <p><img src="portfolio_files/figure-html/1980-1989-1.png" width="672" /></p>
 <hr />
 </div>
-<div id="conclusions" class="section level3">
-<h3>Conclusions</h3>
+<div id="conclusions" class="section level2">
+<h2><span class="header-section-number">2.6</span> Conclusions</h2>
 <p>Now let’s take a look at all four plots in unison and see if we can’t conjure any ideas.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">grid.arrange</span>(tens_plot, zeroes_plot, nineties_plot, eighties_plot, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">grid.arrange</span>(tens_plot, zeroes_plot, nineties_plot, eighties_plot, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>,
     <span class="dt">top =</span> <span class="st">&quot;IMDB Ratings Over the Decades&quot;</span>)</code></pre></div>
 <p><img src="portfolio_files/figure-html/final-1.png" width="672" /></p>
 <p>From the looks of it, the 1980s was overall perhaps the best decade for films. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.</p>

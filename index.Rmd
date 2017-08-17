@@ -2,7 +2,6 @@
 title: "J Steven Raquel"
 output:
   html_document
-
 navbar:  
   left:
     - text: "Home"
