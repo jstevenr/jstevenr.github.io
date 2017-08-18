@@ -1,0 +1,29 @@
+---
+title: "blog"
+author: "J Steven Raquel"
+date: "August 18, 2017"
+output:
+  html_document:
+    includes:
+      in_header:
+        header.html
+navbar:
+  title: "Home"
+  left:
+    - text: "About Me"
+      href: about_me.html
+    - text: "Blog"
+      href: blog.html
+    - text: "Portfolio"
+      menu:
+        - text: "Classifying wine quality"
+          href: wine-classification.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
