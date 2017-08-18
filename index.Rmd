@@ -1,28 +1,58 @@
 ---
-title: "J Steven Raquel"
 output:
   html_document:
     includes:
       in_header: 
         header.html
-navbar:  
+navbar:
   left:
     - text: "Home"
       href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"
-      href: portfolio.html
+      menu:
+        - text: "Classifying wine quality"
+          href: wine-classification.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html
 ---
+
+<center><h1>J Steven Raquel</h1></center>
 
 ----
 
-## Welcome!
+<center><img src="images/banner-beach.png" width="645px"></center>
 
-Thanks for visiting my personal website. I am a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. Find out more about [who I am](https://jstevenr.github.io/about_me.html) and [what I've done](https://jstevenr.github.io/portfolio.html). 
+<br>
 
-### Let's Talk!
+# Welcome!
+
+Thanks for visiting my personal website. I'm J Steven Raquel, a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. Find out more about [who I am](about_me.html). 
 
 If you know anything about data science, statistics, machine learning, AI, or computer science, *get in touch with me*! I have a lot to learn so I'm eager to get in touch with folks with similar interests.
 
+----
+
+## Projects  
+
+These are some of the projects I've worked on throughout my time studying data science.
+
+----
+
+### Machine Learning
+
+* #### [Classifying wine quality](wine-classification.html)
+
+For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.
+
+<br>
+
+### Data Visualization
+
+* #### [Visualizing IMDB ratings](imdb.html)
+
+I looked at the past several decades in film as far back as the 1980s, and visualized each one to see what was the best audience-reviewed decade and what the best films were.
+
+----
 

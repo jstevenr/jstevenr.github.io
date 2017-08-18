@@ -1,5 +1,6 @@
 title: "Home"
 name: "J Steven Raquel"
+
 navbar:
   left:
     - text: "Home"
@@ -8,8 +9,13 @@ navbar:
       href: about_me.html
     - text: "Portfolio"
       href: portfolio.html
-output_dir: "."
+      menu:
+        - text: "Classifying wine quality"
+          href: wine-classification.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html
 
+output_dir: "."
 output:
   html_document:
     theme: cosmo

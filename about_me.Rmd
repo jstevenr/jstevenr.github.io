@@ -6,21 +6,22 @@ output:
       in_header: 
         header.html
 navbar:
+  title: "J Steven Raquel"
   left:
     - text: "Home"
       href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"
-      href: portfolio.html
+      menu:
+        - text: "Classifying wine quality"
+          href: wine-classification.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html
 
 ---
 
 ----
-
-<center><img src="images/banner-beach.png" width="600px"></center>
-
-<br>
 
 # Introduction
 

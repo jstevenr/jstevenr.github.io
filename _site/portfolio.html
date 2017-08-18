@@ -11,7 +11,7 @@
 
 
 
-<title></title>
+<title>Portfolio</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -149,6 +152,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -196,50 +294,19 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Portfolio</h1>
 
 </div>
 
 
-<center>
-<h1>
-J Steven Raquel
-</h1>
-</center>
 <hr />
-<center>
-<img src="images/banner-beach.png" width="645px">
-</center>
-<p><br></p>
-<div id="welcome" class="section level1">
-<h1>Welcome!</h1>
-<p>Thanks for visiting my personal website. I’m J Steven Raquel, a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. Find out more about <a href="about_me.html">who I am</a>.</p>
-<p>If you know anything about data science, statistics, machine learning, AI, or computer science, <em>get in touch with me</em>! I have a lot to learn so I’m eager to get in touch with folks with similar interests.</p>
+<p>Here you’ll find projects that I have worked on/am working on. Naturally, I think all of my work should be questioned and improved on so I also include the code that produces it.</p>
 <hr />
-<div id="projects" class="section level2">
-<h2>Projects</h2>
-<p>These are some of the projects I’ve worked on throughout my time studying data science.</p>
-<hr />
-<div id="machine-learning" class="section level3">
-<h3>Machine Learning</h3>
-<ul>
-<li><h4 id="classifying-wine-quality"><a href="wine-classification.html">Classifying wine quality</a></h4></li>
-</ul>
-<p>For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.</p>
-<p><br></p>
-</div>
-<div id="data-visualization" class="section level3">
-<h3>Data Visualization</h3>
-<ul>
-<li><h4 id="visualizing-imdb-ratings"><a href="imdb.html">Visualizing IMDB ratings</a></h4></li>
-</ul>
-<p>I looked at the past several decades in film as far back as the 1980s, and visualized each one to see what was the best audience-reviewed decade and what the best films were.</p>
-<hr />
-</div>
-</div>
-</div>
 
 
 
+</div>
+</div>
 
 </div>
 
