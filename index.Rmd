@@ -1,13 +1,14 @@
 ---
+title: "J Steven Raquel"
+
 output:
   html_document:
     includes:
       in_header: 
         header.html
 navbar:
+  title: "Home"
   left:
-    - text: "Home"
-      href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"
@@ -18,17 +19,13 @@ navbar:
           href: imdb.html
 ---
 
-<center><h1>J Steven Raquel</h1></center>
+<center><img src="images/banner-beach.png" width="645px"></center>
 
 ----
 
-<center><img src="images/banner-beach.png" width="645px"></center>
-
-<br>
-
 # Welcome!
 
-Thanks for visiting my personal website. I'm J Steven Raquel, a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. Find out more about [who I am](about_me.html). 
+Thanks for visiting my personal website. I'm J Steven Raquel, a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. Find out more about [who I am and how to reach me](about_me.html). 
 
 If you know anything about data science, statistics, machine learning, AI, or computer science, *get in touch with me*! I have a lot to learn so I'm eager to get in touch with folks with similar interests.
 
@@ -36,9 +33,7 @@ If you know anything about data science, statistics, machine learning, AI, or co
 
 ## Projects  
 
-These are some of the projects I've worked on throughout my time studying data science.
-
-----
+These are some of the projects I've worked on throughout my time studying data science, and I am constantly learning and adding things to my repertoire.
 
 ### Machine Learning
 

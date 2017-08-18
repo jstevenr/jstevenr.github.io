@@ -9,10 +9,8 @@ output:
       in_header: 
         header.html
 navbar:
-  title: "J Steven Raquel"
+  title: "Home"
   left:
-    - text: "Home"
-      href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"
@@ -50,7 +48,6 @@ Here we `subset()` the data in order to work with a data that makes sense for ou
 
 ```{r, data cleaning}
 # ggplot2, gridExtra, readr are loaded
-# The dataset is loaded as 'movies'
 movies <- read.csv("~/Documents/git-workspace/imdb-ratings/movie_metadata.csv",
                    stringsAsFactors = FALSE, na.strings = c(NA, "NA"), skipNul = TRUE,
                    fill = FALSE)

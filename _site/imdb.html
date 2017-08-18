@@ -345,13 +345,10 @@ div.tocify {
 <hr />
 <p>This was a very simple visualization I did to test out some of the abilities of <code>ggplot2</code>, an <code>R</code> package with some more robust options that go beyond the base level visualization abilities of <code>R</code>.</p>
 <p>We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I’ve gained since having done this.</p>
-<hr />
-<p>This was a very simple visualization I did to test out some of the abilities of <code>ggplot2</code>, an <code>R</code> package with some more robust options that go beyond the base level visualization abilities of <code>R</code>.</p>
-<p>We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I’ve gained since having done this.</p>
 <p>Data was found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a>.</p>
 <hr />
 <div id="subsetting-the-data" class="section level1">
-<h1><span class="header-section-number">1</span> Subsetting the data</h1>
+<h1>Subsetting the data</h1>
 <p>Here we <code>subset()</code> the data in order to work with a data that makes sense for our purposes. I decided that it would be good to only look at films that were voted on by at least 20,000 people, to ensure that these ratings would be more accurate. For example, a universally praised (or panned) film that only has 1000 votes, probably because it was only seen by a very small minority, probably shouldn’t factor into our appraisal of the the quality of films of the decade in general.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggplot2, gridExtra, readr are loaded</span>
 <span class="co"># The dataset is loaded as &#39;movies&#39;</span>
@@ -370,7 +367,7 @@ movies &lt;-<span class="st"> </span>movies[keeps]</code></pre></div>
 <hr />
 </div>
 <div id="the-10s" class="section level1">
-<h1><span class="header-section-number">2</span> The 10s</h1>
+<h1>The 10s</h1>
 <p>The data for the decade that began in 2010 only goes up until 2016, so naturally it is a smaller subset of data than the rest.</p>
 <p>Let’s take a look at the best and worst films of the decade.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tens &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">2010</span>)
@@ -402,7 +399,7 @@ tens_plot</code></pre></div>
 <hr />
 </div>
 <div id="the-00s" class="section level1">
-<h1><span class="header-section-number">3</span> The 00s</h1>
+<h1>The 00s</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zeroes &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">2000</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">2010</span>)
 zeroes &lt;-<span class="st"> </span>zeroes[<span class="kw">order</span>(zeroes$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]
 <span class="kw">head</span>(zeroes)</code></pre></div>
@@ -438,7 +435,7 @@ zeroes_plot</code></pre></div>
 <hr />
 </div>
 <div id="the-90s" class="section level1">
-<h1><span class="header-section-number">4</span> The 90s</h1>
+<h1>The 90s</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nineties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">1990</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">2000</span>)
 nineties &lt;-<span class="st"> </span>nineties[<span class="kw">order</span>(nineties$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]
 <span class="kw">head</span>(nineties)</code></pre></div>
@@ -474,7 +471,7 @@ nineties_plot</code></pre></div>
 <hr />
 </div>
 <div id="the-80s" class="section level1">
-<h1><span class="header-section-number">5</span> The 80s</h1>
+<h1>The 80s</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eighties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">1980</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">1990</span>)
 eighties &lt;-<span class="st"> </span>eighties[<span class="kw">order</span>(eighties$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]
 <span class="kw">head</span>(eighties)</code></pre></div>
@@ -518,7 +515,7 @@ eighties_plot</code></pre></div>
 <hr />
 </div>
 <div id="conclusions" class="section level1">
-<h1><span class="header-section-number">6</span> Conclusions</h1>
+<h1>Conclusions</h1>
 <p>Now let’s take a look at all four plots in unison and see if we can’t conjure any ideas.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">grid.arrange</span>(tens_plot, zeroes_plot, nineties_plot, eighties_plot, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">top =</span> <span class="st">&quot;IMDB Ratings Over the Decades&quot;</span>)</code></pre></div>
 <p><img src="imdb_files/figure-html/final-1.png" width="672" /></p>

@@ -9,14 +9,11 @@ output:
       in_header: 
         header.html
 navbar:
-  title: "J Steven Raquel"
+  title: "Home"
   left:
-    - text: "Home"
-      href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"
-      href: portfolio.html
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
@@ -56,10 +53,9 @@ In this report, we find the accuracy, error rates, and area under the ROC curve 
 
 ```{r reading data}
 set.seed(10)
-# Reading in the data
-white <- read.csv("~/Documents/git-workspace/wine-classification/winequality-white.csv", 
+white <- read.csv("~/Documents/git-workspace/wine-classification/winequality-white.csv",
                   sep = ";")
-
+head(white)
 # sapply(white, function(x) sum(is.na(x)))
 ```
 
@@ -68,6 +64,7 @@ A preliminary look at the dataset reveals that there are no missing values.
 First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis. 
 
 ```{r correlation matrix}
+
 white.cor <- cor(white[,1:12])
 # white.cor
 ```

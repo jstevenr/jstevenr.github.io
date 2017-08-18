@@ -300,14 +300,11 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html"></a>
+      <a class="navbar-brand" href="index.html">Home</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
-</li>
-<li>
   <a href="about_me.html">About Me</a>
 </li>
 <li class="dropdown">
@@ -351,7 +348,6 @@ div.tocify {
 <h1>Subsetting the data</h1>
 <p>Here we <code>subset()</code> the data in order to work with a data that makes sense for our purposes. I decided that it would be good to only look at films that were voted on by at least 20,000 people, to ensure that these ratings would be more accurate. For example, a universally praised (or panned) film that only has 1000 votes, probably because it was only seen by a very small minority, probably shouldn’t factor into our appraisal of the the quality of films of the decade in general.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggplot2, gridExtra, readr are loaded</span>
-<span class="co"># The dataset is loaded as &#39;movies&#39;</span>
 movies &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/git-workspace/imdb-ratings/movie_metadata.csv&quot;</span>,
                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, <span class="dt">na.strings =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&quot;NA&quot;</span>), <span class="dt">skipNul =</span> <span class="ot">TRUE</span>,
                    <span class="dt">fill =</span> <span class="ot">FALSE</span>)

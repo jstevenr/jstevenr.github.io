@@ -1,15 +1,14 @@
 ---
 title: "About Me"
+
 output:
   html_document:
     includes:
       in_header: 
         header.html
 navbar:
-  title: "J Steven Raquel"
+  title: "Home"
   left:
-    - text: "Home"
-      href: index.html
     - text: "About Me"
       href: about_me.html
     - text: "Portfolio"
@@ -18,7 +17,6 @@ navbar:
           href: wine-classification.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html
-
 ---
 
 ----
@@ -29,7 +27,7 @@ My name is J Steven Raquel. I am an undergraduate at the University of Californi
 
 I have been employed since September 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data and metadata that comes into the [Arctic Data Center](https://arcticdata.io/), a repository designed to host ecological data and funded by the [National Science Foundation](https://www.nsf.gov/) (NSF).
 
-If I am not learning a new programming skill in my free time (currently focused on learning SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM, titled "The Company of Lazarus".
+If I am not learning a new programming skill in my free time (currently focused on learning SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM, called [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-1-kcsb-91-9-fm-in-santa-barbara).
 
 * Email: jsteven.raquel8@gmail.com
 * Twitter: @[jsteven_r](https://www.twitter.com/jsteven_r)

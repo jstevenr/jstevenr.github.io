@@ -342,15 +342,17 @@ div.tocify {
 </div>
 
 
+<p>This was my final project for PSTAT 131, Data Mining, Spring 2017.</p>
+<hr />
 <div id="introduction" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction</h1>
+<h1>Introduction</h1>
 <p>We use this white wine quality dataset, and all of its attributes (e.g. sulfur dioxide content, pH) to determine what constitutes a “good” (or above average) quality wine. We used the R statistical computing language to conduct the analyses in this report. The data were found on the UC Irvine Machine Learning Repository.</p>
 <p>Knowing what makes a good wine was an interesting question because it allows us to look at “taste” in a different way–without formal training in wine tasting, we can determine algorithmically how and why a wine is good using machine learning.</p>
 <p>We utilized randomForest, decision trees, and k-nearest neighbors to classify each observation as either good or bad based off of these attributes, while varying the number of variables, nodes, and number of neighbors and comparing within and between these methods.</p>
 <p>In this report, we find the accuracy, error rates, and area under the ROC curve (AUC) of each of the three methods and ultimately came to determine that randomForest was the most effective in terms of accuracy and AUC. It works well as a generalization of the decision tree method, and as an algorithm it is robust, but it falls short in terms of interpretability. kNN on the other hand is slow to compute with a dataset of this dimensionality, as well as weaker in its accuracy both in absolute terms and relative to the other methods we have tested here.</p>
 </div>
 <div id="main-body" class="section level1">
-<h1><span class="header-section-number">2</span> Main Body</h1>
+<h1>Main Body</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)
 <span class="co"># Reading in the data</span>
 white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/git-workspace/wine-classification/winequality-white.csv&quot;</span>, 
@@ -404,7 +406,7 @@ test_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span 
 test &lt;-<span class="st"> </span>white_sc[test_indices, ]
 train &lt;-<span class="st"> </span>white_sc[-test_indices, ]</code></pre></div>
 <div id="decision-tree" class="section level2">
-<h2><span class="header-section-number">2.1</span> Decision Tree</h2>
+<h2>Decision Tree</h2>
 <p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data.</p>
 <p>Of course, we’re going to use <code>label</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(tree) is loaded predicting the label (good vs bad)</span>
@@ -480,7 +482,7 @@ records</code></pre></div>
 ## small.randomForest            NA         NA       NA</code></pre>
 <p>We see thusly that the area under the curve is <span class="math inline">\(0.788\)</span> which is slightly closer to 1 than 0.5. That is to say that it is more good than bad, but hardly so.</p>
 <div id="k-fold-cross-validation" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> k-fold Cross Validation</h3>
+<h3>k-fold Cross Validation</h3>
 <p>We can use k-fold cross-validation, which randomly partitions the dataset into folds of similar size, to see if the tree requires any pruning which can improve the model’s accuracy as well as make it more interpretable for us.</p>
 <p>In k-fold cross validation, we divide the sample into <code>k</code> sub samples, then train the model on <code>k -1</code> samples, leaving one as a holdout sample. We compute validation error on each of these samples, then average the validation error of all of them.</p>
 <p>The idea of cross-validation is that it will sample multiple times from the training set, with different separations. Ultimately, this creates a more robust model i.e. the tree will not be overfit.</p>
@@ -575,7 +577,7 @@ records</code></pre></div>
 </div>
 </div>
 <div id="k-nearest-neighbors-knn" class="section level2">
-<h2><span class="header-section-number">2.2</span> k-Nearest Neighbors (kNN)</h2>
+<h2>k-Nearest Neighbors (kNN)</h2>
 <p>We’re now going to apply the k-nearest neighbors method of classification, which is a non-parametric method. k-Nearest neighbors (or kNN) is called a “lazy learning” technique because it goes through the training set every time it predicts a test sample’s label. It finds this label by plotting the test sample in the same dimensional space as the training data, then classifies it based on the “k nearest neighbor(s)”, i.e. if k = 10, then the label of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation.</p>
 <p>Distance is measured in different ways, but by default the <code>knn()</code> function utilized Euclidean distance.</p>
 <p>This is rather problematic because when calculating distance it’s assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes’ relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what’s more we scaled the remaining numeric predictors, which goes in a small way to addressing this.</p>
@@ -705,7 +707,7 @@ records</code></pre></div>
 <p>Finally we can move on to the final method of classification, randomForest.</p>
 </div>
 <div id="randomforest" class="section level2">
-<h2><span class="header-section-number">2.3</span> randomForest</h2>
+<h2>randomForest</h2>
 <p>randomForest is similar to the decision tree method in that it builds trees, hence the name ‘random Forest’. This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that randomForest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Random Forest using all 8 predictor attributes, on the training set
 rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label ~<span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">mtry =</span> <span class="dv">8</span>)
@@ -821,7 +823,7 @@ records</code></pre></div>
 </div>
 </div>
 <div id="conclusion" class="section level1">
-<h1><span class="header-section-number">3</span> Conclusion</h1>
+<h1>Conclusion</h1>
 <p>So judging from all of our findings, we have seen that in this case, randomForest is the best algorithm (out of the three we’ve compared) for classifying this wine dataset. So we have answered the question of what among these three classification algorithms is truly the best.</p>
 <p>The decision tree algorithm is useful but ultimately, randomForest is superior version of it since it aggregates many decision trees to create an optimized model that is not susceptible to overfitting. When it comes to interpretability however, a decision tree is preferred. When using a decision tree however it is important to use cross-validation to prune the tree in order to narrow it down to the most important variables.</p>
 <p>Compared to decision trees, the k-nearest neighbor algorithm has a slightly greater accuracy rate but a worse AUC. The decision tree method did however help to narrow down the three most relevant attributes: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. This finding was consistent with when we took a look at the most important variables in the randomForest model.</p>
@@ -834,7 +836,7 @@ records</code></pre></div>
 
 </div>
 <div id="references" class="section level1">
-<h1><span class="header-section-number">4</span> References</h1>
+<h1>References</h1>
 <p>Tan, Pang-Ning, Michael Steinbach, and Vipin Kumar. Introduction To Data Mining. 1st ed. Addison Wesley: Pearson, 2005. Print.</p>
 <p>R Core Team (2017). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
 <p>RStudio Team (2016). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL <a href="http://www.rstudio.com/" class="uri">http://www.rstudio.com/</a>.</p>
