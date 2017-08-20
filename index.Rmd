@@ -43,8 +43,6 @@ These are some of the projects I've worked on throughout my time studying data s
 
 For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.
 
-<br>
-
 ### Data Visualization
 
 * #### [Visualizing IMDB ratings](imdb.html)

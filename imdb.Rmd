@@ -31,7 +31,7 @@ This was a very simple visualization I did to test out some of the abilities of 
 
 We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I've gained since having done this.
 
-Data was found on [Kaggle.com](https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset) and drawn from the [Internet Movie Database](imdb.com).
+Data was found on [Kaggle.com](https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset) and drawn from the [Internet Movie Database](imdb.com). The code to create the plots can be found in the accompanying GitHub [repo](https://github.com/jstevenr/imdb-ratings) for this project, as `imdb.Rmd`.
 
 ----
 
@@ -65,11 +65,14 @@ all_movies <- all_movies[complete.cases(all_movies),]
 # Remove any duplicate films
 all_movies <- all_movies[!duplicated(all_movies$movie_title),]
 
-stats <- matrix(data = NA, nrow = 6, ncol = 6, 
+stats <- matrix(data = NA, nrow = 6, ncol = 7, 
                 dimnames = list(c("1927-2016", "1980-2016","2010-2016", "2000-2010", "1990-2000","1980-1990"),
-                                c("Min", "1Q", "Med", "Mean", "3Q", "Max")))
+                                c("Min", "1Q", "Med", "Mean", "3Q", "Max", "Size")))
 
-stats[1,] <- round(summary(all_movies$imdb_score), 2)
+# Adding summary statistics and size
+stats[1,1:6] <- round(summary(all_movies$imdb_score), 2)
+stats[1,7] <- nrow(all_movies)
+
 all_avg <- stats[1,4]
 ```
 
@@ -80,7 +83,8 @@ The films range from scoring between 1.6 and 9.3 on a scale from 0 to 10.0m and 
 # Keeping only relevant columns as well as only looking at movies from 1980s and beyond
 movies <- subset(all_movies, title_year >= 1980)
 
-stats[2,] <- round(summary(movies$imdb_score), 2)
+stats[2,1:6] <- round(summary(movies$imdb_score), 2)
+stats[2,7] <- nrow(movies)
 modern_avg <- stats[2,4]
 stats
 ```
@@ -98,8 +102,9 @@ Let's take a look at the best and worst films of the decade.
 ```{r, organizing the 10s}
 tens <- subset(movies, title_year >= 2010)
 tens <- tens[order(tens$imdb_score, decreasing = TRUE),]
-nrow(tens)
-stats[3,]<- round(summary(tens$imdb_score), 2)
+
+stats[3,1:6]<- round(summary(tens$imdb_score), 2)
+stats[3,7] <- nrow(tens)
 stats
 ```
 
@@ -109,18 +114,18 @@ Overall, the films from 2010-2016 are roughly similar in quality to those across
 head(tens)
 ```
 
-Note the fact that the three best films of this 6-year period (as voted by IMDB users) were all by Christopher Nolan. Also tied for third is my favorite director, Quentin Tarantino with *Django Unchained*.
+Note the fact that the three best films of this 6-year period (as voted by IMDB users) were all by Christopher Nolan. Also tied for third is my favorite director, Quentin Tarantino with *Django Unchained*. *Samsara*, a relatively unknown film, grossed a modest $2.6 million, a mere fraction of the other films on this list.
 
 ```{r, tens tail}
 tail(tens)
 ```
 
-On the other side of things, the worst film of this period was apparently Justin Bieber's concert film, *Never Say Never*. Two parody films topped the list. 
+On the other side of things, the worst film of this period was apparently Justin Bieber's concert film, *Never Say Never*. Two parody films topped the list. This film, as well as *Jack and Jill*, starring Adam Sandler, grossed well over $70 million, most likely owing to their leads, but nevertheless were universally panned by audiences. 
 
 We can also take a look at the averages across the individual years as well as each decade.
 
 
-```{r, 2010-present day}
+```{r, 2010-present day, echo = FALSE}
 tens_plot <- ggplot(tens, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
@@ -144,8 +149,9 @@ Modern films seem to be pretty mediocre across the board (between 6-7), but if n
 ```{r, organizing the 00s}
 zeroes <- subset(movies, title_year >= 2000 & title_year < 2010)
 zeroes <- zeroes[order(zeroes$imdb_score, decreasing = TRUE),]
-nrow(zeroes)
-stats[4,]<- round(summary(zeroes$imdb_score), 2)
+
+stats[4,1:6]<- round(summary(zeroes$imdb_score), 2)
+stats[4,7] <- nrow(zeroes)
 stats
 ```
 
@@ -162,7 +168,7 @@ tail(zeroes)
 Notably, two of the worst films of this decade were by Jason Friedberg, namely the parody films *Epic Movie* and *Disaster Movie*. He is also responsible for *Vampires Suck*, one of the worst rated films of the 2010s. 
 
 
-```{r, 2000-2009}
+```{r, 2000-2009, echo = FALSE}
 zeroes_plot <- ggplot(zeroes, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(axis.text.x = element_text(hjust = 1)) +
@@ -182,8 +188,9 @@ zeroes_plot
 ```{r, organizing the nineties}
 nineties <- subset(movies, title_year >= 1990 & title_year < 2000)
 nineties <- nineties[order(nineties$imdb_score, decreasing = TRUE),]
-nrow(nineties)
-stats[5,]<- round(summary(nineties$imdb_score), 2)
+
+stats[5,1:6]<- round(summary(nineties$imdb_score), 2)
+stats[5,7] <- nrow(nineties)
 stats
 ```
 
@@ -199,7 +206,7 @@ tail(nineties)
 
 Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: *Street Fighter*, notably starring Jean Claude van Damme and Kylie Minogue, and *Mortal Kombat: Annihilation*. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan's reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the 'punniest' villain of all time. 
 
-```{r, 1990-1999}
+```{r, 1990-1999, echo = FALSE}
 nineties_plot <- ggplot(nineties, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
@@ -222,8 +229,9 @@ nineties_plot
 ```{r}
 eighties <- subset(movies, title_year >= 1980 & title_year < 1990)
 eighties <- eighties[order(eighties$imdb_score, decreasing = TRUE),]
-nrow(eighties)
-stats[6,]<- round(summary(eighties$imdb_score), 2)
+
+stats[6,1:6] <- round(summary(eighties$imdb_score), 2)
+stats[6,7] <- nrow(eighties)
 stats
 ```
 
@@ -242,7 +250,7 @@ Speaking of sequels however, the worst films of the 80s were several ill-advised
 *Jaws: The Revenge* was the fourth and final sequel to the series, with only the original film involving Steven Spielberg, who of course directed the 2nd best rated film of this decade, *Raiders of the Lost Ark* as well as *Schindler's List* in the 90s.
 
 
-```{r, 1980-1989}
+```{r, 1980-1989, echo = FALSE}
 eighties_plot <- ggplot(eighties, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
@@ -260,7 +268,7 @@ eighties_plot
 
 # Conclusions
 
-```{r}
+```{r, echo = FALSE}
 movies_plot<- ggplot(movies, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
@@ -279,14 +287,21 @@ movies_plot
 stats
 ```
 
-From the looks of it, the 1980s was overall perhaps the best decade for films, followed by the 1990s. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.
+From the looks of it, the 1980s was overall perhaps the best decade for films, followed by the 1990s. The 80s had the highest quartiles and the highest average score. On the other hand, the 90s had the best film across not only the post 1980-era but of all modern film (*The Shawshank Redemption*), and the "best worst" film with *Police Academy: Mission to Moscow* with a 3.3 rating.
+
+For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.
 
 Several directors came out strong not only in individual decades, but across them. Christopher Nolan had as many as 4 between 2000 and 2016, with 3 in one decade, and 2 from his Dark Knight Trilogy. Robert Zemeckis and Stephen Spielberg each had one film per decade, and Peter Jackson's Lord of the Rings Trilogy took three of the top spots in the decade it was released.
 
-On the other hand, Jason Friedberg was possibly the most panned director by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s as voted by IMDB users.
+On the other hand, Jason Friedberg was possibly the most panned director by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s as voted by IMDB users. Having said that, his "___ Movie" spoof series tend to do well at the box office in spite of being panned by both critics and audiences.
 
 Several of the worst films were sequels to well-known and successful films including horror franchises like *Friday the 13th*, *Halloween*, comedy films like *The Mask*, or the classic that is *Jaws*. Also important to note is that several parody films, including those by Jason Friedberg and the Scary Movie franchise, appeared in the worst film lists. 
 
+## Outstanding Questions
+
+It would be interesting to see how IMDB user rating correlates with a film's gross, or how the number of faces on a poster (one of the metrics in the dataset) correlates with the film's rating. Genre may also be something worth scrutinizing (e.g. what genres were most popular in what decades). 
+
+Some important things to keep in mind when considering the conclusions of this study is that the sample size in the recent decades was much larger than in the earlier ones, so there was a lot more data to substantiate their ratings. i.e. A person is allowed to question whether or not the average ratings for the earlier decades are truly statistically significant, and this is something they might explore in their own analysis.
 
 ----
 Data found on [Kaggle.com](https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset) and drawn from the [Internet Movie Database](imdb.com)

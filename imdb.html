@@ -356,7 +356,7 @@ div.tocify {
 <hr />
 <p>This was a very simple visualization I did to test out some of the abilities of <code>ggplot2</code>, an <code>R</code> package with some more robust options that go beyond the base level visualization abilities of <code>R</code>.</p>
 <p>We seek to visualize movies over the past few decades to see how quality (or perceived quality at least) has changed over time. There is no actual analysis done on this data, save for the kind of intuitive deduction that can be made from observing the visualizations. Having said that, I would be interested in delving more deeply into these data with the skills in data mining that I’ve gained since having done this.</p>
-<p>Data was found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a>.</p>
+<p>Data was found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a>. The code to create the plots can be found in the accompanying GitHub <a href="https://github.com/jstevenr/imdb-ratings">repo</a> for this project, as <code>imdb.Rmd</code>.</p>
 <hr />
 <div id="data-pre-processing" class="section level1">
 <h1>Data pre-processing</h1>
@@ -378,26 +378,30 @@ all_movies &lt;-<span class="st"> </span>all_movies[<span class="kw">complete.ca
 <span class="co"># Remove any duplicate films</span>
 all_movies &lt;-<span class="st"> </span>all_movies[!<span class="kw">duplicated</span>(all_movies$movie_title),]
 
-stats &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">6</span>, 
+stats &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">7</span>, 
                 <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;1927-2016&quot;</span>, <span class="st">&quot;1980-2016&quot;</span>,<span class="st">&quot;2010-2016&quot;</span>, <span class="st">&quot;2000-2010&quot;</span>, <span class="st">&quot;1990-2000&quot;</span>,<span class="st">&quot;1980-1990&quot;</span>),
-                                <span class="kw">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;1Q&quot;</span>, <span class="st">&quot;Med&quot;</span>, <span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;3Q&quot;</span>, <span class="st">&quot;Max&quot;</span>)))
+                                <span class="kw">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;1Q&quot;</span>, <span class="st">&quot;Med&quot;</span>, <span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;3Q&quot;</span>, <span class="st">&quot;Max&quot;</span>, <span class="st">&quot;Size&quot;</span>)))
 
-stats[<span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(all_movies$imdb_score), <span class="dv">2</span>)
+<span class="co"># Adding summary statistics and size</span>
+stats[<span class="dv">1</span>,<span class="dv">1</span>:<span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(all_movies$imdb_score), <span class="dv">2</span>)
+stats[<span class="dv">1</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(all_movies)
+
 all_avg &lt;-<span class="st"> </span>stats[<span class="dv">1</span>,<span class="dv">4</span>]</code></pre></div>
 <p>The films range from scoring between 1.6 and 9.3 on a scale from 0 to 10.0m and the average score is about 6.62.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Keeping only relevant columns as well as only looking at movies from 1980s and beyond</span>
 movies &lt;-<span class="st"> </span><span class="kw">subset</span>(all_movies, title_year &gt;=<span class="st"> </span><span class="dv">1980</span>)
 
-stats[<span class="dv">2</span>,] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(movies$imdb_score), <span class="dv">2</span>)
+stats[<span class="dv">2</span>,<span class="dv">1</span>:<span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(movies$imdb_score), <span class="dv">2</span>)
+stats[<span class="dv">2</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(movies)
 modern_avg &lt;-<span class="st"> </span>stats[<span class="dv">2</span>,<span class="dv">4</span>]
 stats</code></pre></div>
-<pre><code>##           Min  1Q Med Mean  3Q Max
-## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3
-## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3
-## 2010-2016  NA  NA  NA   NA  NA  NA
-## 2000-2010  NA  NA  NA   NA  NA  NA
-## 1990-2000  NA  NA  NA   NA  NA  NA
-## 1980-1990  NA  NA  NA   NA  NA  NA</code></pre>
+<pre><code>##           Min  1Q Med Mean  3Q Max Size
+## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
+## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
+## 2010-2016  NA  NA  NA   NA  NA  NA   NA
+## 2000-2010  NA  NA  NA   NA  NA  NA   NA
+## 1990-2000  NA  NA  NA   NA  NA  NA   NA
+## 1980-1990  NA  NA  NA   NA  NA  NA   NA</code></pre>
 <p>In the process of dropping films before 1980, the average scores were scarcely affected. This is most likely because of the fact that neither IMDB nor the internet existed since the earliest days of film. Knowing this, rather than look at the average score across the entirety of film we’re only going to look at the average between 1980-2016, and compare these films with that metric.</p>
 <hr />
 </div>
@@ -407,17 +411,17 @@ stats</code></pre></div>
 <p>Let’s take a look at the best and worst films of the decade.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tens &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">2010</span>)
 tens &lt;-<span class="st"> </span>tens[<span class="kw">order</span>(tens$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]
-<span class="kw">nrow</span>(tens)</code></pre></div>
-<pre><code>## [1] 829</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stats[<span class="dv">3</span>,]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(tens$imdb_score), <span class="dv">2</span>)
+
+stats[<span class="dv">3</span>,<span class="dv">1</span>:<span class="dv">6</span>]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(tens$imdb_score), <span class="dv">2</span>)
+stats[<span class="dv">3</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(tens)
 stats</code></pre></div>
-<pre><code>##           Min  1Q Med Mean  3Q Max
-## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3
-## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3
-## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8
-## 2000-2010  NA  NA  NA   NA  NA  NA
-## 1990-2000  NA  NA  NA   NA  NA  NA
-## 1980-1990  NA  NA  NA   NA  NA  NA</code></pre>
+<pre><code>##           Min  1Q Med Mean  3Q Max Size
+## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
+## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
+## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8  829
+## 2000-2010  NA  NA  NA   NA  NA  NA   NA
+## 1990-2000  NA  NA  NA   NA  NA  NA   NA
+## 1980-1990  NA  NA  NA   NA  NA  NA   NA</code></pre>
 <p>Overall, the films from 2010-2016 are roughly similar in quality to those across all years and after 1980. The best film isn’t here though, although the worst film might be, judging by the mins and maxes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tens)</code></pre></div>
 <pre><code>##      imdb_score title_year            movie_title     director_name
@@ -434,7 +438,7 @@ stats</code></pre></div>
 ## 297  162804648
 ## 3932   2601847
 ## 4029  13092000</code></pre>
-<p>Note the fact that the three best films of this 6-year period (as voted by IMDB users) were all by Christopher Nolan. Also tied for third is my favorite director, Quentin Tarantino with <em>Django Unchained</em>.</p>
+<p>Note the fact that the three best films of this 6-year period (as voted by IMDB users) were all by Christopher Nolan. Also tied for third is my favorite director, Quentin Tarantino with <em>Django Unchained</em>. <em>Samsara</em>, a relatively unknown film, grossed a modest $2.6 million, a mere fraction of the other films on this list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(tens)</code></pre></div>
 <pre><code>##      imdb_score title_year                     movie_title   director_name
 ## 1969        4.0       2011                 Shark Night 3D   David R. Ellis
@@ -450,19 +454,8 @@ stats</code></pre></div>
 ## 515  74158157
 ## 2400 13998282
 ## 2835 73000942</code></pre>
-<p>On the other side of things, the worst film of this period was apparently Justin Bieber’s concert film, <em>Never Say Never</em>. Two parody films topped the list.</p>
+<p>On the other side of things, the worst film of this period was apparently Justin Bieber’s concert film, <em>Never Say Never</em>. Two parody films topped the list. This film, as well as <em>Jack and Jill</em>, starring Adam Sandler, grossed well over $70 million, most likely owing to their leads, but nevertheless were universally panned by audiences.</p>
 <p>We can also take a look at the averages across the individual years as well as each decade.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tens_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tens, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">2010</span>, <span class="dv">2016</span>, <span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;2010s in film as rated by IMDB users&quot;</span>) +
-<span class="st">  </span><span class="kw">theme_bw</span>() +<span class="st"> </span><span class="kw">stat_boxplot</span>(<span class="dt">geom =</span> <span class="st">&#39;errorbar&#39;</span>) +<span class="st"> </span><span class="kw">geom_jitter</span>() +
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> modern_avg, <span class="dt">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="dt">show.legend =</span> <span class="ot">TRUE</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)
-tens_plot</code></pre></div>
 <p><img src="imdb_files/figure-html/2010-present%20day-1.png" width="672" /></p>
 <p>Modern films seem to be pretty mediocre across the board (between 6-7), but if nothing else, each year seems to be consistent with the last. The sole high outlier of this decade was the 2010 film <em>Inception</em>, directed by Christopher Nolan.</p>
 <hr />
@@ -471,17 +464,17 @@ tens_plot</code></pre></div>
 <h1>The 00s</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zeroes &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">2000</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">2010</span>)
 zeroes &lt;-<span class="st"> </span>zeroes[<span class="kw">order</span>(zeroes$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]
-<span class="kw">nrow</span>(zeroes)</code></pre></div>
-<pre><code>## [1] 1280</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stats[<span class="dv">4</span>,]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(zeroes$imdb_score), <span class="dv">2</span>)
+
+stats[<span class="dv">4</span>,<span class="dv">1</span>:<span class="dv">6</span>]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(zeroes$imdb_score), <span class="dv">2</span>)
+stats[<span class="dv">4</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(zeroes)
 stats</code></pre></div>
-<pre><code>##           Min  1Q Med Mean  3Q Max
-## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3
-## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3
-## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8
-## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0
-## 1990-2000  NA  NA  NA   NA  NA  NA
-## 1980-1990  NA  NA  NA   NA  NA  NA</code></pre>
+<pre><code>##           Min  1Q Med Mean  3Q Max Size
+## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
+## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
+## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8  829
+## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0 1280
+## 1990-2000  NA  NA  NA   NA  NA  NA   NA
+## 1980-1990  NA  NA  NA   NA  NA  NA   NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(zeroes)</code></pre></div>
 <pre><code>##      imdb_score title_year
 ## 67          9.0       2008
@@ -521,16 +514,6 @@ stats</code></pre></div>
 ## 2269 14174654
 ## 2296  9109322</code></pre>
 <p>Notably, two of the worst films of this decade were by Jason Friedberg, namely the parody films <em>Epic Movie</em> and <em>Disaster Movie</em>. He is also responsible for <em>Vampires Suck</em>, one of the worst rated films of the 2010s.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zeroes_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(zeroes, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">1</span>)) +
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2009</span>, <span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;2000s in film as rated by IMDB users&quot;</span>) +
-<span class="st">  </span><span class="kw">theme_bw</span>() +<span class="st"> </span><span class="kw">stat_boxplot</span>(<span class="dt">geom =</span> <span class="st">&#39;errorbar&#39;</span>) +<span class="st"> </span><span class="kw">geom_jitter</span>() +
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> modern_avg, <span class="dt">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="dt">show.legend =</span> <span class="ot">TRUE</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)
-zeroes_plot</code></pre></div>
 <p><img src="imdb_files/figure-html/2000-2009-1.png" width="672" /></p>
 <hr />
 </div>
@@ -538,17 +521,17 @@ zeroes_plot</code></pre></div>
 <h1>The 90s</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nineties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">1990</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">2000</span>)
 nineties &lt;-<span class="st"> </span>nineties[<span class="kw">order</span>(nineties$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]
-<span class="kw">nrow</span>(nineties)</code></pre></div>
-<pre><code>## [1] 485</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stats[<span class="dv">5</span>,]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(nineties$imdb_score), <span class="dv">2</span>)
+
+stats[<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">6</span>]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(nineties$imdb_score), <span class="dv">2</span>)
+stats[<span class="dv">5</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(nineties)
 stats</code></pre></div>
-<pre><code>##           Min  1Q Med Mean  3Q Max
-## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3
-## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3
-## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8
-## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0
-## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3
-## 1980-1990  NA  NA  NA   NA  NA  NA</code></pre>
+<pre><code>##           Min  1Q Med Mean  3Q Max Size
+## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
+## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
+## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8  829
+## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0 1280
+## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3  485
+## 1980-1990  NA  NA  NA   NA  NA  NA   NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nineties)</code></pre></div>
 <pre><code>##      imdb_score title_year               movie_title     director_name
 ## 1938        9.3       1994 The Shawshank Redemption     Frank Darabont
@@ -581,17 +564,6 @@ stats</code></pre></div>
 ## 1935         Bob Spiers  29247405
 ## 3231        Alan Metter    126247</code></pre>
 <p>Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: <em>Street Fighter</em>, notably starring Jean Claude van Damme and Kylie Minogue, and <em>Mortal Kombat: Annihilation</em>. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan’s reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the ‘punniest’ villain of all time.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nineties_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(nineties, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1990</span>, <span class="dv">1999</span>, <span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;1990s in film as rated by IMDB users&quot;</span>) +
-<span class="st">  </span><span class="kw">theme_bw</span>() +<span class="st"> </span><span class="kw">stat_boxplot</span>(<span class="dt">geom =</span> <span class="st">&#39;errorbar&#39;</span>) +<span class="st"> </span><span class="kw">geom_jitter</span>() +
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> modern_avg, <span class="dt">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="dt">show.legend =</span> <span class="ot">TRUE</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)
-nineties_plot</code></pre></div>
 <p><img src="imdb_files/figure-html/1990-1999-1.png" width="672" /></p>
 <hr />
 </div>
@@ -599,17 +571,17 @@ nineties_plot</code></pre></div>
 <h1>The 80s</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eighties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year &gt;=<span class="st"> </span><span class="dv">1980</span> &amp;<span class="st"> </span>title_year &lt;<span class="st"> </span><span class="dv">1990</span>)
 eighties &lt;-<span class="st"> </span>eighties[<span class="kw">order</span>(eighties$imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]
-<span class="kw">nrow</span>(eighties)</code></pre></div>
-<pre><code>## [1] 153</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stats[<span class="dv">6</span>,]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(eighties$imdb_score), <span class="dv">2</span>)
+
+stats[<span class="dv">6</span>,<span class="dv">1</span>:<span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(eighties$imdb_score), <span class="dv">2</span>)
+stats[<span class="dv">6</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(eighties)
 stats</code></pre></div>
-<pre><code>##           Min  1Q Med Mean  3Q Max
-## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3
-## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3
-## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8
-## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0
-## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3
-## 1980-1990 2.8 6.5 7.2 6.97 7.7 8.8</code></pre>
+<pre><code>##           Min  1Q Med Mean  3Q Max Size
+## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
+## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
+## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8  829
+## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0 1280
+## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3  485
+## 1980-1990 2.8 6.5 7.2 6.97 7.7 8.8  153</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(eighties)</code></pre></div>
 <pre><code>##      imdb_score title_year                                     movie_title
 ## 2052        8.8       1980 Star Wars: Episode V - The Empire Strikes Back 
@@ -650,49 +622,32 @@ stats</code></pre></div>
 ## 2067 20763013</code></pre>
 <p>Speaking of sequels however, the worst films of the 80s were several ill-advised sequels to well-known classics, many of which were done without the involvement of original directors or cast members. Of the films here, only <em>Howard the Duck</em> is not a sequel. Notably also is the inclusion of the 5th and 8th <em>Friday the 13th</em> films. <em>Halloween III</em> is the also only film in the series that doesn’t not feature the antagonist Michael Myers.</p>
 <p><em>Jaws: The Revenge</em> was the fourth and final sequel to the series, with only the original film involving Steven Spielberg, who of course directed the 2nd best rated film of this decade, <em>Raiders of the Lost Ark</em> as well as <em>Schindler’s List</em> in the 90s.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eighties_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(eighties, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1980</span>, <span class="dv">1989</span>, <span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;1980s in film as rated by IMDB users&quot;</span>) +
-<span class="st">  </span><span class="kw">theme_bw</span>() +<span class="st"> </span><span class="kw">stat_boxplot</span>(<span class="dt">geom =</span> <span class="st">&#39;errorbar&#39;</span>) +<span class="st"> </span><span class="kw">geom_jitter</span>() +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> modern_avg, <span class="dt">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="dt">show.legend =</span> <span class="ot">TRUE</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)
-eighties_plot</code></pre></div>
 <p><img src="imdb_files/figure-html/1980-1989-1.png" width="672" /></p>
 <hr />
 </div>
 <div id="conclusions" class="section level1">
 <h1>Conclusions</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">movies_plot&lt;-<span class="st"> </span><span class="kw">ggplot</span>(movies, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(title_year), <span class="dt">y =</span> imdb_score)) +
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">1</span>)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="dt">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1980</span>, <span class="dv">2016</span>, <span class="dv">2</span>), <span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;IMDB Ratings Over the Decades&quot;</span>) +
-<span class="st">  </span><span class="kw">theme_bw</span>() +<span class="st"> </span><span class="kw">stat_boxplot</span>(<span class="dt">geom =</span> <span class="st">&#39;errorbar&#39;</span>) +
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> modern_avg), <span class="dt">colour =</span> <span class="st">&quot;#D55E00&quot;</span>) +
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> modern_avg, <span class="dt">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="dt">show.legend =</span> <span class="ot">TRUE</span>) +
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)
-movies_plot</code></pre></div>
 <p><img src="imdb_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stats</code></pre></div>
-<pre><code>##           Min  1Q Med Mean  3Q Max
-## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3
-## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3
-## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8
-## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0
-## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3
-## 1980-1990 2.8 6.5 7.2 6.97 7.7 8.8</code></pre>
-<p>From the looks of it, the 1980s was overall perhaps the best decade for films, followed by the 1990s. For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.</p>
+<pre><code>##           Min  1Q Med Mean  3Q Max Size
+## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
+## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
+## 2010-2016 1.6 6.1 6.6 6.58 7.2 8.8  829
+## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0 1280
+## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3  485
+## 1980-1990 2.8 6.5 7.2 6.97 7.7 8.8  153</code></pre>
+<p>From the looks of it, the 1980s was overall perhaps the best decade for films, followed by the 1990s. The 80s had the highest quartiles and the highest average score. On the other hand, the 90s had the best film across not only the post 1980-era but of all modern film (<em>The Shawshank Redemption</em>), and the “best worst” film with <em>Police Academy: Mission to Moscow</em> with a 3.3 rating.</p>
+<p>For most of the decade, films on average rated around ~7 or ~8, with few if any lower outliers. Conversely, the 2000s have a number of uncharacteristically bad films which drag down the averages per year quite a bit. One wonders how the 2000s would be seen in terms of film history without these.</p>
 <p>Several directors came out strong not only in individual decades, but across them. Christopher Nolan had as many as 4 between 2000 and 2016, with 3 in one decade, and 2 from his Dark Knight Trilogy. Robert Zemeckis and Stephen Spielberg each had one film per decade, and Peter Jackson’s Lord of the Rings Trilogy took three of the top spots in the decade it was released.</p>
-<p>On the other hand, Jason Friedberg was possibly the most panned director by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s as voted by IMDB users.</p>
+<p>On the other hand, Jason Friedberg was possibly the most panned director by audiences, given that he released two of the worst films of the 2000s as well as one in the 2010s as voted by IMDB users. Having said that, his “___ Movie” spoof series tend to do well at the box office in spite of being panned by both critics and audiences.</p>
 <p>Several of the worst films were sequels to well-known and successful films including horror franchises like <em>Friday the 13th</em>, <em>Halloween</em>, comedy films like <em>The Mask</em>, or the classic that is <em>Jaws</em>. Also important to note is that several parody films, including those by Jason Friedberg and the Scary Movie franchise, appeared in the worst film lists.</p>
+<div id="outstanding-questions" class="section level2">
+<h2>Outstanding Questions</h2>
+<p>It would be interesting to see how IMDB user rating correlates with a film’s gross, or how the number of faces on a poster (one of the metrics in the dataset) correlates with the film’s rating. Genre may also be something worth scrutinizing (e.g. what genres were most popular in what decades).</p>
+<p>Some important things to keep in mind when considering the conclusions of this study is that the sample size in the recent decades was much larger than in the earlier ones, so there was a lot more data to substantiate their ratings. i.e. A person is allowed to question whether or not the average ratings for the earlier decades are truly statistically significant, and this is something they might explore in their own analysis.</p>
 <hr />
 <p>Data found on <a href="https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset">Kaggle.com</a> and drawn from the <a href="imdb.com">Internet Movie Database</a></p>
+</div>
 </div>
 
 
