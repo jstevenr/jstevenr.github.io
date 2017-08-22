@@ -76,8 +76,12 @@ If I am not learning a new programming skill in my free time (currently focused 
     + Spanish
     + Portuguese
 
-## Past Work Experience
+## Work Experience
 
+* **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Present)
+    + Works on a team of interns to curate the [Arctic Data Center](https://arcticdata.io/)
+    + Cleans data in R to prepare for publication
+    + Creates metadata in XML and JSON for the incoming data
 * **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (May 2016 - Sept 2016)
     + Prepared and filed check requests, reimbursement forms, and other documentation
     + Used QuickBooks to memorize reports, write checks, and track spending
@@ -92,4 +96,4 @@ If I am not learning a new programming skill in my free time (currently focused 
 * **Student Mentor**, Isla Vista Elementary (Sept 2016 - June 2017)
     + Acted as a mentor and role model for a 6th grade student for a year
 * **Panelist**, UCSB Mental Health Conference, 2016 & 2017
-    + Took part on a panel of students who shared personal experiences related to mental illness and advised on how to cope and intervene
+    + Took part on a panel to share personal experiences related to mental illness and advise on how to cope and intervene
