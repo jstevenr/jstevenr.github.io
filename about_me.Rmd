@@ -17,6 +17,17 @@ navbar:
           href: wine-classification.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html
+    - text: "Contact Me"
+      menu:
+        - text: "jsteven.raquel8@gmail.com"
+        - text: Twitter
+          href: https://twitter.com/jsteven_r
+        - text: GitHub
+          href: https://github.com/jstevenr
+        - text: LinkedIn
+          href: https://www.linkedin.com/in/jstevenr/
+        - text: Medium
+          href: https://medium.com/@jstevenr
 ---
 
 ----
@@ -77,7 +88,7 @@ If I am not learning a new programming skill in my free time (currently focused 
 * **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Present)
     + Runs a weekly college radio music show titled [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-1-kcsb-91-9-fm-in-santa-barbara)
     + Operates a mixing board and the [DAD](http://www.enco.com/products/dad-radio-automation-presenter.html) Pro software
-* **Student Mentor**, [Isla Vista Elementary](http://37.60.239.169/~goleta02/islavista/) (Sept 2016 - June 2017)
+* **Student Mentor**, Isla Vista Elementary (Sept 2016 - June 2017)
     + Acted as a mentor and role model for a 6th grade student for a year
 * **Panelist**, UCSB Mental Health Conference, 2016 & 2017
     + Took part on a panel of students who shared personal experiences related to mental illness and advised on how to cope and intervene

@@ -17,6 +17,17 @@ navbar:
           href: wine-classification.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html
+    - text: "Contact Me"
+      menu:
+        - text: "jsteven.raquel8@gmail.com"
+        - text: Twitter
+          href: https://twitter.com/jsteven_r
+        - text: GitHub
+          href: https://github.com/jstevenr
+        - text: LinkedIn
+          href: https://www.linkedin.com/in/jstevenr/
+        - text: Medium
+          href: https://medium.com/@jstevenr
 ---
 
 <center><img src="images/banner-beach.png" width="645px"></center>
@@ -27,9 +38,9 @@ navbar:
 
 Thanks for visiting my personal website. I'm J Steven Raquel, a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. I have been programming in R for about 2 years now and am steadily learning new skills in both R and in other languages like Python and SQL. 
 
-Find out more about [who I am and how to reach me](about_me.html). 
+Find out more about [who I am and what I've done](about_me.html).
 
-If you know anything about data science, statistics, machine learning, AI, or computer science, *get in touch with me!* I have a lot to learn so I'm eager to get in touch with folks with similar interests.
+If you know anything about data science, statistics, machine learning, AI, or computer science, feel free to get in touch with me. I have a lot to learn so I'm eager to touch base with folks with similar interests. 
 
 ----
 
