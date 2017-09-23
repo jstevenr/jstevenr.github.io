@@ -35,9 +35,7 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist.  
-
-I have been employed since September 2016 at the [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (NCEAS), as a member of a team dedicated to curating the data and metadata that comes into the [Arctic Data Center](https://arcticdata.io/), a repository designed to host ecological data and funded by the [National Science Foundation](https://www.nsf.gov/) (NSF).
+My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist.
 
 If I am not learning a new programming skill in my free time (currently focused on learning both Python and SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM called [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-1-kcsb-91-9-fm-in-santa-barbara).
 
@@ -78,10 +76,11 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 ## Work Experience
 
-* **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Present)
-    + Works on a team of interns to curate the [Arctic Data Center](https://arcticdata.io/)
-    + Cleans data in R to prepare for publication
-    + Creates metadata in XML and JSON for the incoming data
+* **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Sept 2017)
+    + Worked on a team of interns to curate the [Arctic Data Center](https://arcticdata.io/)
+    + Cleaned data in R to prepare for publication
+    + Created metadata in XML and JSON for the incoming data
+    + Contributed original functions for use in maintaining the site
 * **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (May 2016 - Sept 2016)
     + Prepared and filed check requests, reimbursement forms, and other documentation
     + Used QuickBooks to memorize reports, write checks, and track spending
