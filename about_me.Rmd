@@ -19,7 +19,7 @@ navbar:
           href: imdb.html
     - text: "Contact Me"
       menu:
-        - text: "Email"
+        - text: "jsteven.raquel8@gmail.com"
           href: mailto:jsteven.raquel8@gmail.com
         - text: "Twitter"
           href: https://twitter.com/jsteven_r
