@@ -37,7 +37,7 @@ navbar:
 
 My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist.
 
-If I am not learning a new programming skill in my free time (currently focused on learning both Python and SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM called [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-1-kcsb-91-9-fm-in-santa-barbara).
+If I am not learning a new programming skill in my free time (currently focused on learning both Python and SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM called [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-kcsb-91-9-fm-in-santa-barbara).
 
 * Email: jsteven.raquel8@gmail.com
 * Twitter: [\@jsteven_r](https://www.twitter.com/jsteven_r)
@@ -90,7 +90,7 @@ If I am not learning a new programming skill in my free time (currently focused 
 ## Volunteer Experience
 
 * **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Present)
-    + Runs a weekly college radio music show titled [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-1-kcsb-91-9-fm-in-santa-barbara)
+    + Runs a weekly college radio music show titled [The Company of Lazarus](http://www.radiofreeamerica.com/show/the-company-of-lazarus-kcsb-91-9-fm-in-santa-barbara)
     + Operates a mixing board and the [DAD](http://www.enco.com/products/dad-radio-automation-presenter.html) Pro software
 * **Student Mentor**, Isla Vista Elementary (Sept 2016 - June 2017)
     + Acted as a mentor and role model for a 6th grade student for a year
