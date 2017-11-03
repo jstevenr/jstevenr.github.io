@@ -76,6 +76,10 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 ## Work Experience
 
+* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - Present)
+    + Writes, edits, and records pre-recorded audio content to air on FM radio including: public service announcements, event promotions
+    + Trains others in writing, editing and recording pre-recorded audio content
+    + Maintains an extensive library of pre-recorded content
 * **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Sept 2017)
     + Worked on a team of interns to curate the [Arctic Data Center](https://arcticdata.io/)
     + Cleaned data in R to prepare for publication
