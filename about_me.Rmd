@@ -15,8 +15,8 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Visualizing IMDB ratings"
-          href: imdb.html
+        - text: "Predicting Bitcoin Value"
+          href: bitcoin.html          
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -58,6 +58,8 @@ If I am not learning a new programming skill in my free time (currently focused 
     + PSTAT 131 -  Data Mining
     + PSTAT 126 - Regression Analysis
     + PSTAT 160A - Stochastic Processes
+    + PSTAT 105 - Non Parametric Methods
+    + PSTAT 174 - Time Series
 
 ## Skills
 

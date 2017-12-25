@@ -17,8 +17,8 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Visualizing IMDB ratings"
-          href: imdb.html
+        - text: "Predicting Bitcoin Value"
+          href: bitcoin.html
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -65,7 +65,7 @@ In this report, we find the accuracy, error rates, and area under the ROC curve 
 
 ```{r reading data}
 set.seed(10)
-white <- read.csv("~/Documents/git-workspace/wine-classification/winequality-white.csv",
+white <- read.csv("~/Workspace/wine-quality/winequality-white.csv",
                   sep = ";")
 head(white)
 # sapply(white, function(x) sum(is.na(x)))

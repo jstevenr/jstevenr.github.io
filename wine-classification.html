@@ -389,8 +389,8 @@ div.tocify {
 <div id="main-body" class="section level1">
 <h1>Main Body</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)
-white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/git-workspace/wine-classification/winequality-white.csv&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>)
+white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Workspace/wine-quality/winequality-white.csv&quot;</span>,
+                  <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>)
 <span class="kw">head</span>(white)</code></pre></div>
 <pre><code>##   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
 ## 1           7.0             0.27        0.36           20.7     0.045
@@ -416,13 +416,13 @@ white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># sapply(white, function(x) sum(is.na(x)))</span></code></pre></div>
 <p>A preliminary look at the dataset reveals that there are no missing values.</p>
 <p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">white.cor &lt;-<span class="st"> </span><span class="kw">cor</span>(white[, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">white.cor &lt;-<span class="st"> </span><span class="kw">cor</span>(white[,<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>])
 <span class="co"># white.cor</span></code></pre></div>
 <p>Taking a look at the correlation coefficients <span class="math inline">\(r\)</span> for the predictor variables, we see that <code>density</code> is strongly correlated with <code>residual.sugar</code> (<span class="math inline">\(r = 0.84\)</span>) and <code>alcohol</code> (<span class="math inline">\(r = -0.78\)</span>), and moderately correlated with <code>total.sulfur.dioxide</code> (<span class="math inline">\(r = 0.53\)</span>). <code>free.sulfur.dioxide</code> and <code>total.sulfur.dioxide</code> are also moderately correlated with each other (<span class="math inline">\(r = 0.62\)</span>) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide.</p>
 <p>Aside from that correlations are all very low, including (and especially) <code>quality</code>, the response variable, with the predictors.</p>
 <p>So, we should actually remove the variables <code>residual.sugar</code> and <code>density</code>, as well as <code>total.sulfur.dioxide</code> because if its direct relationship with <code>free.sulfur.dioxide</code>, in order to address problems with multicollinearity. We’re going to withhold removing <code>alcohol</code>, to see the if the initial effect of removing just these three correlated variables is enough to address the issue.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># removing three predictors</span>
-white2 &lt;-<span class="st"> </span><span class="kw">subset</span>(white, <span class="dt">select =</span> <span class="op">-</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>))
+white2 &lt;-<span class="st"> </span><span class="kw">subset</span>(white, <span class="dt">select =</span> <span class="op">-</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">8</span>))
 <span class="co"># cor(white2[,1:9])</span></code></pre></div>
 <p>From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue.</p>
 <p>From here on out, we’re also going to want to convert the <code>quality</code> response variable into a binary factor so that we can use the predictors to classify the observations. We’re going to do this by labeling all of the observations that have received an above average (5 out of 10) as “good”, and the rest as “bad”, “bad” really meaning “not good”. This factor of <code>good</code> and <code>bad</code> goes under a new column titled <code>label</code>.</p>
@@ -430,12 +430,14 @@ white2 &lt;-<span class="st"> </span><span class="kw">subset</span>(white, <span
 <p>It’s important to note that all of these numeric predictor variables (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>, <code>pH</code>, <code>sulphates</code>, <code>alcohol</code>) are not all scaled the same. As such, it’s appropriate to scale them before running any analyses.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scaling the 8 numeric attributes</span>
 white_sc &lt;-<span class="st"> </span>white2
-white_sc[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)] &lt;-<span class="st"> </span><span class="kw">scale</span>(white_sc[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)])
+white_sc[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)] &lt;-<span class="st"> </span><span class="kw">scale</span>(white_sc[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)])
 
 <span class="co"># converting quality into a binary factor</span>
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(white_sc)) {
-    <span class="cf">if</span> (white_sc<span class="op">$</span>quality[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>) 
-        white_sc<span class="op">$</span>label[i] &lt;-<span class="st"> </span><span class="dv">1</span> <span class="cf">else</span> white_sc<span class="op">$</span>label[i] &lt;-<span class="st"> </span><span class="dv">0</span>
+  <span class="cf">if</span> (white_sc<span class="op">$</span>quality[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)
+    white_sc<span class="op">$</span>label[i] &lt;-<span class="st"> </span><span class="dv">1</span>
+  <span class="cf">else</span>
+    white_sc<span class="op">$</span>label[i] &lt;-<span class="st"> </span><span class="dv">0</span>
 }
 white_sc<span class="op">$</span>label &lt;-<span class="st"> </span><span class="kw">factor</span>(white_sc<span class="op">$</span>label, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>))
 <span class="co"># removing the quality variable</span>
@@ -445,8 +447,7 @@ white_sc<span class="op">$</span>quality &lt;-<span class="st"> </span><span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># initializing a matrix for records</span>
 records &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)
 <span class="kw">colnames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Accuracy Rate&quot;</span>, <span class="st">&quot;Error Rate&quot;</span>, <span class="st">&quot;AUC&quot;</span>)
-<span class="kw">rownames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tree&quot;</span>, <span class="st">&quot;pruned.tree&quot;</span>, <span class="st">&quot;k=10 kNN&quot;</span>, <span class="st">&quot;k=35 kNN&quot;</span>, <span class="st">&quot;full.randomForest&quot;</span>, 
-    <span class="st">&quot;small.randomForest&quot;</span>)
+<span class="kw">rownames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tree&quot;</span>, <span class="st">&quot;pruned.tree&quot;</span>, <span class="st">&quot;k=10 kNN&quot;</span>, <span class="st">&quot;k=35 kNN&quot;</span>, <span class="st">&quot;full.randomForest&quot;</span>, <span class="st">&quot;small.randomForest&quot;</span>)
 records</code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate AUC
 ## tree                          NA         NA  NA
@@ -456,17 +457,23 @@ records</code></pre></div>
 ## full.randomForest             NA         NA  NA
 ## small.randomForest            NA         NA  NA</code></pre>
 <p>In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set.seed(10) is loaded using a subset of 1000 obs for the training set</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set.seed(10) is loaded</span>
+<span class="co"># using a subset of 1000 obs for the training set</span>
 test_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(white_sc), <span class="dv">1000</span>)
-test &lt;-<span class="st"> </span>white_sc[test_indices, ]
-train &lt;-<span class="st"> </span>white_sc[<span class="op">-</span>test_indices, ]</code></pre></div>
+test &lt;-<span class="st"> </span>white_sc[test_indices,]
+train &lt;-<span class="st"> </span>white_sc[<span class="op">-</span>test_indices,]</code></pre></div>
 <div id="decision-tree" class="section level2">
 <h2>Decision Tree</h2>
 <p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data.</p>
 <p>Of course, we’re going to use <code>label</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(tree) is loaded predicting the label (good vs bad)</span>
-tree &lt;-<span class="st"> </span><span class="kw">tree</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>, <span class="dt">control =</span> <span class="kw">tree.control</span>(<span class="dt">nobs =</span> <span class="kw">nrow</span>(train), 
-    <span class="dt">mincut =</span> <span class="dv">5</span>, <span class="dt">minsize =</span> <span class="dv">10</span>, <span class="dt">mindev =</span> <span class="fl">0.003</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(tree) is loaded</span>
+<span class="co"># predicting the label (good vs bad)</span>
+tree &lt;-<span class="st"> </span><span class="kw">tree</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, 
+             <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,
+             <span class="dt">control =</span> <span class="kw">tree.control</span>(<span class="dt">nobs =</span> <span class="kw">nrow</span>(train),
+                                          <span class="dt">mincut =</span> <span class="dv">5</span>,
+                                          <span class="dt">minsize =</span> <span class="dv">10</span>,
+                                          <span class="dt">mindev =</span> .<span class="dv">003</span>))
 <span class="kw">summary</span>(tree)</code></pre></div>
 <pre><code>## 
 ## Classification tree:
@@ -487,7 +494,7 @@ tree &lt;-<span class="st"> </span><span class="kw">tree</span>(<span class="dt"
 <p>We can build a confusion matrix after using the data to predict on the test set, and then find the accuracy rate and the error rate.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a function that returns the accuracy of a confusion matrix</span>
 class_acc &lt;-<span class="st"> </span><span class="cf">function</span>(conf) {
-    <span class="kw">sum</span>(<span class="kw">diag</span>(conf))<span class="op">/</span><span class="kw">sum</span>(conf)
+  <span class="kw">sum</span>(<span class="kw">diag</span>(conf)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(conf)
 }
 
 tree_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(tree, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)
@@ -503,22 +510,24 @@ tree_conf</code></pre></div>
 tree_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(tree_conf)
 tree_acc</code></pre></div>
 <pre><code>## [1] 0.748</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># misclassification error</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># misclassification error </span>
 tree_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>tree_acc
 tree_err</code></pre></div>
 <pre><code>## [1] 0.252</code></pre>
 <p>With an accuracy rate of <code>0.748</code>, this decision tree model is not superb, but will still classify correctly about 3 out of 4 times.</p>
 <p>As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(ROCR) is loaded getting matrix of predicted class probabilities</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(ROCR) is loaded</span>
+<span class="co"># getting matrix of predicted class probabilities</span>
 all_tree_probs &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(tree, test, <span class="dt">type =</span> <span class="st">&quot;vector&quot;</span>))
-tree_probs &lt;-<span class="st"> </span>all_tree_probs[, <span class="dv">2</span>]
+tree_probs &lt;-<span class="st"> </span>all_tree_probs[,<span class="dv">2</span>]
 
 tree_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(tree_probs, test<span class="op">$</span>label)
 tree_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(tree_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)
 
 <span class="co"># Plotting the ROC curve for the decision tree</span>
-<span class="kw">plot</span>(tree_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;ROC Curve for tree (before pruning)&quot;</span>)
-<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<span class="kw">plot</span>(tree_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for tree (before pruning)&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20tree-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Area under the curve</span>
 tree_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)
@@ -543,8 +552,9 @@ records</code></pre></div>
 <p>The idea of cross-validation is that it will sample multiple times from the training set, with different separations. Ultimately, this creates a more robust model i.e. the tree will not be overfit.</p>
 <p>Cross validation will help us find the optimal size for the tree (in terms of number of nodes). We can plot the size against misclassification error to visualize this as well.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)
-<span class="co"># 10-fold CV (k = 10) library(tree) is loaded</span>
-cv &lt;-<span class="st"> </span><span class="kw">cv.tree</span>(tree, <span class="dt">FUN =</span> prune.misclass, <span class="dt">K =</span> <span class="dv">10</span>)
+<span class="co"># 10-fold CV (k = 10)</span>
+<span class="co"># library(tree) is loaded</span>
+cv &lt;-<span class="st"> </span><span class="kw">cv.tree</span>(tree, <span class="dt">FUN=</span>prune.misclass, <span class="dt">K=</span><span class="dv">10</span>)
 cv</code></pre></div>
 <pre><code>## $size
 ## [1] 16  9  7  5  4  3  1
@@ -560,18 +570,21 @@ cv</code></pre></div>
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;prune&quot;         &quot;tree.sequence&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Best size</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Best size </span>
 best.cv &lt;-<span class="st"> </span>cv<span class="op">$</span>size[<span class="kw">which.min</span>(cv<span class="op">$</span>dev)]
 
 <span class="co"># plotting misclass error as a function of tree size (k)</span>
-<span class="kw">plot</span>(cv<span class="op">$</span>size, cv<span class="op">$</span>dev, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of leaves, &#39;best&#39;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Misclassification Error&quot;</span>, 
-    <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Optimal Tree Size&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">v =</span> best.cv, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<span class="kw">plot</span>(cv<span class="op">$</span>size , cv<span class="op">$</span>dev, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Number of leaves, </span><span class="ch">\&#39;</span><span class="st">best</span><span class="ch">\&#39;</span><span class="st">&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Misclassification Error&quot;</span>,
+     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Optimal Tree Size&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span>best.cv, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/cross%20validation%20of%20tree-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best.cv</code></pre></div>
 <pre><code>## [1] 7</code></pre>
 <p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree.pruned &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree, <span class="dt">best =</span> best.cv, <span class="dt">method =</span> <span class="st">&quot;misclass&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree.pruned &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree, <span class="dt">best =</span> best.cv, 
+                          <span class="dt">method =</span> <span class="st">&quot;misclass&quot;</span>)
 <span class="kw">summary</span>(tree.pruned)</code></pre></div>
 <pre><code>## 
 ## Classification tree:
@@ -603,16 +616,18 @@ pruned_err</code></pre></div>
 <pre><code>## [1] 0.252</code></pre>
 <p>We see that pruning the tree didn’t actually really improve the accuracy rate of the model at all, although it did condense the number of relevant variables. Initially, seeing that accuracy did not improve might give the impression that pruning was not meaningful, but to the contrary, the fact that we were able to prune the tree without losing any accuracy shows that the sole 3 variables we have remaining (<code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>) are just as good as classifying when using a decision tree as when using all 8 predictors.</p>
 <p>The original model being rather complex with as many as 6 predictors runs the risk of over-fitting, which is to say that the data follows the training data too closely and cannot be well generalized to new data. This is why we are inclined to favor a simpler model such as that we found after pruning with cross-validation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ROC Curve with tree object getting matrix of predicted class probabilities</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ROC Curve with tree object</span>
+<span class="co"># getting matrix of predicted class probabilities</span>
 all_pruned_probs &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(tree.pruned, test, <span class="dt">type =</span> <span class="st">&quot;vector&quot;</span>))
-pruned_probs &lt;-<span class="st"> </span>all_pruned_probs[, <span class="dv">2</span>]
+pruned_probs &lt;-<span class="st"> </span>all_pruned_probs[,<span class="dv">2</span>]
 
 pruned_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(pruned_probs, test<span class="op">$</span>label)
 pruned_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(pruned_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)
 
 <span class="co"># Plotting the ROC curve for the rpart decision tree</span>
-<span class="kw">plot</span>(pruned_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;ROC Curve for Pruned tree&quot;</span>)
-<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<span class="kw">plot</span>(pruned_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for Pruned tree&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20pruned%20tree%20and%20AUC-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pruned_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(pruned_roc_pred, <span class="st">&quot;auc&quot;</span>)
 pruned_AUC &lt;-<span class="st"> </span>pruned_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]
@@ -637,9 +652,12 @@ records</code></pre></div>
 <p>Distance is measured in different ways, but by default the <code>knn()</code> function utilized Euclidean distance.</p>
 <p>This is rather problematic because when calculating distance it’s assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes’ relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what’s more we scaled the remaining numeric predictors, which goes in a small way to addressing this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)
-<span class="co"># library(class) is loaded using 20 nearest neighbors</span>
-knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">test =</span> test[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">cl =</span> train<span class="op">$</span>label, <span class="dt">k =</span> <span class="dv">10</span>, 
-    <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<span class="co"># library(class) is loaded</span>
+<span class="co"># using 20 nearest neighbors</span>
+knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], 
+                <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], 
+                <span class="dt">cl =</span> train<span class="op">$</span>label, 
+                <span class="dt">k =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
 
 <span class="co"># confusion matrix</span>
 knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> knn_pred, <span class="dt">true =</span> test<span class="op">$</span>label)
@@ -657,15 +675,18 @@ knn_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op"
 knn_err</code></pre></div>
 <pre><code>## [1] 0.235</code></pre>
 <p>So, using 10 nearest neighbors was just a random estimate, and it ended up with another mediocre accuracy rate (<span class="math inline">\(0.765\)</span>) but we can look at the area under the ROC curve (AUC) and look at the strength of the test relative to the methods we have tried so far.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the ROC curve for knn library(dplyr) is loaded</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the ROC curve for knn</span>
+<span class="co"># library(dplyr) is loaded</span>
 knn_prob &lt;-<span class="st"> </span><span class="kw">attr</span>(knn_pred, <span class="st">&quot;prob&quot;</span>)
-knn_prob &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">ifelse</span>(knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>knn_prob, knn_prob) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+knn_prob &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">ifelse</span>(knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span><span class="op">-</span>knn_prob, knn_prob) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
 knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> knn_prob, <span class="dt">labels =</span> test<span class="op">$</span>label)
-knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
+knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(knn_roc_pred, 
+                            <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
 
 <span class="co"># Plotting the KNN ROC curve</span>
-<span class="kw">plot</span>(knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 10&quot;</span>)
-<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<span class="kw">plot</span>(knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 10&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20knn-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Area under the knn curve</span>
 knn_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)
@@ -689,32 +710,42 @@ knn_accs &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="
 
 <span class="co"># Determining the best k for k-nearest neighbors classification</span>
 <span class="cf">for</span> (k <span class="cf">in</span> range) {
-    knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">test =</span> test[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">cl =</span> train<span class="op">$</span>label, <span class="dt">k =</span> k, 
-        <span class="dt">prob =</span> <span class="ot">TRUE</span>)
-    knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> knn_pred, <span class="dt">true =</span> test<span class="op">$</span>label)
-    knn_accs[k] &lt;-<span class="st"> </span><span class="kw">class_acc</span>(knn_conf)
+  knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], 
+                  <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], 
+                  <span class="dt">cl =</span> train<span class="op">$</span>label, 
+                  <span class="dt">k =</span> k, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+  knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> knn_pred, <span class="dt">true =</span> test<span class="op">$</span>label)
+  knn_accs[k] &lt;-<span class="st"> </span><span class="kw">class_acc</span>(knn_conf)
 }
 
 <span class="co"># plotting k vs accuracy</span>
-<span class="kw">plot</span>(range, knn_accs, <span class="dt">xlab =</span> <span class="st">&quot;k&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;accuracy&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Number of Neighbors (k) vs Test Accuracy&quot;</span>)</code></pre></div>
+<span class="kw">plot</span>(range, knn_accs, <span class="dt">xlab =</span> <span class="st">&quot;k&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;accuracy&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Number of Neighbors (k) vs Test Accuracy&quot;</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/plotting%20k%20vs%20accs-1.png" width="672" /> This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using <span class="math inline">\(k=1\)</span> will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
 <p>Here is the ROC curve demonstrating this.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">worst_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">test =</span> test[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">cl =</span> train<span class="op">$</span>label, <span class="dt">k =</span> <span class="dv">1</span>, 
-    <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">worst_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], 
+                <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], 
+                <span class="dt">cl =</span> train<span class="op">$</span>label, 
+                <span class="dt">k =</span> <span class="dv">1</span>, 
+                <span class="dt">prob =</span> <span class="ot">TRUE</span>)
 worst_knn_prob &lt;-<span class="st"> </span><span class="kw">attr</span>(worst_knn_pred, <span class="st">&quot;prob&quot;</span>)
-worst_knn_prob &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">ifelse</span>(worst_knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>worst_knn_prob, worst_knn_prob) <span class="op">-</span><span class="st"> </span>
-<span class="st">    </span><span class="dv">1</span>
-worst_knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> worst_knn_prob, <span class="dt">labels =</span> test<span class="op">$</span>label)
+worst_knn_prob &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">ifelse</span>(worst_knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span><span class="op">-</span>worst_knn_prob, worst_knn_prob)<span class="op">-</span><span class="dv">1</span>
+worst_knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> worst_knn_prob, 
+                                <span class="dt">labels =</span> test<span class="op">$</span>label)
 worst_knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(worst_knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
 
 <span class="co"># Plotting the KNN ROC curve</span>
-<span class="kw">plot</span>(worst_knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 1&quot;</span>)
-<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<span class="kw">plot</span>(worst_knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 1&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/worst%20kNN%20k%20=%201-1.png" width="672" /></p>
 <p>So we think better not to opt for <span class="math inline">\(k=1\)</span> and rather choose some <span class="math inline">\(k\)</span> like 35, which is still decently accurate, and probably less biased.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(knn) is loaded</span>
-new_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">test =</span> test[, <span class="op">-</span><span class="dv">9</span>], <span class="dt">cl =</span> train<span class="op">$</span>label, <span class="dt">k =</span> <span class="dv">35</span>, 
-    <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+new_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], 
+                <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], 
+                <span class="dt">cl =</span> train<span class="op">$</span>label, 
+                <span class="dt">k =</span> <span class="dv">35</span>, 
+                <span class="dt">prob =</span> <span class="ot">TRUE</span>)
 
 <span class="co"># confusion matrix</span>
 new_knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">true =</span> test<span class="op">$</span>label, <span class="dt">pred =</span> new_knn_pred)
@@ -732,23 +763,25 @@ new_knn_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class=
 new_knn_err</code></pre></div>
 <pre><code>## [1] 0.245</code></pre>
 <p>Using <span class="math inline">\(k=35\)</span> gives a slight increase in test accuracy relative to <span class="math inline">\(k=10\)</span>, although it is not very significant. Now let’s look at the ROC curve and the AUC to make our final comparison, both with the <span class="math inline">\(k=10\)</span> model, and the decision trees.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the ROC curve for knn library(dplyr) is loaded</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the ROC curve for knn</span>
+<span class="co"># library(dplyr) is loaded</span>
 new_knn_prob &lt;-<span class="st"> </span><span class="kw">attr</span>(new_knn_pred, <span class="st">&quot;prob&quot;</span>)
-new_knn_prob &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">ifelse</span>(new_knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>new_knn_prob, new_knn_prob) <span class="op">-</span><span class="st"> </span>
-<span class="st">    </span><span class="dv">1</span>
-new_knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> new_knn_prob, <span class="dt">labels =</span> test<span class="op">$</span>label)
+new_knn_prob &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">ifelse</span>(new_knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span><span class="op">-</span>new_knn_prob, new_knn_prob)<span class="op">-</span><span class="dv">1</span>
+new_knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> new_knn_prob, 
+                                <span class="dt">labels =</span> test<span class="op">$</span>label)
 new_knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(new_knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
 
 <span class="co"># Plotting the KNN ROC curve</span>
-<span class="kw">plot</span>(new_knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 35&quot;</span>)
-<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<span class="kw">plot</span>(new_knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 35&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20knn%20k=35-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Area under the knn curve</span>
 new_knn_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(new_knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)
 new_knn_AUC &lt;-<span class="st"> </span>new_knn_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]
 new_knn_AUC</code></pre></div>
 <pre><code>## [1] 0.7106358</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">records[<span class="dv">4</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(new_knn_acc, new_knn_err, new_knn_AUC)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">records[<span class="dv">4</span>,] &lt;-<span class="st"> </span><span class="kw">c</span>(new_knn_acc, new_knn_err, new_knn_AUC)
 records</code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.748      0.252 0.7875540
@@ -764,8 +797,11 @@ records</code></pre></div>
 <div id="randomforest" class="section level2">
 <h2>randomForest</h2>
 <p>randomForest is similar to the decision tree method in that it builds trees, hence the name ‘random Forest’. This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that randomForest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Random Forest using all 8 predictor attributes, on the training set
-rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">mtry =</span> <span class="dv">8</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Random Forest
+<span class="co"># using all 8 predictor attributes, on the training set</span>
+rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>.,
+                   <span class="dt">data =</span> train,
+                   <span class="dt">mtry =</span> <span class="dv">8</span>)
 
 <span class="kw">print</span>(rf)</code></pre></div>
 <pre><code>## 
@@ -788,7 +824,7 @@ rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span clas
 rf_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(rf, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)
 
 <span class="co"># Confusion Matrix</span>
-rf_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">true =</span> test<span class="op">$</span>label, <span class="dt">pred =</span> rf_pred)
+rf_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">true =</span> test<span class="op">$</span>label, <span class="dt">pred =</span>  rf_pred)
 rf_conf</code></pre></div>
 <pre><code>##       pred
 ## true   bad good
@@ -803,14 +839,16 @@ rf_err</code></pre></div>
 <p>With an accuracy rate of <code>0.823</code>, this randomForest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far.</p>
 <p>Let’s take a look at the ROC curve and the area underneath it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Building the ROC Curve</span>
-rf_pred &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(rf, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>))
-rf_pred_probs &lt;-<span class="st"> </span>rf_pred[, <span class="dv">2</span>]
+rf_pred &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(rf, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&#39;prob&#39;</span>))
+rf_pred_probs &lt;-<span class="st"> </span>rf_pred[,<span class="dv">2</span>]
 rf_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(rf_pred_probs, test<span class="op">$</span>label)
-rf_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
+rf_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, 
+                       <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
 
 <span class="co"># Plotting the curve</span>
-<span class="kw">plot</span>(rf_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;ROC Curve for randomForest with 8 variables&quot;</span>)
-<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<span class="kw">plot</span>(rf_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for randomForest with 8 variables&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20randomForest-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Area under the curve</span>
 rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)
@@ -831,8 +869,9 @@ records</code></pre></div>
 <p>Recall that earlier we determined in the decision tree that the relevant variables were: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. While this randomForest model was pretty effective in utilizing all of the 8 predictors, we can take a look at a model using only these 3 as well for the sake of comparison.</p>
 <p>We have established by now that simpler models have a reduced bias and complexity, but higher variance and a higher chance of underfitting, whereas complex models (such as the full model) have the opposite issue. The good thing about randomForest is that it inherently accounts for this “Bias-Variance” tradeoff by introducing randomness with bagging (bootstrap aggregating).</p>
 <p>The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf2 &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>volatile.acidity <span class="op">+</span><span class="st"> </span>free.sulfur.dioxide, 
-    <span class="dt">data =</span> train, <span class="dt">mtry =</span> <span class="dv">3</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf2 &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>volatile.acidity <span class="op">+</span><span class="st"> </span>free.sulfur.dioxide,
+                   <span class="dt">data =</span> train,
+                   <span class="dt">mtry =</span> <span class="dv">3</span>)
 <span class="co"># predicting on the test set</span>
 rf_pred2 &lt;-<span class="st"> </span><span class="kw">predict</span>(rf2, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)
 
@@ -850,21 +889,24 @@ rf_acc2</code></pre></div>
 rf_err2</code></pre></div>
 <pre><code>## [1] 0.194</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Building the ROC Curve</span>
-rf_pred2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(rf2, test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>))
-rf_pred_probs2 &lt;-<span class="st"> </span>rf_pred2[, <span class="dv">2</span>]
+rf_pred2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(rf2, test, <span class="dt">type =</span> <span class="st">&#39;prob&#39;</span>))
+rf_pred_probs2 &lt;-<span class="st"> </span>rf_pred2[,<span class="dv">2</span>]
 rf_roc_pred2 &lt;-<span class="st"> </span><span class="kw">prediction</span>(rf_pred_probs2, test<span class="op">$</span>label)
-rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred2, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
+rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred2, 
+                        <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, 
+                        <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
 
 <span class="co"># Plotting the curve</span>
-<span class="kw">plot</span>(rf_perf2, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;ROC Curve for randomForest with 3 variables&quot;</span>)
-<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<span class="kw">plot</span>(rf_perf2, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for randomForest with 3 variables&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/smaller%20randomForest%20with%20ROC%20and%20AUC-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Area under the curve</span>
 rf_perf22 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred2, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)
 rf_AUC2 &lt;-<span class="st"> </span>rf_perf22<span class="op">@</span>y.values[[<span class="dv">1</span>]]
 rf_AUC2</code></pre></div>
 <pre><code>## [1] 0.8455443</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">records[<span class="dv">6</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc2, rf_err2, rf_AUC2)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">records[<span class="dv">6</span>,] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc2, rf_err2, rf_AUC2)
 records</code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.748      0.252 0.7875540

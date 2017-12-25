@@ -1,7 +1,4 @@
 base
-ggplot2
-gridExtra
-readr
 class
 gplots
 ROCR
