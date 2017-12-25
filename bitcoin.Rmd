@@ -35,6 +35,11 @@ navbar:
 
 ---
 
+This was my final project for PSTAT 174, Time Series, Fall 2017.
+
+---
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, dev = 'pdf')
 library(tseries)
