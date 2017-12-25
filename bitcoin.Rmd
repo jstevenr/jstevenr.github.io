@@ -92,7 +92,7 @@ The _autocorrelation_ of data, represented by the function $\gamma_X$ for some d
 
 AR (auto-regressive) models depend on their past values, an error term, and sometimes a constant. MA (moving average) models depend linearly on the current and past values of white noise error terms (which is random). The combination of them, together with differencing, consitute the ARIMA model.
 
-```{r, ACF and PACF, fig.height = 4}
+```{r, ACF and PACF}
 par(mfrow = c(1,2))
 # library(forecast) is loaded
 Acf(open, main = "ACF of Original Data", lag.max = 50)
@@ -105,7 +105,7 @@ The ACF of the data decays gradually, whereas the PACF cuts off abruptly. There 
 
 We would like to begin by using the Box-Cox power transformation, which is a method that helps to Normalize data. This method finds a value $\lambda$ which maximizes the log-likelihood and then the data is raised to the power of $\lambda$. The higher the likelihood, the better (more likely) the model parameter. Power transformations such as the Box-Cox help to stabilize the variance which is imperative for Box-Jenkins modeling.
 
-```{r, finding best lambda, fig.height=4}
+```{r, finding best lambda}
 par(mfrow = c(1,1))
 # library(MASS) is loaded
 bcTransform <- boxcox(open ~ as.numeric(1:length(open)))
@@ -116,7 +116,7 @@ best.lambda
 
 We see that the ideal value for $\lambda$ that maximizes the likelihood is $-0.020$, but the log function, $\lambda = 0$, is within the confidence interval so we can use this instead. Here we will apply the transformation, then compare the variances of our original data with the transformed data. 
 
-```{r, box-cox transformation, fig.height = 3}
+```{r, box-cox transformation}
 # transforming the data
 open.tr <- log(open)
 # new time series plot
@@ -134,7 +134,7 @@ Obviously the data still has a linear trend, but the variance is much smaller. W
 
 We only want to difference once and at lag 1 because we did not observe any seasonality when we first plotted the original time series. The differenced series will represent the _change_ between observations that are $d$ units of time apart, in this case, $d = 1$, which is to say one day apart. So our differenced (and transformed) data will represent the change from each value to the next, one day at a time.
 
-```{r, differencing, fig.height = 3}
+```{r, differencing}
 open.diff <- diff(open.tr, lag = 1)
 plot.ts(open.diff, main = "Differencing at lag 1 after power")
 # plotting the trend line of the series
@@ -165,7 +165,7 @@ Note the inclusion of a 'drift' constant in the model. The `auto.arima()` functi
 
 We are given an ARIMA(0,1,0) model which is essentially a random walk. We can take a look at the ACF and PACF curves as well, and if there are virtually no lags at which either coefficient is significantly far from zero, then it would corroborate this conclusion since it would indicate there is no AR or MA order in the model of best fit. The inclusion of $d = 1$ in the auto-fitted model also tells us that differencing at lag 1 was the right decision.
 
-```{r, ACF-PACF of differenced data, fig.height = 3}
+```{r, ACF-PACF of differenced data}
 par(mfrow = c(1,2))
 Acf(open.diff, main = "ACF of transformed data", lag.max = 50)
 Pacf(open.diff, main = "PACF of transformed data", lag.max = 50)
@@ -259,7 +259,7 @@ Failing to reject the null hypothesis of the Ljung-Box test but rejecting the nu
 
 Now we will proceed with forecasting the next 10 values in the time series using both the ARIMA(0,1,0) and the ARIMA(2,1,0) models, and compare the results with each other and with the true values. 
 
-```{r, forecasting, fig.height = 5}
+```{r, forecasting}
 # library(forecast) is loaded
 forecast010 <- forecast(open, model = fit010, lambda = 0)
 forecast210 <- forecast(open, model = fit210, lambda = 0)
