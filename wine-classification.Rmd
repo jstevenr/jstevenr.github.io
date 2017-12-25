@@ -17,7 +17,7 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Predicting Bitcoin Value"
+        - text: "Predicting bitcoin value"
           href: bitcoin.html
     - text: "Contact Me"
       menu:

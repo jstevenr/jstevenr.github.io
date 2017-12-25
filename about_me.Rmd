@@ -15,7 +15,7 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Predicting Bitcoin Value"
+        - text: "Predicting bitcoin value"
           href: bitcoin.html          
     - text: "Contact Me"
       menu:
@@ -82,6 +82,7 @@ If I am not learning a new programming skill in my free time (currently focused 
     + Writes, edits, and records pre-recorded audio content to air on FM radio including: public service announcements, event promotions
     + Trains others in writing, editing and recording pre-recorded audio content
     + Maintains an extensive library of pre-recorded content
+    + Assists the Lead Engineer and Assistant Engineer with audio mixing live performances
 * **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Sept 2017)
     + Worked on a team of interns to curate the [Arctic Data Center](https://arcticdata.io/)
     + Cleaned data in R to prepare for publication
