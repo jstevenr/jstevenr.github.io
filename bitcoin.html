@@ -451,7 +451,8 @@ open.tr &lt;-<span class="st"> </span><span class="kw">log</span>(open)
 <div id="differencing" class="section level3">
 <h3>Differencing</h3>
 <p>We only want to difference once and at lag 1 because we did not observe any seasonality when we first plotted the original time series. The differenced series will represent the <em>change</em> between observations that are <span class="math inline">\(d\)</span> units of time apart, in this case, <span class="math inline">\(d = 1\)</span>, which is to say one day apart. So our differenced (and transformed) data will represent the change from each value to the next, one day at a time.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">open.diff &lt;-<span class="st"> </span><span class="kw">diff</span>(open.tr, <span class="dt">lag =</span> <span class="dv">1</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))
+open.diff &lt;-<span class="st"> </span><span class="kw">diff</span>(open.tr, <span class="dt">lag =</span> <span class="dv">1</span>)
 <span class="kw">plot.ts</span>(open.diff, <span class="dt">main =</span> <span class="st">&quot;Differencing at lag 1 after power&quot;</span>)
 <span class="co"># plotting the trend line of the series</span>
 <span class="kw">abline</span>(<span class="kw">lm</span>(open.diff<span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(open.diff))), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>

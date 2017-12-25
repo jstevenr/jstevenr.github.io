@@ -76,7 +76,6 @@ A preliminary look at the dataset reveals that there are no missing values.
 First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis. 
 
 ```{r correlation matrix}
-
 white.cor <- cor(white[,1:12])
 # white.cor
 ```

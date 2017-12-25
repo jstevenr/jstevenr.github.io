@@ -135,6 +135,7 @@ Obviously the data still has a linear trend, but the variance is much smaller. W
 We only want to difference once and at lag 1 because we did not observe any seasonality when we first plotted the original time series. The differenced series will represent the _change_ between observations that are $d$ units of time apart, in this case, $d = 1$, which is to say one day apart. So our differenced (and transformed) data will represent the change from each value to the next, one day at a time.
 
 ```{r, differencing}
+par(mfrow = c(1,1))
 open.diff <- diff(open.tr, lag = 1)
 plot.ts(open.diff, main = "Differencing at lag 1 after power")
 # plotting the trend line of the series
@@ -349,7 +350,7 @@ Metcalfe, Andrew V., and Paul S.P. Cowpertwait. Introductory Time Series with R.
 
 # Appendix
 
-```{r, spec.arma and plot.roots, fig.height=5}
+```{r, spec.arma and plot.roots}
 # pretty much all code is included in the body of the report
 fit210$coef[1:2] # the 2 AR coefficients
 par(mfrow = c(1,1))
