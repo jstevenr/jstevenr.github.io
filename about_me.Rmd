@@ -53,7 +53,7 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 * **Statistical Science B.S.**, University of California, Santa Barbara, 2018
     + Concentration in Applied Statistics
-    + GPA: 3.14
+    + GPA: 3.17
 * **Course Highlights**
     + PSTAT 131 -  Data Mining
     + PSTAT 126 - Regression Analysis
