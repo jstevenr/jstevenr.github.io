@@ -35,9 +35,9 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist.
+My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist. I am currently employed as the Production Coordinator at UCSB's radio station, 91.9 KCSB-FM. 
 
-If I am not learning a new programming skill in my free time (currently focused on learning both Python and SQL), then I am probably playing video games or listening to music, especially for the purpose of finding music for the radio show I have on 91.9 KCSB-FM called *The Company of Lazarus*. I am also an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. 
+If I am not learning a new programming skill in my free time (currently focused on learning both Python and SQL), then I am most likely looking for music for my radio show, The Company of Lazarus. In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. 
 
 * Email: jsteven.raquel8@gmail.com
 * Twitter: [\@jsteven_r](https://www.twitter.com/jsteven_r)
@@ -51,53 +51,45 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 ## Education
 
-* **Statistical Science B.S.**, University of California, Santa Barbara, 2018
+* **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
+    + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, and Time Series
     + GPA: 3.17
-* **Course Highlights**
-    + PSTAT 131 -  Data Mining
-    + PSTAT 126 - Regression Analysis
-    + PSTAT 160A - Stochastic Processes
-    + PSTAT 105 - Non Parametric Methods
-    + PSTAT 174 - Time Series
-
+    
 ## Skills
 
 * **Technical**
-    + R, Python, SQL
-    + Linux
-    + Git
-    + XML, JSON
-    + Markdown, LaTeX
+    + Advanced knowledge and aptitude with R 
+    + Working knowledge of Python and SQL
+    + Comfortable with Linux, Git and Bash
 * **Design**
-    + GIMP
-    + Audacity
+    + Experienced in image editing in GIMP
+    + Comfortable editing audio with Audacity
 * **Languages**
-    + Spanish
-    + Portuguese
+    + Conversational in both Spanish and Portuguese
+* **Soft Skills**
+    + Team player
+    + Self-starter
+    + Confident speaker
 
 ## Work Experience
 
 * **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - Present)
-    + Writes, edits, and records pre-recorded audio content to air on FM radio including: public service announcements, event promotions
-    + Trains others in writing, editing and recording pre-recorded audio content
-    + Maintains an extensive library of pre-recorded content
-    + Assists the Lead Engineer and Assistant Engineer with audio mixing live performances
+    + Timely produced excellent public service announcements (PSAs) and event promotions
+    + Organized and trained volunteers to create PSAs and event promotions
 * **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Sept 2017)
-    + Worked on a team of interns to curate the [Arctic Data Center](https://arcticdata.io/)
-    + Cleaned data in R to prepare for publication
-    + Created metadata in XML and JSON for the incoming data
-    + Contributed original functions for use in maintaining the site
+    + Expertly maintained metadata for federally funded data repository
+    + Improved team efficiency in data cleaning, by writing original functions in R
 * **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (May 2016 - Sept 2016)
-    + Prepared and filed check requests, reimbursement forms, and other documentation
-    + Used QuickBooks to memorize reports, write checks, and track spending
+    + Efficiently memorized reports, wrote checks, tracked spending and prepared documentation
+    + Noted areas where the department was overspending, resulting in savings
 * **San Nicolas Desk Attendant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (Oct 2013 - Oct 2014)
     + Maintained an organized and positive environment for residents of campus housing
 
 ## Volunteer Experience
 * **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Present)
-    + Runs a weekly college radio music show titled The Company of Lazarus
-    + Operates a mixing board and the [DAD](http://www.enco.com/products/dad-radio-automation-presenter.html) Pro software
+    + Runs a weekly college radio music show called 'The Company of Lazarus'
+    + Operates a radio control board
 * **Secretary**, [oSTEM Inc. @ UC Santa Barbara](https://orgsync.com/66953/chapter) (May 2016 - Apr 2017)
     + Reaching out to STEM majors who are part of the LGBTQ community
     + Educating on the importance of LGBTQ visibility and inclusivity
@@ -108,4 +100,3 @@ If I am not learning a new programming skill in my free time (currently focused 
 * **Peer Volunteer**, [Life of the Party](https://lifeoftheparty.sa.ucsb.edu/), UCSB Alcohol & Drug Program (Jan 2016 - May 2016)
     + Encouraging the use of safer partying practices in Isla Vista, California
     + Collaborated for a campus-wide “Be Safe and Pace” awareness campaign
-    + Contributed to a student-made PSA for the aforementioned campaign
