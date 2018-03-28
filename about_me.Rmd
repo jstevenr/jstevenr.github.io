@@ -53,8 +53,8 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
-    + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, and Time Series
-    + GPA: 3.17
+    + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, and SAS Programming
+    + GPA: 3.16
     
 ## Skills
 
