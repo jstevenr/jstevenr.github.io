@@ -41,7 +41,8 @@ This was my final project for PSTAT 174, Time Series, Fall 2017.
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, dev = 'pdf')
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, echo = TRUE, cache = TRUE, tidy.opts = list(width.cutoff=80))
+options(width = 80)
 library(tseries)
 library(forecast)
 library(MASS)
@@ -67,7 +68,7 @@ To first analyze the dataset, I want to read in the data and then plot its time 
 
 ```{r, initial plot}
 set.seed(100)
-bitcoin <- read.csv("~/Workspace/project/bitcoin_price.csv")
+bitcoin <- read.csv("bitcoin_price.csv")
 data <- subset(bitcoin, select = c(Date, Open)) # selecting only opening price column
 # flipping the data to go from oldest to newest
 data2 <- data.frame(Date = data$Date[1655:1], Open = data$Open[1655:1])
