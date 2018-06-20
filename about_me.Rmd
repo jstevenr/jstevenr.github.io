@@ -35,9 +35,9 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist. I am currently employed as the Production Coordinator at UCSB's radio station, 91.9 KCSB-FM. 
+My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently seeking work as an entry-level data analyst. 
 
-If I am not learning a new programming skill in my free time (currently focused on learning both Python and SQL), then I am most likely looking for music for my radio show, The Company of Lazarus. In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. 
+In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. I also study programming in Python and SQL in my free time. 
 
 * Email: jsteven.raquel8@gmail.com
 * Twitter: [\@jsteven_r](https://www.twitter.com/jsteven_r)
@@ -53,8 +53,8 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
-    + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, and SAS Programming
-    + GPA: 3.16
+    + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, SAS Programming, Statistical Data Science
+    + GPA: 3.19
     
 ## Skills
 
@@ -64,9 +64,10 @@ If I am not learning a new programming skill in my free time (currently focused 
     + Comfortable with Linux, Git and Bash
 * **Design**
     + Experienced in image editing in GIMP
-    + Comfortable editing audio with Audacity
+    + Strong audio editing skills in Audacity
 * **Languages**
-    + Conversational in both Spanish and Portuguese
+    + Strong writing and reading in Spanish/Portuguese
+    + Conversational listening and speaking in Spanish/Portuguese
 * **Soft Skills**
     + Team player
     + Self-starter
@@ -74,8 +75,8 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 ## Work Experience
 
-* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - Present)
-    + Timely produced excellent public service announcements (PSAs) and event promotions
+* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - June 2018)
+    + Timely produced excellent public service announcements (PSAs) and event promotions conforming with FCC guidelines
     + Organized and trained volunteers to create PSAs and event promotions
 * **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Sept 2017)
     + Expertly maintained metadata for federally funded data repository

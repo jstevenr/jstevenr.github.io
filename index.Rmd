@@ -37,7 +37,7 @@ navbar:
 
 # Welcome!
 
-Thanks for visiting my personal website. I'm J Steven Raquel, a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. My preferred tool is the R programming language, although I am developing skills in both Python and SQL. 
+Thanks for visiting my personal website. I'm J Steven Raquel, a graduate of UC Santa Barbara with a degree in Statistical Science. My preferred tool is the R programming language, although I am developing skills in both Python and SQL. 
 
 Find out more about [who I am and what I've done](about_me.html).
 
