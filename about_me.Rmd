@@ -54,7 +54,7 @@ In my free time I am an avid gamer and a scholar of both Spanish and Portuguese.
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
     + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, SAS Programming, Statistical Data Science
-    + GPA: 3.19
+    + GPA: 3.20
     
 ## Skills
 
