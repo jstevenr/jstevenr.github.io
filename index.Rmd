@@ -17,6 +17,8 @@ navbar:
           href: wine-classification.html
         - text: "Predicting bitcoin value"
           href: bitcoin.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html 
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -60,6 +62,12 @@ For my final project for PSTAT 131 Data Mining, I used and compared the decision
 * #### [Predicting bitcoin price](bitcoin.html)
 
 For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.
+
+### Data Visualization
+
+* #### [Visualizing IMDB ratings](imdb.html)
+
+This is a simple visualization of film ratings on the [Internet Movie Database](imdb.com), particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.
 
 ----
 
