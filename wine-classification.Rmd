@@ -19,6 +19,8 @@ navbar:
           href: wine-classification.html
         - text: "Predicting bitcoin value"
           href: bitcoin.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html         
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -38,16 +40,14 @@ This was my final project for PSTAT 131, Data Mining, Spring 2017.
 ----
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(tidy.opts = list(width.cutoff=80), 
-                      tidy = TRUE, echo = TRUE, cache = TRUE)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), tidy = TRUE, echo = TRUE, cache = TRUE, include = TRUE)
 options(width = 80)
-
 library(class)
 library(ROCR)
 library(randomForest)
 library(tree)
-library(dplyr)
 library(plyr)
+library(dplyr)
 ```
 
 
@@ -65,7 +65,7 @@ In this report, we find the accuracy, error rates, and area under the ROC curve 
 
 ```{r reading data}
 set.seed(10)
-white <- read.csv("~/Workspace/wine-quality/winequality-white.csv",
+white <- read.csv("winequality-white.csv",
                   sep = ";")
 head(white)
 # sapply(white, function(x) sum(is.na(x)))

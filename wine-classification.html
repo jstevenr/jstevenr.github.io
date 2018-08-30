@@ -136,6 +136,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -334,6 +337,9 @@ div.tocify {
     <li>
       <a href="bitcoin.html">Predicting bitcoin value</a>
     </li>
+    <li>
+      <a href="imdb.html">Visualizing IMDB ratings</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -389,7 +395,7 @@ div.tocify {
 <div id="main-body" class="section level1">
 <h1>Main Body</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)
-white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Workspace/wine-quality/winequality-white.csv&quot;</span>,
+white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;winequality-white.csv&quot;</span>,
                   <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>)
 <span class="kw">head</span>(white)</code></pre></div>
 <pre><code>##   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
@@ -811,11 +817,11 @@ rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span clas
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 8
 ## 
-##         OOB estimate of  error rate: 16.34%
+##         OOB estimate of  error rate: 16.37%
 ## Confusion matrix:
 ##      bad good class.error
-## bad  939  373   0.2842988
-## good 264 2322   0.1020882</code></pre>
+## bad  941  371   0.2827744
+## good 267 2319   0.1032483</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">varImpPlot</span>(rf, <span class="dt">main =</span> <span class="st">&quot;Variable Importance Plot&quot;</span>)</code></pre></div>
 <p><img src="wine-classification_files/figure-html/create%20randomForest-1.png" width="672" /></p>
 <p><code>meanDecreaseGini</code> refers to the “mean decrease in node impurity”. Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself.</p>
@@ -828,14 +834,14 @@ rf_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class=
 rf_conf</code></pre></div>
 <pre><code>##       pred
 ## true   bad good
-##   bad  235   93
+##   bad  230   98
 ##   good  81  591</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(rf_conf)
 rf_acc</code></pre></div>
-<pre><code>## [1] 0.826</code></pre>
+<pre><code>## [1] 0.821</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rf_acc
 rf_err</code></pre></div>
-<pre><code>## [1] 0.174</code></pre>
+<pre><code>## [1] 0.179</code></pre>
 <p>With an accuracy rate of <code>0.823</code>, this randomForest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far.</p>
 <p>Let’s take a look at the ROC curve and the area underneath it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Building the ROC Curve</span>
@@ -854,7 +860,7 @@ rf_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc
 rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)
 rf_AUC &lt;-<span class="st"> </span>rf_perf2<span class="op">@</span>y.values[[<span class="dv">1</span>]]
 rf_AUC</code></pre></div>
-<pre><code>## [1] 0.8869796</code></pre>
+<pre><code>## [1] 0.8857297</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">records[<span class="dv">5</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc, rf_err, rf_AUC)
 records</code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
@@ -862,7 +868,7 @@ records</code></pre></div>
 ## pruned.tree                0.748      0.252 0.7557391
 ## k=10 kNN                   0.765      0.235 0.6791635
 ## k=35 kNN                   0.755      0.245 0.7106358
-## full.randomForest          0.826      0.174 0.8869796
+## full.randomForest          0.821      0.179 0.8857297
 ## small.randomForest            NA         NA        NA</code></pre>
 <p>The area under the ROC curve for randomForest is <code>0.887</code>, which is also a strong AUC for a classification model.</p>
 <p>So we see actually that randomForest stands head and shoulders above the other two methods, decision tree and k-nearest neighbors. This is seen in the fact that the accuracy rate, as well as the AUC, are the highest. Judging from this, we can assume that randomForest would be the most likely to correctly classify a wine based off of the attributes and data given.</p>
@@ -880,8 +886,8 @@ rf_conf2 &lt;-<span class="st"> </span><span class="kw">table</span>(test<span c
 rf_conf2</code></pre></div>
 <pre><code>##       rf_pred2
 ##        bad good
-##   bad  217  111
-##   good  83  589</code></pre>
+##   bad  219  109
+##   good  85  587</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf_acc2 &lt;-<span class="st"> </span><span class="kw">class_acc</span>(rf_conf2)
 rf_acc2</code></pre></div>
 <pre><code>## [1] 0.806</code></pre>
@@ -905,7 +911,7 @@ rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_ro
 rf_perf22 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred2, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)
 rf_AUC2 &lt;-<span class="st"> </span>rf_perf22<span class="op">@</span>y.values[[<span class="dv">1</span>]]
 rf_AUC2</code></pre></div>
-<pre><code>## [1] 0.8455443</code></pre>
+<pre><code>## [1] 0.8462158</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">records[<span class="dv">6</span>,] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc2, rf_err2, rf_AUC2)
 records</code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
@@ -913,8 +919,8 @@ records</code></pre></div>
 ## pruned.tree                0.748      0.252 0.7557391
 ## k=10 kNN                   0.765      0.235 0.6791635
 ## k=35 kNN                   0.755      0.245 0.7106358
-## full.randomForest          0.826      0.174 0.8869796
-## small.randomForest         0.806      0.194 0.8455443</code></pre>
+## full.randomForest          0.821      0.179 0.8857297
+## small.randomForest         0.806      0.194 0.8462158</code></pre>
 <p>The accuracy rate has actually decreased, as well as the area under the curve, but not significantly. We’re managed to actually preserve the strength of the model, both in relation to the tree and knn methods, but also relative to the original application of randomForest with all of the predictors.</p>
 <p>As such, we can opt to utilize this much smaller model for classification instead if we are concerned about complexity and bias. Having said that, because of the randomization introduced in the randomForest, it is inherently more robust so subsetting in this manner may even be unnecessary.</p>
 </div>

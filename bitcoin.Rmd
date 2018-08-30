@@ -19,6 +19,8 @@ navbar:
           href: wine-classification.html
         - text: "Predicting bitcoin value"
           href: bitcoin.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
