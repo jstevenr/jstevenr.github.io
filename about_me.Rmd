@@ -37,7 +37,7 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently seeking work as an entry-level data analyst. 
+My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently a data analyst for Saalex Solutions, Inc., an engineering and technology company headquarted in Camarillo, CA.
 
 In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. I also study programming in Python and SQL in my free time. 
 
@@ -65,6 +65,7 @@ In my free time I am an avid gamer and a scholar of both Spanish and Portuguese.
     + Intermediate knowledge of Excel. 
     + Working knowledge of Python and SQL.
     + Comfortable with Linux, Git and Bash.
+    + Knowledgeable in business intelligence software such as Power BI, Tableau, and SAP Analytics Cloud.
 * **Design**
     + Experienced in image editing in GIMP.
     + Strong audio editing skills in Audacity.
@@ -79,6 +80,9 @@ In my free time I am an avid gamer and a scholar of both Spanish and Portuguese.
 
 ## Work Experience
 
+* **Data Analytics Analyst**, [Saalex Solutions, Inc.](https://saalex.com) (Sep 2018 - Present)
+    + Creating data visualizations and dashboards with business intelligence software such as SAP Analytics Cloud to track key performance indicators and inform decision-making.
+    + Assisting with identifying government contracts pertaining to data analytics.
 * **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - June 2018)
     + Timely produced excellent public service announcements (PSAs) and event promotions conforming with FCC guidelines.
     + Organized and trained volunteers to create PSAs and event promotions.
@@ -88,8 +92,6 @@ In my free time I am an avid gamer and a scholar of both Spanish and Portuguese.
 * **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (May 2016 - Sept 2016)
     + Efficiently memorized reports, wrote checks, tracked spending and prepared documentation.
     + Noted areas where the department was overspending, resulting in savings.
-* **San Nicolas Desk Attendant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (Oct 2013 - Oct 2014)
-    + Maintained an organized and positive environment for residents of campus housing.
 
 ## Volunteer Experience
 * **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Jun 2018)
