@@ -17,6 +17,8 @@ navbar:
           href: wine-classification.html
         - text: "Predicting bitcoin value"
           href: bitcoin.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html 
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -33,7 +35,7 @@ navbar:
 
 # Welcome!
 
-Thanks for visiting my personal website. I'm J Steven Raquel, a statistics undergrad at UC Santa Barbara, set to graduate in spring of 2018. My preferred tool is the R programming language, although I am developing skills in both Python and SQL. 
+Thanks for visiting my personal website. I'm J Steven Raquel, a graduate of UC Santa Barbara with a degree in Statistical Science. My preferred tool is the R programming language, although I am developing skills in both Python and SQL. 
 
 Find out more about [who I am and what I've done](about_me.html).
 
@@ -56,6 +58,12 @@ For my final project for PSTAT 131 Data Mining, I used and compared the decision
 * #### [Predicting bitcoin price](bitcoin.html)
 
 For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.
+
+### Data Visualization
+
+* #### [Visualizing IMDB ratings](imdb.html)
+
+This is a simple visualization of film ratings on the [Internet Movie Database](imdb.com), particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.
 
 ----
 

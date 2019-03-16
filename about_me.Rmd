@@ -16,7 +16,9 @@ navbar:
         - text: "Classifying wine quality"
           href: wine-classification.html
         - text: "Predicting bitcoin value"
-          href: bitcoin.html          
+          href: bitcoin.html
+        - text: "Visualizing IMDB ratings"
+          href: imdb.html          
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -31,9 +33,9 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I am an undergraduate at the University of California, Santa Barbara, studying statistics with the ultimate goal of becoming a data scientist. I am currently employed as the Production Coordinator at UCSB's radio station, 91.9 KCSB-FM. 
+My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently a data analyst for Saalex Solutions, Inc., an engineering and technology company headquarted in Camarillo, CA.
 
-If I am not learning a new programming skill in my free time (currently focused on learning both Python and SQL), then I am most likely looking for music for my radio show, The Company of Lazarus. In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. 
+In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. I also study programming in Python and SQL in my free time. 
 
 * Email: jsteven.raquel8@gmail.com
 * Twitter: [\@jsteven_r](https://www.twitter.com/jsteven_r)
@@ -49,50 +51,55 @@ If I am not learning a new programming skill in my free time (currently focused 
 
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
-    + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, and SAS Programming
-    + GPA: 3.16
+    + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, SAS Programming, Statistical Data Science
+    + GPA: 3.20
     
 ## Skills
 
 * **Technical**
-    + Advanced knowledge and aptitude with R 
-    + Working knowledge of Python and SQL
-    + Comfortable with Linux, Git and Bash
+    + Advanced knowledge and aptitude with R.
+    + Intermediate knowledge of Excel. 
+    + Working knowledge of Python and SQL.
+    + Comfortable with Linux, Git and Bash.
+    + Knowledgeable in business intelligence software such as Power BI, Tableau, and SAP Analytics Cloud.
 * **Design**
-    + Experienced in image editing in GIMP
-    + Comfortable editing audio with Audacity
+    + Experienced in image editing in GIMP.
+    + Strong audio editing skills in Audacity.
 * **Languages**
-    + Conversational in both Spanish and Portuguese
+    + Strong writing and reading in Spanish/Portuguese.
+    + Conversational listening and speaking in Spanish/Portuguese.
 * **Soft Skills**
-    + Team player
-    + Self-starter
-    + Confident speaker
+    + Team player.
+    + Self-starter.
+    + Confident speaker.
+    + Fast learner.
 
 ## Work Experience
 
-* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - Present)
-    + Timely produced excellent public service announcements (PSAs) and event promotions
-    + Organized and trained volunteers to create PSAs and event promotions
+* **Data Analytics Analyst**, [Saalex Solutions, Inc.](https://saalex.com) (Sep 2018 - Present)
+    + Creating data visualizations and dashboards with business intelligence software such as SAP Analytics Cloud to track key performance indicators and inform decision-making.
+    + Assisting with identifying government contracts pertaining to data analytics.
+* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - June 2018)
+    + Timely produced excellent public service announcements (PSAs) and event promotions conforming with FCC guidelines.
+    + Organized and trained volunteers to create PSAs and event promotions.
 * **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Sept 2017)
-    + Expertly maintained metadata for federally funded data repository
-    + Improved team efficiency in data cleaning, by writing original functions in R
+    + Expertly maintained metadata for federally funded data repository.
+    + Improved team efficiency in data cleaning, by writing original functions in R.
 * **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (May 2016 - Sept 2016)
-    + Efficiently memorized reports, wrote checks, tracked spending and prepared documentation
-    + Noted areas where the department was overspending, resulting in savings
-* **San Nicolas Desk Attendant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (Oct 2013 - Oct 2014)
-    + Maintained an organized and positive environment for residents of campus housing
+    + Efficiently memorized reports, wrote checks, tracked spending and prepared documentation.
+    + Noted areas where the department was overspending, resulting in savings.
 
 ## Volunteer Experience
-* **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Present)
-    + Runs a weekly college radio music show called 'The Company of Lazarus'
-    + Operates a radio control board
+* **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Jun 2018)
+    + Ran a weekly college radio music show called 'The Company of Lazarus'.
+    + Operated a radio control board.
 * **Secretary**, [oSTEM Inc. @ UC Santa Barbara](https://orgsync.com/66953/chapter) (May 2016 - Apr 2017)
-    + Reaching out to STEM majors who are part of the LGBTQ community
-    + Educating on the importance of LGBTQ visibility and inclusivity
+    + Reaching out to STEM majors who are part of the LGBTQ community.
+    + Educating on the importance of LGBTQ visibility and inclusivity.
 * **Student Mentor**, Isla Vista Elementary (Sept 2016 - June 2017)
-    + Acted as a mentor and role model for a 6th grade student for a year
+    + Acted as a mentor and role model for a 6th grade student for a year.
 * **Panelist**, UCSB Mental Health Conference (2016, 2017)
-    + Took part on a panel to share personal experiences related to mental illness and advise on how to cope and intervene
+    + Took part on a panel to share personal experiences related to mental illness and advise on how to cope and intervene.
 * **Peer Volunteer**, [Life of the Party](https://lifeoftheparty.sa.ucsb.edu/), UCSB Alcohol & Drug Program (Jan 2016 - May 2016)
-    + Encouraging the use of safer partying practices in Isla Vista, California
-    + Collaborated for a campus-wide “Be Safe and Pace” awareness campaign
+    + Encouraging the use of safer partying practices in Isla Vista, California.
+    + Collaborated for a campus-wide “Be Safe and Pace” awareness campaign.
