@@ -18,14 +18,10 @@ navbar:
       menu:
         - text: "jsteven.raquel8@gmail.com"
           href: mailto:jsteven.raquel8@gmail.com
-        - text: "Twitter"
-          href: https://twitter.com/jsteven_r
         - text: "GitHub"
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
-        - text: "Medium"
-          href: https://medium.com/@jstevenr
 
 output_dir: "."
 output:

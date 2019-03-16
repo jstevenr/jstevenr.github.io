@@ -38,10 +38,8 @@ My name is J Steven Raquel. I graduated from the University of California, Santa
 In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. I also study programming in Python and SQL in my free time. 
 
 * Email: jsteven.raquel8@gmail.com
-* Twitter: [\@jsteven_r](https://www.twitter.com/jsteven_r)
 * GitHub: [jstevenr](https://github.com/jstevenr)
 * LinkedIn: [jstevenr](https://www.linkedin.com/in/jstevenr/)
-* Medium: [\@jstevenr](https://medium.com/@jstevenr)
 
 ----
 
@@ -52,7 +50,6 @@ In my free time I am an avid gamer and a scholar of both Spanish and Portuguese.
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
     + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, SAS Programming, Statistical Data Science
-    + GPA: 3.20
     
 ## Skills
 
