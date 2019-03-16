@@ -31,8 +31,9 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
-This was my final project for PSTAT 174, Time Series, Fall 2017.
+This was my final project for PSTAT 174, Time Series, Fall 2017. 
 
+Note that the numbers cited in the documentation might be slightly off due to changes in random sampling in subsequent runs of the code. 
 ---
 
 
