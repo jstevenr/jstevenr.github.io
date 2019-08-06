@@ -70,12 +70,13 @@ Knowing what makes a good wine was an interesting question because it allows us 
 
 We utilized random forest, decision trees, and k-nearest neighbors to classify each observation as either good or bad based off of these attributes, while varying the number of variables, nodes, and number of neighbors and comparing within and between these methods.  
 
-In this report, we find the accuracy, error rates, and area under the ROC curve (AUC) of each of the three methods and ultimately came to determine that random forest was the most effective in terms of accuracy and AUC. It works well as a generalization of the decision tree method, and as an algorithm it is robust, but it falls short in terms of interpretability. kNN on the other hand is slow to compute with a dataset of this dimensionality, as well as weaker in its accuracy both in absolute terms and relative to the other methods we have tested here.
+In this report, we find the accuracy, error rates, and area under the ROC curve (AUC) of each of the three methods and ultimately came to determine that k-nearest neighbors (kNN) was the most effective in terms of both accuracy and AUC relative to the other algorithms.
 
 
 # Main Body
 
 ```{python reading data}
+import pandas as pd
 # reading in the data
 # pandas is loaded as pd
 df = pd.read_csv("winequality-white.csv", sep = ";")
@@ -88,7 +89,19 @@ First we can look at the correlation matrix of the dataset, to see if any predic
 
 ```{python correlation matrix}
 import matplotlib.pyplot as plt
-import seaborn as sns
+
+plt.matshow(df)
+
+groups = df.columns.values
+x_pos = np.range(len(groups))
+plt.xticks(x_pos, groups)
+y_pos = np.rage(len(groups))
+plt.yticks(y_pos, groups)
+
+plt.show()
+
+
+'''
 f, ax = plt.subplots(figsize=(10, 8))
 corr = df.corr()
 print(corr)
@@ -96,6 +109,7 @@ sns.heatmap(corr, mask=np.zeros_like(corr, dtype=np.bool),
             cmap=sns.diverging_palette(220, 10, as_cmap=True),
             square=True, ax=ax)
 plt.show()
+'''
 ```
 
 Taking a look at the correlation coefficients $r$ for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` ($r = 0.84$) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
