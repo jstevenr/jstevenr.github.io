@@ -31,7 +31,7 @@ navbar:
   title: Home
 ---
 
-This was my final project for PSTAT 131, Data Mining, Spring 2017. This project was originally written in R, and was later converted to Python and revised to reflect the changes. The original code and report is present on [my GitHub](https://github.com/jstevenr/wine-classification).
+This was my final project for PSTAT 131, Data Mining, Spring 2017. This project was originally written in R, and was later converted to Python and revised to reflect the changes. The original code and report is present on [my GitHub](https://github.com/jstevenr/wine-classification). Some methodology and results have changed as a result.
 
 ----
 
@@ -88,20 +88,6 @@ A preliminary look at the dataset reveals that there are no missing values.
 First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with random forest, both of which are going to be used in this analysis. 
 
 ```{python correlation matrix}
-import matplotlib.pyplot as plt
-
-plt.matshow(df)
-
-groups = df.columns.values
-x_pos = np.range(len(groups))
-plt.xticks(x_pos, groups)
-y_pos = np.rage(len(groups))
-plt.yticks(y_pos, groups)
-
-plt.show()
-
-
-'''
 f, ax = plt.subplots(figsize=(10, 8))
 corr = df.corr()
 print(corr)
@@ -109,7 +95,6 @@ sns.heatmap(corr, mask=np.zeros_like(corr, dtype=np.bool),
             cmap=sns.diverging_palette(220, 10, as_cmap=True),
             square=True, ax=ax)
 plt.show()
-'''
 ```
 
 Taking a look at the correlation coefficients $r$ for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` ($r = 0.84$) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
@@ -295,7 +280,7 @@ pruned_importance.plot(kind = 'barh', title = 'Feature Importance for pruned dec
 plt.show()
 ```
 
-Note that in this model, the importance of `alcohol` is even more exaggerated, and likewise for `vplatile.acidity`. `sulfur.dioxide` is still the 3rd most important, but it is not that far off from the other variables.
+Note that in this model, the importance of `alcohol` is even more exaggerated, and likewise for `volatile.acidity`. `sulfur.dioxide` is still the 3rd most important, but it is not that far off from the other variables.
 
 Now we can apply the same diagnostic methods as before: looking at the accuracy rate, the ROC curve and the area underneath it, for the sake of comparison. 
 
@@ -380,7 +365,7 @@ Random forest is similar to the decision tree method in that it builds trees, he
 
 ```{python create random forest}
 # random forest
-rf_clf = randomforestClassifier(bootstrap = True, random_state = 100)
+rf_clf = RandomForestClassifier(bootstrap = True, random_state = 100)
 rf_clf.fit(X_train, y_train)
 
 # Getting feature importances from model
