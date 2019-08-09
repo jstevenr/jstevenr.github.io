@@ -41,6 +41,7 @@ knitr::knit_engines$set(python = reticulate::eng_python)
 options(width = 80)
 library(reticulate)
 use_virtualenv("r-reticulate")
+use_condaenv("anaconda3")
 py_available(TRUE)
 ```
 
@@ -49,9 +50,9 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
-from sklearn import neighbors
+# import scikit-learn
+from sklearn import neighbors, tree
 from sklearn.metrics import auc, roc_curve, accuracy_score
-from sklearn import tree
 from sklearn.model_selection import train_test_split, KFold, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
@@ -97,6 +98,7 @@ sns.heatmap(corr, mask=np.zeros_like(corr, dtype=np.bool),
 plt.show()
 ```
 
+
 Taking a look at the correlation coefficients $r$ for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` ($r = 0.84$) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
 
 Aside from that correlations are all very low, including (and especially) `quality`, the response variable, with the predictors. 
@@ -121,9 +123,14 @@ From the new correlation matrix it appears that none of the predictors now have 
 
 From here on out, we're also going to want to convert the `quality` response variable into a binary factor so that we can use the predictors to classify the observations. We're going to do this by labeling all of the observations that have received an above average (5 out of 10) as "good", and the rest as "bad", "bad" really meaning "not good". This factor of `good` and `bad` goes under a new column titled `label`.
 
+
+
 We'll remove the `quality` variable afterwards, since if we use it as an attribute in the predictor, it will skew the results because it is directly correlated to the label.
 
 ```{python convert to factor}
+df = pd.read_csv("winequality-white.csv", sep = ";")
+df.drop(["residual sugar", "density", "total sulfur dioxide"], axis = 1, inplace = True)
+
 # assigning the independent  variables to X
 X = df.loc[:, 'fixed acidity':'alcohol']
 feature_names = X.columns.values 
@@ -166,7 +173,6 @@ The first method we are going to perform on this dataset, is Decision Trees. Dec
 Of course, we're going to use `quality` as a response variable, and each of the now 8 remaining numeric attributes as predictors. Now we're going to fit the model, and then display a feature importance plot (also known as a variable importance plot) to see which features of the data were the most crucial to the model's prediction.
 
 ```{python building decision tree}
-# from sklearn.tree import DecisionTreeClassifier
 tree_clf = tree.DecisionTreeClassifier(random_state = 100)
 tree_clf.fit(X_train, y_train) # training the model
 tree_y_pred = tree_clf.predict(X_test)
