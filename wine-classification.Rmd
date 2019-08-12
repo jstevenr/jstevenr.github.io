@@ -31,7 +31,7 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
-This was my final project for PSTAT 131, Data Mining, Spring 2017. 
+This was my final project for PSTAT 131, Data Mining, Spring 2017. A version of this project written in Python can be found on my GitHub [here](https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb). 
 
 ----
 

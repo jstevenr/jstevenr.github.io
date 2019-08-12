@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -69,9 +70,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -190,8 +189,6 @@ $(document).ready(function () {
 });
 </script>
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
 
 <style type="text/css">
@@ -248,20 +245,17 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -340,7 +334,7 @@ $(document).ready(function () {
 <p>My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently a data analyst for Saalex Solutions, Inc., an engineering and technology company headquarted in Camarillo, CA.</p>
 <p>In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. I also study programming in Python and SQL in my free time.</p>
 <ul>
-<li>Email: <a href="mailto:jsteven.raquel8@gmail.com">jsteven.raquel8@gmail.com</a></li>
+<li>Email: <a href="mailto:jsteven.raquel8@gmail.com" class="email">jsteven.raquel8@gmail.com</a></li>
 <li>GitHub: <a href="https://github.com/jstevenr">jstevenr</a></li>
 <li>LinkedIn: <a href="https://www.linkedin.com/in/jstevenr/">jstevenr</a></li>
 </ul>
@@ -421,7 +415,7 @@ $(document).ready(function () {
 <li>Ran a weekly college radio music show called ‘The Company of Lazarus’.</li>
 <li>Operated a radio control board.</li>
 </ul></li>
-<li><strong>Secretary</strong>, <a href="https://orgsync.com/66953/chapter">oSTEM Inc. @ UC Santa Barbara</a> (May 2016 - Apr 2017)
+<li><strong>Secretary</strong>, <a href="https://orgsync.com/66953/chapter">oSTEM Inc. @ UC Santa Barbara</a> (May 2016 - Apr 2017)
 <ul>
 <li>Reaching out to STEM majors who are part of the LGBTQ community.</li>
 <li>Educating on the importance of LGBTQ visibility and inclusivity.</li>
@@ -460,6 +454,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

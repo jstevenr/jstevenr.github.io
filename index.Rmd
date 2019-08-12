@@ -35,11 +35,11 @@ navbar:
 
 # Welcome!
 
-Thanks for visiting my personal website. I'm J Steven Raquel, a graduate of UC Santa Barbara with a degree in Statistical Science. My preferred tool is the R programming language, although I am developing skills in both Python and SQL. 
+Thanks for visiting my personal website. I'm J Steven Raquel, a graduate of UC Santa Barbara with a BS in Statistical Science. 
 
 Find out more about [who I am and what I've done](about_me.html).
 
-If you know anything about data science, statistics, machine learning, AI, or computer science, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. 
+If you know anything about data science, statistics, machine learning, artificial intelligence, or computer science, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header. 
 
 ----
 
