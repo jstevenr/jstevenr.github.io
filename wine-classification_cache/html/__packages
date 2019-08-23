@@ -8,10 +8,15 @@ rgl
 robustbase
 Matrix
 qpcR
+ggplot2
+ggfortify
+dplyr
+zoo
+gridExtra
+readr
 class
 gplots
 ROCR
 randomForest
 tree
-dplyr
 plyr

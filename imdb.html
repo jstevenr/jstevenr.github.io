@@ -24,6 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -42,97 +44,22 @@
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
 
-
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  { background-color: #f8f8f8; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
 
 
 <style type="text/css">
@@ -177,7 +104,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -498,39 +424,39 @@ div.tocify {
 <h1>Data pre-processing</h1>
 <p>Here we <code>subset()</code> the data in order to work with a data that makes sense for our purposes. I decided that it would be good to only look at films that were voted on by at least 10,000 people, to ensure that these ratings would be more accurate. For example, a universally praised (or panned) film that only has 1000 votes, probably because it was only seen by a very small minority, probably shouldn’t factor into our appraisal of the the quality of films of the decade in general.</p>
 <p>We’re also only going to be looking at the 1980s to the present, so we drop the other rows, as well as any columns that don’t include what we are looking for.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">all_movies &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;movie_metadata.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb1-2" title="2">                   <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb1-3" title="3">                   <span class="dt">na.strings =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="dv">0</span>, <span class="st">&quot;0&quot;</span>), </a>
-<a class="sourceLine" id="cb1-4" title="4">                   <span class="dt">skipNul =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb1-5" title="5">                   <span class="dt">fill =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co"># Only retain films with sufficient number of votes</span></a>
-<a class="sourceLine" id="cb1-8" title="8">all_movies &lt;-<span class="st"> </span><span class="kw">subset</span>(all_movies, num_voted_users <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20000</span>, </a>
-<a class="sourceLine" id="cb1-9" title="9">                 <span class="dt">select =</span> <span class="kw">c</span>(imdb_score, title_year, movie_title, director_name, gross),                  <span class="dt">drop =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-10" title="10"></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co"># To remove any rows with missing values</span></a>
-<a class="sourceLine" id="cb1-12" title="12">all_movies &lt;-<span class="st"> </span>all_movies[<span class="kw">complete.cases</span>(all_movies),]</a>
-<a class="sourceLine" id="cb1-13" title="13"></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co"># Remove any duplicate films</span></a>
-<a class="sourceLine" id="cb1-15" title="15">all_movies &lt;-<span class="st"> </span>all_movies[<span class="op">!</span><span class="kw">duplicated</span>(all_movies<span class="op">$</span>movie_title),]</a>
-<a class="sourceLine" id="cb1-16" title="16"></a>
-<a class="sourceLine" id="cb1-17" title="17">stats &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">7</span>, </a>
-<a class="sourceLine" id="cb1-18" title="18">                <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;1927-2016&quot;</span>, <span class="st">&quot;1980-2016&quot;</span>,<span class="st">&quot;2010-2016&quot;</span>, <span class="st">&quot;2000-2010&quot;</span>, <span class="st">&quot;1990-2000&quot;</span>,<span class="st">&quot;1980-1990&quot;</span>),</a>
-<a class="sourceLine" id="cb1-19" title="19">                                <span class="kw">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;1Q&quot;</span>, <span class="st">&quot;Med&quot;</span>, <span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;3Q&quot;</span>, <span class="st">&quot;Max&quot;</span>, <span class="st">&quot;Size&quot;</span>)))</a>
-<a class="sourceLine" id="cb1-20" title="20"></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="co"># Adding summary statistics and size</span></a>
-<a class="sourceLine" id="cb1-22" title="22">stats[<span class="dv">1</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(all_movies<span class="op">$</span>imdb_score), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb1-23" title="23">stats[<span class="dv">1</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(all_movies)</a>
-<a class="sourceLine" id="cb1-24" title="24"></a>
-<a class="sourceLine" id="cb1-25" title="25">all_avg &lt;-<span class="st"> </span>stats[<span class="dv">1</span>,<span class="dv">4</span>]</a></code></pre></div>
+<pre class="r"><code>all_movies &lt;- read.csv(&quot;movie_metadata.csv&quot;,
+                   stringsAsFactors = FALSE, 
+                   na.strings = c(NA, &quot;NA&quot;, &quot;&quot;, 0, &quot;0&quot;), 
+                   skipNul = TRUE,
+                   fill = FALSE)
+
+# Only retain films with sufficient number of votes
+all_movies &lt;- subset(all_movies, num_voted_users &gt;= 20000, 
+                 select = c(imdb_score, title_year, movie_title, director_name, gross),                  drop = TRUE)
+
+# To remove any rows with missing values
+all_movies &lt;- all_movies[complete.cases(all_movies),]
+
+# Remove any duplicate films
+all_movies &lt;- all_movies[!duplicated(all_movies$movie_title),]
+
+stats &lt;- matrix(data = NA, nrow = 6, ncol = 7, 
+                dimnames = list(c(&quot;1927-2016&quot;, &quot;1980-2016&quot;,&quot;2010-2016&quot;, &quot;2000-2010&quot;, &quot;1990-2000&quot;,&quot;1980-1990&quot;),
+                                c(&quot;Min&quot;, &quot;1Q&quot;, &quot;Med&quot;, &quot;Mean&quot;, &quot;3Q&quot;, &quot;Max&quot;, &quot;Size&quot;)))
+
+# Adding summary statistics and size
+stats[1,1:6] &lt;- round(summary(all_movies$imdb_score), 2)
+stats[1,7] &lt;- nrow(all_movies)
+
+all_avg &lt;- stats[1,4]</code></pre>
 <p>The films range from scoring between 1.6 and 9.3 on a scale from 0 to 10.0m and the average score is about 6.62.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Keeping only relevant columns as well as only looking at movies from 1980s and beyond</span></a>
-<a class="sourceLine" id="cb2-2" title="2">movies &lt;-<span class="st"> </span><span class="kw">subset</span>(all_movies, title_year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1980</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3"></a>
-<a class="sourceLine" id="cb2-4" title="4">stats[<span class="dv">2</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(movies<span class="op">$</span>imdb_score), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-5" title="5">stats[<span class="dv">2</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(movies)</a>
-<a class="sourceLine" id="cb2-6" title="6">modern_avg &lt;-<span class="st"> </span>stats[<span class="dv">2</span>,<span class="dv">4</span>]</a>
-<a class="sourceLine" id="cb2-7" title="7">stats</a></code></pre></div>
+<pre class="r"><code># Keeping only relevant columns as well as only looking at movies from 1980s and beyond
+movies &lt;- subset(all_movies, title_year &gt;= 1980)
+
+stats[2,1:6] &lt;- round(summary(movies$imdb_score), 2)
+stats[2,7] &lt;- nrow(movies)
+modern_avg &lt;- stats[2,4]
+stats</code></pre>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
 ## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
 ## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
@@ -545,12 +471,12 @@ div.tocify {
 <h1>The 10s</h1>
 <p>The data for the decade that began in 2010 only goes up until 2016, so naturally it is a smaller subset of data than the rest.</p>
 <p>Let’s take a look at the best and worst films of the decade.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">tens &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2010</span>)</a>
-<a class="sourceLine" id="cb4-2" title="2">tens &lt;-<span class="st"> </span>tens[<span class="kw">order</span>(tens<span class="op">$</span>imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]</a>
-<a class="sourceLine" id="cb4-3" title="3"></a>
-<a class="sourceLine" id="cb4-4" title="4">stats[<span class="dv">3</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(tens<span class="op">$</span>imdb_score), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-5" title="5">stats[<span class="dv">3</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(tens)</a>
-<a class="sourceLine" id="cb4-6" title="6">stats</a></code></pre></div>
+<pre class="r"><code>tens &lt;- subset(movies, title_year &gt;= 2010)
+tens &lt;- tens[order(tens$imdb_score, decreasing = TRUE),]
+
+stats[3,1:6]&lt;- round(summary(tens$imdb_score), 2)
+stats[3,7] &lt;- nrow(tens)
+stats</code></pre>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
 ## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
 ## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
@@ -559,7 +485,7 @@ div.tocify {
 ## 1990-2000  NA  NA  NA   NA  NA  NA   NA
 ## 1980-1990  NA  NA  NA   NA  NA  NA   NA</code></pre>
 <p>Overall, the films from 2010-2016 are roughly similar in quality to those across all years and after 1980. The best film isn’t here though, although the worst film might be, judging by the mins and maxes.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">head</span>(tens)</a></code></pre></div>
+<pre class="r"><code>head(tens)</code></pre>
 <pre><code>##      imdb_score title_year             movie_title     director_name     gross
 ## 98          8.8       2010             InceptionÂ  Christopher Nolan 292568851
 ## 97          8.6       2014          InterstellarÂ  Christopher Nolan 187991439
@@ -568,7 +494,7 @@ div.tocify {
 ## 3932        8.5       2011               SamsaraÂ         Ron Fricke   2601847
 ## 4029        8.5       2014              WhiplashÂ    Damien Chazelle  13092000</code></pre>
 <p>Note the fact that the three best films of this 6-year period (as voted by IMDB users) were all by Christopher Nolan. Also tied for third is my favorite director, Quentin Tarantino with <em>Django Unchained</em>. <em>Samsara</em>, a relatively unknown film, grossed a modest $2.6 million, a mere fraction of the other films on this list.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">tail</span>(tens)</a></code></pre></div>
+<pre class="r"><code>tail(tens)</code></pre>
 <pre><code>##      imdb_score title_year                      movie_title   director_name
 ## 1969        4.0       2011                 Shark Night 3DÂ   David R. Ellis
 ## 2204        3.5       2010                  Vampires SuckÂ  Jason Friedberg
@@ -591,12 +517,12 @@ div.tocify {
 </div>
 <div id="the-00s" class="section level1">
 <h1>The 00s</h1>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">zeroes &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2000</span> <span class="op">&amp;</span><span class="st"> </span>title_year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2010</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2">zeroes &lt;-<span class="st"> </span>zeroes[<span class="kw">order</span>(zeroes<span class="op">$</span>imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]</a>
-<a class="sourceLine" id="cb10-3" title="3"></a>
-<a class="sourceLine" id="cb10-4" title="4">stats[<span class="dv">4</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(zeroes<span class="op">$</span>imdb_score), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb10-5" title="5">stats[<span class="dv">4</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(zeroes)</a>
-<a class="sourceLine" id="cb10-6" title="6">stats</a></code></pre></div>
+<pre class="r"><code>zeroes &lt;- subset(movies, title_year &gt;= 2000 &amp; title_year &lt; 2010)
+zeroes &lt;- zeroes[order(zeroes$imdb_score, decreasing = TRUE),]
+
+stats[4,1:6]&lt;- round(summary(zeroes$imdb_score), 2)
+stats[4,7] &lt;- nrow(zeroes)
+stats</code></pre>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
 ## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
 ## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
@@ -604,7 +530,7 @@ div.tocify {
 ## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0 1280
 ## 1990-2000  NA  NA  NA   NA  NA  NA   NA
 ## 1980-1990  NA  NA  NA   NA  NA  NA   NA</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">head</span>(zeroes)</a></code></pre></div>
+<pre class="r"><code>head(zeroes)</code></pre>
 <pre><code>##      imdb_score title_year                                         movie_title
 ## 67          9.0       2008                                   The Dark KnightÂ 
 ## 340         8.9       2003     The Lord of the Rings: The Return of the KingÂ 
@@ -620,7 +546,7 @@ div.tocify {
 ## 4030 Fernando Meirelles   7563397
 ## 2374     Hayao Miyazaki  10049886</code></pre>
 <p>All three of Peter Jackson’s <em>The Lord of the Rings</em> trilogy cracked the top 6, along with another Nolan Batman film. Two foreign films made the top of this list, the Brazilian film <em>City of God</em> (aka <em>Cidade de Deus</em>) and a personal favorite, along with the animated Miyazaki classic, <em>Spirited Away</em>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">tail</span>(zeroes)</a></code></pre></div>
+<pre class="r"><code>tail(zeroes)</code></pre>
 <pre><code>##      imdb_score title_year                    movie_title     director_name
 ## 2193        2.3       2007                   Epic MovieÂ    Jason Friedberg
 ## 2314        2.3       2005            Alone in the DarkÂ           Uwe Boll
@@ -641,12 +567,12 @@ div.tocify {
 </div>
 <div id="the-90s" class="section level1">
 <h1>The 90s</h1>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">nineties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1990</span> <span class="op">&amp;</span><span class="st"> </span>title_year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2000</span>)</a>
-<a class="sourceLine" id="cb16-2" title="2">nineties &lt;-<span class="st"> </span>nineties[<span class="kw">order</span>(nineties<span class="op">$</span>imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]</a>
-<a class="sourceLine" id="cb16-3" title="3"></a>
-<a class="sourceLine" id="cb16-4" title="4">stats[<span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]&lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(nineties<span class="op">$</span>imdb_score), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb16-5" title="5">stats[<span class="dv">5</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(nineties)</a>
-<a class="sourceLine" id="cb16-6" title="6">stats</a></code></pre></div>
+<pre class="r"><code>nineties &lt;- subset(movies, title_year &gt;= 1990 &amp; title_year &lt; 2000)
+nineties &lt;- nineties[order(nineties$imdb_score, decreasing = TRUE),]
+
+stats[5,1:6]&lt;- round(summary(nineties$imdb_score), 2)
+stats[5,7] &lt;- nrow(nineties)
+stats</code></pre>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
 ## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
 ## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
@@ -654,7 +580,7 @@ div.tocify {
 ## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0 1280
 ## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3  485
 ## 1980-1990  NA  NA  NA   NA  NA  NA   NA</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">head</span>(nineties)</a></code></pre></div>
+<pre class="r"><code>head(nineties)</code></pre>
 <pre><code>##      imdb_score title_year                movie_title     director_name
 ## 1938        9.3       1994 The Shawshank RedemptionÂ     Frank Darabont
 ## 1875        8.9       1993         Schindler&#39;s ListÂ   Steven Spielberg
@@ -670,7 +596,7 @@ div.tocify {
 ## 837  329691196
 ## 655  171383253</code></pre>
 <p>Three of my favorite films came out in the 1990s and topped this list: <em>Pulp Fiction</em>, <em>Fight Club</em>, and <em>The Matrix</em>. The decade’s top film, <em>The Shawshank Redemption</em>, actually was a box office disappointment because of its direct competition with Tarantino’s film.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">tail</span>(nineties)</a></code></pre></div>
+<pre class="r"><code>tail(nineties)</code></pre>
 <pre><code>##      imdb_score title_year                         movie_title
 ## 1448        3.8       1994                    Street FighterÂ 
 ## 218         3.7       1997                    Batman &amp; RobinÂ 
@@ -691,12 +617,12 @@ div.tocify {
 </div>
 <div id="the-80s" class="section level1">
 <h1>The 80s</h1>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">eighties &lt;-<span class="st"> </span><span class="kw">subset</span>(movies, title_year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1980</span> <span class="op">&amp;</span><span class="st"> </span>title_year <span class="op">&lt;</span><span class="st"> </span><span class="dv">1990</span>)</a>
-<a class="sourceLine" id="cb22-2" title="2">eighties &lt;-<span class="st"> </span>eighties[<span class="kw">order</span>(eighties<span class="op">$</span>imdb_score, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]</a>
-<a class="sourceLine" id="cb22-3" title="3"></a>
-<a class="sourceLine" id="cb22-4" title="4">stats[<span class="dv">6</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">summary</span>(eighties<span class="op">$</span>imdb_score), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb22-5" title="5">stats[<span class="dv">6</span>,<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">nrow</span>(eighties)</a>
-<a class="sourceLine" id="cb22-6" title="6">stats</a></code></pre></div>
+<pre class="r"><code>eighties &lt;- subset(movies, title_year &gt;= 1980 &amp; title_year &lt; 1990)
+eighties &lt;- eighties[order(eighties$imdb_score, decreasing = TRUE),]
+
+stats[6,1:6] &lt;- round(summary(eighties$imdb_score), 2)
+stats[6,7] &lt;- nrow(eighties)
+stats</code></pre>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
 ## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
 ## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
@@ -704,7 +630,7 @@ div.tocify {
 ## 2000-2010 1.9 5.9 6.6 6.55 7.3 9.0 1280
 ## 1990-2000 3.3 6.2 6.8 6.77 7.4 9.3  485
 ## 1980-1990 2.8 6.5 7.2 6.97 7.7 8.8  153</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">head</span>(eighties)</a></code></pre></div>
+<pre class="r"><code>head(eighties)</code></pre>
 <pre><code>##      imdb_score title_year                                      movie_title
 ## 2052        8.8       1980 Star Wars: Episode V - The Empire Strikes BackÂ 
 ## 2153        8.5       1981                        Raiders of the Lost ArkÂ 
@@ -720,7 +646,7 @@ div.tocify {
 ## 1715     Sergio Leone   5300000
 ## 2487    James Cameron  85200000</code></pre>
 <p>Robert Zemeckis, who made the last list in the 90s for <em>Forrest Gump</em>, also topped this decade with one of my favorites, <em>Back to the Future</em>. The two latter films in the original Star Wars trilogy, Episodes V and VI, also topped the list.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">tail</span>(eighties)</a></code></pre></div>
+<pre class="r"><code>tail(eighties)</code></pre>
 <pre><code>##      imdb_score title_year                                        movie_title
 ## 4230        4.7       1985                 Friday the 13th: A New BeginningÂ 
 ## 1694        4.6       1986                                  Howard the DuckÂ 
@@ -742,8 +668,8 @@ div.tocify {
 </div>
 <div id="conclusions" class="section level1">
 <h1>Conclusions</h1>
-<p><img src="imdb_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">stats</a></code></pre></div>
+<p><img src="imdb_files/figure-html/all_movies-1.png" width="672" /></p>
+<pre class="r"><code>stats</code></pre>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
 ## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
 ## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747

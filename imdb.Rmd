@@ -123,7 +123,7 @@ stats
 
 Overall, the films from 2010-2016 are roughly similar in quality to those across all years and after 1980. The best film isn't here though, although the worst film might be, judging by the mins and maxes. 
 
-```{r}
+```{r tens head}
 head(tens)
 ```
 
@@ -168,7 +168,7 @@ stats[4,7] <- nrow(zeroes)
 stats
 ```
 
-```{r}
+```{r zeroes head}
 head(zeroes)
 ```
 
@@ -207,13 +207,13 @@ stats[5,7] <- nrow(nineties)
 stats
 ```
 
-```{r}
+```{r nineties head}
 head(nineties)
 ```
 
 Three of my favorite films came out in the 1990s and topped this list: *Pulp Fiction*, *Fight Club*, and *The Matrix*. The decade's top film, *The Shawshank Redemption*, actually was a box office disappointment because of its direct competition with Tarantino's film.
 
-```{r}
+```{r nineties tail}
 tail(nineties)
 ```
 
@@ -239,7 +239,7 @@ nineties_plot
 
 # The 80s
 
-```{r}
+```{r organizing the 80s}
 eighties <- subset(movies, title_year >= 1980 & title_year < 1990)
 eighties <- eighties[order(eighties$imdb_score, decreasing = TRUE),]
 
@@ -248,7 +248,7 @@ stats[6,7] <- nrow(eighties)
 stats
 ```
 
-```{r}
+```{r eighties head}
 head(eighties)
 ```
 
@@ -281,7 +281,7 @@ eighties_plot
 
 # Conclusions
 
-```{r, echo = FALSE}
+```{r, all_movies, echo = FALSE}
 movies_plot<- ggplot(movies, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
@@ -296,7 +296,7 @@ movies_plot<- ggplot(movies, aes(x = factor(title_year), y = imdb_score)) +
 movies_plot
 ```
 
-```{r}
+```{r stats}
 stats
 ```
 

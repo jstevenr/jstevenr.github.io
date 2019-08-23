@@ -24,6 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -42,97 +44,22 @@
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
 
-
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  { background-color: #f8f8f8; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
 
 
 <style type="text/css">
@@ -177,7 +104,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -499,10 +425,10 @@ div.tocify {
 </div>
 <div id="main-body" class="section level1">
 <h1>Main Body</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">set.seed</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">white &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;winequality-white.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb1-3" title="3">                  <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>)</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw">head</span>(white)</a></code></pre></div>
+<pre class="r"><code>set.seed(10)
+white &lt;- read.csv(&quot;winequality-white.csv&quot;,
+                  sep = &quot;;&quot;)
+head(white)</code></pre>
 <pre><code>##   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
 ## 1           7.0             0.27        0.36           20.7     0.045
 ## 2           6.3             0.30        0.34            1.6     0.049
@@ -524,42 +450,42 @@ div.tocify {
 ## 4       6
 ## 5       6
 ## 6       6</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># sapply(white, function(x) sum(is.na(x)))</span></a></code></pre></div>
+<pre class="r"><code># sapply(white, function(x) sum(is.na(x)))</code></pre>
 <p>A preliminary look at the dataset reveals that there are no missing values.</p>
 <p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">white.cor &lt;-<span class="st"> </span><span class="kw">cor</span>(white[,<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>])</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="co"># white.cor</span></a></code></pre></div>
+<pre class="r"><code>white.cor &lt;- cor(white[,1:12])
+# white.cor</code></pre>
 <p>Taking a look at the correlation coefficients <span class="math inline">\(r\)</span> for the predictor variables, we see that <code>density</code> is strongly correlated with <code>residual.sugar</code> (<span class="math inline">\(r = 0.84\)</span>) and <code>alcohol</code> (<span class="math inline">\(r = -0.78\)</span>), and moderately correlated with <code>total.sulfur.dioxide</code> (<span class="math inline">\(r = 0.53\)</span>). <code>free.sulfur.dioxide</code> and <code>total.sulfur.dioxide</code> are also moderately correlated with each other (<span class="math inline">\(r = 0.62\)</span>) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide.</p>
 <p>Aside from that correlations are all very low, including (and especially) <code>quality</code>, the response variable, with the predictors.</p>
 <p>So, we should actually remove the variables <code>residual.sugar</code> and <code>density</code>, as well as <code>total.sulfur.dioxide</code> because if its direct relationship with <code>free.sulfur.dioxide</code>, in order to address problems with multicollinearity. We’re going to withhold removing <code>alcohol</code>, to see the if the initial effect of removing just these three correlated variables is enough to address the issue.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># removing three predictors</span></a>
-<a class="sourceLine" id="cb5-2" title="2">white2 &lt;-<span class="st"> </span><span class="kw">subset</span>(white, <span class="dt">select =</span> <span class="op">-</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">8</span>))</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co"># cor(white2[,1:9])</span></a></code></pre></div>
+<pre class="r"><code># removing three predictors
+white2 &lt;- subset(white, select = -c(4,7,8))
+# cor(white2[,1:9])</code></pre>
 <p>From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue.</p>
 <p>From here on out, we’re also going to want to convert the <code>quality</code> response variable into a binary factor so that we can use the predictors to classify the observations. We’re going to do this by labeling all of the observations that have received an above average (5 out of 10) as “good”, and the rest as “bad”, “bad” really meaning “not good”. This factor of <code>good</code> and <code>bad</code> goes under a new column titled <code>label</code>.</p>
 <p>We’ll remove the <code>quality</code> variable afterwards, since if we use it as an attribute in the predictor, it will skew the results because it is directly correlated to the label.</p>
 <p>It’s important to note that all of these numeric predictor variables (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>, <code>pH</code>, <code>sulphates</code>, <code>alcohol</code>) are not all scaled the same. As such, it’s appropriate to scale them before running any analyses.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># scaling the 8 numeric attributes</span></a>
-<a class="sourceLine" id="cb6-2" title="2">white_sc &lt;-<span class="st"> </span>white2</a>
-<a class="sourceLine" id="cb6-3" title="3">white_sc[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)] &lt;-<span class="st"> </span><span class="kw">scale</span>(white_sc[,<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)])</a>
-<a class="sourceLine" id="cb6-4" title="4"></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co"># converting quality into a binary factor</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(white_sc)) {</a>
-<a class="sourceLine" id="cb6-7" title="7">  <span class="cf">if</span> (white_sc<span class="op">$</span>quality[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb6-8" title="8">    white_sc<span class="op">$</span>label[i] &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb6-9" title="9">  <span class="cf">else</span></a>
-<a class="sourceLine" id="cb6-10" title="10">    white_sc<span class="op">$</span>label[i] &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-11" title="11">}</a>
-<a class="sourceLine" id="cb6-12" title="12">white_sc<span class="op">$</span>label &lt;-<span class="st"> </span><span class="kw">factor</span>(white_sc<span class="op">$</span>label, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>))</a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="co"># removing the quality variable</span></a>
-<a class="sourceLine" id="cb6-14" title="14">white_sc<span class="op">$</span>quality &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<pre class="r"><code># scaling the 8 numeric attributes
+white_sc &lt;- white2
+white_sc[,c(1:8)] &lt;- scale(white_sc[,c(1:8)])
+
+# converting quality into a binary factor
+for (i in 1:nrow(white_sc)) {
+  if (white_sc$quality[i] &gt; 5)
+    white_sc$label[i] &lt;- 1
+  else
+    white_sc$label[i] &lt;- 0
+}
+white_sc$label &lt;- factor(white_sc$label, levels = c(0, 1), labels = c(&quot;bad&quot;, &quot;good&quot;))
+# removing the quality variable
+white_sc$quality &lt;- NULL</code></pre>
 <p>Now we have 8 numeric predictor variables, and one two-level categorical variable (<code>label</code>). We’re going to apply a few different classification methods in order to firstly determine which the best model for predicting is in terms of the relevant variables, and secondly to find the best classification algorithm for this data.</p>
 <p>We’re going to initialize a matrix to easily compare the quality of the different classification methods we’re going to utilize going forward, namely decision trees (with k-fold cross validation to prune the tree), k-nearest neighbor, and randomForest. The ‘full randomForest’ refers to the model using all 8 predictors whereas the ‘small randomForest’ refers to a subset of these predictors, the use of which will become clear when discussing decision trees.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># initializing a matrix for records</span></a>
-<a class="sourceLine" id="cb7-2" title="2">records &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="kw">colnames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Accuracy Rate&quot;</span>, <span class="st">&quot;Error Rate&quot;</span>, <span class="st">&quot;AUC&quot;</span>)</a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="kw">rownames</span>(records) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tree&quot;</span>, <span class="st">&quot;pruned.tree&quot;</span>, <span class="st">&quot;k=10 kNN&quot;</span>, <span class="st">&quot;k=35 kNN&quot;</span>, <span class="st">&quot;full.randomForest&quot;</span>, <span class="st">&quot;small.randomForest&quot;</span>)</a>
-<a class="sourceLine" id="cb7-5" title="5">records</a></code></pre></div>
+<pre class="r"><code># initializing a matrix for records
+records &lt;- matrix(NA, nrow = 6, ncol = 3)
+colnames(records) &lt;- c(&quot;Accuracy Rate&quot;, &quot;Error Rate&quot;, &quot;AUC&quot;)
+rownames(records) &lt;- c(&quot;tree&quot;, &quot;pruned.tree&quot;, &quot;k=10 kNN&quot;, &quot;k=35 kNN&quot;, &quot;full.randomForest&quot;, &quot;small.randomForest&quot;)
+records</code></pre>
 <pre><code>##                    Accuracy Rate Error Rate AUC
 ## tree                          NA         NA  NA
 ## pruned.tree                   NA         NA  NA
@@ -568,24 +494,24 @@ div.tocify {
 ## full.randomForest             NA         NA  NA
 ## small.randomForest            NA         NA  NA</code></pre>
 <p>In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># set.seed(10) is loaded</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="co"># using a subset of 1000 obs for the training set</span></a>
-<a class="sourceLine" id="cb9-3" title="3">test_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(white_sc), <span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb9-4" title="4">test &lt;-<span class="st"> </span>white_sc[test_indices,]</a>
-<a class="sourceLine" id="cb9-5" title="5">train &lt;-<span class="st"> </span>white_sc[<span class="op">-</span>test_indices,]</a></code></pre></div>
+<pre class="r"><code># set.seed(10) is loaded
+# using a subset of 1000 obs for the training set
+test_indices &lt;- sample(1:nrow(white_sc), 1000)
+test &lt;- white_sc[test_indices,]
+train &lt;- white_sc[-test_indices,]</code></pre>
 <div id="decision-tree" class="section level2">
 <h2>Decision Tree</h2>
 <p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data.</p>
 <p>Of course, we’re going to use <code>label</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># library(tree) is loaded</span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="co"># predicting the label (good vs bad)</span></a>
-<a class="sourceLine" id="cb10-3" title="3">tree &lt;-<span class="st"> </span><span class="kw">tree</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, </a>
-<a class="sourceLine" id="cb10-4" title="4">             <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,</a>
-<a class="sourceLine" id="cb10-5" title="5">             <span class="dt">control =</span> <span class="kw">tree.control</span>(<span class="dt">nobs =</span> <span class="kw">nrow</span>(train),</a>
-<a class="sourceLine" id="cb10-6" title="6">                                          <span class="dt">mincut =</span> <span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb10-7" title="7">                                          <span class="dt">minsize =</span> <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb10-8" title="8">                                          <span class="dt">mindev =</span> <span class="fl">.003</span>))</a>
-<a class="sourceLine" id="cb10-9" title="9"><span class="kw">summary</span>(tree)</a></code></pre></div>
+<pre class="r"><code># library(tree) is loaded
+# predicting the label (good vs bad)
+tree &lt;- tree(formula = label ~ ., data = train, 
+             method = &quot;class&quot;,
+             control = tree.control(nobs = nrow(train),
+                                          mincut = 5,
+                                          minsize = 10,
+                                          mindev = .003))
+summary(tree)</code></pre>
 <pre><code>## 
 ## Classification tree:
 ## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train), 
@@ -598,57 +524,57 @@ div.tocify {
 ## Residual mean deviance:  0.9588 = 3722 / 3882 
 ## Misclassification error rate: 0.2324 = 906 / 3898</code></pre>
 <p>So we can see from this summary, that in fact 6 out of the 8 predictors were used in constructing this tree: <code>alcohol</code>, <code>volatile.acidity</code>, <code>free.sulfur.dioxide</code>, <code>sulphates</code>, <code>citric.acid</code>, and <code>fixed.acidity</code>. Now we are actually going to plot the tree to visualize this.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">plot</span>(tree, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)</a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="kw">text</span>(tree, <span class="dt">pretty =</span> <span class="dv">0</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="kw">title</span>(<span class="st">&quot;Classification Tree (Before Pruning)&quot;</span>)</a></code></pre></div>
+<pre class="r"><code>plot(tree, type = &quot;uniform&quot;)
+text(tree, pretty = 0, cex = 1, col = &quot;red&quot;)
+title(&quot;Classification Tree (Before Pruning)&quot;)</code></pre>
 <p><img src="wine-classification_files/figure-html/plot%20decision%20tree-1.png" width="672" /></p>
 <p>We can see while looking at the tree how often <code>alcohol</code> appears and intuit from that that the amount of alcohol, whether high or low, plays at least some part in the model’s classification of a good wine.</p>
 <p>We can build a confusion matrix after using the data to predict on the test set, and then find the accuracy rate and the error rate.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># a function that returns the accuracy of a confusion matrix</span></a>
-<a class="sourceLine" id="cb13-2" title="2">class_acc &lt;-<span class="st"> </span><span class="cf">function</span>(conf) {</a>
-<a class="sourceLine" id="cb13-3" title="3">  <span class="kw">sum</span>(<span class="kw">diag</span>(conf)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(conf)</a>
-<a class="sourceLine" id="cb13-4" title="4">}</a>
-<a class="sourceLine" id="cb13-5" title="5"></a>
-<a class="sourceLine" id="cb13-6" title="6">tree_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(tree, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</a>
-<a class="sourceLine" id="cb13-7" title="7"></a>
-<a class="sourceLine" id="cb13-8" title="8"><span class="co"># confusion matrix</span></a>
-<a class="sourceLine" id="cb13-9" title="9">tree_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> tree_pred, <span class="dt">true =</span> test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb13-10" title="10">tree_conf</a></code></pre></div>
+<pre class="r"><code># a function that returns the accuracy of a confusion matrix
+class_acc &lt;- function(conf) {
+  sum(diag(conf)) / sum(conf)
+}
+
+tree_pred &lt;- predict(tree, test, type = &quot;class&quot;)
+
+# confusion matrix
+tree_conf &lt;- table(pred = tree_pred, true = test$label)
+tree_conf</code></pre>
 <pre><code>##       true
 ## pred   bad good
 ##   bad  225  118
 ##   good 133  524</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># the class_acc() function is defined locally</span></a>
-<a class="sourceLine" id="cb15-2" title="2">tree_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(tree_conf)</a>
-<a class="sourceLine" id="cb15-3" title="3">tree_acc</a></code></pre></div>
+<pre class="r"><code># the class_acc() function is defined locally
+tree_acc &lt;- class_acc(tree_conf)
+tree_acc</code></pre>
 <pre><code>## [1] 0.749</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># misclassification error </span></a>
-<a class="sourceLine" id="cb17-2" title="2">tree_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>tree_acc</a>
-<a class="sourceLine" id="cb17-3" title="3">tree_err</a></code></pre></div>
+<pre class="r"><code># misclassification error 
+tree_err &lt;- 1 - tree_acc
+tree_err</code></pre>
 <pre><code>## [1] 0.251</code></pre>
 <p>With an accuracy rate of <code>0.748</code>, this decision tree model is not superb, but will still classify correctly about 3 out of 4 times.</p>
 <p>As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification).</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># library(ROCR) is loaded</span></a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="co"># getting matrix of predicted class probabilities</span></a>
-<a class="sourceLine" id="cb19-3" title="3">all_tree_probs &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(tree, test, <span class="dt">type =</span> <span class="st">&quot;vector&quot;</span>))</a>
-<a class="sourceLine" id="cb19-4" title="4">tree_probs &lt;-<span class="st"> </span>all_tree_probs[,<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb19-5" title="5"></a>
-<a class="sourceLine" id="cb19-6" title="6">tree_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(tree_probs, test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb19-7" title="7">tree_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(tree_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</a>
-<a class="sourceLine" id="cb19-8" title="8"></a>
-<a class="sourceLine" id="cb19-9" title="9"><span class="co"># Plotting the ROC curve for the decision tree</span></a>
-<a class="sourceLine" id="cb19-10" title="10"><span class="kw">plot</span>(tree_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb19-11" title="11">     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for tree (before pruning)&quot;</span>)</a>
-<a class="sourceLine" id="cb19-12" title="12"><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</a></code></pre></div>
+<pre class="r"><code># library(ROCR) is loaded
+# getting matrix of predicted class probabilities
+all_tree_probs &lt;- as.data.frame(predict(tree, test, type = &quot;vector&quot;))
+tree_probs &lt;- all_tree_probs[,2]
+
+tree_roc_pred &lt;- prediction(tree_probs, test$label)
+tree_roc_perf &lt;- performance(tree_roc_pred, &quot;tpr&quot;, &quot;fpr&quot;)
+
+# Plotting the ROC curve for the decision tree
+plot(tree_roc_perf, col = 2, lwd = 3, 
+     main = &quot;ROC Curve for tree (before pruning)&quot;)
+abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20tree-1.png" width="672" /></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Area under the curve</span></a>
-<a class="sourceLine" id="cb20-2" title="2">tree_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)</a>
-<a class="sourceLine" id="cb20-3" title="3">tree_AUC &lt;-<span class="st"> </span>tree_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb20-4" title="4">tree_AUC</a></code></pre></div>
+<pre class="r"><code># Area under the curve
+tree_auc_perf &lt;- performance(tree_roc_pred, &quot;auc&quot;)
+tree_AUC &lt;- tree_auc_perf@y.values[[1]]
+tree_AUC</code></pre>
 <pre><code>## [1] 0.7885253</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># adding to records matrix</span></a>
-<a class="sourceLine" id="cb22-2" title="2">records[<span class="dv">1</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(tree_acc, tree_err, tree_AUC)</a>
-<a class="sourceLine" id="cb22-3" title="3">records</a></code></pre></div>
+<pre class="r"><code># adding to records matrix
+records[1, ] &lt;- c(tree_acc, tree_err, tree_AUC)
+records</code></pre>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.749      0.251 0.7885253
 ## pruned.tree                   NA         NA        NA
@@ -663,11 +589,11 @@ div.tocify {
 <p>In k-fold cross validation, we divide the sample into <code>k</code> sub samples, then train the model on <code>k -1</code> samples, leaving one as a holdout sample. We compute validation error on each of these samples, then average the validation error of all of them.</p>
 <p>The idea of cross-validation is that it will sample multiple times from the training set, with different separations. Ultimately, this creates a more robust model i.e. the tree will not be overfit.</p>
 <p>Cross validation will help us find the optimal size for the tree (in terms of number of nodes). We can plot the size against misclassification error to visualize this as well.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">set.seed</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="co"># 10-fold CV (k = 10)</span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="co"># library(tree) is loaded</span></a>
-<a class="sourceLine" id="cb24-4" title="4">cv &lt;-<span class="st"> </span><span class="kw">cv.tree</span>(tree, <span class="dt">FUN=</span>prune.misclass, <span class="dt">K=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb24-5" title="5">cv</a></code></pre></div>
+<pre class="r"><code>set.seed(10)
+# 10-fold CV (k = 10)
+# library(tree) is loaded
+cv &lt;- cv.tree(tree, FUN=prune.misclass, K=10)
+cv</code></pre>
 <pre><code>## $size
 ## [1] 16 11  8  7  6  5  4  3  1
 ## 
@@ -683,22 +609,22 @@ div.tocify {
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;prune&quot;         &quot;tree.sequence&quot;</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># Best size </span></a>
-<a class="sourceLine" id="cb26-2" title="2">best.cv &lt;-<span class="st"> </span>cv<span class="op">$</span>size[<span class="kw">which.min</span>(cv<span class="op">$</span>dev)]</a>
-<a class="sourceLine" id="cb26-3" title="3"></a>
-<a class="sourceLine" id="cb26-4" title="4"><span class="co"># plotting misclass error as a function of tree size (k)</span></a>
-<a class="sourceLine" id="cb26-5" title="5"><span class="kw">plot</span>(cv<span class="op">$</span>size , cv<span class="op">$</span>dev, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb26-6" title="6">     <span class="dt">xlab =</span> <span class="st">&quot;Number of leaves, </span><span class="ch">\&#39;</span><span class="st">best</span><span class="ch">\&#39;</span><span class="st">&quot;</span>, </a>
-<a class="sourceLine" id="cb26-7" title="7">     <span class="dt">ylab =</span> <span class="st">&quot;Misclassification Error&quot;</span>,</a>
-<a class="sourceLine" id="cb26-8" title="8">     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Optimal Tree Size&quot;</span>)</a>
-<a class="sourceLine" id="cb26-9" title="9"><span class="kw">abline</span>(<span class="dt">v=</span>best.cv, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre></div>
+<pre class="r"><code># Best size 
+best.cv &lt;- cv$size[which.min(cv$dev)]
+
+# plotting misclass error as a function of tree size (k)
+plot(cv$size , cv$dev, type=&quot;b&quot;, 
+     xlab = &quot;Number of leaves, \&#39;best\&#39;&quot;, 
+     ylab = &quot;Misclassification Error&quot;,
+     col = &quot;red&quot;, main=&quot;Optimal Tree Size&quot;)
+abline(v=best.cv, lty=2)</code></pre>
 <p><img src="wine-classification_files/figure-html/cross%20validation%20of%20tree-1.png" width="672" /></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">best.cv</a></code></pre></div>
+<pre class="r"><code>best.cv</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">tree.pruned &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree, <span class="dt">best =</span> best.cv, </a>
-<a class="sourceLine" id="cb29-2" title="2">                          <span class="dt">method =</span> <span class="st">&quot;misclass&quot;</span>)</a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="kw">summary</span>(tree.pruned)</a></code></pre></div>
+<pre class="r"><code>tree.pruned &lt;- prune.tree(tree, best = best.cv, 
+                          method = &quot;misclass&quot;)
+summary(tree.pruned)</code></pre>
 <pre><code>## 
 ## Classification tree:
 ## snip.tree(tree = tree, nodes = c(10L, 3L, 4L, 11L))
@@ -707,47 +633,47 @@ div.tocify {
 ## Number of terminal nodes:  4 
 ## Residual mean deviance:  1.054 = 4103 / 3894 
 ## Misclassification error rate: 0.2496 = 973 / 3898</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">plot</span>(tree.pruned, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)</a>
-<a class="sourceLine" id="cb31-2" title="2"><span class="kw">text</span>(tree.pruned, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb31-3" title="3"><span class="kw">title</span>(<span class="st">&quot;Pruned Classification Tree&quot;</span>)</a></code></pre></div>
+<pre class="r"><code>plot(tree.pruned, type = &quot;uniform&quot;)
+text(tree.pruned, col = &quot;blue&quot;)
+title(&quot;Pruned Classification Tree&quot;)</code></pre>
 <p><img src="wine-classification_files/figure-html/pruning%20the%20tree-1.png" width="672" /></p>
 <p>Note that after pruning the tree, the only relevant variables used in tree construction are: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. And of course, this tree only has 7 nodes, the best tree size we determined from using cross-validation.</p>
 <p>Now we can apply the same diagnostic methods as before: looking at confusion matrix, accuracy/error rate, the ROC curve and the area underneath it, for the sake of comparison.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">pruned_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(tree.pruned, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</a>
-<a class="sourceLine" id="cb32-2" title="2"><span class="co"># confusion matrix</span></a>
-<a class="sourceLine" id="cb32-3" title="3">pruned_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> pruned_pred, <span class="dt">true =</span> test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb32-4" title="4">pruned_conf</a></code></pre></div>
+<pre class="r"><code>pruned_pred &lt;- predict(tree.pruned, test, type = &quot;class&quot;)
+# confusion matrix
+pruned_conf &lt;- table(pred = pruned_pred, true = test$label)
+pruned_conf</code></pre>
 <pre><code>##       true
 ## pred   bad good
 ##   bad  179   88
 ##   good 179  554</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">pruned_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(tree_conf)</a>
-<a class="sourceLine" id="cb34-2" title="2">pruned_acc</a></code></pre></div>
+<pre class="r"><code>pruned_acc &lt;- class_acc(tree_conf)
+pruned_acc</code></pre>
 <pre><code>## [1] 0.749</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">pruned_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>tree_acc</a>
-<a class="sourceLine" id="cb36-2" title="2">pruned_err</a></code></pre></div>
+<pre class="r"><code>pruned_err &lt;- 1 - tree_acc
+pruned_err</code></pre>
 <pre><code>## [1] 0.251</code></pre>
 <p>We see that pruning the tree didn’t actually really improve the accuracy rate of the model at all, although it did condense the number of relevant variables. Initially, seeing that accuracy did not improve might give the impression that pruning was not meaningful, but to the contrary, the fact that we were able to prune the tree without losing any accuracy shows that the sole 3 variables we have remaining (<code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>) are just as good as classifying when using a decision tree as when using all 8 predictors.</p>
 <p>The original model being rather complex with as many as 6 predictors runs the risk of over-fitting, which is to say that the data follows the training data too closely and cannot be well generalized to new data. This is why we are inclined to favor a simpler model such as that we found after pruning with cross-validation.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="co"># ROC Curve with tree object</span></a>
-<a class="sourceLine" id="cb38-2" title="2"><span class="co"># getting matrix of predicted class probabilities</span></a>
-<a class="sourceLine" id="cb38-3" title="3">all_pruned_probs &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(tree.pruned, test, <span class="dt">type =</span> <span class="st">&quot;vector&quot;</span>))</a>
-<a class="sourceLine" id="cb38-4" title="4">pruned_probs &lt;-<span class="st"> </span>all_pruned_probs[,<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb38-5" title="5"></a>
-<a class="sourceLine" id="cb38-6" title="6">pruned_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(pruned_probs, test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb38-7" title="7">pruned_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(pruned_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</a>
-<a class="sourceLine" id="cb38-8" title="8"></a>
-<a class="sourceLine" id="cb38-9" title="9"><span class="co"># Plotting the ROC curve for the rpart decision tree</span></a>
-<a class="sourceLine" id="cb38-10" title="10"><span class="kw">plot</span>(pruned_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb38-11" title="11">     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for Pruned tree&quot;</span>)</a>
-<a class="sourceLine" id="cb38-12" title="12"><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</a></code></pre></div>
+<pre class="r"><code># ROC Curve with tree object
+# getting matrix of predicted class probabilities
+all_pruned_probs &lt;- as.data.frame(predict(tree.pruned, test, type = &quot;vector&quot;))
+pruned_probs &lt;- all_pruned_probs[,2]
+
+pruned_roc_pred &lt;- prediction(pruned_probs, test$label)
+pruned_roc_perf &lt;- performance(pruned_roc_pred, &quot;tpr&quot;, &quot;fpr&quot;)
+
+# Plotting the ROC curve for the rpart decision tree
+plot(pruned_roc_perf, col = 2, lwd = 3, 
+     main = &quot;ROC Curve for Pruned tree&quot;)
+abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20pruned%20tree%20and%20AUC-1.png" width="672" /></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">pruned_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(pruned_roc_pred, <span class="st">&quot;auc&quot;</span>)</a>
-<a class="sourceLine" id="cb39-2" title="2">pruned_AUC &lt;-<span class="st"> </span>pruned_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb39-3" title="3">pruned_AUC</a></code></pre></div>
+<pre class="r"><code>pruned_auc_perf &lt;- performance(pruned_roc_pred, &quot;auc&quot;)
+pruned_AUC &lt;- pruned_auc_perf@y.values[[1]]
+pruned_AUC</code></pre>
 <pre><code>## [1] 0.7604509</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">records[<span class="dv">2</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(pruned_acc, pruned_err, pruned_AUC)</a>
-<a class="sourceLine" id="cb41-2" title="2">records</a></code></pre></div>
+<pre class="r"><code>records[2, ] &lt;- c(pruned_acc, pruned_err, pruned_AUC)
+records</code></pre>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.749      0.251 0.7885253
 ## pruned.tree                0.749      0.251 0.7604509
@@ -764,50 +690,50 @@ div.tocify {
 <p>We’re now going to apply the k-nearest neighbors method of classification, which is a non-parametric method. k-Nearest neighbors (or kNN) is called a “lazy learning” technique because it goes through the training set every time it predicts a test sample’s label. It finds this label by plotting the test sample in the same dimensional space as the training data, then classifies it based on the “k nearest neighbor(s)”, i.e. if k = 10, then the label of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation.</p>
 <p>Distance is measured in different ways, but by default the <code>knn()</code> function utilized Euclidean distance.</p>
 <p>This is rather problematic because when calculating distance it’s assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes’ relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what’s more we scaled the remaining numeric predictors, which goes in a small way to addressing this.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">set.seed</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb43-2" title="2"><span class="co"># library(class) is loaded</span></a>
-<a class="sourceLine" id="cb43-3" title="3"><span class="co"># using 20 nearest neighbors</span></a>
-<a class="sourceLine" id="cb43-4" title="4">knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb43-5" title="5">                <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb43-6" title="6">                <span class="dt">cl =</span> train<span class="op">$</span>label, </a>
-<a class="sourceLine" id="cb43-7" title="7">                <span class="dt">k =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb43-8" title="8"></a>
-<a class="sourceLine" id="cb43-9" title="9"><span class="co"># confusion matrix</span></a>
-<a class="sourceLine" id="cb43-10" title="10">knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> knn_pred, <span class="dt">true =</span> test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb43-11" title="11">knn_conf</a></code></pre></div>
+<pre class="r"><code>set.seed(10)
+# library(class) is loaded
+# using 20 nearest neighbors
+knn_pred &lt;- knn(train = train[,-9], 
+                test = test[,-9], 
+                cl = train$label, 
+                k = 10, prob = TRUE)
+
+# confusion matrix
+knn_conf &lt;- table(pred = knn_pred, true = test$label)
+knn_conf</code></pre>
 <pre><code>##       true
 ## pred   bad good
 ##   bad  205   91
 ##   good 153  551</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># accuracy</span></a>
-<a class="sourceLine" id="cb45-2" title="2">knn_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(knn_conf)</a>
-<a class="sourceLine" id="cb45-3" title="3">knn_acc</a></code></pre></div>
+<pre class="r"><code># accuracy
+knn_acc &lt;- class_acc(knn_conf)
+knn_acc</code></pre>
 <pre><code>## [1] 0.756</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="co"># misclassification error</span></a>
-<a class="sourceLine" id="cb47-2" title="2">knn_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>knn_acc</a>
-<a class="sourceLine" id="cb47-3" title="3">knn_err</a></code></pre></div>
+<pre class="r"><code># misclassification error
+knn_err &lt;- 1 - knn_acc
+knn_err</code></pre>
 <pre><code>## [1] 0.244</code></pre>
 <p>So, using 10 nearest neighbors was just a random estimate, and it ended up with another mediocre accuracy rate (<span class="math inline">\(0.765\)</span>) but we can look at the area under the ROC curve (AUC) and look at the strength of the test relative to the methods we have tried so far.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="co"># Creating the ROC curve for knn</span></a>
-<a class="sourceLine" id="cb49-2" title="2"><span class="co"># library(dplyr) is loaded</span></a>
-<a class="sourceLine" id="cb49-3" title="3">knn_prob &lt;-<span class="st"> </span><span class="kw">attr</span>(knn_pred, <span class="st">&quot;prob&quot;</span>)</a>
-<a class="sourceLine" id="cb49-4" title="4">knn_prob &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">ifelse</span>(knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span><span class="op">-</span>knn_prob, knn_prob) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb49-5" title="5">knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> knn_prob, <span class="dt">labels =</span> test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb49-6" title="6">knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(knn_roc_pred, </a>
-<a class="sourceLine" id="cb49-7" title="7">                            <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</a>
-<a class="sourceLine" id="cb49-8" title="8"></a>
-<a class="sourceLine" id="cb49-9" title="9"><span class="co"># Plotting the KNN ROC curve</span></a>
-<a class="sourceLine" id="cb49-10" title="10"><span class="kw">plot</span>(knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb49-11" title="11">     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 10&quot;</span>)</a>
-<a class="sourceLine" id="cb49-12" title="12"><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</a></code></pre></div>
+<pre class="r"><code># Creating the ROC curve for knn
+# library(dplyr) is loaded
+knn_prob &lt;- attr(knn_pred, &quot;prob&quot;)
+knn_prob &lt;- 2 * ifelse(knn_pred == &quot;-1&quot;, 1-knn_prob, knn_prob) - 1
+knn_roc_pred &lt;- prediction(predictions = knn_prob, labels = test$label)
+knn_roc_perf &lt;- performance(knn_roc_pred, 
+                            measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the KNN ROC curve
+plot(knn_roc_perf, col = 2, lwd = 3, 
+     main = &quot;ROC Curve for kNN, k = 10&quot;)
+abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20knn-1.png" width="672" /></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="co"># Area under the knn curve</span></a>
-<a class="sourceLine" id="cb50-2" title="2">knn_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
-<a class="sourceLine" id="cb50-3" title="3">knn_AUC &lt;-<span class="st"> </span>knn_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb50-4" title="4">knn_AUC</a></code></pre></div>
+<pre class="r"><code># Area under the knn curve
+knn_auc_perf &lt;- performance(knn_roc_pred, measure = &quot;auc&quot;)
+knn_AUC &lt;- knn_auc_perf@y.values[[1]]
+knn_AUC</code></pre>
 <pre><code>## [1] 0.6893241</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">records[<span class="dv">3</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(knn_acc, knn_err, knn_AUC)</a>
-<a class="sourceLine" id="cb52-2" title="2">records</a></code></pre></div>
+<pre class="r"><code>records[3, ] &lt;- c(knn_acc, knn_err, knn_AUC)
+records</code></pre>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.749      0.251 0.7885253
 ## pruned.tree                0.749      0.251 0.7604509
@@ -816,86 +742,86 @@ div.tocify {
 ## full.randomForest             NA         NA        NA
 ## small.randomForest            NA         NA        NA</code></pre>
 <p>So with an AUC of <span class="math inline">\(0.679\)</span>, this test is not very good. We can look at different values for <span class="math inline">\(k\)</span> and try to find the best one to use and then compare the results from that with these.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">set.seed</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb54-2" title="2"><span class="co"># library &#39;class&#39; is loaded</span></a>
-<a class="sourceLine" id="cb54-3" title="3">range &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb54-4" title="4">knn_accs &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">length</span>(range))</a>
-<a class="sourceLine" id="cb54-5" title="5"></a>
-<a class="sourceLine" id="cb54-6" title="6"><span class="co"># Determining the best k for k-nearest neighbors classification</span></a>
-<a class="sourceLine" id="cb54-7" title="7"><span class="cf">for</span> (k <span class="cf">in</span> range) {</a>
-<a class="sourceLine" id="cb54-8" title="8">  knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb54-9" title="9">                  <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb54-10" title="10">                  <span class="dt">cl =</span> train<span class="op">$</span>label, </a>
-<a class="sourceLine" id="cb54-11" title="11">                  <span class="dt">k =</span> k, <span class="dt">prob =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb54-12" title="12">  knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">pred =</span> knn_pred, <span class="dt">true =</span> test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb54-13" title="13">  knn_accs[k] &lt;-<span class="st"> </span><span class="kw">class_acc</span>(knn_conf)</a>
-<a class="sourceLine" id="cb54-14" title="14">}</a>
-<a class="sourceLine" id="cb54-15" title="15"></a>
-<a class="sourceLine" id="cb54-16" title="16"><span class="co"># plotting k vs accuracy</span></a>
-<a class="sourceLine" id="cb54-17" title="17"><span class="kw">plot</span>(range, knn_accs, <span class="dt">xlab =</span> <span class="st">&quot;k&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;accuracy&quot;</span>,</a>
-<a class="sourceLine" id="cb54-18" title="18">     <span class="dt">main =</span> <span class="st">&quot;Number of Neighbors (k) vs Test Accuracy&quot;</span>)</a></code></pre></div>
+<pre class="r"><code>set.seed(10)
+# library &#39;class&#39; is loaded
+range &lt;- 1:50
+knn_accs &lt;- rep(0, length(range))
+
+# Determining the best k for k-nearest neighbors classification
+for (k in range) {
+  knn_pred &lt;- knn(train = train[,-9], 
+                  test = test[,-9], 
+                  cl = train$label, 
+                  k = k, prob = TRUE)
+  knn_conf &lt;- table(pred = knn_pred, true = test$label)
+  knn_accs[k] &lt;- class_acc(knn_conf)
+}
+
+# plotting k vs accuracy
+plot(range, knn_accs, xlab = &quot;k&quot;, ylab = &quot;accuracy&quot;,
+     main = &quot;Number of Neighbors (k) vs Test Accuracy&quot;)</code></pre>
 <p><img src="wine-classification_files/figure-html/plotting%20k%20vs%20accs-1.png" width="672" /> This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using <span class="math inline">\(k=1\)</span> will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
 <p>Here is the ROC curve demonstrating this.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">worst_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb55-2" title="2">                <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb55-3" title="3">                <span class="dt">cl =</span> train<span class="op">$</span>label, </a>
-<a class="sourceLine" id="cb55-4" title="4">                <span class="dt">k =</span> <span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb55-5" title="5">                <span class="dt">prob =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb55-6" title="6">worst_knn_prob &lt;-<span class="st"> </span><span class="kw">attr</span>(worst_knn_pred, <span class="st">&quot;prob&quot;</span>)</a>
-<a class="sourceLine" id="cb55-7" title="7">worst_knn_prob &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">ifelse</span>(worst_knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span><span class="op">-</span>worst_knn_prob, worst_knn_prob)<span class="op">-</span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb55-8" title="8">worst_knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> worst_knn_prob, </a>
-<a class="sourceLine" id="cb55-9" title="9">                                <span class="dt">labels =</span> test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb55-10" title="10">worst_knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(worst_knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</a>
-<a class="sourceLine" id="cb55-11" title="11"></a>
-<a class="sourceLine" id="cb55-12" title="12"><span class="co"># Plotting the KNN ROC curve</span></a>
-<a class="sourceLine" id="cb55-13" title="13"><span class="kw">plot</span>(worst_knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb55-14" title="14">     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 1&quot;</span>)</a>
-<a class="sourceLine" id="cb55-15" title="15"><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</a></code></pre></div>
+<pre class="r"><code>worst_knn_pred &lt;- knn(train = train[,-9], 
+                test = test[,-9], 
+                cl = train$label, 
+                k = 1, 
+                prob = TRUE)
+worst_knn_prob &lt;- attr(worst_knn_pred, &quot;prob&quot;)
+worst_knn_prob &lt;- 2*ifelse(worst_knn_pred == &quot;-1&quot;, 1-worst_knn_prob, worst_knn_prob)-1
+worst_knn_roc_pred &lt;- prediction(predictions = worst_knn_prob, 
+                                labels = test$label)
+worst_knn_roc_perf &lt;- performance(worst_knn_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the KNN ROC curve
+plot(worst_knn_roc_perf, col = 2, lwd = 3, 
+     main = &quot;ROC Curve for kNN, k = 1&quot;)
+abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/worst%20kNN%20k%20=%201-1.png" width="672" /></p>
 <p>So we think better not to opt for <span class="math inline">\(k=1\)</span> and rather choose some <span class="math inline">\(k\)</span> like 35, which is still decently accurate, and probably less biased.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="co"># library(knn) is loaded</span></a>
-<a class="sourceLine" id="cb56-2" title="2">new_knn_pred &lt;-<span class="st"> </span><span class="kw">knn</span>(<span class="dt">train =</span> train[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb56-3" title="3">                <span class="dt">test =</span> test[,<span class="op">-</span><span class="dv">9</span>], </a>
-<a class="sourceLine" id="cb56-4" title="4">                <span class="dt">cl =</span> train<span class="op">$</span>label, </a>
-<a class="sourceLine" id="cb56-5" title="5">                <span class="dt">k =</span> <span class="dv">35</span>, </a>
-<a class="sourceLine" id="cb56-6" title="6">                <span class="dt">prob =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb56-7" title="7"></a>
-<a class="sourceLine" id="cb56-8" title="8"><span class="co"># confusion matrix</span></a>
-<a class="sourceLine" id="cb56-9" title="9">new_knn_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">true =</span> test<span class="op">$</span>label, <span class="dt">pred =</span> new_knn_pred)</a>
-<a class="sourceLine" id="cb56-10" title="10">new_knn_conf</a></code></pre></div>
+<pre class="r"><code># library(knn) is loaded
+new_knn_pred &lt;- knn(train = train[,-9], 
+                test = test[,-9], 
+                cl = train$label, 
+                k = 35, 
+                prob = TRUE)
+
+# confusion matrix
+new_knn_conf &lt;- table(true = test$label, pred = new_knn_pred)
+new_knn_conf</code></pre>
 <pre><code>##       pred
 ## true   bad good
 ##   bad  197  161
 ##   good  84  558</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="co"># accuracy rate</span></a>
-<a class="sourceLine" id="cb58-2" title="2">new_knn_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(new_knn_conf)</a>
-<a class="sourceLine" id="cb58-3" title="3">new_knn_acc</a></code></pre></div>
+<pre class="r"><code># accuracy rate
+new_knn_acc &lt;- class_acc(new_knn_conf)
+new_knn_acc</code></pre>
 <pre><code>## [1] 0.755</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="co"># misclassification error rate</span></a>
-<a class="sourceLine" id="cb60-2" title="2">new_knn_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>new_knn_acc</a>
-<a class="sourceLine" id="cb60-3" title="3">new_knn_err</a></code></pre></div>
+<pre class="r"><code># misclassification error rate
+new_knn_err &lt;- 1 - new_knn_acc
+new_knn_err</code></pre>
 <pre><code>## [1] 0.245</code></pre>
 <p>Using <span class="math inline">\(k=35\)</span> gives a slight increase in test accuracy relative to <span class="math inline">\(k=10\)</span>, although it is not very significant. Now let’s look at the ROC curve and the AUC to make our final comparison, both with the <span class="math inline">\(k=10\)</span> model, and the decision trees.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="co"># Creating the ROC curve for knn</span></a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="co"># library(dplyr) is loaded</span></a>
-<a class="sourceLine" id="cb62-3" title="3">new_knn_prob &lt;-<span class="st"> </span><span class="kw">attr</span>(new_knn_pred, <span class="st">&quot;prob&quot;</span>)</a>
-<a class="sourceLine" id="cb62-4" title="4">new_knn_prob &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">ifelse</span>(new_knn_pred <span class="op">==</span><span class="st"> &quot;-1&quot;</span>, <span class="dv">1</span><span class="op">-</span>new_knn_prob, new_knn_prob)<span class="op">-</span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb62-5" title="5">new_knn_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="dt">predictions =</span> new_knn_prob, </a>
-<a class="sourceLine" id="cb62-6" title="6">                                <span class="dt">labels =</span> test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb62-7" title="7">new_knn_roc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(new_knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</a>
-<a class="sourceLine" id="cb62-8" title="8"></a>
-<a class="sourceLine" id="cb62-9" title="9"><span class="co"># Plotting the KNN ROC curve</span></a>
-<a class="sourceLine" id="cb62-10" title="10"><span class="kw">plot</span>(new_knn_roc_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb62-11" title="11">     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 35&quot;</span>)</a>
-<a class="sourceLine" id="cb62-12" title="12"><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</a></code></pre></div>
+<pre class="r"><code># Creating the ROC curve for knn
+# library(dplyr) is loaded
+new_knn_prob &lt;- attr(new_knn_pred, &quot;prob&quot;)
+new_knn_prob &lt;- 2*ifelse(new_knn_pred == &quot;-1&quot;, 1-new_knn_prob, new_knn_prob)-1
+new_knn_roc_pred &lt;- prediction(predictions = new_knn_prob, 
+                                labels = test$label)
+new_knn_roc_perf &lt;- performance(new_knn_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
+
+# Plotting the KNN ROC curve
+plot(new_knn_roc_perf, col = 2, lwd = 3, 
+     main = &quot;ROC Curve for kNN, k = 35&quot;)
+abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20knn%20k=35-1.png" width="672" /></p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="co"># Area under the knn curve</span></a>
-<a class="sourceLine" id="cb63-2" title="2">new_knn_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(new_knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
-<a class="sourceLine" id="cb63-3" title="3">new_knn_AUC &lt;-<span class="st"> </span>new_knn_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb63-4" title="4">new_knn_AUC</a></code></pre></div>
+<pre class="r"><code># Area under the knn curve
+new_knn_auc_perf &lt;- performance(new_knn_roc_pred, measure = &quot;auc&quot;)
+new_knn_AUC &lt;- new_knn_auc_perf@y.values[[1]]
+new_knn_AUC</code></pre>
 <pre><code>## [1] 0.7414004</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">records[<span class="dv">4</span>,] &lt;-<span class="st"> </span><span class="kw">c</span>(new_knn_acc, new_knn_err, new_knn_AUC)</a>
-<a class="sourceLine" id="cb65-2" title="2">records</a></code></pre></div>
+<pre class="r"><code>records[4,] &lt;- c(new_knn_acc, new_knn_err, new_knn_AUC)
+records</code></pre>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.749      0.251 0.7885253
 ## pruned.tree                0.749      0.251 0.7604509
@@ -910,13 +836,13 @@ div.tocify {
 <div id="randomforest" class="section level2">
 <h2>randomForest</h2>
 <p>randomForest is similar to the decision tree method in that it builds trees, hence the name ‘random Forest’. This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that randomForest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="co">### Random Forest</span></a>
-<a class="sourceLine" id="cb67-2" title="2"><span class="co"># using all 8 predictor attributes, on the training set</span></a>
-<a class="sourceLine" id="cb67-3" title="3">rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>.,</a>
-<a class="sourceLine" id="cb67-4" title="4">                   <span class="dt">data =</span> train,</a>
-<a class="sourceLine" id="cb67-5" title="5">                   <span class="dt">mtry =</span> <span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb67-6" title="6"></a>
-<a class="sourceLine" id="cb67-7" title="7"><span class="kw">print</span>(rf)</a></code></pre></div>
+<pre class="r"><code>### Random Forest
+# using all 8 predictor attributes, on the training set
+rf &lt;- randomForest(formula = label ~ .,
+                   data = train,
+                   mtry = 8)
+
+print(rf)</code></pre>
 <pre><code>## 
 ## Call:
 ##  randomForest(formula = label ~ ., data = train, mtry = 8) 
@@ -929,47 +855,47 @@ div.tocify {
 ##      bad good class.error
 ## bad  896  386   0.3010920
 ## good 275 2341   0.1051223</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1"><span class="kw">varImpPlot</span>(rf, <span class="dt">main =</span> <span class="st">&quot;Variable Importance Plot&quot;</span>)</a></code></pre></div>
+<pre class="r"><code>varImpPlot(rf, main = &quot;Variable Importance Plot&quot;)</code></pre>
 <p><img src="wine-classification_files/figure-html/create%20randomForest-1.png" width="672" /></p>
 <p><code>meanDecreaseGini</code> refers to the “mean decrease in node impurity”. Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself.</p>
 <p>randomForest used all 8 of the predictor variables. This variable importance plot shows how ‘important’ each variable was in determining the classification. We can see that, consistent with the pruned decision tree, that <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code> are the three most important predictors.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="co"># predicting on the test set</span></a>
-<a class="sourceLine" id="cb70-2" title="2">rf_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(rf, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</a>
-<a class="sourceLine" id="cb70-3" title="3"></a>
-<a class="sourceLine" id="cb70-4" title="4"><span class="co"># Confusion Matrix</span></a>
-<a class="sourceLine" id="cb70-5" title="5">rf_conf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">true =</span> test<span class="op">$</span>label, <span class="dt">pred =</span>  rf_pred)</a>
-<a class="sourceLine" id="cb70-6" title="6">rf_conf</a></code></pre></div>
+<pre class="r"><code># predicting on the test set
+rf_pred &lt;- predict(rf, test, type = &quot;class&quot;)
+
+# Confusion Matrix
+rf_conf &lt;- table(true = test$label, pred =  rf_pred)
+rf_conf</code></pre>
 <pre><code>##       pred
 ## true   bad good
 ##   bad  251  107
 ##   good  67  575</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">rf_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(rf_conf)</a>
-<a class="sourceLine" id="cb72-2" title="2">rf_acc</a></code></pre></div>
+<pre class="r"><code>rf_acc &lt;- class_acc(rf_conf)
+rf_acc</code></pre>
 <pre><code>## [1] 0.826</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">rf_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rf_acc</a>
-<a class="sourceLine" id="cb74-2" title="2">rf_err</a></code></pre></div>
+<pre class="r"><code>rf_err &lt;- 1 - rf_acc
+rf_err</code></pre>
 <pre><code>## [1] 0.174</code></pre>
 <p>With an accuracy rate of <code>0.823</code>, this randomForest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far.</p>
 <p>Let’s take a look at the ROC curve and the area underneath it.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="co"># Building the ROC Curve</span></a>
-<a class="sourceLine" id="cb76-2" title="2">rf_pred &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(rf, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&#39;prob&#39;</span>))</a>
-<a class="sourceLine" id="cb76-3" title="3">rf_pred_probs &lt;-<span class="st"> </span>rf_pred[,<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb76-4" title="4">rf_roc_pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(rf_pred_probs, test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb76-5" title="5">rf_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, </a>
-<a class="sourceLine" id="cb76-6" title="6">                       <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</a>
-<a class="sourceLine" id="cb76-7" title="7"></a>
-<a class="sourceLine" id="cb76-8" title="8"><span class="co"># Plotting the curve</span></a>
-<a class="sourceLine" id="cb76-9" title="9"><span class="kw">plot</span>(rf_perf, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb76-10" title="10">     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for randomForest with 8 variables&quot;</span>)</a>
-<a class="sourceLine" id="cb76-11" title="11"><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</a></code></pre></div>
+<pre class="r"><code># Building the ROC Curve
+rf_pred &lt;- as.data.frame(predict(rf, newdata = test, type = &#39;prob&#39;))
+rf_pred_probs &lt;- rf_pred[,2]
+rf_roc_pred &lt;- prediction(rf_pred_probs, test$label)
+rf_perf &lt;- performance(rf_roc_pred, measure = &quot;tpr&quot;, 
+                       x.measure = &quot;fpr&quot;)
+
+# Plotting the curve
+plot(rf_perf, col = 2, lwd = 3, 
+     main = &quot;ROC Curve for randomForest with 8 variables&quot;)
+abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20randomForest-1.png" width="672" /></p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="co"># Area under the curve</span></a>
-<a class="sourceLine" id="cb77-2" title="2">rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
-<a class="sourceLine" id="cb77-3" title="3">rf_AUC &lt;-<span class="st"> </span>rf_perf2<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb77-4" title="4">rf_AUC</a></code></pre></div>
+<pre class="r"><code># Area under the curve
+rf_perf2 &lt;- performance(rf_roc_pred, measure = &quot;auc&quot;)
+rf_AUC &lt;- rf_perf2@y.values[[1]]
+rf_AUC</code></pre>
 <pre><code>## [1] 0.8891906</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">records[<span class="dv">5</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc, rf_err, rf_AUC)</a>
-<a class="sourceLine" id="cb79-2" title="2">records</a></code></pre></div>
+<pre class="r"><code>records[5, ] &lt;- c(rf_acc, rf_err, rf_AUC)
+records</code></pre>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.749      0.251 0.7885253
 ## pruned.tree                0.749      0.251 0.7604509
@@ -982,45 +908,45 @@ div.tocify {
 <p>Recall that earlier we determined in the decision tree that the relevant variables were: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. While this randomForest model was pretty effective in utilizing all of the 8 predictors, we can take a look at a model using only these 3 as well for the sake of comparison.</p>
 <p>We have established by now that simpler models have a reduced bias and complexity, but higher variance and a higher chance of underfitting, whereas complex models (such as the full model) have the opposite issue. The good thing about randomForest is that it inherently accounts for this “Bias-Variance” tradeoff by introducing randomness with bagging (bootstrap aggregating).</p>
 <p>The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1">rf2 &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> label <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>volatile.acidity <span class="op">+</span><span class="st"> </span>free.sulfur.dioxide,</a>
-<a class="sourceLine" id="cb81-2" title="2">                   <span class="dt">data =</span> train,</a>
-<a class="sourceLine" id="cb81-3" title="3">                   <span class="dt">mtry =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb81-4" title="4"><span class="co"># predicting on the test set</span></a>
-<a class="sourceLine" id="cb81-5" title="5">rf_pred2 &lt;-<span class="st"> </span><span class="kw">predict</span>(rf2, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</a>
-<a class="sourceLine" id="cb81-6" title="6"></a>
-<a class="sourceLine" id="cb81-7" title="7"><span class="co"># Confusion Matrix</span></a>
-<a class="sourceLine" id="cb81-8" title="8">rf_conf2 &lt;-<span class="st"> </span><span class="kw">table</span>(test<span class="op">$</span>label, rf_pred2)</a>
-<a class="sourceLine" id="cb81-9" title="9">rf_conf2</a></code></pre></div>
+<pre class="r"><code>rf2 &lt;- randomForest(formula = label ~ alcohol + volatile.acidity + free.sulfur.dioxide,
+                   data = train,
+                   mtry = 3)
+# predicting on the test set
+rf_pred2 &lt;- predict(rf2, test, type = &quot;class&quot;)
+
+# Confusion Matrix
+rf_conf2 &lt;- table(test$label, rf_pred2)
+rf_conf2</code></pre>
 <pre><code>##       rf_pred2
 ##        bad good
 ##   bad  232  126
 ##   good  71  571</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">rf_acc2 &lt;-<span class="st"> </span><span class="kw">class_acc</span>(rf_conf2)</a>
-<a class="sourceLine" id="cb83-2" title="2">rf_acc2</a></code></pre></div>
+<pre class="r"><code>rf_acc2 &lt;- class_acc(rf_conf2)
+rf_acc2</code></pre>
 <pre><code>## [1] 0.803</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">rf_err2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rf_acc2</a>
-<a class="sourceLine" id="cb85-2" title="2">rf_err2</a></code></pre></div>
+<pre class="r"><code>rf_err2 &lt;- 1 - rf_acc2
+rf_err2</code></pre>
 <pre><code>## [1] 0.197</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="co"># Building the ROC Curve</span></a>
-<a class="sourceLine" id="cb87-2" title="2">rf_pred2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(rf2, test, <span class="dt">type =</span> <span class="st">&#39;prob&#39;</span>))</a>
-<a class="sourceLine" id="cb87-3" title="3">rf_pred_probs2 &lt;-<span class="st"> </span>rf_pred2[,<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb87-4" title="4">rf_roc_pred2 &lt;-<span class="st"> </span><span class="kw">prediction</span>(rf_pred_probs2, test<span class="op">$</span>label)</a>
-<a class="sourceLine" id="cb87-5" title="5">rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred2, </a>
-<a class="sourceLine" id="cb87-6" title="6">                        <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, </a>
-<a class="sourceLine" id="cb87-7" title="7">                        <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</a>
-<a class="sourceLine" id="cb87-8" title="8"></a>
-<a class="sourceLine" id="cb87-9" title="9"><span class="co"># Plotting the curve</span></a>
-<a class="sourceLine" id="cb87-10" title="10"><span class="kw">plot</span>(rf_perf2, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb87-11" title="11">     <span class="dt">main =</span> <span class="st">&quot;ROC Curve for randomForest with 3 variables&quot;</span>)</a>
-<a class="sourceLine" id="cb87-12" title="12"><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</a></code></pre></div>
+<pre class="r"><code># Building the ROC Curve
+rf_pred2 &lt;- as.data.frame(predict(rf2, test, type = &#39;prob&#39;))
+rf_pred_probs2 &lt;- rf_pred2[,2]
+rf_roc_pred2 &lt;- prediction(rf_pred_probs2, test$label)
+rf_perf2 &lt;- performance(rf_roc_pred2, 
+                        measure = &quot;tpr&quot;, 
+                        x.measure = &quot;fpr&quot;)
+
+# Plotting the curve
+plot(rf_perf2, col = 2, lwd = 3, 
+     main = &quot;ROC Curve for randomForest with 3 variables&quot;)
+abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/smaller%20randomForest%20with%20ROC%20and%20AUC-1.png" width="672" /></p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1"><span class="co"># Area under the curve</span></a>
-<a class="sourceLine" id="cb88-2" title="2">rf_perf22 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred2, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
-<a class="sourceLine" id="cb88-3" title="3">rf_AUC2 &lt;-<span class="st"> </span>rf_perf22<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb88-4" title="4">rf_AUC2</a></code></pre></div>
+<pre class="r"><code># Area under the curve
+rf_perf22 &lt;- performance(rf_roc_pred2, measure = &quot;auc&quot;)
+rf_AUC2 &lt;- rf_perf22@y.values[[1]]
+rf_AUC2</code></pre>
 <pre><code>## [1] 0.8515354</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">records[<span class="dv">6</span>,] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc2, rf_err2, rf_AUC2)</a>
-<a class="sourceLine" id="cb90-2" title="2">records</a></code></pre></div>
+<pre class="r"><code>records[6,] &lt;- c(rf_acc2, rf_err2, rf_AUC2)
+records</code></pre>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
 ## tree                       0.749      0.251 0.7885253
 ## pruned.tree                0.749      0.251 0.7604509

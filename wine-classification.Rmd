@@ -8,6 +8,7 @@ output:
     includes:
       in_header: 
         header.html
+
 navbar:
   title: "Home"
   left:
