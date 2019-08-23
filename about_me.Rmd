@@ -35,7 +35,7 @@ navbar:
 
 My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently a data analyst for Saalex Solutions, Inc., an engineering and technology company headquarted in Camarillo, CA.
 
-In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. I also study programming in Python and SQL in my free time. 
+In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. 
 
 * Email: jsteven.raquel8@gmail.com
 * GitHub: [jstevenr](https://github.com/jstevenr)
