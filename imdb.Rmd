@@ -36,7 +36,6 @@ navbar:
         - text: "Medium"
           href: https://medium.com/@jstevenr
 ---
----
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, echo = TRUE, cache = TRUE, tidy.opts = list(width.cutoff = 80))
@@ -45,8 +44,7 @@ library(ggplot2)
 library(gridExtra)
 library(readr)
 ```
-
-----
+---
 
 This was a very simple visualization I did to test out some of the abilities of `ggplot2`, an `R` package with some more robust options that go beyond the base level visualization abilities of `R`.  
 

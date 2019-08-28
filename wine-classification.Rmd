@@ -124,7 +124,9 @@ We're going to initialize a matrix to easily compare the quality of the differen
 # initializing a matrix for records
 records <- matrix(NA, nrow = 6, ncol = 3)
 colnames(records) <- c("Accuracy Rate", "Error Rate", "AUC")
-rownames(records) <- c("tree", "pruned.tree", "k=10 kNN", "k=35 kNN", "full.randomForest", "small.randomForest")
+rownames(records) <- c("tree", "pruned.tree", 
+                       "k=10 kNN", "k=35 kNN", 
+                       "full.randomForest", "small.randomForest")
 records
 ```
 

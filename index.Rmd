@@ -69,7 +69,7 @@ This is a simple visualization of film ratings on the [Internet Movie Database](
 
 ### Python
 
-* #### [Regression analysis](https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb)
+* #### [Predicting housing price with regression](https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb)
 
 This project was done to showcase a variety of machine learning regression models, including ordinary least squares, decision trees, random forests, gradient boosting, and k-nearest neighbors. These models were all used to predict the median value of a home in Boston. I also built a small application that leveraged the final model to make predictions based on user input. I ultimately concluded that in this case, the gradient boosting model was the strongest model, although it is important to note that this model (and indeed any model built on decision trees) is not suitable for extrapolating with data yet unseen by the model. 
 
