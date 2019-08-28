@@ -16,10 +16,12 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Predicting bitcoin value"
+        - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html 
+        - text: "Predicting housing price"
+          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -50,23 +52,21 @@ If you know anything about data science, statistics, machine learning, artificia
 
 These are some of the projects I've worked on throughout my time studying data science, and I am constantly learning and adding things to my repertoire.
 
-### Machine Learning
-
 * #### [Classifying wine quality](wine-classification.html)
 
 For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.
 
-### Predictive Modeling
-
-* #### [Predicting bitcoin price](bitcoin.html)
+* #### [Time series for bitcoin price forecasting](bitcoin.html)
 
 For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.
 
-### Data Visualization
+* #### [Regression analysis](https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb)
 
 * #### [Visualizing IMDB ratings](imdb.html)
 
 This is a simple visualization of film ratings on the [Internet Movie Database](imdb.com), particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.
+
+
 
 ----
 

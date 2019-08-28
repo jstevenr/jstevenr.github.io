@@ -364,7 +364,7 @@ div.tocify {
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Portfolio
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -372,17 +372,20 @@ div.tocify {
       <a href="wine-classification.html">Classifying wine quality</a>
     </li>
     <li>
-      <a href="bitcoin.html">Predicting bitcoin value</a>
+      <a href="bitcoin.html">Forecasting bitcoin value</a>
     </li>
     <li>
       <a href="imdb.html">Visualizing IMDB ratings</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing price</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Contact Me
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -399,7 +402,7 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -505,23 +508,23 @@ train &lt;- white_sc[-test_indices,]</code></pre>
 <p>Of course, we’re going to use <code>label</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
 <pre class="r"><code># library(tree) is loaded
 # predicting the label (good vs bad)
-tree &lt;- tree(formula = label ~ ., data = train,
+tree &lt;- tree(formula = label ~ ., data = train, 
              method = &quot;class&quot;,
              control = tree.control(nobs = nrow(train),
                                           mincut = 5,
                                           minsize = 10,
                                           mindev = .003))
 summary(tree)</code></pre>
-<pre><code>##
+<pre><code>## 
 ## Classification tree:
-## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train),
+## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train), 
 ##     mincut = 5, minsize = 10, mindev = 0.003), method = &quot;class&quot;)
 ## Variables actually used in tree construction:
 ## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
-## [4] &quot;chlorides&quot;           &quot;sulphates&quot;           &quot;fixed.acidity&quot;
-## [7] &quot;citric.acid&quot;
-## Number of terminal nodes:  16
-## Residual mean deviance:  0.9588 = 3722 / 3882
+## [4] &quot;chlorides&quot;           &quot;sulphates&quot;           &quot;fixed.acidity&quot;      
+## [7] &quot;citric.acid&quot;        
+## Number of terminal nodes:  16 
+## Residual mean deviance:  0.9588 = 3722 / 3882 
 ## Misclassification error rate: 0.2324 = 906 / 3898</code></pre>
 <p>So we can see from this summary, that in fact 6 out of the 8 predictors were used in constructing this tree: <code>alcohol</code>, <code>volatile.acidity</code>, <code>free.sulfur.dioxide</code>, <code>sulphates</code>, <code>citric.acid</code>, and <code>fixed.acidity</code>. Now we are actually going to plot the tree to visualize this.</p>
 <pre class="r"><code>plot(tree, type = &quot;uniform&quot;)
@@ -548,7 +551,7 @@ tree_conf</code></pre>
 tree_acc &lt;- class_acc(tree_conf)
 tree_acc</code></pre>
 <pre><code>## [1] 0.749</code></pre>
-<pre class="r"><code># misclassification error
+<pre class="r"><code># misclassification error 
 tree_err &lt;- 1 - tree_acc
 tree_err</code></pre>
 <pre><code>## [1] 0.251</code></pre>
@@ -563,7 +566,7 @@ tree_roc_pred &lt;- prediction(tree_probs, test$label)
 tree_roc_perf &lt;- performance(tree_roc_pred, &quot;tpr&quot;, &quot;fpr&quot;)
 
 # Plotting the ROC curve for the decision tree
-plot(tree_roc_perf, col = 2, lwd = 3,
+plot(tree_roc_perf, col = 2, lwd = 3, 
      main = &quot;ROC Curve for tree (before pruning)&quot;)
 abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20tree-1.png" width="672" /></p>
@@ -596,25 +599,25 @@ cv &lt;- cv.tree(tree, FUN=prune.misclass, K=10)
 cv</code></pre>
 <pre><code>## $size
 ## [1] 16 11  8  7  6  5  4  3  1
-##
+## 
 ## $dev
 ## [1] 1004 1004 1004 1013 1013 1007  997 1057 1205
-##
+## 
 ## $k
 ## [1]       -Inf   0.000000   1.333333   6.000000   7.000000  10.000000  40.000000
 ## [8]  77.000000 116.000000
-##
+## 
 ## $method
 ## [1] &quot;misclass&quot;
-##
+## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;prune&quot;         &quot;tree.sequence&quot;</code></pre>
-<pre class="r"><code># Best size
+<pre class="r"><code># Best size 
 best.cv &lt;- cv$size[which.min(cv$dev)]
 
 # plotting misclass error as a function of tree size (k)
-plot(cv$size , cv$dev, type=&quot;b&quot;,
-     xlab = &quot;Number of leaves, \&#39;best\&#39;&quot;,
+plot(cv$size , cv$dev, type=&quot;b&quot;, 
+     xlab = &quot;Number of leaves, \&#39;best\&#39;&quot;, 
      ylab = &quot;Misclassification Error&quot;,
      col = &quot;red&quot;, main=&quot;Optimal Tree Size&quot;)
 abline(v=best.cv, lty=2)</code></pre>
@@ -622,16 +625,16 @@ abline(v=best.cv, lty=2)</code></pre>
 <pre class="r"><code>best.cv</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
-<pre class="r"><code>tree.pruned &lt;- prune.tree(tree, best = best.cv,
+<pre class="r"><code>tree.pruned &lt;- prune.tree(tree, best = best.cv, 
                           method = &quot;misclass&quot;)
 summary(tree.pruned)</code></pre>
-<pre><code>##
+<pre><code>## 
 ## Classification tree:
 ## snip.tree(tree = tree, nodes = c(10L, 3L, 4L, 11L))
 ## Variables actually used in tree construction:
 ## [1] &quot;alcohol&quot;          &quot;volatile.acidity&quot;
-## Number of terminal nodes:  4
-## Residual mean deviance:  1.054 = 4103 / 3894
+## Number of terminal nodes:  4 
+## Residual mean deviance:  1.054 = 4103 / 3894 
 ## Misclassification error rate: 0.2496 = 973 / 3898</code></pre>
 <pre class="r"><code>plot(tree.pruned, type = &quot;uniform&quot;)
 text(tree.pruned, col = &quot;blue&quot;)
@@ -664,7 +667,7 @@ pruned_roc_pred &lt;- prediction(pruned_probs, test$label)
 pruned_roc_perf &lt;- performance(pruned_roc_pred, &quot;tpr&quot;, &quot;fpr&quot;)
 
 # Plotting the ROC curve for the rpart decision tree
-plot(pruned_roc_perf, col = 2, lwd = 3,
+plot(pruned_roc_perf, col = 2, lwd = 3, 
      main = &quot;ROC Curve for Pruned tree&quot;)
 abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20pruned%20tree%20and%20AUC-1.png" width="672" /></p>
@@ -693,9 +696,9 @@ records</code></pre>
 <pre class="r"><code>set.seed(10)
 # library(class) is loaded
 # using 20 nearest neighbors
-knn_pred &lt;- knn(train = train[,-9],
-                test = test[,-9],
-                cl = train$label,
+knn_pred &lt;- knn(train = train[,-9], 
+                test = test[,-9], 
+                cl = train$label, 
                 k = 10, prob = TRUE)
 
 # confusion matrix
@@ -719,11 +722,11 @@ knn_err</code></pre>
 knn_prob &lt;- attr(knn_pred, &quot;prob&quot;)
 knn_prob &lt;- 2 * ifelse(knn_pred == &quot;-1&quot;, 1-knn_prob, knn_prob) - 1
 knn_roc_pred &lt;- prediction(predictions = knn_prob, labels = test$label)
-knn_roc_perf &lt;- performance(knn_roc_pred,
+knn_roc_perf &lt;- performance(knn_roc_pred, 
                             measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
 
 # Plotting the KNN ROC curve
-plot(knn_roc_perf, col = 2, lwd = 3,
+plot(knn_roc_perf, col = 2, lwd = 3, 
      main = &quot;ROC Curve for kNN, k = 10&quot;)
 abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20knn-1.png" width="672" /></p>
@@ -749,9 +752,9 @@ knn_accs &lt;- rep(0, length(range))
 
 # Determining the best k for k-nearest neighbors classification
 for (k in range) {
-  knn_pred &lt;- knn(train = train[,-9],
-                  test = test[,-9],
-                  cl = train$label,
+  knn_pred &lt;- knn(train = train[,-9], 
+                  test = test[,-9], 
+                  cl = train$label, 
                   k = k, prob = TRUE)
   knn_conf &lt;- table(pred = knn_pred, true = test$label)
   knn_accs[k] &lt;- class_acc(knn_conf)
@@ -762,28 +765,28 @@ plot(range, knn_accs, xlab = &quot;k&quot;, ylab = &quot;accuracy&quot;,
      main = &quot;Number of Neighbors (k) vs Test Accuracy&quot;)</code></pre>
 <p><img src="wine-classification_files/figure-html/plotting%20k%20vs%20accs-1.png" width="672" /> This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using <span class="math inline">\(k=1\)</span> will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
 <p>Here is the ROC curve demonstrating this.</p>
-<pre class="r"><code>worst_knn_pred &lt;- knn(train = train[,-9],
-                test = test[,-9],
-                cl = train$label,
-                k = 1,
+<pre class="r"><code>worst_knn_pred &lt;- knn(train = train[,-9], 
+                test = test[,-9], 
+                cl = train$label, 
+                k = 1, 
                 prob = TRUE)
 worst_knn_prob &lt;- attr(worst_knn_pred, &quot;prob&quot;)
 worst_knn_prob &lt;- 2*ifelse(worst_knn_pred == &quot;-1&quot;, 1-worst_knn_prob, worst_knn_prob)-1
-worst_knn_roc_pred &lt;- prediction(predictions = worst_knn_prob,
+worst_knn_roc_pred &lt;- prediction(predictions = worst_knn_prob, 
                                 labels = test$label)
 worst_knn_roc_perf &lt;- performance(worst_knn_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
 
 # Plotting the KNN ROC curve
-plot(worst_knn_roc_perf, col = 2, lwd = 3,
+plot(worst_knn_roc_perf, col = 2, lwd = 3, 
      main = &quot;ROC Curve for kNN, k = 1&quot;)
 abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/worst%20kNN%20k%20=%201-1.png" width="672" /></p>
 <p>So we think better not to opt for <span class="math inline">\(k=1\)</span> and rather choose some <span class="math inline">\(k\)</span> like 35, which is still decently accurate, and probably less biased.</p>
 <pre class="r"><code># library(knn) is loaded
-new_knn_pred &lt;- knn(train = train[,-9],
-                test = test[,-9],
-                cl = train$label,
-                k = 35,
+new_knn_pred &lt;- knn(train = train[,-9], 
+                test = test[,-9], 
+                cl = train$label, 
+                k = 35, 
                 prob = TRUE)
 
 # confusion matrix
@@ -806,12 +809,12 @@ new_knn_err</code></pre>
 # library(dplyr) is loaded
 new_knn_prob &lt;- attr(new_knn_pred, &quot;prob&quot;)
 new_knn_prob &lt;- 2*ifelse(new_knn_pred == &quot;-1&quot;, 1-new_knn_prob, new_knn_prob)-1
-new_knn_roc_pred &lt;- prediction(predictions = new_knn_prob,
+new_knn_roc_pred &lt;- prediction(predictions = new_knn_prob, 
                                 labels = test$label)
 new_knn_roc_perf &lt;- performance(new_knn_roc_pred, measure = &quot;tpr&quot;, x.measure = &quot;fpr&quot;)
 
 # Plotting the KNN ROC curve
-plot(new_knn_roc_perf, col = 2, lwd = 3,
+plot(new_knn_roc_perf, col = 2, lwd = 3, 
      main = &quot;ROC Curve for kNN, k = 35&quot;)
 abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20knn%20k=35-1.png" width="672" /></p>
@@ -843,13 +846,13 @@ rf &lt;- randomForest(formula = label ~ .,
                    mtry = 8)
 
 print(rf)</code></pre>
-<pre><code>##
+<pre><code>## 
 ## Call:
-##  randomForest(formula = label ~ ., data = train, mtry = 8)
+##  randomForest(formula = label ~ ., data = train, mtry = 8) 
 ##                Type of random forest: classification
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 8
-##
+## 
 ##         OOB estimate of  error rate: 16.96%
 ## Confusion matrix:
 ##      bad good class.error
@@ -881,11 +884,11 @@ rf_err</code></pre>
 rf_pred &lt;- as.data.frame(predict(rf, newdata = test, type = &#39;prob&#39;))
 rf_pred_probs &lt;- rf_pred[,2]
 rf_roc_pred &lt;- prediction(rf_pred_probs, test$label)
-rf_perf &lt;- performance(rf_roc_pred, measure = &quot;tpr&quot;,
+rf_perf &lt;- performance(rf_roc_pred, measure = &quot;tpr&quot;, 
                        x.measure = &quot;fpr&quot;)
 
 # Plotting the curve
-plot(rf_perf, col = 2, lwd = 3,
+plot(rf_perf, col = 2, lwd = 3, 
      main = &quot;ROC Curve for randomForest with 8 variables&quot;)
 abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/ROC%20for%20randomForest-1.png" width="672" /></p>
@@ -931,12 +934,12 @@ rf_err2</code></pre>
 rf_pred2 &lt;- as.data.frame(predict(rf2, test, type = &#39;prob&#39;))
 rf_pred_probs2 &lt;- rf_pred2[,2]
 rf_roc_pred2 &lt;- prediction(rf_pred_probs2, test$label)
-rf_perf2 &lt;- performance(rf_roc_pred2,
-                        measure = &quot;tpr&quot;,
+rf_perf2 &lt;- performance(rf_roc_pred2, 
+                        measure = &quot;tpr&quot;, 
                         x.measure = &quot;fpr&quot;)
 
 # Plotting the curve
-plot(rf_perf2, col = 2, lwd = 3,
+plot(rf_perf2, col = 2, lwd = 3, 
      main = &quot;ROC Curve for randomForest with 3 variables&quot;)
 abline(0,1)</code></pre>
 <p><img src="wine-classification_files/figure-html/smaller%20randomForest%20with%20ROC%20and%20AUC-1.png" width="672" /></p>
@@ -1054,7 +1057,7 @@ $(document).ready(function ()  {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

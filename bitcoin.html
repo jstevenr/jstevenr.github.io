@@ -364,7 +364,7 @@ div.tocify {
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Portfolio
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -372,17 +372,20 @@ div.tocify {
       <a href="wine-classification.html">Classifying wine quality</a>
     </li>
     <li>
-      <a href="bitcoin.html">Predicting bitcoin value</a>
+      <a href="bitcoin.html">Forecasting bitcoin value</a>
     </li>
     <li>
       <a href="imdb.html">Visualizing IMDB ratings</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing price</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Contact Me
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -399,7 +402,7 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -439,7 +442,7 @@ df &lt;- df[order(df$Date),]
 df_sub &lt;- df %&gt;% subset(Date &gt;= &quot;2015-10-09&quot; &amp; Date &lt;= &quot;2016-10-08&quot;)
 # plotting with a LOESS line
 par(mfrow = c(1,1))
-ggplot(df_sub, aes(x = Date, y = Open, group = 1)) + geom_line() + xlab(&quot;Date&quot;) + ylab(&quot;USD&quot;) +
+ggplot(df_sub, aes(x = Date, y = Open, group = 1)) + geom_line() + xlab(&quot;Date&quot;) + ylab(&quot;USD&quot;) + 
   ggtitle(&quot;Opening Price of Bitcoin&quot;) + geom_smooth(method = &quot;loess&quot;, level = 0)</code></pre>
 <p><img src="bitcoin_files/figure-html/initial%20plot-1.png" width="672" /></p>
 <pre class="r"><code>open &lt;- as.ts(df_sub$Open)</code></pre>
@@ -474,7 +477,7 @@ df_sub$Open_tr &lt;- log(open)
 
 # new time series plot
 par(mfrow = c(1,1))
-ggplot(df_sub, aes(x = Date, y = Open_tr, group = 1)) + geom_line() + xlab(&quot;Date&quot;) + ylab(&quot;USD (after log transformation)&quot;) +
+ggplot(df_sub, aes(x = Date, y = Open_tr, group = 1)) + geom_line() + xlab(&quot;Date&quot;) + ylab(&quot;USD (after log transformation)&quot;) + 
   ggtitle(&quot;Series after Box-Cox&quot;) + geom_smooth(method = &quot;loess&quot;, level = 0)</code></pre>
 <pre><code>## Don&#39;t know how to automatically pick scale for object of type ts. Defaulting to continuous.</code></pre>
 <p><img src="bitcoin_files/figure-html/box-cox%20transformation-1.png" width="672" /></p>
@@ -498,9 +501,9 @@ autoplot(open_diff) + ggtitle(&quot;Series after Differencing at lag 1 after Box
 adf.test(open_diff, alternative = &quot;stationary&quot;)</code></pre>
 <pre><code>## Warning in adf.test(open_diff, alternative = &quot;stationary&quot;): p-value smaller than
 ## printed p-value</code></pre>
-<pre><code>##
+<pre><code>## 
 ##  Augmented Dickey-Fuller Test
-##
+## 
 ## data:  open_diff
 ## Dickey-Fuller = -7.0202, Lag order = 7, p-value = 0.01
 ## alternative hypothesis: stationary</code></pre>
@@ -514,15 +517,15 @@ adf.test(open_diff, alternative = &quot;stationary&quot;)</code></pre>
 # stepwise and approximation = F is slower, but more accurate
 auto.fit &lt;- auto.arima(open, stepwise = F, approximation = F, lambda = 0, ic = &quot;aicc&quot;)
 auto.fit</code></pre>
-<pre><code>## Series: open
-## ARIMA(0,1,4) with drift
-## Box Cox transformation: lambda= 0
-##
+<pre><code>## Series: open 
+## ARIMA(0,1,4) with drift 
+## Box Cox transformation: lambda= 0 
+## 
 ## Coefficients:
 ##          ma1      ma2      ma3     ma4   drift
 ##       0.0462  -0.0766  -0.0212  0.1660  0.0026
 ## s.e.  0.0519   0.0513   0.0503  0.0556  0.0017
-##
+## 
 ## sigma^2 estimated as 0.000833:  log likelihood=778.57
 ## AIC=-1545.14   AICc=-1544.91   BIC=-1521.74</code></pre>
 <p>Note the inclusion of a ‘drift’ constant in the model. The <code>auto.arima()</code> function only includes the drift if it improves the model, based on AICc, which is the information criterion we specified to judge the model on, something that will be explained in more detail later on. We note that the drift <span class="math inline">\(\mu = 0.0026\)</span> with standard error <span class="math inline">\(0.0017\)</span>, so the confidence interval for it actually includes zero hinting at this being a rather insignificant drift.</p>
@@ -545,14 +548,14 @@ ggAcf(open_diff) + ggtitle(&quot;ACF of transformed data&quot;)</code></pre>
 <p>For now we will just use the AICc to select a couple of models and determine later on if the residuals will be an issue.</p>
 <pre class="r"><code># matrix of AIC values for p and q
 # library(qpcR) and library(forecast) are loaded
-AICc.mat &lt;- matrix(data = NA, nrow = 5, ncol = 5,
+AICc.mat &lt;- matrix(data = NA, nrow = 5, ncol = 5, 
                   dimnames = list(paste(&quot;p =&quot;, 0:4),
                                   paste(&quot;q =&quot;, 0:4)))
 
 # simulating arima models for p,q = 0,1,2,3,4 and d = 1
 for (p in 0:4) {
     for (q in 0:4) {
-        AICc.mat[p+1,q+1] &lt;- AICc(Arima(open, order = c(p, 1, q),
+        AICc.mat[p+1,q+1] &lt;- AICc(Arima(open, order = c(p, 1, q), 
                                         method = &quot;ML&quot;, lambda = 0)) } }
 # printing matrix
 AICc.mat</code></pre>
@@ -567,29 +570,29 @@ AICc.mat</code></pre>
 <pre class="r"><code># ARIMA(1,1,2)
 fit112 &lt;- Arima(open, order = c(1,1,2), method = &quot;ML&quot;, lambda = 0)
 fit112</code></pre>
-<pre><code>## Series: open
-## ARIMA(1,1,2)
-## Box Cox transformation: lambda= 0
-##
+<pre><code>## Series: open 
+## ARIMA(1,1,2) 
+## Box Cox transformation: lambda= 0 
+## 
 ## Coefficients:
 ##          ar1      ma1      ma2
 ##       0.0546  -0.0167  -0.0536
 ## s.e.  0.4038   0.4003   0.0487
-##
+## 
 ## sigma^2 estimated as 0.0008555:  log likelihood=772.76
 ## AIC=-1537.53   AICc=-1537.41   BIC=-1521.93</code></pre>
 <pre class="r"><code># ARIMA(2,1,1)
 fit211 &lt;- Arima(open, order = c(2,1,1), method = &quot;ML&quot;, lambda = 0)
 fit211</code></pre>
-<pre><code>## Series: open
-## ARIMA(2,1,1)
-## Box Cox transformation: lambda= 0
-##
+<pre><code>## Series: open 
+## ARIMA(2,1,1) 
+## Box Cox transformation: lambda= 0 
+## 
 ## Coefficients:
 ##          ar1      ar2     ma1
 ##       0.0287  -0.0671  0.0098
 ## s.e.  0.3504   0.0538  0.3480
-##
+## 
 ## sigma^2 estimated as 0.0008546:  log likelihood=772.94
 ## AIC=-1537.89   AICc=-1537.78   BIC=-1522.29</code></pre>
 <p>So, we have the ARIMA(1,1,2) model <span class="math display">\[X_t - 0.0546X_{t-1} = Z_t + 0.0167Z_{t-1} + 0.0536Z_{t-2}\]</span> and the ARIMA(2,1,1) model <span class="math display">\[X_t - 0.0287X_{t-1} + 0.0671X_{t-2} = Z_t - 0.0098Z_{t-1}\]</span></p>
@@ -621,7 +624,7 @@ round(diag.mat, 3)</code></pre>
 <pre><code>##              Ljung-Box McLeod-Li Shapiro-Wilk
 ## ARIMA(1,1,2)     0.670         0            0
 ## ARIMA(2,1,1)     0.558         0            0</code></pre>
-<p>In the case of both models, the residuals <em>fail to reject</em> the null hypothesis in the Ljung-Box test, but have overwhelming evidence to reject it in the case of the McLeod-Li and the Shapiro-Wilk test. All tests use an <span class="math display">\[\alpha = 0.05\]</span> confidence level. These conclusions imply that while the residuals are all independently distributed, the squared residuals are not. They also tell us that the residuals are not Normally distributed. The fact that the squared residuals are correlated and the lack of normality are both major pitfalls in our ARIMA models, since our model selection and our forecasting are contingent on these assumptions.</p>
+<p>In the case of both models, the residuals <em>fail to reject</em> the null hypothesis in the Ljung-Box test, but have overwhelming evidence to reject it in the case of the McLeod-Li and the Shapiro-Wilk test. All tests use an <span class="math inline">\(\alpha = 0.05\)</span> confidence level. These conclusions imply that while the residuals are all independently distributed, the squared residuals are not. They also tell us that the residuals are not Normally distributed. The fact that the squared residuals are correlated and the lack of normality are both major pitfalls in our ARIMA models, since our model selection and our forecasting are contingent on these assumptions.</p>
 <p>Failing to reject the null hypothesis of the Ljung-Box test but rejecting the null hypothesis of the McLeod-Li test tells us that our data might be more typical of a GARCH (generalized auto-regressive conditional heteroskedasticity) model rather than ARIMA as we have fitted here. With the addendum that our model is not necessarily the best one available, we will run diagnostic checks on the rest of the model and proceed with forecasting anyway, just to see what happens.</p>
 </div>
 <div id="forecasting" class="section level2">
@@ -637,7 +640,7 @@ df_add &lt;- df %&gt;% subset(Date &gt;= &quot;2015-10-09&quot; &amp; Date &lt;=
 open_add &lt;- as.ts(df_add$Open)
 
 # True Values
-autoplot(open_add, xlim = c(300, 375)) + xlab(&quot;Days from 10/09/15&quot;) + ylab(&quot;USD&quot;) +
+autoplot(open_add, xlim = c(300, 375)) + xlab(&quot;Days from 10/09/15&quot;) + ylab(&quot;USD&quot;) + 
   ggtitle(&quot;True Values for Opening Price of Bitcoin, 2016-08-03 - 2016-10-18&quot;)</code></pre>
 <pre><code>## Warning: Removed 300 rows containing missing values (geom_path).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-1.png" width="672" /></p>
@@ -648,7 +651,7 @@ autoplot(forecast112, xlim = c(300, 375)) + xlab(&quot;Days from 10/09/15&quot;)
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-2.png" width="672" /></p>
 <pre class="r"><code># ARIMA (2,1,1)
-autoplot(forecast211, xlim = c(300, 375)) + xlab(&quot;Days from 10/09/15&quot;) + ylab(&quot;USD&quot;) +
+autoplot(forecast211, xlim = c(300, 375)) + xlab(&quot;Days from 10/09/15&quot;) + ylab(&quot;USD&quot;) + 
   ggtitle(&quot;ARIMA(2,1,1) Forecast for Opening Price of Bitcoin, 10 Days ahead&quot;)</code></pre>
 <pre><code>## Warning: Removed 299 rows containing missing values (geom_path).
 
@@ -658,8 +661,8 @@ autoplot(forecast211, xlim = c(300, 375)) + xlab(&quot;Days from 10/09/15&quot;)
 <p>Here we print out two data frames, one for each model, comparing the true values, the predictions, the 95% confidence intervals, and the percent difference between the prediction and the true value (the column <code>pct.diff</code>). A value of <span class="math inline">\(4.43\)</span> means that the predicted value is 4.43% <em>bigger</em> than the true value.</p>
 <pre class="r"><code>true &lt;- df_add$Open[366:375]
 # data.frame of ARIMA(1,1,2) forecasts
-df112 &lt;- data.frame(true = true, pred = forecast112$mean,
-           lower = forecast112$lower[,2],
+df112 &lt;- data.frame(true = true, pred = forecast112$mean, 
+           lower = forecast112$lower[,2], 
            upper = forecast112$upper[,2],
            pct.diff = round((forecast112$mean - true) / true, 4) * 100)
 df112</code></pre>
@@ -676,7 +679,7 @@ df112</code></pre>
 ## 10 641.82 617.2549 515.7634 738.7179    -3.83</code></pre>
 <pre class="r"><code># data.frame of ARIMA(2,1,1) forecasts
 df211 &lt;- data.frame(true = true, pred = forecast211$mean,
-                    lower = forecast211$lower[,2],
+                    lower = forecast211$lower[,2], 
                     upper = forecast211$upper[,2],
                     pct.diff = round((forecast211$mean - true) / true, 4) * 100)
 df211</code></pre>
@@ -724,7 +727,7 @@ University, Sept. 2017, people.duke.edu/~rnau/411home.htm.</p>
 <h1>Appendix</h1>
 <pre class="r"><code># pretty much all code is included in the body of the report
 fit211$coef[1:2] # the 2 AR coefficients</code></pre>
-<pre><code>##         ar1         ar2
+<pre><code>##         ar1         ar2 
 ##  0.02867388 -0.06710986</code></pre>
 <pre class="r"><code>par(mfrow = c(1,1))
 # RESIDUALS
@@ -823,7 +826,7 @@ $(document).ready(function ()  {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
