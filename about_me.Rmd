@@ -35,7 +35,7 @@ navbar:
 
 My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently a data analyst for Saalex Solutions, Inc., an engineering and technology company headquarted in Camarillo, CA.
 
-In my free time I am an avid gamer and a scholar of both Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday. 
+In my free time I am an avid gamer and I study languages, particularly Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday.
 
 * Email: jsteven.raquel8@gmail.com
 * GitHub: [jstevenr](https://github.com/jstevenr)
@@ -54,49 +54,41 @@ In my free time I am an avid gamer and a scholar of both Spanish and Portuguese.
 ## Skills
 
 * **Technical**
-    + Advanced knowledge and aptitude with R.
-    + Intermediate knowledge of Excel. 
-    + Working knowledge of Python and SQL.
-    + Comfortable with Linux, Git and Bash.
-    + Knowledgeable in business intelligence software such as Power BI, Tableau, and SAP Analytics Cloud.
-* **Design**
-    + Experienced in image editing in GIMP.
-    + Strong audio editing skills in Audacity.
+    + R, Python, SQL
+    + Linux, Git, Bash
+    + Power BI, Tableau, SAP Analytics Cloud
+* **Design and Editing**
+    + GIMP, Audacity
 * **Languages**
-    + Strong writing and reading in Spanish/Portuguese.
-    + Conversational listening and speaking in Spanish/Portuguese.
-* **Soft Skills**
-    + Team player.
-    + Self-starter.
-    + Confident speaker.
-    + Fast learner.
+    + Spanish, Portuguese
 
 ## Work Experience
 
-* **Data Analytics Analyst**, [Saalex Solutions, Inc.](https://saalex.com) (Sep 2018 - Present)
-    + Creating data visualizations and dashboards with business intelligence software such as SAP Analytics Cloud to track key performance indicators and inform decision-making.
+* **Data Analyst**, [Saalex Solutions, Inc.](https://saalex.com), Sep 2018 - Present
+    + Creating data visualizations and dashboards with business intelligence software to track key performance indicators and inform decision-making for the company and external clients.
     + Assisting with identifying government contracts pertaining to data analytics.
-* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org) (Nov 2017 - June 2018)
+    + Building predictive models with machine learning algorithms. 
+* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org), Nov 2017 - June 2018
     + Timely produced excellent public service announcements (PSAs) and event promotions conforming with FCC guidelines.
     + Organized and trained volunteers to create PSAs and event promotions.
-* **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/) (Sept 2016 - Sept 2017)
+* **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/), Sep 2016 - Sep 2017
     + Expertly maintained metadata for federally funded data repository.
-    + Improved team efficiency in data cleaning, by writing original functions in R.
-* **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home) (May 2016 - Sept 2016)
+    + Improved team efficiency in data cleaning, by writing original functions and teaching other members how to use R. 
+* **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home), May 2016 - Sep 2016
     + Efficiently memorized reports, wrote checks, tracked spending and prepared documentation.
     + Noted areas where the department was overspending, resulting in savings.
 
 ## Volunteer Experience
-* **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/) (Jun 2017 - Jun 2018)
+* **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/), Jun 2017 - Jun 2018
     + Ran a weekly college radio music show called 'The Company of Lazarus'.
     + Operated a radio control board.
-* **Secretary**, [oSTEM Inc. @ UC Santa Barbara](https://orgsync.com/66953/chapter) (May 2016 - Apr 2017)
+* **Secretary**, [oSTEM Inc. @ UC Santa Barbara](https://orgsync.com/66953/chapter), May 2016 - Apr 2017
     + Reaching out to STEM majors who are part of the LGBTQ community.
     + Educating on the importance of LGBTQ visibility and inclusivity.
-* **Student Mentor**, Isla Vista Elementary (Sept 2016 - June 2017)
+* **Student Mentor**, Isla Vista Elementary, Sep 2016 - Jun 2017
     + Acted as a mentor and role model for a 6th grade student for a year.
-* **Panelist**, UCSB Mental Health Conference (2016, 2017)
+* **Panelist**, UCSB Mental Health Conference, 2016, 2017
     + Took part on a panel to share personal experiences related to mental illness and advise on how to cope and intervene.
-* **Peer Volunteer**, [Life of the Party](https://lifeoftheparty.sa.ucsb.edu/), UCSB Alcohol & Drug Program (Jan 2016 - May 2016)
+* **Peer Volunteer**, [Life of the Party](https://lifeoftheparty.sa.ucsb.edu/), UCSB Alcohol & Drug Program, Jan 2016 - May 2016
     + Encouraging the use of safer partying practices in Isla Vista, California.
     + Collaborated for a campus-wide “Be Safe and Pace” awareness campaign.
