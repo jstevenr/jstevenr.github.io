@@ -360,20 +360,29 @@ $(document).ready(function () {
 <div id="projects" class="section level2">
 <h2>Projects</h2>
 <p>These are some of the projects I’ve worked on throughout my time studying data science, and I am constantly learning and adding things to my repertoire.</p>
+<div id="r" class="section level3">
+<h3>R</h3>
 <ul>
 <li><h4 id="classifying-wine-quality"><a href="wine-classification.html">Classifying wine quality</a></h4></li>
 </ul>
-<p>For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.</p>
+<p>For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine. A version of this project written in Python can be found <a href="https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb">here</a>.</p>
 <ul>
 <li><h4 id="time-series-for-bitcoin-price-forecasting"><a href="bitcoin.html">Time series for bitcoin price forecasting</a></h4></li>
 </ul>
 <p>For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.</p>
 <ul>
-<li><h4 id="regression-analysis"><a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Regression analysis</a></h4></li>
 <li><h4 id="visualizing-imdb-ratings"><a href="imdb.html">Visualizing IMDB ratings</a></h4></li>
 </ul>
 <p>This is a simple visualization of film ratings on the <a href="imdb.com">Internet Movie Database</a>, particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.</p>
+</div>
+<div id="python" class="section level3">
+<h3>Python</h3>
+<ul>
+<li><h4 id="regression-analysis"><a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Regression analysis</a></h4></li>
+</ul>
+<p>This project was done to showcase a variety of machine learning regression models, including ordinary least squares, decision trees, random forests, gradient boosting, and k-nearest neighbors. These models were all used to predict the median value of a home in Boston. I also built a small application that leveraged the final model to make predictions based on user input. I ultimately concluded that in this case, the gradient boosting model was the strongest model, although it is important to note that this model (and indeed any model built on decision trees) is not suitable for extrapolating with data yet unseen by the model.</p>
 <hr />
+</div>
 </div>
 </div>
 
