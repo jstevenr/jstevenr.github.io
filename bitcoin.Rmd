@@ -1,5 +1,5 @@
 ---
-title: "Predicting bitcoin opening price"
+title: "Forecasting bitcoin value with ARIMA"
 
 output:
   html_document:
@@ -18,10 +18,12 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Predicting bitcoin value"
+        - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html
+        - text: "Predicting housing price"
+          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb     
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -207,7 +209,7 @@ for (p in 0:4) {
 AICc.mat
 ```
 
-We see that the model with the _lowest_ AICC is the ARIMA(1,1,2) model with an AICc of $-1538.392 $, but all of them are very close to one another. The ARIMA(2,1,1) is pretty similar with an AICc of $-1538.822$.
+We see that the model with the _lowest_ AICC is the ARIMA(1,1,2) model with an AICc of $-1538.392$, but all of them are very close to one another. The ARIMA(2,1,1) is pretty similar with an AICc of $-1538.822$.
 
 We want to estimate as few parameters as possible due to the principle of parsimony (to select as few parameters as possible). In our case, the more parameters there are, the weaker the model. We can fit a couple of different models and compare. It is generally advisable in fact to stick to models in which at least one of $p$ and $q$ is no larger than 1, since this is likely to lead to overfitting. 
 

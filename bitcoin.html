@@ -12,7 +12,7 @@
 
 
 
-<title>Predicting bitcoin opening price</title>
+<title>Forecasting bitcoin value with ARIMA</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -489,7 +489,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Predicting bitcoin opening price</h1>
+<h1 class="title toc-ignore">Forecasting bitcoin value with ARIMA</h1>
 
 </div>
 
@@ -642,7 +642,7 @@ div.tocify {
 ## p = 2 -1539.853 -1537.820 -1541.075 -1541.256 -1541.248
 ## p = 3 -1537.821 -1535.777 -1541.447 -1536.959 -1539.292
 ## p = 4 -1542.163 -1541.295 -1539.960 -1538.658 -1542.195</code></pre>
-<p>We see that the model with the <em>lowest</em> AICC is the ARIMA(1,1,2) model with an AICc of $-1538.392 $, but all of them are very close to one another. The ARIMA(2,1,1) is pretty similar with an AICc of <span class="math inline">\(-1538.822\)</span>.</p>
+<p>We see that the model with the <em>lowest</em> AICC is the ARIMA(1,1,2) model with an AICc of <span class="math inline">\(-1538.392\)</span>, but all of them are very close to one another. The ARIMA(2,1,1) is pretty similar with an AICc of <span class="math inline">\(-1538.822\)</span>.</p>
 <p>We want to estimate as few parameters as possible due to the principle of parsimony (to select as few parameters as possible). In our case, the more parameters there are, the weaker the model. We can fit a couple of different models and compare. It is generally advisable in fact to stick to models in which at least one of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> is no larger than 1, since this is likely to lead to overfitting.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># ARIMA(1,1,2)</span></a>
 <a class="sourceLine" id="cb23-2" title="2">fit112 &lt;-<span class="st"> </span><span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>)</a>
@@ -903,7 +903,7 @@ $(document).ready(function ()  {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
