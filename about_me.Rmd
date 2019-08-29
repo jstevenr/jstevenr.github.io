@@ -3,6 +3,7 @@ title: "About Me"
 
 output:
   html_document:
+    keep_tex: true
     includes:
       in_header: 
         header.html

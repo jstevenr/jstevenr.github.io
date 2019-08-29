@@ -5,6 +5,7 @@ output:
   html_document:
     toc: true
     toc_float: true
+    keep_tex: yes
     includes:
       in_header: 
         header.html
@@ -79,7 +80,7 @@ white.cor <- cor(white[,1:12])
 # white.cor
 ```
 
-Taking a look at the correlation coefficients $r$ for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` ($r = 0.84$) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
+Taking a look at the correlation coefficients \(r\) for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` (\(r = 0.84\)) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
 
 Aside from that correlations are all very low, including (and especially) `quality`, the response variable, with the predictors. 
 
