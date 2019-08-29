@@ -441,7 +441,7 @@ div.tocify {
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Portfolio
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -462,7 +462,7 @@ div.tocify {
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Contact Me
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -479,7 +479,7 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -594,16 +594,16 @@ div.tocify {
 <a class="sourceLine" id="cb10-7" title="7">                                          <span class="dt">minsize =</span> <span class="dv">10</span>,</a>
 <a class="sourceLine" id="cb10-8" title="8">                                          <span class="dt">mindev =</span> <span class="fl">.003</span>))</a>
 <a class="sourceLine" id="cb10-9" title="9"><span class="kw">summary</span>(tree)</a></code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Classification tree:
-## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train), 
+## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train),
 ##     mincut = 5, minsize = 10, mindev = 0.003), method = &quot;class&quot;)
 ## Variables actually used in tree construction:
 ## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
-## [4] &quot;chlorides&quot;           &quot;sulphates&quot;           &quot;fixed.acidity&quot;      
-## [7] &quot;citric.acid&quot;        
-## Number of terminal nodes:  16 
-## Residual mean deviance:  0.9588 = 3722 / 3882 
+## [4] &quot;chlorides&quot;           &quot;sulphates&quot;           &quot;fixed.acidity&quot;
+## [7] &quot;citric.acid&quot;
+## Number of terminal nodes:  16
+## Residual mean deviance:  0.9588 = 3722 / 3882
 ## Misclassification error rate: 0.2324 = 906 / 3898</code></pre>
 <p>So we can see from this summary, that in fact 6 out of the 8 predictors were used in constructing this tree: <code>alcohol</code>, <code>volatile.acidity</code>, <code>free.sulfur.dioxide</code>, <code>sulphates</code>, <code>citric.acid</code>, and <code>fixed.acidity</code>. Now we are actually going to plot the tree to visualize this.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">plot</span>(tree, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)</a>
@@ -678,17 +678,17 @@ div.tocify {
 <a class="sourceLine" id="cb24-5" title="5">cv</a></code></pre></div>
 <pre><code>## $size
 ## [1] 16 11  8  7  6  5  4  3  1
-## 
+##
 ## $dev
 ## [1] 1004 1004 1004 1013 1013 1007  997 1057 1205
-## 
+##
 ## $k
 ## [1]       -Inf   0.000000   1.333333   6.000000   7.000000  10.000000  40.000000
 ## [8]  77.000000 116.000000
-## 
+##
 ## $method
 ## [1] &quot;misclass&quot;
-## 
+##
 ## attr(,&quot;class&quot;)
 ## [1] &quot;prune&quot;         &quot;tree.sequence&quot;</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># Best size </span></a>
@@ -707,13 +707,13 @@ div.tocify {
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">tree.pruned &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree, <span class="dt">best =</span> best.cv, </a>
 <a class="sourceLine" id="cb29-2" title="2">                          <span class="dt">method =</span> <span class="st">&quot;misclass&quot;</span>)</a>
 <a class="sourceLine" id="cb29-3" title="3"><span class="kw">summary</span>(tree.pruned)</a></code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Classification tree:
 ## snip.tree(tree = tree, nodes = c(10L, 3L, 4L, 11L))
 ## Variables actually used in tree construction:
 ## [1] &quot;alcohol&quot;          &quot;volatile.acidity&quot;
-## Number of terminal nodes:  4 
-## Residual mean deviance:  1.054 = 4103 / 3894 
+## Number of terminal nodes:  4
+## Residual mean deviance:  1.054 = 4103 / 3894
 ## Misclassification error rate: 0.2496 = 973 / 3898</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">plot</span>(tree.pruned, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)</a>
 <a class="sourceLine" id="cb31-2" title="2"><span class="kw">text</span>(tree.pruned, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
@@ -925,13 +925,13 @@ div.tocify {
 <a class="sourceLine" id="cb67-5" title="5">                   <span class="dt">mtry =</span> <span class="dv">8</span>)</a>
 <a class="sourceLine" id="cb67-6" title="6"></a>
 <a class="sourceLine" id="cb67-7" title="7"><span class="kw">print</span>(rf)</a></code></pre></div>
-<pre><code>## 
+<pre><code>##
 ## Call:
-##  randomForest(formula = label ~ ., data = train, mtry = 8) 
+##  randomForest(formula = label ~ ., data = train, mtry = 8)
 ##                Type of random forest: classification
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 8
-## 
+##
 ##         OOB estimate of  error rate: 16.96%
 ## Confusion matrix:
 ##      bad good class.error
@@ -1051,7 +1051,7 @@ div.tocify {
 <p>We would also like to delve more into how best to select some <span class="math inline">\(k\)</span> for kNN that maintains a high level of accuracy while also having a balance between bias and variance without either over or underfitting. We would also posit a similar question for the number of nodes in a decision tree. Finally, is dropping variables in randomForest really necessary, if the randomization inherent in it already accounts for overfitting?</p>
 <p>If we can only compare models that utilize the same set of predictors, then we should look at the pruned classification tree against the randomForest model utilizing the same attributes. We see even there that the randomForest model is superior.</p>
 <p>In conclusion we have found that randomForest is best for binary classification and that alcohol, volatile acidity, and free sulfur dioxide are the most important predictors when attempting to classify a good wine.</p>
-
+<div style="page-break-after: always;"></div>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
@@ -1136,7 +1136,7 @@ $(document).ready(function ()  {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
