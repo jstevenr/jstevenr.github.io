@@ -22,8 +22,6 @@ navbar:
           href: bitcoin.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html
-        - text: "Predicting housing price"
-          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb     
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"

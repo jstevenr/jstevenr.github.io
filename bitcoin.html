@@ -441,7 +441,7 @@ div.tocify {
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Portfolio
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -454,15 +454,12 @@ div.tocify {
     <li>
       <a href="imdb.html">Visualizing IMDB ratings</a>
     </li>
-    <li>
-      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing price</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Contact Me
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -479,7 +476,7 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -578,9 +575,9 @@ div.tocify {
 <a class="sourceLine" id="cb14-2" title="2"><span class="kw">adf.test</span>(open_diff, <span class="dt">alternative =</span> <span class="st">&quot;stationary&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning in adf.test(open_diff, alternative = &quot;stationary&quot;): p-value smaller than
 ## printed p-value</code></pre>
-<pre><code>##
+<pre><code>## 
 ##  Augmented Dickey-Fuller Test
-##
+## 
 ## data:  open_diff
 ## Dickey-Fuller = -7.0202, Lag order = 7, p-value = 0.01
 ## alternative hypothesis: stationary</code></pre>
@@ -594,15 +591,15 @@ div.tocify {
 <a class="sourceLine" id="cb17-2" title="2"><span class="co"># stepwise and approximation = F is slower, but more accurate</span></a>
 <a class="sourceLine" id="cb17-3" title="3">auto.fit &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(open, <span class="dt">stepwise =</span> F, <span class="dt">approximation =</span> F, <span class="dt">lambda =</span> <span class="dv">0</span>, <span class="dt">ic =</span> <span class="st">&quot;aicc&quot;</span>)</a>
 <a class="sourceLine" id="cb17-4" title="4">auto.fit</a></code></pre></div>
-<pre><code>## Series: open
-## ARIMA(0,1,4) with drift
-## Box Cox transformation: lambda= 0
-##
+<pre><code>## Series: open 
+## ARIMA(0,1,4) with drift 
+## Box Cox transformation: lambda= 0 
+## 
 ## Coefficients:
 ##          ma1      ma2      ma3     ma4   drift
 ##       0.0462  -0.0766  -0.0212  0.1660  0.0026
 ## s.e.  0.0519   0.0513   0.0503  0.0556  0.0017
-##
+## 
 ## sigma^2 estimated as 0.000833:  log likelihood=778.57
 ## AIC=-1545.14   AICc=-1544.91   BIC=-1521.74</code></pre>
 <p>Note the inclusion of a ‘drift’ constant in the model. The <code>auto.arima()</code> function only includes the drift if it improves the model, based on AICc, which is the information criterion we specified to judge the model on, something that will be explained in more detail later on. We note that the drift <span class="math inline">\(\mu = 0.0026\)</span> with standard error <span class="math inline">\(0.0017\)</span>, so the confidence interval for it actually includes zero hinting at this being a rather insignificant drift.</p>
@@ -647,29 +644,29 @@ div.tocify {
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># ARIMA(1,1,2)</span></a>
 <a class="sourceLine" id="cb23-2" title="2">fit112 &lt;-<span class="st"> </span><span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb23-3" title="3">fit112</a></code></pre></div>
-<pre><code>## Series: open
-## ARIMA(1,1,2)
-## Box Cox transformation: lambda= 0
-##
+<pre><code>## Series: open 
+## ARIMA(1,1,2) 
+## Box Cox transformation: lambda= 0 
+## 
 ## Coefficients:
 ##          ar1      ma1      ma2
 ##       0.0546  -0.0167  -0.0536
 ## s.e.  0.4038   0.4003   0.0487
-##
+## 
 ## sigma^2 estimated as 0.0008555:  log likelihood=772.76
 ## AIC=-1537.53   AICc=-1537.41   BIC=-1521.93</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co"># ARIMA(2,1,1)</span></a>
 <a class="sourceLine" id="cb25-2" title="2">fit211 &lt;-<span class="st"> </span><span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb25-3" title="3">fit211</a></code></pre></div>
-<pre><code>## Series: open
-## ARIMA(2,1,1)
-## Box Cox transformation: lambda= 0
-##
+<pre><code>## Series: open 
+## ARIMA(2,1,1) 
+## Box Cox transformation: lambda= 0 
+## 
 ## Coefficients:
 ##          ar1      ar2     ma1
 ##       0.0287  -0.0671  0.0098
 ## s.e.  0.3504   0.0538  0.3480
-##
+## 
 ## sigma^2 estimated as 0.0008546:  log likelihood=772.94
 ## AIC=-1537.89   AICc=-1537.78   BIC=-1522.29</code></pre>
 <p>So, we have the ARIMA(1,1,2) model <span class="math display">\[X_t - 0.0546X_{t-1} = Z_t + 0.0167Z_{t-1} + 0.0536Z_{t-2}\]</span> and the ARIMA(2,1,1) model <span class="math display">\[X_t - 0.0287X_{t-1} + 0.0671X_{t-2} = Z_t - 0.0098Z_{t-1}\]</span></p>
@@ -804,7 +801,7 @@ University, Sept. 2017, people.duke.edu/~rnau/411home.htm.</p>
 <h1>Appendix</h1>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="co"># pretty much all code is included in the body of the report</span></a>
 <a class="sourceLine" id="cb44-2" title="2">fit211<span class="op">$</span>coef[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] <span class="co"># the 2 AR coefficients</span></a></code></pre></div>
-<pre><code>##         ar1         ar2
+<pre><code>##         ar1         ar2 
 ##  0.02867388 -0.06710986</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb46-2" title="2"><span class="co"># RESIDUALS</span></a>
@@ -903,7 +900,7 @@ $(document).ready(function ()  {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

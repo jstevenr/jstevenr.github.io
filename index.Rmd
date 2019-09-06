@@ -20,8 +20,6 @@ navbar:
           href: bitcoin.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html 
-        - text: "Predicting housing price"
-          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -66,12 +64,6 @@ For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenk
 * #### [Visualizing IMDB ratings](imdb.html)
 
 This is a simple visualization of film ratings on the [Internet Movie Database](imdb.com), particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.
-
-### Python
-
-* #### [Predicting housing price with regression](https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb)
-
-This project was done to showcase a variety of machine learning regression models, including ordinary least squares, decision trees, random forests, gradient boosting, and k-nearest neighbors. These models were all used to predict the median value of a home in Boston. I also built a small application that leveraged the final model to make predictions based on user input. I ultimately concluded that in this case, the gradient boosting model was the strongest model, although it is important to note that this model (and indeed any model built on decision trees) is not suitable for extrapolating with data yet unseen by the model. 
 
 ----
 
