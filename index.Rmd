@@ -5,7 +5,8 @@ output:
   html_document:
     includes:
       in_header: 
-        header.html
+        header.html          
+
 navbar:
   title: "Home"
   left:
@@ -29,6 +30,8 @@ navbar:
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
+          
+      
 ---
 
 <center><img src="images/banner-beach.png" width="645px"></center>
@@ -49,7 +52,8 @@ If you know anything about data science, statistics, machine learning, artificia
 
 These are some of the projects I've worked on throughout my time studying data science, and I am constantly learning and adding things to my repertoire.
 
-### Machine Learning
+
+### R
 
 * #### [Classifying wine quality](wine-classification.html)
 

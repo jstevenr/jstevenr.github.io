@@ -1,13 +1,14 @@
 --- 
 title: "Classifying wine quality"
 output:
+  pdf_document: 
+    fig_height: 6
+    toc: yes
   html_document:
     includes:
       in_header: header.html
     toc: yes
     toc_float: yes
-  pdf_document:
-    toc: yes
 navbar:
   left:
   - href: about_me.html
@@ -29,37 +30,43 @@ navbar:
       text: LinkedIn
     text: Contact Me
   title: Home
+editor_options: 
+  chunk_output_type: inline
 ---
 
 This was my final project for PSTAT 131, Data Mining, Spring 2017. This project was originally written in R, and was later converted to Python and revised to reflect the changes. The original code and report is present on [my GitHub](https://github.com/jstevenr/wine-classification). Some methodology and results have changed as a result.
 
-----
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), tidy = TRUE, echo = TRUE, cache = TRUE, include = TRUE)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), tidy = TRUE, 
+                      echo = TRUE, cache = TRUE, include = TRUE)
 knitr::knit_engines$set(python = reticulate::eng_python)
 options(width = 80)
 library(reticulate)
+library(knitr)
 use_virtualenv("r-reticulate")
 use_condaenv("anaconda3")
 py_available(TRUE)
 ```
 
-```{python setup environment}
+
+```{python, setup environment}
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
-# import scikit-learn
 from sklearn import neighbors, tree
 from sklearn.metrics import auc, roc_curve, accuracy_score
-from sklearn.model_selection import train_test_split, KFold, cross_val_score
+from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 import seaborn as sns
 # Import and suppress warnings
 import warnings
 warnings.filterwarnings('ignore')
+# Prevents the QT window error from using plt.show()
+import os
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = 'C:/Users/jsteven.raquel/AppData/Local/Continuum/anaconda3/Library/plugins/platforms'
 ```
 
 
@@ -89,13 +96,25 @@ A preliminary look at the dataset reveals that there are no missing values.
 First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with random forest, both of which are going to be used in this analysis. 
 
 ```{python correlation matrix}
-f, ax = plt.subplots(figsize=(10, 8))
+import pandas as pd
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+import seaborn as sns 
+
+import os
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = 'C:/Users/jsteven.raquel/AppData/Local/Continuum/anaconda3/Library/plugins/platforms'
+
+# reading in the data
+df = pd.read_csv("winequality-white.csv", sep = ";")
+# Correlation Matrix
 corr = df.corr()
-print(corr)
-sns.heatmap(corr, mask=np.zeros_like(corr, dtype=np.bool),
-            cmap=sns.diverging_palette(220, 10, as_cmap=True),
-            square=True, ax=ax)
+pd.set_option('precision', 2)
+# Plot
+fig, ax = plt.subplots(figsize = (10,10))
+sns.heatmap(corr, vmax = .8, linewidths = 0.01, square = True, annot = True, cmap = 'RdYlGn', linecolor = 'white')
+plt.title('Correlation Matrix')
 plt.show()
+# fig.savefig("correlation_matrix.png")
 ```
 
 
@@ -110,12 +129,11 @@ So, we should actually remove the variables `residual.sugar` and `density`, as w
 df = pd.read_csv("winequality-white.csv", sep = ";")
 df.drop(["residual sugar", "density", "total sulfur dioxide"], axis = 1, inplace = True)
 
-f, ax = plt.subplots(figsize=(10, 8))
+pd.set_option('precision', 2)
 corr = df.corr()
-# seaborn is loaded as sns
-sns.heatmap(corr, mask=np.zeros_like(corr, dtype=np.bool),
-            cmap=sns.diverging_palette(220, 10, as_cmap=True),
-            square=True, ax=ax)
+plt.figure(figsize = (10,10))
+sns.heatmap(corr, vmax = .8, linewidths = 0.01, square = True, annot = True, cmap = 'RdYlGn', linecolor = 'white')
+plt.title('Correlation Matrix')
 plt.show()
 ```
 
@@ -124,13 +142,9 @@ From the new correlation matrix it appears that none of the predictors now have 
 From here on out, we're also going to want to convert the `quality` response variable into a binary factor so that we can use the predictors to classify the observations. We're going to do this by labeling all of the observations that have received an above average (5 out of 10) as "good", and the rest as "bad", "bad" really meaning "not good". This factor of `good` and `bad` goes under a new column titled `label`.
 
 
-
 We'll remove the `quality` variable afterwards, since if we use it as an attribute in the predictor, it will skew the results because it is directly correlated to the label.
 
 ```{python convert to factor}
-df = pd.read_csv("winequality-white.csv", sep = ";")
-df.drop(["residual sugar", "density", "total sulfur dioxide"], axis = 1, inplace = True)
-
 # assigning the independent  variables to X
 X = df.loc[:, 'fixed acidity':'alcohol']
 feature_names = X.columns.values 
@@ -155,11 +169,12 @@ In order to apply machine learning algorithms to this dataset, we need to strati
 It's important to note that all of these numeric predictor variables (`fixed.acidity`, `volatile.acidity`, `citric.acid`, `chlorides`, `free.sulfur.dioxide`, `pH`, `sulphates`, `alcohol`) are not all scaled the same. As such, it's appropriate to scale them before running any analyses. 
 
 ```{python test and training set}
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 # split the data intro training and test sets, test size is 30% of the data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 100)
 
 # scaling the numeric attributes
-# from sklearn.preprocessingimport StandardScaler
 scaler = StandardScaler().fit(X_train)
 # scaled X
 X_train = scaler.transform(X_train) 
@@ -173,6 +188,7 @@ The first method we are going to perform on this dataset, is Decision Trees. Dec
 Of course, we're going to use `quality` as a response variable, and each of the now 8 remaining numeric attributes as predictors. Now we're going to fit the model, and then display a feature importance plot (also known as a variable importance plot) to see which features of the data were the most crucial to the model's prediction.
 
 ```{python building decision tree}
+from sklearn import tree
 tree_clf = tree.DecisionTreeClassifier(random_state = 100)
 tree_clf.fit(X_train, y_train) # training the model
 tree_y_pred = tree_clf.predict(X_test)
@@ -189,8 +205,7 @@ As we can see, `alcohol` is far and away the most 'important' feature in the mod
 Now we want to calculate the accuracy and error rate of the model. 
 
 ```{python prediction with tree}
-# numpy is loaded as np
-# from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score
 tree_acc = accuracy_score(y_test, tree_y_pred)
 print(tree_acc)
 ```
@@ -200,6 +215,8 @@ With an accuracy rate of `0.776`, this decision tree model is not superb, but wi
 As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification). 
 
 ```{python ROC curve of tree}
+from sklearn.metrics import auc, roc_curve
+
 def calculate_roc(clf, X_test, y_test):
     probs = clf.predict_proba(X_test)
     preds = probs[:,1]
@@ -239,9 +256,6 @@ One of the pitfalls of the decision tree model is that the more complex it is, t
 
 
 ```{python pruning of tree}
-from sklearn import tree
-from sklearn.model_selection import cross_val_score
-
 depth = []
 
 for i in range(3,20):
@@ -314,6 +328,8 @@ Distance is measured in different ways, but by default the `knn()` function util
 This is rather problematic because when calculating distance it's assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes' relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what's more we scaled the remaining numeric predictors, which goes in a small way to addressing this.
 
 ```{python, "kNN with k = 10"}
+from sklearn import neighbors
+
 # k-nearest neighbors
 knn_clf = neighbors.KNeighborsClassifier(10, weights = "distance")
 knn_clf.fit(X_train, y_train)
@@ -370,6 +386,8 @@ Finally we can move on to the final method of classification, the random forest 
 Random forest is similar to the decision tree method in that it builds trees, hence the name 'random forest'. This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that random forest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own. The disadvantage however is that since it is a 'black-box' algorithm, it is harder to interpret than a decision tree. 
 
 ```{python create random forest}
+from sklearn.ensemble import RandomForestClassifier
+
 # random forest
 rf_clf = RandomForestClassifier(bootstrap = True, random_state = 100)
 rf_clf.fit(X_train, y_train)

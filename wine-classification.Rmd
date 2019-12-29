@@ -5,9 +5,11 @@ output:
   html_document:
     toc: true
     toc_float: true
+    keep_tex: yes
     includes:
       in_header: 
         header.html
+
 navbar:
   title: "Home"
   left:
@@ -17,10 +19,10 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Predicting bitcoin value"
+        - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Visualizing IMDB ratings"
-          href: imdb.html         
+          href: imdb.html   
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -76,7 +78,7 @@ white.cor <- cor(white[,1:12])
 # white.cor
 ```
 
-Taking a look at the correlation coefficients $r$ for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` ($r = 0.84$) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
+Taking a look at the correlation coefficients \(r\) for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` (\(r = 0.84\)) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
 
 Aside from that correlations are all very low, including (and especially) `quality`, the response variable, with the predictors. 
 
@@ -121,7 +123,9 @@ We're going to initialize a matrix to easily compare the quality of the differen
 # initializing a matrix for records
 records <- matrix(NA, nrow = 6, ncol = 3)
 colnames(records) <- c("Accuracy Rate", "Error Rate", "AUC")
-rownames(records) <- c("tree", "pruned.tree", "k=10 kNN", "k=35 kNN", "full.randomForest", "small.randomForest")
+rownames(records) <- c("tree", "pruned.tree", 
+                       "k=10 kNN", "k=35 kNN", 
+                       "full.randomForest", "small.randomForest")
 records
 ```
 

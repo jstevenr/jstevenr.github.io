@@ -8,3 +8,7 @@ rgl
 robustbase
 Matrix
 qpcR
+ggplot2
+ggfortify
+dplyr
+zoo
