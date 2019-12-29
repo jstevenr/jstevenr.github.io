@@ -53,7 +53,7 @@ If you know anything about data science, statistics, machine learning, artificia
 These are some of the projects I've worked on throughout my time studying data science, and I am constantly learning and adding things to my repertoire.
 
 
-### R
+### Machine Learning
 
 * #### [Classifying wine quality](wine-classification.html)
 
