@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -177,7 +176,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -326,6 +324,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -354,6 +353,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -446,10 +451,13 @@ div.tocify {
       <a href="wine-classification.html">Classifying wine quality</a>
     </li>
     <li>
-      <a href="bitcoin.html">Predicting bitcoin value</a>
+      <a href="bitcoin.html">Forecasting bitcoin value</a>
     </li>
     <li>
       <a href="imdb.html">Visualizing IMDB ratings</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices in Boston</a>
     </li>
   </ul>
 </li>
@@ -592,10 +600,9 @@ div.tocify {
 ##     mincut = 5, minsize = 10, mindev = 0.003), method = &quot;class&quot;)
 ## Variables actually used in tree construction:
 ## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
-## [4] &quot;chlorides&quot;           &quot;sulphates&quot;           &quot;fixed.acidity&quot;      
-## [7] &quot;citric.acid&quot;        
+## [4] &quot;sulphates&quot;           &quot;citric.acid&quot;         &quot;fixed.acidity&quot;      
 ## Number of terminal nodes:  16 
-## Residual mean deviance:  0.9588 = 3722 / 3882 
+## Residual mean deviance:  0.9591 = 3723 / 3882 
 ## Misclassification error rate: 0.2324 = 906 / 3898</code></pre>
 <p>So we can see from this summary, that in fact 6 out of the 8 predictors were used in constructing this tree: <code>alcohol</code>, <code>volatile.acidity</code>, <code>free.sulfur.dioxide</code>, <code>sulphates</code>, <code>citric.acid</code>, and <code>fixed.acidity</code>. Now we are actually going to plot the tree to visualize this.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">plot</span>(tree, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)</a>
@@ -616,16 +623,16 @@ div.tocify {
 <a class="sourceLine" id="cb13-10" title="10">tree_conf</a></code></pre></div>
 <pre><code>##       true
 ## pred   bad good
-##   bad  225  118
-##   good 133  524</code></pre>
+##   bad  198  122
+##   good 130  550</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># the class_acc() function is defined locally</span></a>
 <a class="sourceLine" id="cb15-2" title="2">tree_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(tree_conf)</a>
 <a class="sourceLine" id="cb15-3" title="3">tree_acc</a></code></pre></div>
-<pre><code>## [1] 0.749</code></pre>
+<pre><code>## [1] 0.748</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># misclassification error </span></a>
 <a class="sourceLine" id="cb17-2" title="2">tree_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>tree_acc</a>
 <a class="sourceLine" id="cb17-3" title="3">tree_err</a></code></pre></div>
-<pre><code>## [1] 0.251</code></pre>
+<pre><code>## [1] 0.252</code></pre>
 <p>With an accuracy rate of <code>0.748</code>, this decision tree model is not superb, but will still classify correctly about 3 out of 4 times.</p>
 <p>As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification).</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># library(ROCR) is loaded</span></a>
@@ -645,17 +652,17 @@ div.tocify {
 <a class="sourceLine" id="cb20-2" title="2">tree_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)</a>
 <a class="sourceLine" id="cb20-3" title="3">tree_AUC &lt;-<span class="st"> </span>tree_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb20-4" title="4">tree_AUC</a></code></pre></div>
-<pre><code>## [1] 0.7885253</code></pre>
+<pre><code>## [1] 0.787554</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># adding to records matrix</span></a>
 <a class="sourceLine" id="cb22-2" title="2">records[<span class="dv">1</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(tree_acc, tree_err, tree_AUC)</a>
 <a class="sourceLine" id="cb22-3" title="3">records</a></code></pre></div>
-<pre><code>##                    Accuracy Rate Error Rate       AUC
-## tree                       0.749      0.251 0.7885253
-## pruned.tree                   NA         NA        NA
-## k=10 kNN                      NA         NA        NA
-## k=35 kNN                      NA         NA        NA
-## full.randomForest             NA         NA        NA
-## small.randomForest            NA         NA        NA</code></pre>
+<pre><code>##                    Accuracy Rate Error Rate      AUC
+## tree                       0.748      0.252 0.787554
+## pruned.tree                   NA         NA       NA
+## k=10 kNN                      NA         NA       NA
+## k=35 kNN                      NA         NA       NA
+## full.randomForest             NA         NA       NA
+## small.randomForest            NA         NA       NA</code></pre>
 <p>We see thusly that the area under the curve is <span class="math inline">\(0.788\)</span> which is slightly closer to 1 than 0.5. That is to say that it is more good than bad, but hardly so.</p>
 <div id="k-fold-cross-validation" class="section level3">
 <h3>k-fold Cross Validation</h3>
@@ -669,14 +676,13 @@ div.tocify {
 <a class="sourceLine" id="cb24-4" title="4">cv &lt;-<span class="st"> </span><span class="kw">cv.tree</span>(tree, <span class="dt">FUN=</span>prune.misclass, <span class="dt">K=</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb24-5" title="5">cv</a></code></pre></div>
 <pre><code>## $size
-## [1] 16 11  8  7  6  5  4  3  1
+## [1] 16  9  7  5  4  3  1
 ## 
 ## $dev
-## [1] 1004 1004 1004 1013 1013 1007  997 1057 1205
+## [1] 1013 1013 1012 1023 1025 1045 1252
 ## 
 ## $k
-## [1]       -Inf   0.000000   1.333333   6.000000   7.000000  10.000000  40.000000
-## [8]  77.000000 116.000000
+## [1]  -Inf   0.0   4.0   9.5  36.0  71.0 136.0
 ## 
 ## $method
 ## [1] &quot;misclass&quot;
@@ -694,19 +700,19 @@ div.tocify {
 <a class="sourceLine" id="cb26-9" title="9"><span class="kw">abline</span>(<span class="dt">v=</span>best.cv, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="wine-classification_files/figure-html/cross%20validation%20of%20tree-1.png" width="672" /></p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">best.cv</a></code></pre></div>
-<pre><code>## [1] 4</code></pre>
+<pre><code>## [1] 7</code></pre>
 <p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">tree.pruned &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree, <span class="dt">best =</span> best.cv, </a>
 <a class="sourceLine" id="cb29-2" title="2">                          <span class="dt">method =</span> <span class="st">&quot;misclass&quot;</span>)</a>
 <a class="sourceLine" id="cb29-3" title="3"><span class="kw">summary</span>(tree.pruned)</a></code></pre></div>
 <pre><code>## 
 ## Classification tree:
-## snip.tree(tree = tree, nodes = c(10L, 3L, 4L, 11L))
+## snip.tree(tree = tree, nodes = c(4L, 10L, 23L, 7L))
 ## Variables actually used in tree construction:
-## [1] &quot;alcohol&quot;          &quot;volatile.acidity&quot;
-## Number of terminal nodes:  4 
-## Residual mean deviance:  1.054 = 4103 / 3894 
-## Misclassification error rate: 0.2496 = 973 / 3898</code></pre>
+## [1] &quot;alcohol&quot;             &quot;volatile.acidity&quot;    &quot;free.sulfur.dioxide&quot;
+## Number of terminal nodes:  7 
+## Residual mean deviance:  1.021 = 3971 / 3891 
+## Misclassification error rate: 0.2345 = 914 / 3898</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">plot</span>(tree.pruned, <span class="dt">type =</span> <span class="st">&quot;uniform&quot;</span>)</a>
 <a class="sourceLine" id="cb31-2" title="2"><span class="kw">text</span>(tree.pruned, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
 <a class="sourceLine" id="cb31-3" title="3"><span class="kw">title</span>(<span class="st">&quot;Pruned Classification Tree&quot;</span>)</a></code></pre></div>
@@ -719,14 +725,14 @@ div.tocify {
 <a class="sourceLine" id="cb32-4" title="4">pruned_conf</a></code></pre></div>
 <pre><code>##       true
 ## pred   bad good
-##   bad  179   88
-##   good 179  554</code></pre>
+##   bad  196  119
+##   good 132  553</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">pruned_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(tree_conf)</a>
 <a class="sourceLine" id="cb34-2" title="2">pruned_acc</a></code></pre></div>
-<pre><code>## [1] 0.749</code></pre>
+<pre><code>## [1] 0.748</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">pruned_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>tree_acc</a>
 <a class="sourceLine" id="cb36-2" title="2">pruned_err</a></code></pre></div>
-<pre><code>## [1] 0.251</code></pre>
+<pre><code>## [1] 0.252</code></pre>
 <p>We see that pruning the tree didn’t actually really improve the accuracy rate of the model at all, although it did condense the number of relevant variables. Initially, seeing that accuracy did not improve might give the impression that pruning was not meaningful, but to the contrary, the fact that we were able to prune the tree without losing any accuracy shows that the sole 3 variables we have remaining (<code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>) are just as good as classifying when using a decision tree as when using all 8 predictors.</p>
 <p>The original model being rather complex with as many as 6 predictors runs the risk of over-fitting, which is to say that the data follows the training data too closely and cannot be well generalized to new data. This is why we are inclined to favor a simpler model such as that we found after pruning with cross-validation.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="co"># ROC Curve with tree object</span></a>
@@ -745,12 +751,12 @@ div.tocify {
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">pruned_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(pruned_roc_pred, <span class="st">&quot;auc&quot;</span>)</a>
 <a class="sourceLine" id="cb39-2" title="2">pruned_AUC &lt;-<span class="st"> </span>pruned_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb39-3" title="3">pruned_AUC</a></code></pre></div>
-<pre><code>## [1] 0.7604509</code></pre>
+<pre><code>## [1] 0.7557391</code></pre>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">records[<span class="dv">2</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(pruned_acc, pruned_err, pruned_AUC)</a>
 <a class="sourceLine" id="cb41-2" title="2">records</a></code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
-## tree                       0.749      0.251 0.7885253
-## pruned.tree                0.749      0.251 0.7604509
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
 ## k=10 kNN                      NA         NA        NA
 ## k=35 kNN                      NA         NA        NA
 ## full.randomForest             NA         NA        NA
@@ -777,16 +783,16 @@ div.tocify {
 <a class="sourceLine" id="cb43-11" title="11">knn_conf</a></code></pre></div>
 <pre><code>##       true
 ## pred   bad good
-##   bad  205   91
-##   good 153  551</code></pre>
+##   bad  192   99
+##   good 136  573</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># accuracy</span></a>
 <a class="sourceLine" id="cb45-2" title="2">knn_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(knn_conf)</a>
 <a class="sourceLine" id="cb45-3" title="3">knn_acc</a></code></pre></div>
-<pre><code>## [1] 0.756</code></pre>
+<pre><code>## [1] 0.765</code></pre>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="co"># misclassification error</span></a>
 <a class="sourceLine" id="cb47-2" title="2">knn_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>knn_acc</a>
 <a class="sourceLine" id="cb47-3" title="3">knn_err</a></code></pre></div>
-<pre><code>## [1] 0.244</code></pre>
+<pre><code>## [1] 0.235</code></pre>
 <p>So, using 10 nearest neighbors was just a random estimate, and it ended up with another mediocre accuracy rate (<span class="math inline">\(0.765\)</span>) but we can look at the area under the ROC curve (AUC) and look at the strength of the test relative to the methods we have tried so far.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="co"># Creating the ROC curve for knn</span></a>
 <a class="sourceLine" id="cb49-2" title="2"><span class="co"># library(dplyr) is loaded</span></a>
@@ -805,13 +811,13 @@ div.tocify {
 <a class="sourceLine" id="cb50-2" title="2">knn_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
 <a class="sourceLine" id="cb50-3" title="3">knn_AUC &lt;-<span class="st"> </span>knn_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb50-4" title="4">knn_AUC</a></code></pre></div>
-<pre><code>## [1] 0.6893241</code></pre>
+<pre><code>## [1] 0.6791635</code></pre>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">records[<span class="dv">3</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(knn_acc, knn_err, knn_AUC)</a>
 <a class="sourceLine" id="cb52-2" title="2">records</a></code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
-## tree                       0.749      0.251 0.7885253
-## pruned.tree                0.749      0.251 0.7604509
-## k=10 kNN                   0.756      0.244 0.6893241
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
 ## k=35 kNN                      NA         NA        NA
 ## full.randomForest             NA         NA        NA
 ## small.randomForest            NA         NA        NA</code></pre>
@@ -865,8 +871,8 @@ div.tocify {
 <a class="sourceLine" id="cb56-10" title="10">new_knn_conf</a></code></pre></div>
 <pre><code>##       pred
 ## true   bad good
-##   bad  197  161
-##   good  84  558</code></pre>
+##   bad  179  149
+##   good  96  576</code></pre>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="co"># accuracy rate</span></a>
 <a class="sourceLine" id="cb58-2" title="2">new_knn_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(new_knn_conf)</a>
 <a class="sourceLine" id="cb58-3" title="3">new_knn_acc</a></code></pre></div>
@@ -893,14 +899,14 @@ div.tocify {
 <a class="sourceLine" id="cb63-2" title="2">new_knn_auc_perf &lt;-<span class="st"> </span><span class="kw">performance</span>(new_knn_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
 <a class="sourceLine" id="cb63-3" title="3">new_knn_AUC &lt;-<span class="st"> </span>new_knn_auc_perf<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb63-4" title="4">new_knn_AUC</a></code></pre></div>
-<pre><code>## [1] 0.7414004</code></pre>
+<pre><code>## [1] 0.7106358</code></pre>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">records[<span class="dv">4</span>,] &lt;-<span class="st"> </span><span class="kw">c</span>(new_knn_acc, new_knn_err, new_knn_AUC)</a>
 <a class="sourceLine" id="cb65-2" title="2">records</a></code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
-## tree                       0.749      0.251 0.7885253
-## pruned.tree                0.749      0.251 0.7604509
-## k=10 kNN                   0.756      0.244 0.6893241
-## k=35 kNN                   0.755      0.245 0.7414004
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
+## k=35 kNN                   0.755      0.245 0.7106358
 ## full.randomForest             NA         NA        NA
 ## small.randomForest            NA         NA        NA</code></pre>
 <p>So we see that although we have sacrified some accuracy, the area under the curve has increased somewhat, so it could be argued that the test has improved. What’s more, with a dataset of this dimensionality, it is most likely better to use more neighbors if one can, because otherwise you run the risk of overfitting to the training data (which is why we did not opt for <span class="math inline">\(k=1\)</span>.)</p>
@@ -924,11 +930,11 @@ div.tocify {
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 8
 ## 
-##         OOB estimate of  error rate: 16.96%
+##         OOB estimate of  error rate: 16.37%
 ## Confusion matrix:
 ##      bad good class.error
-## bad  896  386   0.3010920
-## good 275 2341   0.1051223</code></pre>
+## bad  941  371   0.2827744
+## good 267 2319   0.1032483</code></pre>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1"><span class="kw">varImpPlot</span>(rf, <span class="dt">main =</span> <span class="st">&quot;Variable Importance Plot&quot;</span>)</a></code></pre></div>
 <p><img src="wine-classification_files/figure-html/create%20randomForest-1.png" width="672" /></p>
 <p><code>meanDecreaseGini</code> refers to the “mean decrease in node impurity”. Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself.</p>
@@ -941,14 +947,14 @@ div.tocify {
 <a class="sourceLine" id="cb70-6" title="6">rf_conf</a></code></pre></div>
 <pre><code>##       pred
 ## true   bad good
-##   bad  251  107
-##   good  67  575</code></pre>
+##   bad  230   98
+##   good  81  591</code></pre>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">rf_acc &lt;-<span class="st"> </span><span class="kw">class_acc</span>(rf_conf)</a>
 <a class="sourceLine" id="cb72-2" title="2">rf_acc</a></code></pre></div>
-<pre><code>## [1] 0.826</code></pre>
+<pre><code>## [1] 0.821</code></pre>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">rf_err &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rf_acc</a>
 <a class="sourceLine" id="cb74-2" title="2">rf_err</a></code></pre></div>
-<pre><code>## [1] 0.174</code></pre>
+<pre><code>## [1] 0.179</code></pre>
 <p>With an accuracy rate of <code>0.823</code>, this randomForest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far.</p>
 <p>Let’s take a look at the ROC curve and the area underneath it.</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="co"># Building the ROC Curve</span></a>
@@ -967,15 +973,15 @@ div.tocify {
 <a class="sourceLine" id="cb77-2" title="2">rf_perf2 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
 <a class="sourceLine" id="cb77-3" title="3">rf_AUC &lt;-<span class="st"> </span>rf_perf2<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb77-4" title="4">rf_AUC</a></code></pre></div>
-<pre><code>## [1] 0.8891906</code></pre>
+<pre><code>## [1] 0.8857297</code></pre>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">records[<span class="dv">5</span>, ] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc, rf_err, rf_AUC)</a>
 <a class="sourceLine" id="cb79-2" title="2">records</a></code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
-## tree                       0.749      0.251 0.7885253
-## pruned.tree                0.749      0.251 0.7604509
-## k=10 kNN                   0.756      0.244 0.6893241
-## k=35 kNN                   0.755      0.245 0.7414004
-## full.randomForest          0.826      0.174 0.8891906
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
+## k=35 kNN                   0.755      0.245 0.7106358
+## full.randomForest          0.821      0.179 0.8857297
 ## small.randomForest            NA         NA        NA</code></pre>
 <p>The area under the ROC curve for randomForest is <code>0.887</code>, which is also a strong AUC for a classification model.</p>
 <p>So we see actually that randomForest stands head and shoulders above the other two methods, decision tree and k-nearest neighbors. This is seen in the fact that the accuracy rate, as well as the AUC, are the highest. Judging from this, we can assume that randomForest would be the most likely to correctly classify a wine based off of the attributes and data given.</p>
@@ -993,14 +999,14 @@ div.tocify {
 <a class="sourceLine" id="cb81-9" title="9">rf_conf2</a></code></pre></div>
 <pre><code>##       rf_pred2
 ##        bad good
-##   bad  232  126
-##   good  71  571</code></pre>
+##   bad  219  109
+##   good  85  587</code></pre>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">rf_acc2 &lt;-<span class="st"> </span><span class="kw">class_acc</span>(rf_conf2)</a>
 <a class="sourceLine" id="cb83-2" title="2">rf_acc2</a></code></pre></div>
-<pre><code>## [1] 0.803</code></pre>
+<pre><code>## [1] 0.806</code></pre>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">rf_err2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rf_acc2</a>
 <a class="sourceLine" id="cb85-2" title="2">rf_err2</a></code></pre></div>
-<pre><code>## [1] 0.197</code></pre>
+<pre><code>## [1] 0.194</code></pre>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="co"># Building the ROC Curve</span></a>
 <a class="sourceLine" id="cb87-2" title="2">rf_pred2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">predict</span>(rf2, test, <span class="dt">type =</span> <span class="st">&#39;prob&#39;</span>))</a>
 <a class="sourceLine" id="cb87-3" title="3">rf_pred_probs2 &lt;-<span class="st"> </span>rf_pred2[,<span class="dv">2</span>]</a>
@@ -1018,16 +1024,16 @@ div.tocify {
 <a class="sourceLine" id="cb88-2" title="2">rf_perf22 &lt;-<span class="st"> </span><span class="kw">performance</span>(rf_roc_pred2, <span class="dt">measure =</span> <span class="st">&quot;auc&quot;</span>)</a>
 <a class="sourceLine" id="cb88-3" title="3">rf_AUC2 &lt;-<span class="st"> </span>rf_perf22<span class="op">@</span>y.values[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb88-4" title="4">rf_AUC2</a></code></pre></div>
-<pre><code>## [1] 0.8515354</code></pre>
+<pre><code>## [1] 0.8462158</code></pre>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">records[<span class="dv">6</span>,] &lt;-<span class="st"> </span><span class="kw">c</span>(rf_acc2, rf_err2, rf_AUC2)</a>
 <a class="sourceLine" id="cb90-2" title="2">records</a></code></pre></div>
 <pre><code>##                    Accuracy Rate Error Rate       AUC
-## tree                       0.749      0.251 0.7885253
-## pruned.tree                0.749      0.251 0.7604509
-## k=10 kNN                   0.756      0.244 0.6893241
-## k=35 kNN                   0.755      0.245 0.7414004
-## full.randomForest          0.826      0.174 0.8891906
-## small.randomForest         0.803      0.197 0.8515354</code></pre>
+## tree                       0.748      0.252 0.7875540
+## pruned.tree                0.748      0.252 0.7557391
+## k=10 kNN                   0.765      0.235 0.6791635
+## k=35 kNN                   0.755      0.245 0.7106358
+## full.randomForest          0.821      0.179 0.8857297
+## small.randomForest         0.806      0.194 0.8462158</code></pre>
 <p>The accuracy rate has actually decreased, as well as the area under the curve, but not significantly. We’re managed to actually preserve the strength of the model, both in relation to the tree and knn methods, but also relative to the original application of randomForest with all of the predictors.</p>
 <p>As such, we can opt to utilize this much smaller model for classification instead if we are concerned about complexity and bias. Having said that, because of the randomization introduced in the randomForest, it is inherently more robust so subsetting in this manner may even be unnecessary.</p>
 </div>
@@ -1043,7 +1049,7 @@ div.tocify {
 <p>We would also like to delve more into how best to select some <span class="math inline">\(k\)</span> for kNN that maintains a high level of accuracy while also having a balance between bias and variance without either over or underfitting. We would also posit a similar question for the number of nodes in a decision tree. Finally, is dropping variables in randomForest really necessary, if the randomization inherent in it already accounts for overfitting?</p>
 <p>If we can only compare models that utilize the same set of predictors, then we should look at the pruned classification tree against the randomForest model utilizing the same attributes. We see even there that the randomForest model is superior.</p>
 <p>In conclusion we have found that randomForest is best for binary classification and that alcohol, volatile acidity, and free sulfur dioxide are the most important predictors when attempting to classify a good wine.</p>
-
+<div style="page-break-after: always;"></div>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>

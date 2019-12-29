@@ -17,10 +17,12 @@ navbar:
       menu:
         - text: "Classifying wine quality"
           href: wine-classification.html
-        - text: "Predicting bitcoin value"
+        - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Visualizing IMDB ratings"
           href: imdb.html
+        - text: "Predicting housing prices in Boston"
+          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -84,7 +83,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -233,6 +231,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -286,10 +285,13 @@ $(document).ready(function () {
       <a href="wine-classification.html">Classifying wine quality</a>
     </li>
     <li>
-      <a href="bitcoin.html">Predicting bitcoin value</a>
+      <a href="bitcoin.html">Forecasting bitcoin value</a>
     </li>
     <li>
       <a href="imdb.html">Visualizing IMDB ratings</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices in Boston</a>
     </li>
   </ul>
 </li>
@@ -346,21 +348,25 @@ $(document).ready(function () {
 <ul>
 <li><h4 id="classifying-wine-quality"><a href="wine-classification.html">Classifying wine quality</a></h4></li>
 </ul>
-<p>For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.</p>
-</div>
-<div id="predictive-modeling" class="section level3">
-<h3>Predictive Modeling</h3>
+<p>For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms using R to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.</p>
 <ul>
-<li><h4 id="predicting-bitcoin-price"><a href="bitcoin.html">Predicting bitcoin price</a></h4></li>
+<li><h4 id="predicting-housing-prices-in-boston"><a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices in Boston</a></h4></li>
 </ul>
-<p>For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.</p>
+<p>This project utilizes various regression algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a regression model using various attributes of the housing market in Boston.</p>
+</div>
+<div id="time-series-forecasting" class="section level3">
+<h3>Time Series Forecasting</h3>
+<ul>
+<li><h4 id="forecasting-bitcoin-price"><a href="bitcoin.html">Forecasting bitcoin price</a></h4></li>
+</ul>
+<p>For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model using R to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.</p>
 </div>
 <div id="data-visualization" class="section level3">
 <h3>Data Visualization</h3>
 <ul>
 <li><h4 id="visualizing-imdb-ratings"><a href="imdb.html">Visualizing IMDB ratings</a></h4></li>
 </ul>
-<p>This is a simple visualization of film ratings on the <a href="imdb.com">Internet Movie Database</a>, particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.</p>
+<p>This is a simple visualization of film ratings on the <a href="imdb.com">Internet Movie Database</a> in R, particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.</p>
 <hr />
 </div>
 </div>

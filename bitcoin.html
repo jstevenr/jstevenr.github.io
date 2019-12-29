@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -177,7 +176,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -326,6 +324,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -354,6 +353,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -446,10 +451,13 @@ div.tocify {
       <a href="wine-classification.html">Classifying wine quality</a>
     </li>
     <li>
-      <a href="bitcoin.html">Predicting bitcoin value</a>
+      <a href="bitcoin.html">Forecasting bitcoin value</a>
     </li>
     <li>
       <a href="imdb.html">Visualizing IMDB ratings</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices in Boston</a>
     </li>
   </ul>
 </li>
@@ -508,16 +516,15 @@ div.tocify {
 <p>To first analyze the dataset, I want to read in the data and then plot its time series. The data is organized to where the values are the top are the most recent, and those at the bottom are the oldest, so I will have to reverse this. I’m going to subset the data to a certain range in the middle so that I can compare my forecasting with actual existing data. After doing this, I will plot the series along a trend line or ‘line of best fit’.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">set.seed</span>(<span class="dv">100</span>)</a>
 <a class="sourceLine" id="cb1-2" title="2">bitcoin &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;bitcoin_price.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3">data &lt;-<span class="st"> </span><span class="kw">subset</span>(bitcoin, <span class="dt">select =</span> <span class="kw">c</span>(Date, Open)) <span class="co"># selecting only opening price column</span></a>
+<a class="sourceLine" id="cb1-3" title="3">data &lt;-<span class="st"> </span><span class="kw">subset</span>(bitcoin, <span class="dt">select =</span> <span class="kw">c</span>(Date, Open))  <span class="co"># selecting only opening price column</span></a>
 <a class="sourceLine" id="cb1-4" title="4"><span class="co"># flipping the data to go from oldest to newest</span></a>
 <a class="sourceLine" id="cb1-5" title="5">data2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Date =</span> data<span class="op">$</span>Date[<span class="dv">1655</span><span class="op">:</span><span class="dv">1</span>], <span class="dt">Open =</span> data<span class="op">$</span>Open[<span class="dv">1655</span><span class="op">:</span><span class="dv">1</span>])</a>
 <a class="sourceLine" id="cb1-6" title="6"><span class="co"># taking a 356 observation subset of the data</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb1-8" title="8">open &lt;-<span class="st"> </span>data2<span class="op">$</span>Open[<span class="dv">790</span><span class="op">:</span><span class="dv">1155</span>]</a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="kw">plot.ts</span>(open, <span class="dt">main =</span> <span class="st">&quot;Opening Daily Price of Bitcoin&quot;</span>, </a>
-<a class="sourceLine" id="cb1-10" title="10">        <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Time, in weeks&quot;</span>)</a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="kw">abline</span>(<span class="kw">lm</span>(open <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(open))), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend =</span> <span class="st">&quot;trend line&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">plot.ts</span>(open, <span class="dt">main =</span> <span class="st">&quot;Opening Daily Price of Bitcoin&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Time, in weeks&quot;</span>)</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">abline</span>(<span class="kw">lm</span>(open <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(open))), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend =</span> <span class="st">&quot;trend line&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/initial%20plot-1.png" width="672" /></p>
 </div>
 <div id="trend-seasonality-and-sharp-changes" class="section level2">
@@ -529,7 +536,7 @@ div.tocify {
 <p>With the end goal of forecasting, the first step after looking at the data is to transform it to make it stationary, i.e. make it so the future behaves as the past. In order to determine the best way to do that, we should look at the ACF (auto-covariance) and PACF (partial auto-covariance) plots, which depict how data are affected by the observations that precede them. This will also give us an idea of the model for the data.</p>
 <p>The <em>autocorrelation</em> of data, represented by the function <span class="math inline">\(\gamma_X\)</span> for some data <span class="math inline">\(X\)</span>, is the correlation in the data between two different points in time. One of the conditions for stationarity of a dataset is for the autocorrelation between two points in time <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> to be equal to the autocorrelation of the difference between <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span>. The <em>partial autocorrelation</em> is the original ACF, controlling for the values of the time series at all shorter lags. Properties of these plots help us determine the order of the AR and MA components of our ARMA model.</p>
 <p>AR (auto-regressive) models depend on their past values, an error term, and sometimes a constant. MA (moving average) models depend linearly on the current and past values of white noise error terms (which is random). The combination of them, together with differencing, consitute the ARIMA model.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co"># library(forecast) is loaded</span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw">Acf</span>(open, <span class="dt">main =</span> <span class="st">&quot;ACF of Original Data&quot;</span>, <span class="dt">lag.max =</span> <span class="dv">50</span>)</a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="kw">Pacf</span>(open, <span class="dt">main =</span> <span class="st">&quot;PACF of Original Data&quot;</span>, <span class="dt">lag.max =</span> <span class="dv">50</span>)</a></code></pre></div>
@@ -538,7 +545,7 @@ div.tocify {
 <div id="box-cox-transformation" class="section level3">
 <h3>Box-Cox Transformation</h3>
 <p>We would like to begin by using the Box-Cox power transformation, which is a method that helps to Normalize data. This method finds a value <span class="math inline">\(\lambda\)</span> which maximizes the log-likelihood and then the data is raised to the power of <span class="math inline">\(\lambda\)</span>. The higher the likelihood, the better (more likely) the model parameter. Power transformations such as the Box-Cox help to stabilize the variance which is imperative for Box-Jenkins modeling.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co"># library(MASS) is loaded</span></a>
 <a class="sourceLine" id="cb3-3" title="3">bcTransform &lt;-<span class="st"> </span><span class="kw">boxcox</span>(open <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(open)))</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/finding%20best%20lambda-1.png" width="672" /></p>
@@ -550,7 +557,7 @@ div.tocify {
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># transforming the data</span></a>
 <a class="sourceLine" id="cb6-2" title="2">open.tr &lt;-<span class="st"> </span><span class="kw">log</span>(open)</a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="co"># new time series plot</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb6-5" title="5"><span class="kw">plot.ts</span>(open.tr, <span class="dt">main =</span> <span class="st">&quot;Series after Box-Cox&quot;</span>)</a>
 <a class="sourceLine" id="cb6-6" title="6"><span class="kw">abline</span>(<span class="kw">lm</span>(open.tr <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(open.tr))), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/box-cox%20transformation-1.png" width="672" /></p>
@@ -564,11 +571,11 @@ div.tocify {
 <div id="differencing" class="section level3">
 <h3>Differencing</h3>
 <p>We only want to difference once and at lag 1 because we did not observe any seasonality when we first plotted the original time series. The differenced series will represent the <em>change</em> between observations that are <span class="math inline">\(d\)</span> units of time apart, in this case, <span class="math inline">\(d = 1\)</span>, which is to say one day apart. So our differenced (and transformed) data will represent the change from each value to the next, one day at a time.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb11-2" title="2">open.diff &lt;-<span class="st"> </span><span class="kw">diff</span>(open.tr, <span class="dt">lag =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb11-3" title="3"><span class="kw">plot.ts</span>(open.diff, <span class="dt">main =</span> <span class="st">&quot;Differencing at lag 1 after power&quot;</span>)</a>
 <a class="sourceLine" id="cb11-4" title="4"><span class="co"># plotting the trend line of the series</span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="kw">abline</span>(<span class="kw">lm</span>(open.diff<span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(open.diff))), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb11-5" title="5"><span class="kw">abline</span>(<span class="kw">lm</span>(open.diff <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(open.diff))), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/differencing-1.png" width="672" /></p>
 <p>Note that the y-intercept for the trend line is now approximately zero, so our upward trend has been nullified by the differencing. It does concern us that the variance does not appear to be constant throughout (heteroskedasticity) in spite of the Box-Cox transformation being applied, which is theoretically the best power transformation available. In the graph it is noted how the variance is extremely small at certain points, and at other times very large. We can however proceed with an augmented Dickey-Fuller test which will determine whether the data is stationary or not by checking against null hypothesis that the sample has a unit root. If it doesn’t, then it is stationary.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># library(tseries) is loaded</span></a>
@@ -587,8 +594,8 @@ div.tocify {
 <div id="parameter-estimation" class="section level2">
 <h2>Parameter Estimation</h2>
 <p>Now we want to try and estimate the order of the model i.e. values of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>. We can start speculating on these values by plotting the ACF and PACF of the newly differenced series. We can get ideas on what the orders are by using the <code>auto.arima()</code> function on the original time series, as well as the ACF and PACF of our transformed series. We’ll include <span class="math inline">\(\lambda = 0\)</span> as a part of our function so that it estimates a model of our Box-Cox transformed data.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># library(forecast) is loaded</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="co"># stepwise and approximation = F is slower, but more accurate</span></a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># library(forecast) is loaded stepwise and approximation = F is slower, but more</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="co"># accurate</span></a>
 <a class="sourceLine" id="cb15-3" title="3">auto.fit &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(open, <span class="dt">stepwise =</span> F, <span class="dt">approximation =</span> F, <span class="dt">lambda =</span> <span class="dv">0</span>, <span class="dt">ic =</span> <span class="st">&quot;aicc&quot;</span>)</a>
 <a class="sourceLine" id="cb15-4" title="4">auto.fit</a></code></pre></div>
 <pre><code>## Series: open 
@@ -604,7 +611,7 @@ div.tocify {
 ## AIC=-1545.14   AICc=-1544.91   BIC=-1521.74</code></pre>
 <p>Note the inclusion of a ‘drift’ constant in the model. The <code>auto.arima()</code> function only includes the drift if it improves the model, based on AICc, which is the information criterion we specified to judge the model on, something that will be explained in more detail later on. We note that the drift <span class="math inline">\(\mu = 0.0028\)</span> with standard error <span class="math inline">\(0.0016\)</span>, so the confidence interval for it actually includes zero hinting at this being a rather insignificant drift.</p>
 <p>We are given an ARIMA(0,1,0) model which is essentially a random walk. We can take a look at the ACF and PACF curves as well, and if there are virtually no lags at which either coefficient is significantly far from zero, then it would corroborate this conclusion since it would indicate there is no AR or MA order in the model of best fit. The inclusion of <span class="math inline">\(d = 1\)</span> in the auto-fitted model also tells us that differencing at lag 1 was the right decision.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="kw">Acf</span>(open.diff, <span class="dt">main =</span> <span class="st">&quot;ACF of transformed data&quot;</span>, <span class="dt">lag.max =</span> <span class="dv">50</span>)</a>
 <a class="sourceLine" id="cb17-3" title="3"><span class="kw">Pacf</span>(open.diff, <span class="dt">main =</span> <span class="st">&quot;PACF of transformed data&quot;</span>, <span class="dt">lag.max =</span> <span class="dv">50</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/ACF-PACF%20of%20differenced%20data-1.png" width="672" /></p>
@@ -619,20 +626,19 @@ div.tocify {
 <div id="model-selection" class="section level2">
 <h2>Model Selection</h2>
 <p>For now we will just use the AICc to select a couple of models and determine later on if the residuals will be an issue.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># matrix of AIC values for p and q</span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="co"># library(qpcR) and library(forecast) are loaded</span></a>
-<a class="sourceLine" id="cb18-3" title="3">AICc.mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb18-4" title="4">                  <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">paste</span>(<span class="st">&quot;p =&quot;</span>, <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb18-5" title="5">                                  <span class="kw">paste</span>(<span class="st">&quot;q =&quot;</span>, <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>)))</a>
-<a class="sourceLine" id="cb18-6" title="6"></a>
-<a class="sourceLine" id="cb18-7" title="7"><span class="co"># simulating arima models for p,q = 0,1,2,3,4 and d = 1</span></a>
-<a class="sourceLine" id="cb18-8" title="8"><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>) {</a>
-<a class="sourceLine" id="cb18-9" title="9">    <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>) {</a>
-<a class="sourceLine" id="cb18-10" title="10">        AICc.mat[p<span class="op">+</span><span class="dv">1</span>,q<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">AICc</span>(<span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(p, <span class="dv">1</span>, q), </a>
-<a class="sourceLine" id="cb18-11" title="11">                                        <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb18-12" title="12">                                        <span class="dt">include.constant =</span> T)) } }</a>
-<a class="sourceLine" id="cb18-13" title="13"><span class="co"># printing matrix</span></a>
-<a class="sourceLine" id="cb18-14" title="14">AICc.mat</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># matrix of AIC values for p and q library(qpcR) and library(forecast) are loaded</span></a>
+<a class="sourceLine" id="cb18-2" title="2">AICc.mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">paste</span>(<span class="st">&quot;p =&quot;</span>, <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>), </a>
+<a class="sourceLine" id="cb18-3" title="3">    <span class="kw">paste</span>(<span class="st">&quot;q =&quot;</span>, <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>)))</a>
+<a class="sourceLine" id="cb18-4" title="4"></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="co"># simulating arima models for p,q = 0,1,2,3,4 and d = 1</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>) {</a>
+<a class="sourceLine" id="cb18-7" title="7">    <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span><span class="dv">2</span>) {</a>
+<a class="sourceLine" id="cb18-8" title="8">        AICc.mat[p <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, q <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">AICc</span>(<span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(p, <span class="dv">1</span>, q), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, </a>
+<a class="sourceLine" id="cb18-9" title="9">            <span class="dt">lambda =</span> <span class="dv">0</span>, <span class="dt">include.constant =</span> T))</a>
+<a class="sourceLine" id="cb18-10" title="10">    }</a>
+<a class="sourceLine" id="cb18-11" title="11">}</a>
+<a class="sourceLine" id="cb18-12" title="12"><span class="co"># printing matrix</span></a>
+<a class="sourceLine" id="cb18-13" title="13">AICc.mat</a></code></pre></div>
 <pre><code>##           q = 0     q = 1     q = 2
 ## p = 0 -1542.541 -1540.874 -1540.398
 ## p = 1 -1540.821 -1539.224 -1538.392
@@ -640,7 +646,7 @@ div.tocify {
 <p>We see that the model with the <em>lowest</em> AICC is the ARIMA(0,1,0) model with an AICc of <span class="math inline">\(-1520.377\)</span>, but all of them are very close to one another. As expected, the next strongest model was the ARIMA(2,1,0) model, with an AICc statistic of <span class="math inline">\(-1519.999\)</span>. These being the strongest models are consistent with the fact that the ACF and PACF values were not significantly far from zero.</p>
 <p>We want to estimate as few parameters as possible due to the principle of parsimony (to select as few parameters as possible). In our case, the more parameters there are, the weaker the model. All signs point to a random walk being the best fit for this model thus far, but we can fit all both, run diagnostics and compare. We’re also going to make sure we include the drift constant because it was determined that including it does lower the AICc even though it is not significantly different from zero.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># ARIMA(0,1,0)</span></a>
-<a class="sourceLine" id="cb20-2" title="2">fit010 &lt;-<span class="st"> </span><span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>, <span class="dt">include.constant =</span> T)</a>
+<a class="sourceLine" id="cb20-2" title="2">fit010 &lt;-<span class="st"> </span><span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>, <span class="dt">include.constant =</span> T)</a>
 <a class="sourceLine" id="cb20-3" title="3">fit010</a></code></pre></div>
 <pre><code>## Series: open 
 ## ARIMA(0,1,0) with drift 
@@ -654,7 +660,7 @@ div.tocify {
 ## sigma^2 estimated as 0.0008484:  log likelihood=773.28
 ## AIC=-1542.55   AICc=-1542.52   BIC=-1534.75</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># ARIMA(2,1,0)</span></a>
-<a class="sourceLine" id="cb22-2" title="2">fit210 &lt;-<span class="st"> </span><span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>, <span class="dt">include.constant =</span> T)</a>
+<a class="sourceLine" id="cb22-2" title="2">fit210 &lt;-<span class="st"> </span><span class="kw">Arima</span>(open, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">lambda =</span> <span class="dv">0</span>, <span class="dt">include.constant =</span> T)</a>
 <a class="sourceLine" id="cb22-3" title="3">fit210</a></code></pre></div>
 <pre><code>## Series: open 
 ## ARIMA(2,1,0) with drift 
@@ -679,20 +685,19 @@ div.tocify {
 <a class="sourceLine" id="cb24-2" title="2">resids210 &lt;-<span class="st"> </span>fit210<span class="op">$</span>residuals</a>
 <a class="sourceLine" id="cb24-3" title="3">k &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">sqrt</span>(<span class="kw">length</span>(open)))</a>
 <a class="sourceLine" id="cb24-4" title="4"><span class="co"># a matrix comparing p-values for the three different tests</span></a>
-<a class="sourceLine" id="cb24-5" title="5">diag.mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb24-6" title="6">                   <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;ARIMA(0,1,0)&quot;</span>, <span class="st">&quot;ARIMA(2,1,0)&quot;</span>),</a>
-<a class="sourceLine" id="cb24-7" title="7">                                   <span class="kw">c</span>(<span class="st">&quot;Ljung-Box&quot;</span>, <span class="st">&quot;McLeod-Li&quot;</span>, <span class="st">&quot;Shapiro-Wilk&quot;</span>)))</a>
-<a class="sourceLine" id="cb24-8" title="8"></a>
-<a class="sourceLine" id="cb24-9" title="9"><span class="co"># testing ARIMA(0,1,0) residuals</span></a>
-<a class="sourceLine" id="cb24-10" title="10">diag.mat[<span class="dv">1</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids010, <span class="dt">type =</span> <span class="st">&#39;Ljung-Box&#39;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">0</span>)<span class="op">$</span>p.value</a>
-<a class="sourceLine" id="cb24-11" title="11">diag.mat[<span class="dv">1</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids010<span class="op">^</span><span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&#39;Ljung-Box&#39;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">0</span>)<span class="op">$</span>p.value</a>
-<a class="sourceLine" id="cb24-12" title="12">diag.mat[<span class="dv">1</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">shapiro.test</span>(resids010)<span class="op">$</span>p.value</a>
-<a class="sourceLine" id="cb24-13" title="13"><span class="co"># testing ARIMA(2,1,0) residuals</span></a>
-<a class="sourceLine" id="cb24-14" title="14">diag.mat[<span class="dv">2</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids210, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">2</span>)<span class="op">$</span>p.value</a>
-<a class="sourceLine" id="cb24-15" title="15">diag.mat[<span class="dv">2</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids210<span class="op">^</span><span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">2</span>)<span class="op">$</span>p.value</a>
-<a class="sourceLine" id="cb24-16" title="16">diag.mat[<span class="dv">2</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">shapiro.test</span>(resids210)<span class="op">$</span>p.value</a>
-<a class="sourceLine" id="cb24-17" title="17"><span class="co"># matrix of p-values</span></a>
-<a class="sourceLine" id="cb24-18" title="18"><span class="kw">round</span>(diag.mat, <span class="dv">3</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb24-5" title="5">diag.mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;ARIMA(0,1,0)&quot;</span>, </a>
+<a class="sourceLine" id="cb24-6" title="6">    <span class="st">&quot;ARIMA(2,1,0)&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;Ljung-Box&quot;</span>, <span class="st">&quot;McLeod-Li&quot;</span>, <span class="st">&quot;Shapiro-Wilk&quot;</span>)))</a>
+<a class="sourceLine" id="cb24-7" title="7"></a>
+<a class="sourceLine" id="cb24-8" title="8"><span class="co"># testing ARIMA(0,1,0) residuals</span></a>
+<a class="sourceLine" id="cb24-9" title="9">diag.mat[<span class="dv">1</span>, <span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids010, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">0</span>)<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb24-10" title="10">diag.mat[<span class="dv">1</span>, <span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids010<span class="op">^</span><span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">0</span>)<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb24-11" title="11">diag.mat[<span class="dv">1</span>, <span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">shapiro.test</span>(resids010)<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb24-12" title="12"><span class="co"># testing ARIMA(2,1,0) residuals</span></a>
+<a class="sourceLine" id="cb24-13" title="13">diag.mat[<span class="dv">2</span>, <span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids210, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">2</span>)<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb24-14" title="14">diag.mat[<span class="dv">2</span>, <span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">Box.test</span>(resids210<span class="op">^</span><span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="dt">lag =</span> k, <span class="dt">fitdf =</span> <span class="dv">2</span>)<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb24-15" title="15">diag.mat[<span class="dv">2</span>, <span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">shapiro.test</span>(resids210)<span class="op">$</span>p.value</a>
+<a class="sourceLine" id="cb24-16" title="16"><span class="co"># matrix of p-values</span></a>
+<a class="sourceLine" id="cb24-17" title="17"><span class="kw">round</span>(diag.mat, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##              Ljung-Box McLeod-Li Shapiro-Wilk
 ## ARIMA(0,1,0)     0.560         0            0
 ## ARIMA(2,1,0)     0.567         0            0</code></pre>
@@ -705,23 +710,23 @@ div.tocify {
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># library(forecast) is loaded</span></a>
 <a class="sourceLine" id="cb26-2" title="2">forecast010 &lt;-<span class="st"> </span><span class="kw">forecast</span>(open, <span class="dt">model =</span> fit010, <span class="dt">lambda =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb26-3" title="3">forecast210 &lt;-<span class="st"> </span><span class="kw">forecast</span>(open, <span class="dt">model =</span> fit210, <span class="dt">lambda =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb26-4" title="4">true &lt;-<span class="st"> </span>data2<span class="op">$</span>Open[<span class="dv">1156</span><span class="op">:</span><span class="dv">1165</span>] <span class="co"># the next ten true values</span></a>
+<a class="sourceLine" id="cb26-4" title="4">true &lt;-<span class="st"> </span>data2<span class="op">$</span>Open[<span class="dv">1156</span><span class="op">:</span><span class="dv">1165</span>]  <span class="co"># the next ten true values</span></a>
 <a class="sourceLine" id="cb26-5" title="5">open.add &lt;-<span class="st"> </span><span class="kw">c</span>(open, true)</a>
-<a class="sourceLine" id="cb26-6" title="6"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb26-7" title="7"><span class="kw">plot.ts</span>(open.add[<span class="dv">326</span><span class="op">:</span><span class="dv">376</span>], <span class="dt">main =</span> <span class="st">&quot;True Values&quot;</span>, </a>
-<a class="sourceLine" id="cb26-8" title="8">        <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">200</span>,<span class="dv">800</span>), <span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Days from 6/26/15&quot;</span>)</a>
-<a class="sourceLine" id="cb26-9" title="9"><span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">labels =</span> <span class="kw">seq</span>(<span class="dv">330</span>,<span class="dv">370</span>,<span class="dv">10</span>), <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">4</span>,<span class="dv">44</span>,<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb26-10" title="10"><span class="kw">plot</span>(forecast010, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">800</span>), <span class="dt">include =</span> <span class="dv">40</span>, </a>
-<a class="sourceLine" id="cb26-11" title="11">     <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Days from 6/26/15&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;ARIMA(0,1,0)&quot;</span>)</a>
-<a class="sourceLine" id="cb26-12" title="12"><span class="kw">plot</span>(forecast210, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">800</span>), <span class="dt">include =</span> <span class="dv">40</span>,</a>
-<a class="sourceLine" id="cb26-13" title="13">     <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Days from 6/26/15&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;ARIMA(2,1,0)&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb26-6" title="6"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb26-7" title="7"><span class="kw">plot.ts</span>(open.add[<span class="dv">326</span><span class="op">:</span><span class="dv">376</span>], <span class="dt">main =</span> <span class="st">&quot;True Values&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">800</span>), <span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>, </a>
+<a class="sourceLine" id="cb26-8" title="8">    <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Days from 6/26/15&quot;</span>)</a>
+<a class="sourceLine" id="cb26-9" title="9"><span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">labels =</span> <span class="kw">seq</span>(<span class="dv">330</span>, <span class="dv">370</span>, <span class="dv">10</span>), <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">44</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb26-10" title="10"><span class="kw">plot</span>(forecast010, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">800</span>), <span class="dt">include =</span> <span class="dv">40</span>, <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Days from 6/26/15&quot;</span>, </a>
+<a class="sourceLine" id="cb26-11" title="11">    <span class="dt">main =</span> <span class="st">&quot;ARIMA(0,1,0)&quot;</span>)</a>
+<a class="sourceLine" id="cb26-12" title="12"><span class="kw">plot</span>(forecast210, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">800</span>), <span class="dt">include =</span> <span class="dv">40</span>, <span class="dt">ylab =</span> <span class="st">&quot;USD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Days from 6/26/15&quot;</span>, </a>
+<a class="sourceLine" id="cb26-13" title="13">    <span class="dt">main =</span> <span class="st">&quot;ARIMA(2,1,0)&quot;</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/forecasting-1.png" width="672" /></p>
 <p>As we can see, the ARIMA(2,1,0) is very similar to the ARIMA(0,1,0) due to the fact that the estimated coefficients of the ARIMA(2,1,0) model were not significantly different from zero. We do observe that while the forecasts predict a straight line, which the true values obviously did not follow, at the very least the confidence intervals of the predictions capture the true values. The further one goes into the future, the larger the confidence interval i.e. the more uncertain predictions become.</p>
 <p>Here we print out two data frames, one for each model, comparing the true values, the predictions, the 95% confidence intervals, and the percent difference between the prediction and the true value (the column <code>pct.diff</code>). A value of <span class="math inline">\(4.43\)</span> means that the predicted value is 4.43% <em>bigger</em> than the true value.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co"># data.frame of ARIMA(0,1,0) forecasts</span></a>
-<a class="sourceLine" id="cb27-2" title="2">df010 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">true =</span> true, <span class="dt">pred =</span> forecast010<span class="op">$</span>mean, </a>
-<a class="sourceLine" id="cb27-3" title="3">           <span class="dt">lower =</span> forecast010<span class="op">$</span>lower[,<span class="dv">2</span>], <span class="dt">upper =</span> forecast010<span class="op">$</span>upper[,<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb27-4" title="4">           <span class="dt">pct.diff =</span> <span class="kw">round</span>((forecast010<span class="op">$</span>mean<span class="op">-</span>true)<span class="op">/</span>true, <span class="dv">4</span>)<span class="op">*</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb27-2" title="2">df010 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">true =</span> true, <span class="dt">pred =</span> forecast010<span class="op">$</span>mean, <span class="dt">lower =</span> forecast010<span class="op">$</span>lower[, </a>
+<a class="sourceLine" id="cb27-3" title="3">    <span class="dv">2</span>], <span class="dt">upper =</span> forecast010<span class="op">$</span>upper[, <span class="dv">2</span>], <span class="dt">pct.diff =</span> <span class="kw">round</span>((forecast010<span class="op">$</span>mean <span class="op">-</span><span class="st"> </span>true)<span class="op">/</span>true, </a>
+<a class="sourceLine" id="cb27-4" title="4">    <span class="dv">4</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)</a>
 <a class="sourceLine" id="cb27-5" title="5">df010</a></code></pre></div>
 <pre><code>##      true     pred    lower    upper pct.diff
 ## 1  619.17 618.9224 584.5789 655.2837    -0.04
@@ -735,9 +740,9 @@ div.tocify {
 ## 9  641.82 631.7289 532.2938 749.7390    -1.57
 ## 10 639.41 633.3482 528.7372 758.6567    -0.95</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># data.frame of ARIMA(2,1,0) forecasts</span></a>
-<a class="sourceLine" id="cb29-2" title="2">df210 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">true =</span> true, <span class="dt">pred =</span> forecast210<span class="op">$</span>mean,</a>
-<a class="sourceLine" id="cb29-3" title="3">                    <span class="dt">lower =</span> forecast210<span class="op">$</span>lower[,<span class="dv">2</span>], <span class="dt">upper =</span> forecast210<span class="op">$</span>upper[,<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb29-4" title="4">                    <span class="dt">pct.diff =</span> <span class="kw">round</span>((forecast210<span class="op">$</span>mean<span class="op">-</span>true)<span class="op">/</span>true, <span class="dv">4</span>)<span class="op">*</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb29-2" title="2">df210 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">true =</span> true, <span class="dt">pred =</span> forecast210<span class="op">$</span>mean, <span class="dt">lower =</span> forecast210<span class="op">$</span>lower[, </a>
+<a class="sourceLine" id="cb29-3" title="3">    <span class="dv">2</span>], <span class="dt">upper =</span> forecast210<span class="op">$</span>upper[, <span class="dv">2</span>], <span class="dt">pct.diff =</span> <span class="kw">round</span>((forecast210<span class="op">$</span>mean <span class="op">-</span><span class="st"> </span>true)<span class="op">/</span>true, </a>
+<a class="sourceLine" id="cb29-4" title="4">    <span class="dv">4</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)</a>
 <a class="sourceLine" id="cb29-5" title="5">df210</a></code></pre></div>
 <pre><code>##      true     pred    lower    upper pct.diff
 ## 1  619.17 619.1287 584.7909 655.4827    -0.01
@@ -782,30 +787,28 @@ University, Sept. 2017, people.duke.edu/~rnau/411home.htm.</p>
 <div id="appendix" class="section level1">
 <h1>Appendix</h1>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="co"># pretty much all code is included in the body of the report</span></a>
-<a class="sourceLine" id="cb35-2" title="2">fit210<span class="op">$</span>coef[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] <span class="co"># the 2 AR coefficients</span></a></code></pre></div>
+<a class="sourceLine" id="cb35-2" title="2">fit210<span class="op">$</span>coef[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]  <span class="co"># the 2 AR coefficients</span></a></code></pre></div>
 <pre><code>##         ar1         ar2 
 ##  0.03089711 -0.07507494</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb37-2" title="2"><span class="co"># RESIDUALS</span></a>
-<a class="sourceLine" id="cb37-3" title="3"><span class="co"># residual plots have clear heteroskedasticity</span></a>
-<a class="sourceLine" id="cb37-4" title="4"><span class="kw">plot.ts</span>(resids010, <span class="dt">main =</span> <span class="st">&quot;ARIMA(0,1,0) Residuals&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="co"># RESIDUALS residual plots have clear heteroskedasticity</span></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="kw">plot.ts</span>(resids010, <span class="dt">main =</span> <span class="st">&quot;ARIMA(0,1,0) Residuals&quot;</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-1.png" width="672" /></p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">plot.ts</span>(resids210, <span class="dt">main =</span> <span class="st">&quot;ARIMA(2,1,0) Residuals&quot;</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-2.png" width="672" /></p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="co"># QQ-plots of residuals</span></a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb39-2" title="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb39-3" title="3"><span class="kw">qqnorm</span>(resids010, <span class="dt">main =</span> <span class="st">&quot;Standardized Residuals of ARIMA(0,1,0)&quot;</span>)</a>
 <a class="sourceLine" id="cb39-4" title="4"><span class="kw">qqline</span>(resids010)</a>
 <a class="sourceLine" id="cb39-5" title="5"><span class="kw">qqnorm</span>(resids210, <span class="dt">main =</span> <span class="st">&quot;Standardized Residuals of ARIMA(2,1,0)&quot;</span>)</a>
 <a class="sourceLine" id="cb39-6" title="6"><span class="kw">qqline</span>(resids210)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-3.png" width="672" /></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># ACF of residuals</span></a>
-<a class="sourceLine" id="cb40-2" title="2"><span class="co"># shows they are uncorrelated at every lag i.e. white noise</span></a>
-<a class="sourceLine" id="cb40-3" title="3"><span class="kw">Acf</span>(resids010, <span class="dt">main =</span> <span class="st">&quot;ARIMA(0,1,0) Residuals&#39; ACF&quot;</span>)</a>
-<a class="sourceLine" id="cb40-4" title="4"><span class="kw">Acf</span>(resids210, <span class="dt">main =</span> <span class="st">&quot;ARIMA(2,1,0) Residuals&#39; ACF&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># ACF of residuals shows they are uncorrelated at every lag i.e. white noise</span></a>
+<a class="sourceLine" id="cb40-2" title="2"><span class="kw">Acf</span>(resids010, <span class="dt">main =</span> <span class="st">&quot;ARIMA(0,1,0) Residuals&#39; ACF&quot;</span>)</a>
+<a class="sourceLine" id="cb40-3" title="3"><span class="kw">Acf</span>(resids210, <span class="dt">main =</span> <span class="st">&quot;ARIMA(2,1,0) Residuals&#39; ACF&quot;</span>)</a></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-4.png" width="672" /></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="co"># ACF of squared residuals</span></a>
-<a class="sourceLine" id="cb41-2" title="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb41-2" title="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb41-3" title="3"><span class="co"># not uncorrelated, i.e. not white noise</span></a>
 <a class="sourceLine" id="cb41-4" title="4"><span class="kw">Acf</span>(resids010<span class="op">^</span><span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;ARIMA(0,1,0) Squared Residuals&#39; ACF&quot;</span>)</a>
 <a class="sourceLine" id="cb41-5" title="5"><span class="kw">Acf</span>(resids210<span class="op">^</span><span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;ARIMA(2,1,0) Squared Residuals&#39; ACF&quot;</span>)</a></code></pre></div>
