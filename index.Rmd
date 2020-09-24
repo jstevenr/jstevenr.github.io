@@ -40,7 +40,7 @@ navbar:
 
 # Welcome!
 
-Thanks for visiting my personal website. I'm J Steven Raquel, a graduate of UC Santa Barbara with a BS in Statistical Science. 
+Thanks for visiting my personal website. I'm J Steven Raquel and am pursuing a Master of Science in Statistics at the University of California, Irvine.
 
 Find out more about [who I am and what I've done](about_me.html).
 

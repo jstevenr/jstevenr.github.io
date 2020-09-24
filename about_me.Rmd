@@ -36,9 +36,9 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. I am currently a data analyst for Saalex Solutions, Inc., an engineering and technology company headquarted in Camarillo, CA.
+My name is J Steven Raquel. I'm currently enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science. 
 
-In my free time I am an avid gamer and I study languages, particularly Spanish and Portuguese. I aspire to travel across both Europe and Latin America someday.
+In my free time, I am an avid gamer and I study languages, particularly Spanish and Portuguese. 
 
 * Email: jsteven.raquel8@gmail.com
 * GitHub: [jstevenr](https://github.com/jstevenr)
@@ -50,6 +50,8 @@ In my free time I am an avid gamer and I study languages, particularly Spanish a
 
 ## Education
 
+* **Statistics M.S.**, University of California, Irvine, Estimated Completion June 2022
+
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
     + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, SAS Programming, Statistical Data Science
@@ -60,14 +62,12 @@ In my free time I am an avid gamer and I study languages, particularly Spanish a
     + R, Python, SQL
     + Linux, Git, Bash
     + Power BI, Tableau, SAP Analytics Cloud
-* **Design and Editing**
-    + GIMP, Audacity
 * **Languages**
-    + Spanish, Portuguese
+    + Spanish (B1), Portuguese (B1)
 
 ## Work Experience
 
-* **Data Analyst**, [Saalex Solutions, Inc.](https://saalex.com), Sep 2018 - Present
+* **Data Analyst**, [Saalex Solutions, Inc.](https://saalex.com), Sep 2018 - Sep 2020
     + Creating data visualizations and dashboards with business intelligence software to track key performance indicators and inform decision-making for the company and external clients.
     + Assisting with identifying government contracts pertaining to data analytics.
     + Building predictive models with machine learning algorithms. 
