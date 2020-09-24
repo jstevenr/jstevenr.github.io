@@ -51,7 +51,6 @@ In my free time, I am an avid gamer and I study languages, particularly Spanish 
 ## Education
 
 * **Statistics M.S.**, University of California, Irvine, Estimated Completion June 2022
-
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
     + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, SAS Programming, Statistical Data Science
