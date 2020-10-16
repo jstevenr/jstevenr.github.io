@@ -38,7 +38,9 @@ This was my final project for PSTAT 131, Data Mining, Spring 2017. A version of 
 ----
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), tidy = TRUE, echo = TRUE, cache = TRUE, include = TRUE)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), 
+                      tidy = TRUE, eval = TRUE, 
+                      echo = TRUE, include = TRUE, results = 'asis')
 options(width = 80)
 library(class)
 library(ROCR)
@@ -63,9 +65,9 @@ In this report, we find the accuracy, error rates, and area under the ROC curve 
 
 ```{r reading data}
 set.seed(10)
-white <- read.csv(here::here("data", "winequality-white.csv"), sep = ";")
-head(white)
-# sapply(white, function(x) sum(is.na(x)))
+white <- read.csv(here::here("data", "winequality-white.csv"),  
+                  sep = ";")
+sapply(white, function(x) sum(is.na(x)))
 ```
 
 A preliminary look at the dataset reveals that there are no missing values.
@@ -398,6 +400,7 @@ plot(range, knn_accs,
   main = "Number of Neighbors (k) vs Test Accuracy"
 )
 ```
+
 This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using $k=1$ will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data. 
 
 Here is the ROC curve demonstrating this.
