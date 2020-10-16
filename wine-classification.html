@@ -741,13 +741,14 @@ div.tocify {
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>cv <span class="ot">&lt;-</span> <span class="fu">cv.tree</span>(tree, <span class="at">FUN =</span> prune.misclass, <span class="at">K =</span> <span class="dv">10</span>)</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>cv</span></code></pre></div>
 <pre><code>## $size
-## [1] 2 1
+## [1] 16 11  8  7  6  5  4  3  1
 ## 
 ## $dev
-## [1]    0 1282
+## [1] 1004 1004 1004 1013 1013 1007  997 1057 1205
 ## 
 ## $k
-## [1] -Inf 1282
+## [1]       -Inf   0.000000   1.333333   6.000000   7.000000  10.000000  40.000000
+## [8]  77.000000 116.000000
 ## 
 ## $method
 ## [1] &quot;misclass&quot;
@@ -763,19 +764,18 @@ div.tocify {
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> best.cv, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="wine-classification_files/figure-html/cross%20validation%20of%20tree-1.png" width="672" /></p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>best.cv</span></code></pre></div>
-<pre><code>## [1] 2</code></pre>
+<pre><code>## [1] 4</code></pre>
 <p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tree.pruned <span class="ot">&lt;-</span> <span class="fu">prune.tree</span>(tree, <span class="at">best =</span> best.cv, <span class="at">method =</span> <span class="st">&quot;misclass&quot;</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tree.pruned)</span></code></pre></div>
 <pre><code>## 
 ## Classification tree:
-## tree(formula = label ~ ., data = train, control = tree.control(nobs = nrow(train), 
-##     mincut = 5, minsize = 10, mindev = 0.003), method = &quot;class&quot;)
+## snip.tree(tree = tree, nodes = c(10L, 3L, 4L, 11L))
 ## Variables actually used in tree construction:
-## [1] &quot;quality&quot;
-## Number of terminal nodes:  2 
-## Residual mean deviance:  0 = 0 / 3896 
-## Misclassification error rate: 0 = 0 / 3898</code></pre>
+## [1] &quot;alcohol&quot;          &quot;volatile.acidity&quot;
+## Number of terminal nodes:  4 
+## Residual mean deviance:  1.054 = 4103 / 3894 
+## Misclassification error rate: 0.2496 = 973 / 3898</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree.pruned, <span class="at">type =</span> <span class="st">&quot;uniform&quot;</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tree.pruned, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Pruned Classification Tree&quot;</span>)</span></code></pre></div>
