@@ -40,7 +40,9 @@ options(width = 80)
 library(ggplot2)
 library(gridExtra)
 library(readr)
+library(here)
 ```
+
 ---
 
 This was a very simple visualization I did to test out some of the abilities of `ggplot2`, an `R` package with some more robust options that go beyond the base level visualization abilities of `R`.  
@@ -59,31 +61,37 @@ We're also only going to be looking at the 1980s to the present, so we drop the 
 
 
 ```{r, data cleaning}
-all_movies <- read.csv("movie_metadata.csv",
-                   stringsAsFactors = FALSE, 
-                   na.strings = c(NA, "NA", "", 0, "0"), 
-                   skipNul = TRUE,
-                   fill = FALSE)
+all_movies <- read.csv(here::here("data", "movie_metadata.csv"),
+  stringsAsFactors = FALSE,
+  na.strings = c(NA, "NA", "", 0, "0"),
+  skipNul = TRUE,
+  fill = FALSE
+)
 
 # Only retain films with sufficient number of votes
-all_movies <- subset(all_movies, num_voted_users >= 20000, 
-                 select = c(imdb_score, title_year, movie_title, director_name, gross),                  drop = TRUE)
+all_movies <- subset(all_movies, num_voted_users >= 20000,
+  select = c(imdb_score, title_year, movie_title, director_name, gross), drop = TRUE
+)
 
 # To remove any rows with missing values
-all_movies <- all_movies[complete.cases(all_movies),]
+all_movies <- all_movies[complete.cases(all_movies), ]
 
 # Remove any duplicate films
-all_movies <- all_movies[!duplicated(all_movies$movie_title),]
+all_movies <- all_movies[!duplicated(all_movies$movie_title), ]
 
-stats <- matrix(data = NA, nrow = 6, ncol = 7, 
-                dimnames = list(c("1927-2016", "1980-2016","2010-2016", "2000-2010", "1990-2000","1980-1990"),
-                                c("Min", "1Q", "Med", "Mean", "3Q", "Max", "Size")))
+stats <- matrix(
+  data = NA, nrow = 6, ncol = 7,
+  dimnames = list(
+    c("1927-2016", "1980-2016", "2010-2016", "2000-2010", "1990-2000", "1980-1990"),
+    c("Min", "1Q", "Med", "Mean", "3Q", "Max", "Size")
+  )
+)
 
 # Adding summary statistics and size
-stats[1,1:6] <- round(summary(all_movies$imdb_score), 2)
-stats[1,7] <- nrow(all_movies)
+stats[1, 1:6] <- round(summary(all_movies$imdb_score), 2)
+stats[1, 7] <- nrow(all_movies)
 
-all_avg <- stats[1,4]
+all_avg <- stats[1, 4]
 ```
 
 The films range from scoring between 1.6 and 9.3 on a scale from 0 to 10.0m and the average score is about 6.62.
@@ -93,9 +101,9 @@ The films range from scoring between 1.6 and 9.3 on a scale from 0 to 10.0m and 
 # Keeping only relevant columns as well as only looking at movies from 1980s and beyond
 movies <- subset(all_movies, title_year >= 1980)
 
-stats[2,1:6] <- round(summary(movies$imdb_score), 2)
-stats[2,7] <- nrow(movies)
-modern_avg <- stats[2,4]
+stats[2, 1:6] <- round(summary(movies$imdb_score), 2)
+stats[2, 7] <- nrow(movies)
+modern_avg <- stats[2, 4]
 stats
 ```
 
@@ -111,10 +119,10 @@ Let's take a look at the best and worst films of the decade.
 
 ```{r, organizing the 10s}
 tens <- subset(movies, title_year >= 2010)
-tens <- tens[order(tens$imdb_score, decreasing = TRUE),]
+tens <- tens[order(tens$imdb_score, decreasing = TRUE), ]
 
-stats[3,1:6]<- round(summary(tens$imdb_score), 2)
-stats[3,7] <- nrow(tens)
+stats[3, 1:6] <- round(summary(tens$imdb_score), 2)
+stats[3, 7] <- nrow(tens)
 stats
 ```
 
@@ -135,15 +143,17 @@ On the other side of things, the worst film of this period was apparently Justin
 We can also take a look at the averages across the individual years as well as each decade.
 
 
-```{r, 2010-present day, echo = FALSE}
+```{r, 2010-present day}
 tens_plot <- ggplot(tens, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
-  theme(axis.text.x = element_text(hjust = 1)) + 
-  scale_y_continuous(breaks = seq(0,10,1), name = "IMDB Rating") +
-  scale_x_discrete(breaks = seq(2010, 2016, 1), name = "Year") + 
+  theme(axis.text.x = element_text(hjust = 1)) +
+  scale_y_continuous(breaks = seq(0, 10, 1), name = "IMDB Rating") +
+  scale_x_discrete(breaks = seq(2010, 2016, 1), name = "Year") +
   ggtitle("2010s in film as rated by IMDB users") +
-  theme_bw() + stat_boxplot(geom = 'errorbar') + geom_jitter() +
+  theme_bw() +
+  stat_boxplot(geom = "errorbar") +
+  geom_jitter() +
   geom_hline(aes(yintercept = modern_avg, colour = "Average IMDB Rating from 1980-2016"), show.legend = TRUE) +
   theme(legend.position = "bottom")
 tens_plot
@@ -158,10 +168,10 @@ Modern films seem to be pretty mediocre across the board (between 6-7), but if n
 
 ```{r, organizing the 00s}
 zeroes <- subset(movies, title_year >= 2000 & title_year < 2010)
-zeroes <- zeroes[order(zeroes$imdb_score, decreasing = TRUE),]
+zeroes <- zeroes[order(zeroes$imdb_score, decreasing = TRUE), ]
 
-stats[4,1:6]<- round(summary(zeroes$imdb_score), 2)
-stats[4,7] <- nrow(zeroes)
+stats[4, 1:6] <- round(summary(zeroes$imdb_score), 2)
+stats[4, 7] <- nrow(zeroes)
 stats
 ```
 
@@ -178,14 +188,16 @@ tail(zeroes)
 Notably, two of the worst films of this decade were by Jason Friedberg, namely the parody films *Epic Movie* and *Disaster Movie*. He is also responsible for *Vampires Suck*, one of the worst rated films of the 2010s. 
 
 
-```{r, 2000-2009, echo = FALSE}
+```{r, 2000-2009}
 zeroes_plot <- ggplot(zeroes, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(axis.text.x = element_text(hjust = 1)) +
-  scale_y_continuous(breaks = seq(0,10,1), name = "IMDB Rating") +
-  scale_x_discrete(breaks = seq(2000, 2009, 1), name = "Year") + 
+  scale_y_continuous(breaks = seq(0, 10, 1), name = "IMDB Rating") +
+  scale_x_discrete(breaks = seq(2000, 2009, 1), name = "Year") +
   ggtitle("2000s in film as rated by IMDB users") +
-  theme_bw() + stat_boxplot(geom = 'errorbar') + geom_jitter() +
+  theme_bw() +
+  stat_boxplot(geom = "errorbar") +
+  geom_jitter() +
   geom_hline(aes(yintercept = modern_avg, colour = "Average IMDB Rating from 1980-2016"), show.legend = TRUE) +
   theme(legend.position = "bottom")
 zeroes_plot
@@ -197,10 +209,10 @@ zeroes_plot
 
 ```{r, organizing the nineties}
 nineties <- subset(movies, title_year >= 1990 & title_year < 2000)
-nineties <- nineties[order(nineties$imdb_score, decreasing = TRUE),]
+nineties <- nineties[order(nineties$imdb_score, decreasing = TRUE), ]
 
-stats[5,1:6]<- round(summary(nineties$imdb_score), 2)
-stats[5,7] <- nrow(nineties)
+stats[5, 1:6] <- round(summary(nineties$imdb_score), 2)
+stats[5, 7] <- nrow(nineties)
 stats
 ```
 
@@ -216,15 +228,17 @@ tail(nineties)
 
 Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: *Street Fighter*, notably starring Jean Claude van Damme and Kylie Minogue, and *Mortal Kombat: Annihilation*. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan's reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the 'punniest' villain of all time. 
 
-```{r, 1990-1999, echo = FALSE}
+```{r, 1990-1999}
 nineties_plot <- ggplot(nineties, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
-  theme(axis.text.x = element_text(hjust = 1)) + 
-  scale_y_continuous(breaks = seq(0,10,1), name = "IMDB Rating") +
-  scale_x_discrete(breaks = seq(1990, 1999, 1), name = "Year") + 
+  theme(axis.text.x = element_text(hjust = 1)) +
+  scale_y_continuous(breaks = seq(0, 10, 1), name = "IMDB Rating") +
+  scale_x_discrete(breaks = seq(1990, 1999, 1), name = "Year") +
   ggtitle("1990s in film as rated by IMDB users") +
-  theme_bw() + stat_boxplot(geom = 'errorbar') + geom_jitter() +
+  theme_bw() +
+  stat_boxplot(geom = "errorbar") +
+  geom_jitter() +
   geom_hline(aes(yintercept = modern_avg, colour = "Average IMDB Rating from 1980-2016"), show.legend = TRUE) +
   theme(legend.position = "bottom")
 nineties_plot
@@ -238,10 +252,10 @@ nineties_plot
 
 ```{r organizing the 80s}
 eighties <- subset(movies, title_year >= 1980 & title_year < 1990)
-eighties <- eighties[order(eighties$imdb_score, decreasing = TRUE),]
+eighties <- eighties[order(eighties$imdb_score, decreasing = TRUE), ]
 
-stats[6,1:6] <- round(summary(eighties$imdb_score), 2)
-stats[6,7] <- nrow(eighties)
+stats[6, 1:6] <- round(summary(eighties$imdb_score), 2)
+stats[6, 7] <- nrow(eighties)
 stats
 ```
 
@@ -260,15 +274,17 @@ Speaking of sequels however, the worst films of the 80s were several ill-advised
 *Jaws: The Revenge* was the fourth and final sequel to the series, with only the original film involving Steven Spielberg, who of course directed the 2nd best rated film of this decade, *Raiders of the Lost Ark* as well as *Schindler's List* in the 90s.
 
 
-```{r, 1980-1989, echo = FALSE}
+```{r, 1980-1989}
 eighties_plot <- ggplot(eighties, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
-  theme(axis.text.x = element_text(hjust = 1)) + 
-  scale_y_continuous(breaks = seq(0,10,1), name = "IMDB Rating") +
-  scale_x_discrete(breaks = seq(1980, 1989, 1), name = "Year") + 
+  theme(axis.text.x = element_text(hjust = 1)) +
+  scale_y_continuous(breaks = seq(0, 10, 1), name = "IMDB Rating") +
+  scale_x_discrete(breaks = seq(1980, 1989, 1), name = "Year") +
   ggtitle("1980s in film as rated by IMDB users") +
-  theme_bw() + stat_boxplot(geom = 'errorbar') + geom_jitter() + 
+  theme_bw() +
+  stat_boxplot(geom = "errorbar") +
+  geom_jitter() +
   geom_hline(aes(yintercept = modern_avg, colour = "Average IMDB Rating from 1980-2016"), show.legend = TRUE) +
   theme(legend.position = "bottom")
 eighties_plot
@@ -278,15 +294,16 @@ eighties_plot
 
 # Conclusions
 
-```{r, all_movies, echo = FALSE}
-movies_plot<- ggplot(movies, aes(x = factor(title_year), y = imdb_score)) +
+```{r, all_movies}
+movies_plot <- ggplot(movies, aes(x = factor(title_year), y = imdb_score)) +
   geom_boxplot(fill = "#4271AE", colour = "#1F3552") +
   theme(legend.position = "none") +
-  theme(axis.text.x = element_text(hjust = 1)) + 
+  theme(axis.text.x = element_text(hjust = 1)) +
   scale_y_continuous(breaks = seq(0, 10, 1), name = "IMDB Rating") +
-  scale_x_discrete(breaks = seq(1980, 2016, 2), name = "Year") + 
+  scale_x_discrete(breaks = seq(1980, 2016, 2), name = "Year") +
   ggtitle("IMDB Ratings Over the Decades") +
-  theme_bw() + stat_boxplot(geom = 'errorbar') +
+  theme_bw() +
+  stat_boxplot(geom = "errorbar") +
   geom_hline(aes(yintercept = modern_avg), colour = "#D55E00") +
   geom_hline(aes(yintercept = modern_avg, colour = "Average IMDB Rating from 1980-2016"), show.legend = TRUE) +
   theme(legend.position = "bottom")

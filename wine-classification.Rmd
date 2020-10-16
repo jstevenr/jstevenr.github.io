@@ -63,8 +63,7 @@ In this report, we find the accuracy, error rates, and area under the ROC curve 
 
 ```{r reading data}
 set.seed(10)
-white <- read.csv("winequality-white.csv",
-                  sep = ";")
+white <- read.csv(here::here("data", "winequality-white.csv"), sep = ";")
 head(white)
 # sapply(white, function(x) sum(is.na(x)))
 ```
@@ -74,7 +73,7 @@ A preliminary look at the dataset reveals that there are no missing values.
 First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis. 
 
 ```{r correlation matrix}
-white.cor <- cor(white[,1:12])
+white.cor <- cor(white[, 1:12])
 # white.cor
 ```
 
@@ -86,33 +85,26 @@ So, we should actually remove the variables `residual.sugar` and `density`, as w
 
 ```{r dropping variables}
 # removing three predictors
-white2 <- subset(white, select = -c(4,7,8))
+white2 <- subset(white, select = -c(4, 7, 8))
 # cor(white2[,1:9])
 ```
 
 From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue. 
 
-From here on out, we're also going to want to convert the `quality` response variable into a binary factor so that we can use the predictors to classify the observations. We're going to do this by labeling all of the observations that have received an above average (5 out of 10) as "good", and the rest as "bad", "bad" really meaning "not good". This factor of `good` and `bad` goes under a new column titled `label`.
-
-We'll remove the `quality` variable afterwards, since if we use it as an attribute in the predictor, it will skew the results because it is directly correlated to the label.
+From here on out, we're also going to want to convert the `quality` response variable into a binary factor so that we can use the predictors to classify the observations. We're going to do this by labeling all of the observations that have received an above average (5 out of 10) as "good", and the rest as "bad", "bad" really meaning "not good". 
 
 It's important to note that all of these numeric predictor variables (`fixed.acidity`, `volatile.acidity`, `citric.acid`, `chlorides`, `free.sulfur.dioxide`, `pH`, `sulphates`, `alcohol`) are not all scaled the same. As such, it's appropriate to scale them before running any analyses. 
 
 ```{r scaling and convert to factor}
 # scaling the 8 numeric attributes
 white_sc <- white2
-white_sc[,c(1:8)] <- scale(white_sc[,c(1:8)])
+white_sc[, c(1:8)] <- scale(white_sc[, c(1:8)])
 
-# converting quality into a binary factor
-for (i in 1:nrow(white_sc)) {
-  if (white_sc$quality[i] > 5)
-    white_sc$label[i] <- 1
-  else
-    white_sc$label[i] <- 0
-}
-white_sc$label <- factor(white_sc$label, levels = c(0, 1), labels = c("bad", "good"))
-# removing the quality variable
-white_sc$quality <- NULL
+# Converting quality into a binary factor
+white_sc <- white_sc %>%
+  mutate(quality = ifelse(quality > 5, yes = "good", no = "bad"))
+
+white_sc$quality <- factor(white_sc$quality, labels = c("bad", "good"))
 ```
 
 Now we have 8 numeric predictor variables, and one two-level categorical variable (`label`). We're going to apply a few different classification methods in order to firstly determine which the best model for predicting is in terms of the relevant variables, and secondly to find the best classification algorithm for this data. 
@@ -123,9 +115,11 @@ We're going to initialize a matrix to easily compare the quality of the differen
 # initializing a matrix for records
 records <- matrix(NA, nrow = 6, ncol = 3)
 colnames(records) <- c("Accuracy Rate", "Error Rate", "AUC")
-rownames(records) <- c("tree", "pruned.tree", 
-                       "k=10 kNN", "k=35 kNN", 
-                       "full.randomForest", "small.randomForest")
+rownames(records) <- c(
+  "tree", "pruned.tree",
+  "k=10 kNN", "k=35 kNN",
+  "full.randomForest", "small.randomForest"
+)
 records
 ```
 
@@ -135,26 +129,29 @@ In order to apply machine learning algorithms to this dataset, we need to strati
 # set.seed(10) is loaded
 # using a subset of 1000 obs for the training set
 test_indices <- sample(1:nrow(white_sc), 1000)
-test <- white_sc[test_indices,]
-train <- white_sc[-test_indices,]
-
+test <- white_sc[test_indices, ]
+train <- white_sc[-test_indices, ]
 ```
 
 ## Decision Tree
 
 The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data. 
 
-Of course, we're going to use `label` as a response variable, and each of the now 8 remaining numeric attributes as predictors.
+Of course, we're going to use `quality` as a response variable, and each of the now 8 remaining numeric attributes as predictors.
 
 ```{r building decision tree}
 # library(tree) is loaded
-# predicting the label (good vs bad)
-tree <- tree(formula = label ~ ., data = train, 
-             method = "class",
-             control = tree.control(nobs = nrow(train),
-                                          mincut = 5,
-                                          minsize = 10,
-                                          mindev = .003))
+# predicting the quality (good vs bad)
+tree <- tree(
+  formula = quality ~ ., data = train,
+  method = "class",
+  control = tree.control(
+    nobs = nrow(train),
+    mincut = 5,
+    minsize = 10,
+    mindev = .003
+  )
+)
 summary(tree)
 ```
 
@@ -180,12 +177,12 @@ class_acc <- function(conf) {
 tree_pred <- predict(tree, test, type = "class")
 
 # confusion matrix
-tree_conf <- table(pred = tree_pred, true = test$label)
+tree_conf <- table(pred = tree_pred, true = test$quality)
 tree_conf
 # the class_acc() function is defined locally
 tree_acc <- class_acc(tree_conf)
 tree_acc
-# misclassification error 
+# misclassification error
 tree_err <- 1 - tree_acc
 tree_err
 ```
@@ -198,15 +195,17 @@ As an alternative metric to quantify the robustness of this method, we can use t
 # library(ROCR) is loaded
 # getting matrix of predicted class probabilities
 all_tree_probs <- as.data.frame(predict(tree, test, type = "vector"))
-tree_probs <- all_tree_probs[,2]
+tree_probs <- all_tree_probs[, 2]
 
-tree_roc_pred <- prediction(tree_probs, test$label)
+tree_roc_pred <- prediction(tree_probs, test$quality)
 tree_roc_perf <- performance(tree_roc_pred, "tpr", "fpr")
 
 # Plotting the ROC curve for the decision tree
-plot(tree_roc_perf, col = 2, lwd = 3, 
-     main = "ROC Curve for tree (before pruning)")
-abline(0,1)
+plot(tree_roc_perf,
+  col = 2, lwd = 3,
+  main = "ROC Curve for tree (before pruning)"
+)
+abline(0, 1)
 
 # Area under the curve
 tree_auc_perf <- performance(tree_roc_pred, "auc")
@@ -234,18 +233,20 @@ Cross validation will help us find the optimal size for the tree (in terms of nu
 set.seed(10)
 # 10-fold CV (k = 10)
 # library(tree) is loaded
-cv <- cv.tree(tree, FUN=prune.misclass, K=10)
+cv <- cv.tree(tree, FUN = prune.misclass, K = 10)
 cv
 
-# Best size 
+# Best size
 best.cv <- cv$size[which.min(cv$dev)]
 
 # plotting misclass error as a function of tree size (k)
-plot(cv$size , cv$dev, type="b", 
-     xlab = "Number of leaves, \'best\'", 
-     ylab = "Misclassification Error",
-     col = "red", main="Optimal Tree Size")
-abline(v=best.cv, lty=2)
+plot(cv$size, cv$dev,
+  type = "b",
+  xlab = "Number of leaves, \'best\'",
+  ylab = "Misclassification Error",
+  col = "red", main = "Optimal Tree Size"
+)
+abline(v = best.cv, lty = 2)
 
 best.cv
 ```
@@ -254,8 +255,10 @@ So we see, after running cross-validation, we see that we should prune the tree 
 
 
 ```{r pruning the tree}
-tree.pruned <- prune.tree(tree, best = best.cv, 
-                          method = "misclass")
+tree.pruned <- prune.tree(tree,
+  best = best.cv,
+  method = "misclass"
+)
 summary(tree.pruned)
 
 plot(tree.pruned, type = "uniform")
@@ -271,7 +274,7 @@ Now we can apply the same diagnostic methods as before: looking at confusion mat
 ```{r predicting with pruned tree}
 pruned_pred <- predict(tree.pruned, test, type = "class")
 # confusion matrix
-pruned_conf <- table(pred = pruned_pred, true = test$label)
+pruned_conf <- table(pred = pruned_pred, true = test$quality)
 pruned_conf
 pruned_acc <- class_acc(tree_conf)
 pruned_acc
@@ -287,15 +290,17 @@ The original model being rather complex with as many as 6 predictors runs the ri
 # ROC Curve with tree object
 # getting matrix of predicted class probabilities
 all_pruned_probs <- as.data.frame(predict(tree.pruned, test, type = "vector"))
-pruned_probs <- all_pruned_probs[,2]
+pruned_probs <- all_pruned_probs[, 2]
 
-pruned_roc_pred <- prediction(pruned_probs, test$label)
+pruned_roc_pred <- prediction(pruned_probs, test$quality)
 pruned_roc_perf <- performance(pruned_roc_pred, "tpr", "fpr")
 
 # Plotting the ROC curve for the rpart decision tree
-plot(pruned_roc_perf, col = 2, lwd = 3, 
-     main = "ROC Curve for Pruned tree")
-abline(0,1)
+plot(pruned_roc_perf,
+  col = 2, lwd = 3,
+  main = "ROC Curve for Pruned tree"
+)
+abline(0, 1)
 
 pruned_auc_perf <- performance(pruned_roc_pred, "auc")
 pruned_AUC <- pruned_auc_perf@y.values[[1]]
@@ -311,7 +316,7 @@ Now we have added both the original and the pruned tree's respective error rates
 
 ## k-Nearest Neighbors (kNN)
 
-We're now going to apply the k-nearest neighbors method of classification, which is a non-parametric method.  k-Nearest neighbors (or kNN) is called a "lazy learning" technique because it goes through the training set every time it predicts a test sample's label. It finds this label by plotting the test sample in the same dimensional space as the training data, then classifies it based on the "k nearest neighbor(s)", i.e. if k = 10, then the label of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation.
+We're now going to apply the k-nearest neighbors method of classification, which is a non-parametric method.  k-Nearest neighbors (or kNN) is called a "lazy learning" technique because it goes through the training set every time it predicts a test sample's quality. It finds this quality by plotting the test sample in the same dimensional space as the training data, then classifies it based on the "k nearest neighbor(s)", i.e. if k = 10, then the quality of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation.
 
 Distance is measured in different ways, but by default the `knn()` function utilized Euclidean distance. 
 
@@ -321,13 +326,15 @@ This is rather problematic because when calculating distance it's assumed that a
 set.seed(10)
 # library(class) is loaded
 # using 20 nearest neighbors
-knn_pred <- knn(train = train[,-9], 
-                test = test[,-9], 
-                cl = train$label, 
-                k = 10, prob = TRUE)
+knn_pred <- knn(
+  train = train[, -9],
+  test = test[, -9],
+  cl = train$quality,
+  k = 10, prob = TRUE
+)
 
 # confusion matrix
-knn_conf <- table(pred = knn_pred, true = test$label)
+knn_conf <- table(pred = knn_pred, true = test$quality)
 knn_conf
 # accuracy
 knn_acc <- class_acc(knn_conf)
@@ -343,15 +350,18 @@ So, using 10 nearest neighbors was just a random estimate, and it ended up with 
 # Creating the ROC curve for knn
 # library(dplyr) is loaded
 knn_prob <- attr(knn_pred, "prob")
-knn_prob <- 2 * ifelse(knn_pred == "-1", 1-knn_prob, knn_prob) - 1
-knn_roc_pred <- prediction(predictions = knn_prob, labels = test$label)
-knn_roc_perf <- performance(knn_roc_pred, 
-                            measure = "tpr", x.measure = "fpr")
+knn_prob <- 2 * ifelse(knn_pred == "-1", 1 - knn_prob, knn_prob) - 1
+knn_roc_pred <- prediction(predictions = knn_prob, labels = test$quality)
+knn_roc_perf <- performance(knn_roc_pred,
+  measure = "tpr", x.measure = "fpr"
+)
 
 # Plotting the KNN ROC curve
-plot(knn_roc_perf, col = 2, lwd = 3, 
-     main = "ROC Curve for kNN, k = 10")
-abline(0,1)
+plot(knn_roc_perf,
+  col = 2, lwd = 3,
+  main = "ROC Curve for kNN, k = 10"
+)
+abline(0, 1)
 
 # Area under the knn curve
 knn_auc_perf <- performance(knn_roc_pred, measure = "auc")
@@ -372,52 +382,64 @@ knn_accs <- rep(0, length(range))
 
 # Determining the best k for k-nearest neighbors classification
 for (k in range) {
-  knn_pred <- knn(train = train[,-9], 
-                  test = test[,-9], 
-                  cl = train$label, 
-                  k = k, prob = TRUE)
-  knn_conf <- table(pred = knn_pred, true = test$label)
+  knn_pred <- knn(
+    train = train[, -9],
+    test = test[, -9],
+    cl = train$quality,
+    k = k, prob = TRUE
+  )
+  knn_conf <- table(pred = knn_pred, true = test$quality)
   knn_accs[k] <- class_acc(knn_conf)
 }
 
 # plotting k vs accuracy
-plot(range, knn_accs, xlab = "k", ylab = "accuracy",
-     main = "Number of Neighbors (k) vs Test Accuracy")
+plot(range, knn_accs,
+  xlab = "k", ylab = "accuracy",
+  main = "Number of Neighbors (k) vs Test Accuracy"
+)
 ```
 This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using $k=1$ will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data. 
 
 Here is the ROC curve demonstrating this.
 
 ```{r "worst kNN k = 1"}
-worst_knn_pred <- knn(train = train[,-9], 
-                test = test[,-9], 
-                cl = train$label, 
-                k = 1, 
-                prob = TRUE)
+worst_knn_pred <- knn(
+  train = train[, -9],
+  test = test[, -9],
+  cl = train$quality,
+  k = 1,
+  prob = TRUE
+)
 worst_knn_prob <- attr(worst_knn_pred, "prob")
-worst_knn_prob <- 2*ifelse(worst_knn_pred == "-1", 1-worst_knn_prob, worst_knn_prob)-1
-worst_knn_roc_pred <- prediction(predictions = worst_knn_prob, 
-                                labels = test$label)
+worst_knn_prob <- 2 * ifelse(worst_knn_pred == "-1", 1 - worst_knn_prob, worst_knn_prob) - 1
+worst_knn_roc_pred <- prediction(
+  predictions = worst_knn_prob,
+  labels = test$quality
+)
 worst_knn_roc_perf <- performance(worst_knn_roc_pred, measure = "tpr", x.measure = "fpr")
 
 # Plotting the KNN ROC curve
-plot(worst_knn_roc_perf, col = 2, lwd = 3, 
-     main = "ROC Curve for kNN, k = 1")
-abline(0,1)
+plot(worst_knn_roc_perf,
+  col = 2, lwd = 3,
+  main = "ROC Curve for kNN, k = 1"
+)
+abline(0, 1)
 ```
 
 So we think better not to opt for $k=1$ and rather choose some $k$ like 35, which is still decently accurate, and probably less biased.
 
 ```{r "knn with k=35"}
 # library(knn) is loaded
-new_knn_pred <- knn(train = train[,-9], 
-                test = test[,-9], 
-                cl = train$label, 
-                k = 35, 
-                prob = TRUE)
+new_knn_pred <- knn(
+  train = train[, -9],
+  test = test[, -9],
+  cl = train$quality,
+  k = 35,
+  prob = TRUE
+)
 
 # confusion matrix
-new_knn_conf <- table(true = test$label, pred = new_knn_pred)
+new_knn_conf <- table(true = test$quality, pred = new_knn_pred)
 new_knn_conf
 # accuracy rate
 new_knn_acc <- class_acc(new_knn_conf)
@@ -433,22 +455,26 @@ Using $k=35$ gives a slight increase in test accuracy relative to $k=10$, althou
 # Creating the ROC curve for knn
 # library(dplyr) is loaded
 new_knn_prob <- attr(new_knn_pred, "prob")
-new_knn_prob <- 2*ifelse(new_knn_pred == "-1", 1-new_knn_prob, new_knn_prob)-1
-new_knn_roc_pred <- prediction(predictions = new_knn_prob, 
-                                labels = test$label)
+new_knn_prob <- 2 * ifelse(new_knn_pred == "-1", 1 - new_knn_prob, new_knn_prob) - 1
+new_knn_roc_pred <- prediction(
+  predictions = new_knn_prob,
+  labels = test$quality
+)
 new_knn_roc_perf <- performance(new_knn_roc_pred, measure = "tpr", x.measure = "fpr")
 
 # Plotting the KNN ROC curve
-plot(new_knn_roc_perf, col = 2, lwd = 3, 
-     main = "ROC Curve for kNN, k = 35")
-abline(0,1)
+plot(new_knn_roc_perf,
+  col = 2, lwd = 3,
+  main = "ROC Curve for kNN, k = 35"
+)
+abline(0, 1)
 
 # Area under the knn curve
 new_knn_auc_perf <- performance(new_knn_roc_pred, measure = "auc")
 new_knn_AUC <- new_knn_auc_perf@y.values[[1]]
 new_knn_AUC
 
-records[4,] <- c(new_knn_acc, new_knn_err, new_knn_AUC)
+records[4, ] <- c(new_knn_acc, new_knn_err, new_knn_AUC)
 records
 ```
 
@@ -465,14 +491,15 @@ randomForest is similar to the decision tree method in that it builds trees, hen
 ```{r create randomForest}
 ### Random Forest
 # using all 8 predictor attributes, on the training set
-rf <- randomForest(formula = label ~ .,
-                   data = train,
-                   mtry = 8)
+rf <- randomForest(
+  formula = quality ~ .,
+  data = train,
+  mtry = 8
+)
 
 print(rf)
 
 varImpPlot(rf, main = "Variable Importance Plot")
-
 ```
 
 `meanDecreaseGini` refers to the "mean decrease in node impurity". Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself. 
@@ -484,7 +511,7 @@ randomForest used all 8 of the predictor variables. This variable importance plo
 rf_pred <- predict(rf, test, type = "class")
 
 # Confusion Matrix
-rf_conf <- table(true = test$label, pred =  rf_pred)
+rf_conf <- table(true = test$quality, pred = rf_pred)
 rf_conf
 rf_acc <- class_acc(rf_conf)
 rf_acc
@@ -498,16 +525,20 @@ Let's take a look at the ROC curve and the area underneath it.
 
 ```{r ROC for randomForest}
 # Building the ROC Curve
-rf_pred <- as.data.frame(predict(rf, newdata = test, type = 'prob'))
-rf_pred_probs <- rf_pred[,2]
-rf_roc_pred <- prediction(rf_pred_probs, test$label)
-rf_perf <- performance(rf_roc_pred, measure = "tpr", 
-                       x.measure = "fpr")
+rf_pred <- as.data.frame(predict(rf, newdata = test, type = "prob"))
+rf_pred_probs <- rf_pred[, 2]
+rf_roc_pred <- prediction(rf_pred_probs, test$quality)
+rf_perf <- performance(rf_roc_pred,
+  measure = "tpr",
+  x.measure = "fpr"
+)
 
 # Plotting the curve
-plot(rf_perf, col = 2, lwd = 3, 
-     main = "ROC Curve for randomForest with 8 variables")
-abline(0,1)
+plot(rf_perf,
+  col = 2, lwd = 3,
+  main = "ROC Curve for randomForest with 8 variables"
+)
+abline(0, 1)
 
 # Area under the curve
 rf_perf2 <- performance(rf_roc_pred, measure = "auc")
@@ -516,7 +547,6 @@ rf_AUC
 
 records[5, ] <- c(rf_acc, rf_err, rf_AUC)
 records
-
 ```
 
 The area under the ROC curve for randomForest is `0.887`, which is also a strong AUC for a classification model.
@@ -530,14 +560,16 @@ We have established by now that simpler models have a reduced bias and complexit
 The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out.
 
 ```{r smaller randomForest with ROC and AUC}
-rf2 <- randomForest(formula = label ~ alcohol + volatile.acidity + free.sulfur.dioxide,
-                   data = train,
-                   mtry = 3)
+rf2 <- randomForest(
+  formula = quality ~ alcohol + volatile.acidity + free.sulfur.dioxide,
+  data = train,
+  mtry = 3
+)
 # predicting on the test set
 rf_pred2 <- predict(rf2, test, type = "class")
 
 # Confusion Matrix
-rf_conf2 <- table(test$label, rf_pred2)
+rf_conf2 <- table(test$quality, rf_pred2)
 rf_conf2
 rf_acc2 <- class_acc(rf_conf2)
 rf_acc2
@@ -545,24 +577,27 @@ rf_err2 <- 1 - rf_acc2
 rf_err2
 
 # Building the ROC Curve
-rf_pred2 <- as.data.frame(predict(rf2, test, type = 'prob'))
-rf_pred_probs2 <- rf_pred2[,2]
-rf_roc_pred2 <- prediction(rf_pred_probs2, test$label)
-rf_perf2 <- performance(rf_roc_pred2, 
-                        measure = "tpr", 
-                        x.measure = "fpr")
+rf_pred2 <- as.data.frame(predict(rf2, test, type = "prob"))
+rf_pred_probs2 <- rf_pred2[, 2]
+rf_roc_pred2 <- prediction(rf_pred_probs2, test$quality)
+rf_perf2 <- performance(rf_roc_pred2,
+  measure = "tpr",
+  x.measure = "fpr"
+)
 
 # Plotting the curve
-plot(rf_perf2, col = 2, lwd = 3, 
-     main = "ROC Curve for randomForest with 3 variables")
-abline(0,1)
+plot(rf_perf2,
+  col = 2, lwd = 3,
+  main = "ROC Curve for randomForest with 3 variables"
+)
+abline(0, 1)
 
 # Area under the curve
 rf_perf22 <- performance(rf_roc_pred2, measure = "auc")
 rf_AUC2 <- rf_perf22@y.values[[1]]
 rf_AUC2
 
-records[6,] <- c(rf_acc2, rf_err2, rf_AUC2)
+records[6, ] <- c(rf_acc2, rf_err2, rf_AUC2)
 records
 ```
 

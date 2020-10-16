@@ -40,8 +40,10 @@ This was my final project for PSTAT 174, Time Series, Fall 2017. It has been cha
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, 
-                      echo = TRUE, cache = TRUE, tidy.opts = list(width.cutoff=80))
+knitr::opts_chunk$set(
+  echo = TRUE, tidy = TRUE,
+  echo = TRUE, cache = TRUE, tidy.opts = list(width.cutoff = 80)
+)
 options(width = 80)
 library(tseries)
 library(forecast)
@@ -74,15 +76,19 @@ To first analyze the dataset, I want to read in the data and then plot its time 
 
 ```{r, initial plot}
 set.seed(100)
-df <- read.csv("bitcoin_price.csv") %>% select(c(Date, Open))
+df <- read.csv(here::here("data", "bitcoin_price.csv")) %>% select(c(Date, Open))
 df$Date <- as.Date(df$Date, "%b %d, %Y")
-df <- df[order(df$Date),]
+df <- df[order(df$Date), ]
 # taking a 356 observation subset of the data
 df_sub <- df %>% subset(Date >= "2015-10-09" & Date <= "2016-10-08")
 # plotting with a LOESS line
-par(mfrow = c(1,1))
-ggplot(df_sub, aes(x = Date, y = Open, group = 1)) + geom_line() + xlab("Date") + ylab("USD") + 
-  ggtitle("Opening Price of Bitcoin") + geom_smooth(method = "loess", level = 0)
+par(mfrow = c(1, 1))
+ggplot(df_sub, aes(x = Date, y = Open, group = 1)) +
+  geom_line() +
+  xlab("Date") +
+  ylab("USD") +
+  ggtitle("Opening Price of Bitcoin") +
+  geom_smooth(method = "loess", level = 0)
 
 open <- as.ts(df_sub$Open)
 ```
@@ -111,7 +117,7 @@ The ACF of the data decays gradually, whereas the PACF cuts off abruptly. The gr
 We would like to begin by using the Box-Cox power transformation, which is a method that helps to Normalize data. This method finds a value $\lambda$ which maximizes the log-likelihood and then the data is raised to the power of $\lambda$. The higher the likelihood, the better (more likely) the model parameter. Power transformations such as the Box-Cox help to stabilize the variance which is imperative for Box-Jenkins modeling.
 
 ```{r, finding best lambda}
-par(mfrow = c(1,1))
+par(mfrow = c(1, 1))
 # library(MASS) is loaded
 bcTransform <- boxcox(open ~ as.numeric(1:length(open)))
 # value of lambda which maxes log-likelihood
@@ -126,9 +132,13 @@ We see that the ideal value for $\lambda$ that maximizes the likelihood is $0.18
 df_sub$Open_tr <- log(open)
 
 # new time series plot
-par(mfrow = c(1,1))
-ggplot(df_sub, aes(x = Date, y = Open_tr, group = 1)) + geom_line() + xlab("Date") + ylab("USD (after log transformation)") + 
-  ggtitle("Series after Box-Cox") + geom_smooth(method = "loess", level = 0)
+par(mfrow = c(1, 1))
+ggplot(df_sub, aes(x = Date, y = Open_tr, group = 1)) +
+  geom_line() +
+  xlab("Date") +
+  ylab("USD (after log transformation)") +
+  ggtitle("Series after Box-Cox") +
+  geom_smooth(method = "loess", level = 0)
 
 
 # comparing the variances of original and transformed data
@@ -143,7 +153,7 @@ Obviously the data still has a linear trend, but the variance is much smaller. W
 We only want to difference once and at lag 1 because we did not observe any seasonality when we first plotted the original time series. The differenced series will represent the _change_ between observations that are $d$ units of time apart, in this case, $d = 1$, which is to say one day apart. So our differenced (and transformed) data will represent the change from each value to the next, one day at a time.
 
 ```{r, differencing}
-par(mfrow = c(1,1))
+par(mfrow = c(1, 1))
 
 open_diff <- diff(df_sub$Open_tr, lag = 1)
 autoplot(open_diff) + ggtitle("Series after Differencing at lag 1 after Box-Cox")
@@ -174,7 +184,7 @@ Note the inclusion of a 'drift' constant in the model. The `auto.arima()` functi
 We are given an ARIMA(0,1,4) model in this case which means it was differenced at lag 1 just like we did earlier, and also the order is $q = 4$. 
 
 ```{r, ACF-PACF of differenced data}
-par(mfrow = c(1,2))
+par(mfrow = c(1, 2))
 ggAcf(open_diff) + ggtitle("ACF of transformed data")
 ggPacf(open_diff) + ggtitle("PACF of transformed data")
 ```
@@ -196,15 +206,23 @@ For now we will just use the AICc to select a couple of models and determine lat
 ```{r, simulation and comparison}
 # matrix of AIC values for p and q
 # library(qpcR) and library(forecast) are loaded
-AICc.mat <- matrix(data = NA, nrow = 5, ncol = 5, 
-                  dimnames = list(paste("p =", 0:4),
-                                  paste("q =", 0:4)))
+AICc.mat <- matrix(
+  data = NA, nrow = 5, ncol = 5,
+  dimnames = list(
+    paste("p =", 0:4),
+    paste("q =", 0:4)
+  )
+)
 
 # simulating arima models for p,q = 0,1,2,3,4 and d = 1
 for (p in 0:4) {
-    for (q in 0:4) {
-        AICc.mat[p+1,q+1] <- AICc(Arima(open, order = c(p, 1, q), 
-                                        method = "ML", lambda = 0)) } }
+  for (q in 0:4) {
+    AICc.mat[p + 1, q + 1] <- AICc(Arima(open,
+      order = c(p, 1, q),
+      method = "ML", lambda = 0
+    ))
+  }
+}
 # printing matrix
 AICc.mat
 ```
@@ -215,10 +233,10 @@ We want to estimate as few parameters as possible due to the principle of parsim
 
 ```{r, parameter estimation}
 # ARIMA(1,1,2)
-fit112 <- Arima(open, order = c(1,1,2), method = "ML", lambda = 0)
+fit112 <- Arima(open, order = c(1, 1, 2), method = "ML", lambda = 0)
 fit112
 # ARIMA(2,1,1)
-fit211 <- Arima(open, order = c(2,1,1), method = "ML", lambda = 0)
+fit211 <- Arima(open, order = c(2, 1, 1), method = "ML", lambda = 0)
 fit211
 ```
 
@@ -242,18 +260,22 @@ resids112 <- fit112$residuals
 resids211 <- fit211$residuals
 k <- round(sqrt(length(open)))
 # a matrix comparing p-values for the three different tests
-diag.mat <- matrix(data = NA, nrow = 2, ncol = 3,
-                   dimnames = list(c("ARIMA(1,1,2)", "ARIMA(2,1,1)"),
-                                   c("Ljung-Box", "McLeod-Li", "Shapiro-Wilk")))
+diag.mat <- matrix(
+  data = NA, nrow = 2, ncol = 3,
+  dimnames = list(
+    c("ARIMA(1,1,2)", "ARIMA(2,1,1)"),
+    c("Ljung-Box", "McLeod-Li", "Shapiro-Wilk")
+  )
+)
 
 # testing ARIMA(0,1,0) residuals
-diag.mat[1,1] <- Box.test(resids112, type = 'Ljung-Box', lag = k, fitdf = 0)$p.value
-diag.mat[1,2] <- Box.test(resids112^2, type = 'Ljung-Box', lag = k, fitdf = 0)$p.value
-diag.mat[1,3] <- shapiro.test(resids112)$p.value
+diag.mat[1, 1] <- Box.test(resids112, type = "Ljung-Box", lag = k, fitdf = 0)$p.value
+diag.mat[1, 2] <- Box.test(resids112^2, type = "Ljung-Box", lag = k, fitdf = 0)$p.value
+diag.mat[1, 3] <- shapiro.test(resids112)$p.value
 # testing ARIMA(2,1,0) residuals
-diag.mat[2,1] <- Box.test(resids211, type = "Ljung-Box", lag = k, fitdf = 2)$p.value
-diag.mat[2,2] <- Box.test(resids211^2, type = "Ljung-Box", lag = k, fitdf = 2)$p.value
-diag.mat[2,3] <- shapiro.test(resids211)$p.value
+diag.mat[2, 1] <- Box.test(resids211, type = "Ljung-Box", lag = k, fitdf = 2)$p.value
+diag.mat[2, 2] <- Box.test(resids211^2, type = "Ljung-Box", lag = k, fitdf = 2)$p.value
+diag.mat[2, 3] <- shapiro.test(resids211)$p.value
 # matrix of p-values
 round(diag.mat, 3)
 ```
@@ -273,12 +295,12 @@ forecast112 <- forecast(df_sub$Open, model = fit112, lambda = 0)
 forecast211 <- forecast(df_sub$Open, model = fit211, lambda = 0)
 
 # plotting true values and the forecasts
-par(mfrow = c(3,1))
+par(mfrow = c(3, 1))
 df_add <- df %>% subset(Date >= "2015-10-09" & Date <= "2016-10-18")
 open_add <- as.ts(df_add$Open)
 
 # True Values
-autoplot(open_add, xlim = c(300, 375)) + xlab("Days from 10/09/15") + ylab("USD") + 
+autoplot(open_add, xlim = c(300, 375)) + xlab("Days from 10/09/15") + ylab("USD") +
   ggtitle("True Values for Opening Price of Bitcoin, 2016-08-03 - 2016-10-18")
 
 # ARIMA(1,1,2)
@@ -286,7 +308,7 @@ autoplot(forecast112, xlim = c(300, 375)) + xlab("Days from 10/09/15") + ylab("U
   ggtitle("ARIMA(1,1,2) Forecast for Opening Price of Bitcoin, 10 Days ahead")
 
 # ARIMA (2,1,1)
-autoplot(forecast211, xlim = c(300, 375)) + xlab("Days from 10/09/15") + ylab("USD") + 
+autoplot(forecast211, xlim = c(300, 375)) + xlab("Days from 10/09/15") + ylab("USD") +
   ggtitle("ARIMA(2,1,1) Forecast for Opening Price of Bitcoin, 10 Days ahead")
 ```
 
@@ -297,16 +319,20 @@ Here we print out two data frames, one for each model, comparing the true values
 ```{r, confidence interval}
 true <- df_add$Open[366:375]
 # data.frame of ARIMA(1,1,2) forecasts
-df112 <- data.frame(true = true, pred = forecast112$mean, 
-           lower = forecast112$lower[,2], 
-           upper = forecast112$upper[,2],
-           pct.diff = round((forecast112$mean - true) / true, 4) * 100)
+df112 <- data.frame(
+  true = true, pred = forecast112$mean,
+  lower = forecast112$lower[, 2],
+  upper = forecast112$upper[, 2],
+  pct.diff = round((forecast112$mean - true) / true, 4) * 100
+)
 df112
 # data.frame of ARIMA(2,1,1) forecasts
-df211 <- data.frame(true = true, pred = forecast211$mean,
-                    lower = forecast211$lower[,2], 
-                    upper = forecast211$upper[,2],
-                    pct.diff = round((forecast211$mean - true) / true, 4) * 100)
+df211 <- data.frame(
+  true = true, pred = forecast211$mean,
+  lower = forecast211$lower[, 2],
+  upper = forecast211$upper[, 2],
+  pct.diff = round((forecast211$mean - true) / true, 4) * 100
+)
 df211
 # the average error
 mean(df112$pct.diff)
@@ -370,13 +396,13 @@ Metcalfe, Andrew V., and Paul S.P. Cowpertwait. Introductory Time Series with R.
 ```{r, spec.arma and plot.roots}
 # pretty much all code is included in the body of the report
 fit211$coef[1:2] # the 2 AR coefficients
-par(mfrow = c(1,1))
+par(mfrow = c(1, 1))
 # RESIDUALS
 # residual plots have clear heteroskedasticity
 plot.ts(resids112, main = "ARIMA(1,1,2) Residuals")
 plot.ts(resids211, main = "ARIMA(2,1,1) Residuals")
 # QQ-plots of residuals
-par(mfrow = c(2,1))
+par(mfrow = c(2, 1))
 qqnorm(resids112, main = "Standardized Residuals of ARIMA(1,1,2)")
 qqline(resids112)
 qqnorm(resids211, main = "Standardized Residuals of ARIMA(2,1,1)")
@@ -386,7 +412,7 @@ qqline(resids211)
 ggAcf(resids112) + ggtitle("ARIMA(1,1,2) Residuals' ACF")
 ggAcf(resids211) + ggtitle("ARIMA(2,1,1) Residuals' ACF")
 # ACF of squared residuals
-par(mfrow = c(2,1))
+par(mfrow = c(2, 1))
 # not uncorrelated, i.e. not white noise
 ggAcf(resids112^2) + ggtitle("ARIMA(1,1,2) Squared Residuals' ACF")
 ggAcf(resids211^2) + ggtitle("ARIMA(2,1,1) Squared Residuals' ACF")
