@@ -38,16 +38,18 @@ This was my final project for PSTAT 131, Data Mining, Spring 2017. A version of 
 ----
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), 
-                      tidy = TRUE, eval = TRUE, 
-                      echo = TRUE, include = TRUE, results = 'asis')
+knitr::opts_chunk$set(
+  tidy.opts = list(width.cutoff = 80),
+  tidy = TRUE, eval = TRUE,
+  echo = TRUE, include = TRUE, results = "asis"
+)
 options(width = 80)
+library(tidyverse)
 library(class)
 library(ROCR)
 library(randomForest)
 library(tree)
-library(plyr)
-library(dplyr)
+library(reshape2)
 ```
 
 
@@ -65,8 +67,9 @@ In this report, we find the accuracy, error rates, and area under the ROC curve 
 
 ```{r reading data}
 set.seed(10)
-white <- read.csv(here::here("data", "winequality-white.csv"),  
-                  sep = ";")
+white <- read.csv(here::here("data", "winequality-white.csv"),
+  sep = ";"
+)
 sapply(white, function(x) sum(is.na(x)))
 ```
 
@@ -75,8 +78,70 @@ A preliminary look at the dataset reveals that there are no missing values.
 First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis. 
 
 ```{r correlation matrix}
-white.cor <- cor(white[, 1:12])
-# white.cor
+cormat <- round(cor(white[, 1:12]), 2)
+
+reorder_cormat <- function(cormat) {
+  # Use correlation between variables as distance
+  dd <- as.dist((1 - cormat) / 2)
+  hc <- hclust(dd)
+  cormat <- cormat[hc$order, hc$order]
+}
+
+# Get lower triangle of the correlation matrix
+get_lower_tri <- function(cormat) {
+  cormat[upper.tri(cormat)] <- NA
+  return(cormat)
+}
+
+# Get upper triangle of the correlation matrix
+get_upper_tri <- function(cormat) {
+  cormat[lower.tri(cormat)] <- NA
+  return(cormat)
+}
+
+
+# Reorder the correlation matrix
+cormat <- reorder_cormat(cormat)
+upper_tri <- get_upper_tri(cormat)
+
+# Melt the correlation matrix
+melted_cormat <- melt(upper_tri, na.rm = TRUE)
+
+# Create a ggheatmap
+ggheatmap <- ggplot(melted_cormat, aes(Var2, Var1, fill = value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(
+    low = "blue", high = "red", mid = "white",
+    midpoint = 0, limit = c(-1, 1), space = "Lab",
+    name = "Pearson\nCorrelation"
+  ) +
+  theme_minimal() + # minimal theme
+  theme(axis.text.x = element_text(
+    angle = 45, vjust = 1,
+    size = 10, hjust = 1
+  )) +
+  coord_fixed() + 
+  ggtitle("Full Correlation Plot")
+
+# Print the heatmap
+
+ggheatmap +
+  geom_text(aes(Var2, Var1, label = value), color = "black", size = 3) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    axis.ticks = element_blank(),
+    legend.justification = c(1, 0),
+    legend.position = c(0.6, 0.7),
+    legend.direction = "horizontal"
+  ) +
+  guides(fill = guide_colorbar(
+    barwidth = 7, barheight = 1,
+    title.position = "top", title.hjust = 0.5
+  ))
 ```
 
 Taking a look at the correlation coefficients \(r\) for the predictor variables, we see that `density` is strongly correlated with `residual.sugar` (\(r = 0.84\)) and `alcohol` ($r = -0.78$), and moderately correlated with `total.sulfur.dioxide` ($r = 0.53$). `free.sulfur.dioxide` and `total.sulfur.dioxide` are also moderately correlated with each other ($r = 0.62$) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide. 
@@ -88,7 +153,49 @@ So, we should actually remove the variables `residual.sugar` and `density`, as w
 ```{r dropping variables}
 # removing three predictors
 white2 <- subset(white, select = -c(4, 7, 8))
-# cor(white2[,1:9])
+cormat2 <- round(cor(white2[, 1:9]), 2)
+
+# Reorder the correlation matrix
+cormat2 <- reorder_cormat(cormat2)
+upper_tri2 <- get_upper_tri(cormat2)
+
+# Melt the correlation matrix
+melted_cormat2 <- melt(upper_tri2, na.rm = TRUE)
+
+# Create a ggheatmap
+ggheatmap2 <- ggplot(melted_cormat2, aes(Var2, Var1, fill = value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(
+    low = "blue", high = "red", mid = "white",
+    midpoint = 0, limit = c(-1, 1), space = "Lab",
+    name = "Pearson\nCorrelation"
+  ) +
+  theme_minimal() + # minimal theme
+  theme(axis.text.x = element_text(
+    angle = 45, vjust = 1,
+    size = 10, hjust = 1
+  )) +
+  coord_fixed() + 
+  ggtitle("Subsetted Correlation Plot")
+
+# Print the heatmap
+ggheatmap2 +
+  geom_text(aes(Var2, Var1, label = value), color = "black", size = 3) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    axis.ticks = element_blank(),
+    legend.justification = c(1, 0),
+    legend.position = c(0.6, 0.7),
+    legend.direction = "horizontal"
+  ) +
+  guides(fill = guide_colorbar(
+    barwidth = 7, barheight = 1,
+    title.position = "top", title.hjust = 0.5
+  ))
 ```
 
 From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue. 
