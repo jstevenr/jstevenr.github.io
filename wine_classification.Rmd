@@ -19,13 +19,12 @@ abstract: |
 bibliography: references_wc.bib
 
 output: 
-  bookdown::html_document2:
+  html_document:
     toc: true
     toc_float: true
-    base_format: rticles::asa_article
-    number_sections: true
     includes:
-      in_header: header.html
+      in_header: 
+        header.html
 
 navbar:
   title: "Home"
