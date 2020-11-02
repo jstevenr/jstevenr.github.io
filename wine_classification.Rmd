@@ -6,16 +6,7 @@ blinded: 0
 authors: 
 - name: J Steven Raquel
   affiliation: Department of Statistics, University of California, Irvine
-
-keywords: 
-- supervised learning
-- decision tree
-- random forest
-- k-nearest neighbors
-
-abstract: |
-  There are many different machine learning techniques useful for classification. This paper compares various supervised learning algorithms, namely decision trees, k-nearest neighbors, and random forest in order to determine which is the most effective for binary classification. The usefulness of cross-validation and the necessity of randomness to ensure robustness is also discussed in this paper. We utilize a free and openly sourced dataset available on the UC Irvine Machine Learning Repository which includes several different attributes of wine including alcohol content, sulfur dioxide, and acidity, among others, and use these different ML algorithms to classify each of them as either good or bad. We found that the models that performed the best overall were random forest, but acknowledge that they suffer from a lack of interpretability on account of being a black-box algorithm. 
-
+  
 bibliography: references_wc.bib
 
 output: 
@@ -55,6 +46,8 @@ This paper was originally written as a final project for PSTAT 131 Data Mining a
 
 ---
 
+# Abstract
+There are many different machine learning techniques useful for classification. This paper compares various supervised learning algorithms, namely decision trees, k-nearest neighbors, and random forest in order to determine which is the most effective for binary classification. The usefulness of cross-validation and the necessity of randomness to ensure robustness is also discussed in this paper. We utilize a free and openly sourced dataset available on the UC Irvine Machine Learning Repository which includes several different attributes of wine including alcohol content, sulfur dioxide, and acidity, among others, and use these different ML algorithms to classify each of them as either good or bad. We found that the models that performed the best overall were random forest, but acknowledge that they suffer from a lack of interpretability on account of being a black-box algorithm. 
 
 # Introduction
 

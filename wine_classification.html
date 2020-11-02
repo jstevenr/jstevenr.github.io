@@ -20,29 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
-<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-<link rel="manifest" href="manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -150,16 +130,6 @@ code span.wa { color: #da4453; } /* Warning */
   }
 </style>
 
-<style type="text/css">
-  p.abstract{
-    text-align: center;
-    font-weight: bold;
-  }
-  div.abstract{
-    margin: auto;
-    width: 90%;
-  }
-</style>
 
 <style type="text/css">
 h1 {
@@ -368,69 +338,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -438,16 +345,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -519,16 +416,16 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Comparing supervised machine learning algorithms in classifying wine quality</h1>
-<div class="abstract">
-<p class="abstract">Abstract</p>
-<p>There are many different machine learning techniques useful for classification. This paper compares various supervised learning algorithms, namely decision trees, k-nearest neighbors, and random forest in order to determine which is the most effective for binary classification. The usefulness of cross-validation and the necessity of randomness to ensure robustness is also discussed in this paper. We utilize a free and openly sourced dataset available on the UC Irvine Machine Learning Repository which includes several different attributes of wine including alcohol content, sulfur dioxide, and acidity, among others, and use these different ML algorithms to classify each of them as either good or bad. We found that the models that performed the best overall were random forest, but acknowledge that they suffer from a lack of interpretability on account of being a black-box algorithm.</p>
-</div>
 
 </div>
 
 
 <p>This paper was originally written as a final project for PSTAT 131 Data Mining at UC Santa Barbara in spring 2017. It was revised heavily for STATS 295 Advanced R at UC Irvine. A version of this project written in Python can be found on my GitHub <a href="https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb">here</a>.</p>
 <hr />
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
+<p>There are many different machine learning techniques useful for classification. This paper compares various supervised learning algorithms, namely decision trees, k-nearest neighbors, and random forest in order to determine which is the most effective for binary classification. The usefulness of cross-validation and the necessity of randomness to ensure robustness is also discussed in this paper. We utilize a free and openly sourced dataset available on the UC Irvine Machine Learning Repository which includes several different attributes of wine including alcohol content, sulfur dioxide, and acidity, among others, and use these different ML algorithms to classify each of them as either good or bad. We found that the models that performed the best overall were random forest, but acknowledge that they suffer from a lack of interpretability on account of being a black-box algorithm.</p>
+</div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>The importance of identifying what constitutes wine quality is a question of interest to many; whether you produce wine or consume it. While wine tasting as a profession has a long history, the application of statistics and machine learning to determine wine quality is comparatively much younger. Taking a dataset that has pre-existing quality scores assigned to different wines, we can apply supervised learning machine learning algorithms to attempt to determine which among them performs best when classifying the quality of the wine, and what attributes they determined were the most relevant in that classification.</p>
@@ -1225,8 +1122,6 @@ Therneau, Terry, and Beth Atkinson. 2019. <em>Rpart: Recursive Partitioning and 
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -1259,32 +1154,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
