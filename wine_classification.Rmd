@@ -52,6 +52,11 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
+This paper was originally written as a final project for PSTAT 131 Data Mining at UC Santa Barbara in spring 2017. It was revised heavily for STATS 295 Advanced R at UC Irvine. A version of this project written in Python can be found on my GitHub [here](https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb).
+
+---
+
+
 # Introduction
 
 The importance of identifying what constitutes wine quality is a question of interest to many; whether you produce wine or consume it. While wine tasting as a profession has a long history, the application of statistics and machine learning to determine wine quality is comparatively much younger. Taking a dataset that has pre-existing quality scores assigned to different wines, we can apply supervised learning machine learning algorithms to attempt to determine which among them performs best when classifying the quality of the wine, and what attributes they determined were the most relevant in that classification. 
