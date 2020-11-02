@@ -13,7 +13,7 @@
 
 <title>Visualizing IMDB Ratings</title>
 
-<script src="site_libs/header-attrs-2.4/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -24,6 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
@@ -49,71 +51,6 @@
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      pre > code.sourceCode { white-space: pre; position: relative; }
-      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-      pre > code.sourceCode > span:empty { height: 1.2em; }
-      code.sourceCode > span { color: inherit; text-decoration: inherit; }
-      div.sourceCode { margin: 1em 0; }
-      pre.sourceCode { margin: 0; }
-      @media screen {
-      div.sourceCode { overflow: auto; }
-      }
-      @media print {
-      pre > code.sourceCode { white-space: pre-wrap; }
-      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-      }
-      pre.numberSource code
-        { counter-reset: source-line 0; }
-      pre.numberSource code > span
-        { position: relative; left: -4em; counter-increment: source-line; }
-      pre.numberSource code > span > a:first-child::before
-        { content: counter(source-line);
-          position: relative; left: -1em; text-align: right; vertical-align: baseline;
-          border: none; display: inline-block;
-          -webkit-touch-callout: none; -webkit-user-select: none;
-          -khtml-user-select: none; -moz-user-select: none;
-          -ms-user-select: none; user-select: none;
-          padding: 0 4px; width: 4em;
-          background-color: #232629;
-          color: #7a7c7d;
-        }
-      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
-      div.sourceCode
-        { color: #cfcfc2; background-color: #232629; }
-      @media screen {
-      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-      }
-      code span { color: #cfcfc2; } /* Normal */
-      code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-      code span.an { color: #3f8058; } /* Annotation */
-      code span.at { color: #2980b9; } /* Attribute */
-      code span.bn { color: #f67400; } /* BaseN */
-      code span.bu { color: #7f8c8d; } /* BuiltIn */
-      code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-      code span.ch { color: #3daee9; } /* Char */
-      code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-      code span.co { color: #7a7c7d; } /* Comment */
-      code span.cv { color: #7f8c8d; } /* CommentVar */
-      code span.do { color: #a43340; } /* Documentation */
-      code span.dt { color: #2980b9; } /* DataType */
-      code span.dv { color: #f67400; } /* DecVal */
-      code span.er { color: #da4453; text-decoration: underline; } /* Error */
-      code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-      code span.fl { color: #f67400; } /* Float */
-      code span.fu { color: #8e44ad; } /* Function */
-      code span.im { color: #27ae60; } /* Import */
-      code span.in { color: #c45b00; } /* Information */
-      code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-      code span.op { color: #cfcfc2; } /* Operator */
-      code span.ot { color: #27ae60; } /* Other */
-      code span.pp { color: #27ae60; } /* Preprocessor */
-      code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-      code span.sc { color: #3daee9; } /* SpecialChar */
-      code span.ss { color: #da4453; } /* SpecialString */
-      code span.st { color: #f44f4f; } /* String */
-      code span.va { color: #27aeae; } /* Variable */
-      code span.vs { color: #da4453; } /* VerbatimString */
-      code span.wa { color: #da4453; } /* Warning */
     </style>
 
 
@@ -585,37 +522,45 @@ div.tocify {
 <h1>Data pre-processing</h1>
 <p>Here we <code>subset()</code> the data in order to work with a data that makes sense for our purposes. I decided that it would be good to only look at films that were voted on by at least 10,000 people, to ensure that these ratings would be more accurate. For example, a universally praised (or panned) film that only has 1000 votes, probably because it was only seen by a very small minority, probably shouldn’t factor into our appraisal of the the quality of films of the decade in general.</p>
 <p>We’re also only going to be looking at the 1980s to the present, so we drop the other rows, as well as any columns that don’t include what we are looking for.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;movie_metadata.csv&quot;</span>), <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="dv">0</span>, <span class="st">&quot;0&quot;</span>), <span class="at">skipNul =</span> <span class="cn">TRUE</span>, <span class="at">fill =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Only retain films with sufficient number of votes</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> <span class="fu">subset</span>(all_movies, num_voted_users <span class="sc">&gt;=</span> <span class="dv">20000</span>, <span class="at">select =</span> <span class="fu">c</span>(imdb_score, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    title_year, movie_title, director_name, gross), <span class="at">drop =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;movie_metadata.csv&quot;</span>),</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="dv">0</span>, <span class="st">&quot;0&quot;</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">skipNul =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># To remove any rows with missing values</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> all_movies[<span class="fu">complete.cases</span>(all_movies), ]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove any duplicate films</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> all_movies[<span class="sc">!</span><span class="fu">duplicated</span>(all_movies<span class="sc">$</span>movie_title), ]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">7</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;1927-2016&quot;</span>, <span class="st">&quot;1980-2016&quot;</span>, </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;2010-2016&quot;</span>, <span class="st">&quot;2000-2010&quot;</span>, <span class="st">&quot;1990-2000&quot;</span>, <span class="st">&quot;1980-1990&quot;</span>), <span class="fu">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;1Q&quot;</span>, <span class="st">&quot;Med&quot;</span>, <span class="st">&quot;Mean&quot;</span>, </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;3Q&quot;</span>, <span class="st">&quot;Max&quot;</span>, <span class="st">&quot;Size&quot;</span>)))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding summary statistics and size</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(all_movies<span class="sc">$</span>imdb_score), <span class="dv">2</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">1</span>, <span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(all_movies)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>all_avg <span class="ot">&lt;-</span> stats[<span class="dv">1</span>, <span class="dv">4</span>]</span></code></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Only retain films with sufficient number of votes</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> <span class="fu">subset</span>(all_movies, num_voted_users <span class="sc">&gt;=</span> <span class="dv">20000</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">select =</span> <span class="fu">c</span>(imdb_score, title_year, movie_title, director_name, gross), <span class="at">drop =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># To remove any rows with missing values</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> all_movies[<span class="fu">complete.cases</span>(all_movies), ]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove any duplicate films</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>all_movies <span class="ot">&lt;-</span> all_movies[<span class="sc">!</span><span class="fu">duplicated</span>(all_movies<span class="sc">$</span>movie_title), ]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">7</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;1927-2016&quot;</span>, <span class="st">&quot;1980-2016&quot;</span>, <span class="st">&quot;2010-2016&quot;</span>, <span class="st">&quot;2000-2010&quot;</span>, <span class="st">&quot;1990-2000&quot;</span>, <span class="st">&quot;1980-1990&quot;</span>),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;Min&quot;</span>, <span class="st">&quot;1Q&quot;</span>, <span class="st">&quot;Med&quot;</span>, <span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;3Q&quot;</span>, <span class="st">&quot;Max&quot;</span>, <span class="st">&quot;Size&quot;</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding summary statistics and size</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(all_movies<span class="sc">$</span>imdb_score), <span class="dv">2</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">1</span>, <span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(all_movies)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>all_avg <span class="ot">&lt;-</span> stats[<span class="dv">1</span>, <span class="dv">4</span>]</span></code></pre></div>
 <p>The films range from scoring between 1.6 and 9.3 on a scale from 0 to 10.0m and the average score is about 6.62.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keeping only relevant columns as well as only looking at movies from 1980s and</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># beyond</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>movies <span class="ot">&lt;-</span> <span class="fu">subset</span>(all_movies, title_year <span class="sc">&gt;=</span> <span class="dv">1980</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(movies<span class="sc">$</span>imdb_score), <span class="dv">2</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">2</span>, <span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(movies)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>modern_avg <span class="ot">&lt;-</span> stats[<span class="dv">2</span>, <span class="dv">4</span>]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>stats</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keeping only relevant columns as well as only looking at movies from 1980s and beyond</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>movies <span class="ot">&lt;-</span> <span class="fu">subset</span>(all_movies, title_year <span class="sc">&gt;=</span> <span class="dv">1980</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(movies<span class="sc">$</span>imdb_score), <span class="dv">2</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>stats[<span class="dv">2</span>, <span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">nrow</span>(movies)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>modern_avg <span class="ot">&lt;-</span> stats[<span class="dv">2</span>, <span class="dv">4</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>stats</span></code></pre></div>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
 ## 1927-2016 1.6 6.1 6.7 6.65 7.3 9.3 2816
 ## 1980-2016 1.6 6.1 6.7 6.62 7.3 9.3 2747
@@ -670,13 +615,19 @@ div.tocify {
 ## 2835 73000942</code></pre>
 <p>On the other side of things, the worst film of this period was apparently Justin Bieber’s concert film, <em>Never Say Never</em>. Two parody films topped the list. This film, as well as <em>Jack and Jill</em>, starring Adam Sandler, grossed well over $70 million, most likely owing to their leads, but nevertheless were universally panned by audiences.</p>
 <p>We can also take a look at the averages across the individual years as well as each decade.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tens_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tens, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2010</span>, </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2016</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;2010s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span> <span class="fu">geom_jitter</span>() <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>tens_plot</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tens_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tens, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2010</span>, <span class="dv">2016</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;2010s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>tens_plot</span></code></pre></div>
 <p><img src="imdb_files/figure-html/2010-present%20day-1.png" width="672" /></p>
 <p>Modern films seem to be pretty mediocre across the board (between 6-7), but if nothing else, each year seems to be consistent with the last. The sole high outlier of this decade was the 2010 film <em>Inception</em>, directed by Christopher Nolan.</p>
 <hr />
@@ -728,13 +679,18 @@ div.tocify {
 ## 2269 14174654
 ## 2296  9109322</code></pre>
 <p>Notably, two of the worst films of this decade were by Jason Friedberg, namely the parody films <em>Epic Movie</em> and <em>Disaster Movie</em>. He is also responsible for <em>Vampires Suck</em>, one of the worst rated films of the 2010s.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>zeroes_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(zeroes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2009</span>, <span class="dv">1</span>), </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;2000s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span> <span class="fu">geom_jitter</span>() <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>zeroes_plot</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>zeroes_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(zeroes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2009</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;2000s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>zeroes_plot</span></code></pre></div>
 <p><img src="imdb_files/figure-html/2000-2009-1.png" width="672" /></p>
 <hr />
 </div>
@@ -785,14 +741,19 @@ div.tocify {
 ## 1935         Bob Spiers  29247405
 ## 3231        Alan Metter    126247</code></pre>
 <p>Two films based on fighting video games (my personal favorite genre) landed in the bottom spots: <em>Street Fighter</em>, notably starring Jean Claude van Damme and Kylie Minogue, and <em>Mortal Kombat: Annihilation</em>. Also included was the only Batman film starring George Clooney, replacing Val Kilmer. It would be the last Batman film until Nolan’s reboot in 2005 (the third of his Batman trilogy of course topping the charts in the 2010s). Arnold Schwarzeneggar was Mr. Freeze in this film, possibly the ‘punniest’ villain of all time.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nineties_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nineties, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, </span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1990</span>, <span class="dv">1999</span>, <span class="dv">1</span>), </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;1990s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span> <span class="fu">geom_jitter</span>() <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, </span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>nineties_plot</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nineties_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nineties, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1990</span>, <span class="dv">1999</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;1990s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>nineties_plot</span></code></pre></div>
 <p><img src="imdb_files/figure-html/1990-1999-1.png" width="672" /></p>
 <hr />
 </div>
@@ -844,27 +805,37 @@ div.tocify {
 ## 2067    Joseph Sargent 20763013</code></pre>
 <p>Speaking of sequels however, the worst films of the 80s were several ill-advised sequels to well-known classics, many of which were done without the involvement of original directors or cast members. Of the films here, only <em>Howard the Duck</em> is not a sequel. Notably also is the inclusion of the 5th and 8th <em>Friday the 13th</em> films. <em>Halloween III</em> is the also only film in the series that doesn’t not feature the antagonist Michael Myers.</p>
 <p><em>Jaws: The Revenge</em> was the fourth and final sequel to the series, with only the original film involving Steven Spielberg, who of course directed the 2nd best rated film of this decade, <em>Raiders of the Lost Ark</em> as well as <em>Schindler’s List</em> in the 90s.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>eighties_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(eighties, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, </span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1980</span>, <span class="dv">1989</span>, <span class="dv">1</span>), </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;1980s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span> <span class="fu">geom_jitter</span>() <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, </span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>eighties_plot</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>eighties_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(eighties, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1980</span>, <span class="dv">1989</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;1980s in film as rated by IMDB users&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>eighties_plot</span></code></pre></div>
 <p><img src="imdb_files/figure-html/1980-1989-1.png" width="672" /></p>
 <hr />
 </div>
 <div id="conclusions" class="section level1">
 <h1>Conclusions</h1>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>movies_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(movies, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1980</span>, </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2016</span>, <span class="dv">2</span>), <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;IMDB Ratings Over the Decades&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg), <span class="at">colour =</span> <span class="st">&quot;#D55E00&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), </span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>movies_plot</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>movies_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(movies, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(title_year), <span class="at">y =</span> imdb_score)) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#4271AE&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;#1F3552&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">&quot;IMDB Rating&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1980</span>, <span class="dv">2016</span>, <span class="dv">2</span>), <span class="at">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;IMDB Ratings Over the Decades&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg), <span class="at">colour =</span> <span class="st">&quot;#D55E00&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> modern_avg, <span class="at">colour =</span> <span class="st">&quot;Average IMDB Rating from 1980-2016&quot;</span>), <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>movies_plot</span></code></pre></div>
 <p><img src="imdb_files/figure-html/all_movies-1.png" width="672" /></p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>stats</span></code></pre></div>
 <pre><code>##           Min  1Q Med Mean  3Q Max Size
@@ -899,7 +870,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

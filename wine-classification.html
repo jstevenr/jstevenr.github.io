@@ -11,9 +11,9 @@
 
 
 
-<title>Classifying wine quality</title>
+<title>Comparing supervised machine learning algorithms in classifying wine quality</title>
 
-<script src="site_libs/header-attrs-2.4/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -24,6 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
@@ -49,71 +51,6 @@
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      pre > code.sourceCode { white-space: pre; position: relative; }
-      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-      pre > code.sourceCode > span:empty { height: 1.2em; }
-      code.sourceCode > span { color: inherit; text-decoration: inherit; }
-      div.sourceCode { margin: 1em 0; }
-      pre.sourceCode { margin: 0; }
-      @media screen {
-      div.sourceCode { overflow: auto; }
-      }
-      @media print {
-      pre > code.sourceCode { white-space: pre-wrap; }
-      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-      }
-      pre.numberSource code
-        { counter-reset: source-line 0; }
-      pre.numberSource code > span
-        { position: relative; left: -4em; counter-increment: source-line; }
-      pre.numberSource code > span > a:first-child::before
-        { content: counter(source-line);
-          position: relative; left: -1em; text-align: right; vertical-align: baseline;
-          border: none; display: inline-block;
-          -webkit-touch-callout: none; -webkit-user-select: none;
-          -khtml-user-select: none; -moz-user-select: none;
-          -ms-user-select: none; user-select: none;
-          padding: 0 4px; width: 4em;
-          background-color: #232629;
-          color: #7a7c7d;
-        }
-      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
-      div.sourceCode
-        { color: #cfcfc2; background-color: #232629; }
-      @media screen {
-      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-      }
-      code span { color: #cfcfc2; } /* Normal */
-      code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-      code span.an { color: #3f8058; } /* Annotation */
-      code span.at { color: #2980b9; } /* Attribute */
-      code span.bn { color: #f67400; } /* BaseN */
-      code span.bu { color: #7f8c8d; } /* BuiltIn */
-      code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-      code span.ch { color: #3daee9; } /* Char */
-      code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-      code span.co { color: #7a7c7d; } /* Comment */
-      code span.cv { color: #7f8c8d; } /* CommentVar */
-      code span.do { color: #a43340; } /* Documentation */
-      code span.dt { color: #2980b9; } /* DataType */
-      code span.dv { color: #f67400; } /* DecVal */
-      code span.er { color: #da4453; text-decoration: underline; } /* Error */
-      code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-      code span.fl { color: #f67400; } /* Float */
-      code span.fu { color: #8e44ad; } /* Function */
-      code span.im { color: #27ae60; } /* Import */
-      code span.in { color: #c45b00; } /* Information */
-      code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-      code span.op { color: #cfcfc2; } /* Operator */
-      code span.ot { color: #27ae60; } /* Other */
-      code span.pp { color: #27ae60; } /* Preprocessor */
-      code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-      code span.sc { color: #3daee9; } /* SpecialChar */
-      code span.ss { color: #da4453; } /* SpecialString */
-      code span.st { color: #f44f4f; } /* String */
-      code span.va { color: #27aeae; } /* Variable */
-      code span.vs { color: #da4453; } /* VerbatimString */
-      code span.wa { color: #da4453; } /* Warning */
     </style>
 
 
@@ -571,635 +508,709 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Classifying wine quality</h1>
+<h1 class="title toc-ignore">Comparing supervised machine learning algorithms in classifying wine quality</h1>
 
 </div>
 
 
-<p>This was my final project for PSTAT 131, Data Mining, Spring 2017. A version of this project written in Python can be found on my GitHub <a href="https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb">here</a>.</p>
+<p>This paper was originally written as a final project for PSTAT 131 Data Mining at UC Santa Barbara in spring 2017. It was revised heavily for STATS 295 Advanced R at UC Irvine. A version of this project written in Python can be found on my GitHub <a href="https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb">here</a>.</p>
 <hr />
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
+<p>There are many different machine learning techniques useful for classification. This paper compares various supervised learning algorithms, namely decision trees, k-nearest neighbors, and random forest in order to determine which is the most effective for binary classification. The usefulness of cross-validation and the necessity of randomness to ensure robustness is also discussed in this paper. We utilize a free and openly sourced dataset available on the UC Irvine Machine Learning Repository which includes several different attributes of wine including alcohol content, sulfur dioxide, and acidity, among others, and use these different ML algorithms to classify each of them as either good or bad. We found that the models that performed the best overall were random forest, but acknowledge that they suffer from a lack of interpretability on account of being a black-box algorithm.</p>
+</div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>We use this white wine quality dataset, and all of its attributes (e.g. sulfur dioxide content, pH) to determine what constitutes a “good” (or above average) quality wine. We used the R statistical computing language to conduct the analyses in this report. The data were found on the UC Irvine Machine Learning Repository.</p>
-<p>Knowing what makes a good wine was an interesting question because it allows us to look at “taste” in a different way–without formal training in wine tasting, we can determine algorithmically how and why a wine is good using machine learning.</p>
-<p>We utilized randomForest, decision trees, and k-nearest neighbors to classify each observation as either good or bad based off of these attributes, while varying the number of variables, nodes, and number of neighbors and comparing within and between these methods.</p>
-<p>In this report, we find the accuracy, error rates, and area under the ROC curve (AUC) of each of the three methods and ultimately came to determine that randomForest was the most effective in terms of accuracy and AUC. It works well as a generalization of the decision tree method, and as an algorithm it is robust, but it falls short in terms of interpretability. kNN on the other hand is slow to compute with a dataset of this dimensionality, as well as weaker in its accuracy both in absolute terms and relative to the other methods we have tested here.</p>
+<p>The importance of identifying what constitutes wine quality is a question of interest to many; whether you produce wine or consume it. While wine tasting as a profession has a long history, the application of statistics and machine learning to determine wine quality is comparatively much younger. Taking a dataset that has pre-existing quality scores assigned to different wines, we can apply supervised learning machine learning algorithms to attempt to determine which among them performs best when classifying the quality of the wine, and what attributes they determined were the most relevant in that classification.</p>
 </div>
-<div id="main-body" class="section level1">
-<h1>Main Body</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>white <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;winequality-white.csv&quot;</span>),</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">&quot;;&quot;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(white, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span></code></pre></div>
-<pre><code>   fixed.acidity     volatile.acidity          citric.acid 
-               0                    0                    0 
-  residual.sugar            chlorides  free.sulfur.dioxide 
-               0                    0                    0 </code></pre>
-<p>total.sulfur.dioxide density pH 0 0 0 sulphates alcohol quality 0 0 0</p>
-<p>A preliminary look at the dataset reveals that there are no missing values.</p>
-<p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with randomForest, both of which are going to be used in this analysis.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cormat <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(white[, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]), <span class="dv">2</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>reorder_cormat <span class="ot">&lt;-</span> <span class="cf">function</span>(cormat) {</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use correlation between variables as distance</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  dd <span class="ot">&lt;-</span> <span class="fu">as.dist</span>((<span class="dv">1</span> <span class="sc">-</span> cormat) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dd)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  cormat <span class="ot">&lt;-</span> cormat[hc<span class="sc">$</span>order, hc<span class="sc">$</span>order]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Get lower triangle of the correlation matrix</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>get_lower_tri <span class="ot">&lt;-</span> <span class="cf">function</span>(cormat) {</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  cormat[<span class="fu">upper.tri</span>(cormat)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cormat)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get upper triangle of the correlation matrix</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>get_upper_tri <span class="ot">&lt;-</span> <span class="cf">function</span>(cormat) {</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  cormat[<span class="fu">lower.tri</span>(cormat)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cormat)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder the correlation matrix</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>cormat <span class="ot">&lt;-</span> <span class="fu">reorder_cormat</span>(cormat)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>upper_tri <span class="ot">&lt;-</span> <span class="fu">get_upper_tri</span>(cormat)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Melt the correlation matrix</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>melted_cormat <span class="ot">&lt;-</span> <span class="fu">melt</span>(upper_tri, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggheatmap</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>ggheatmap <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(melted_cormat, <span class="fu">aes</span>(Var2, Var1, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;white&quot;</span>,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">limit =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">space =</span> <span class="st">&quot;Lab&quot;</span>,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Pearson</span><span class="sc">\n</span><span class="st">Correlation&quot;</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># minimal theme</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="dv">1</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span> </span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Full Correlation Plot&quot;</span>)</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the heatmap</span></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>ggheatmap <span class="sc">+</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(Var2, Var1, <span class="at">label =</span> value), <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.7</span>),</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.direction =</span> <span class="st">&quot;horizontal&quot;</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_colorbar</span>(</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">barwidth =</span> <span class="dv">7</span>, <span class="at">barheight =</span> <span class="dv">1</span>,</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">title.position =</span> <span class="st">&quot;top&quot;</span>, <span class="at">title.hjust =</span> <span class="fl">0.5</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/correlation%20matrix-1.png" width="672" /></p>
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p>We use this white wine quality dataset, and all of its attributes (e.g. sulfur dioxide content, pH) to determine what constitutes a “good” (or above average) quality wine. We used the R statistical computing language to conduct the analyses in this report. The data were found on the UC Irvine Machine Learning Repository <span class="citation">(<span>“<span>UCI</span> <span>Machine</span> <span>Learning</span> <span>Repository</span>”</span> n.d.)</span>.</p>
+<p>Knowing what makes a good wine was an interesting question because it allows us to look at “taste” in a different way–without formal training in wine tasting, we can determine algorithmically how and why a wine is good using machine learning.</p>
+<p>We utilized random forest, decision trees, and k-nearest neighbors to classify each observation as either good or bad based off of these attributes, while varying the number of variables, nodes, and number of neighbors and comparing within and between these methods.</p>
+<p>In this report, we find the accuracy, error rates, and area under the ROC curve (AUC) of each of the three methods and ultimately came to determine that random forest was the most effective in terms of accuracy and AUC. It works well as a generalization of the decision tree method, and as an algorithm it is robust, but it falls short in terms of interpretability. kNN on the other hand is slow to compute with a dataset of this dimensionality, as well as weaker in its accuracy both in absolute terms and relative to the other methods we have tested here.</p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with random forest, both of which are going to be used in this analysis. See Figure @ref(fig:correlation-matrix) for the correlation matrix.</p>
+<div class="figure">
+<img src="wine-classification_files/figure-html/correlation-matrix-1.png" alt="The full correlation matrix of the data." width="672" />
+<p class="caption">
+The full correlation matrix of the data.
+</p>
+</div>
 <p>Taking a look at the correlation coefficients <span class="math inline">\(r\)</span> for the predictor variables, we see that <code>density</code> is strongly correlated with <code>residual.sugar</code> (<span class="math inline">\(r = 0.84\)</span>) and <code>alcohol</code> (<span class="math inline">\(r = -0.78\)</span>), and moderately correlated with <code>total.sulfur.dioxide</code> (<span class="math inline">\(r = 0.53\)</span>). <code>free.sulfur.dioxide</code> and <code>total.sulfur.dioxide</code> are also moderately correlated with each other (<span class="math inline">\(r = 0.62\)</span>) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide.</p>
 <p>Aside from that correlations are all very low, including (and especially) <code>quality</code>, the response variable, with the predictors.</p>
-<p>So, we should actually remove the variables <code>residual.sugar</code> and <code>density</code>, as well as <code>total.sulfur.dioxide</code> because if its direct relationship with <code>free.sulfur.dioxide</code>, in order to address problems with multicollinearity. We’re going to withhold removing <code>alcohol</code>, to see the if the initial effect of removing just these three correlated variables is enough to address the issue.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># removing three predictors</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>white2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(white, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>cormat2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(white2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>]), <span class="dv">2</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder the correlation matrix</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>cormat2 <span class="ot">&lt;-</span> <span class="fu">reorder_cormat</span>(cormat2)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>upper_tri2 <span class="ot">&lt;-</span> <span class="fu">get_upper_tri</span>(cormat2)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Melt the correlation matrix</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>melted_cormat2 <span class="ot">&lt;-</span> <span class="fu">melt</span>(upper_tri2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggheatmap</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>ggheatmap2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(melted_cormat2, <span class="fu">aes</span>(Var2, Var1, <span class="at">fill =</span> value)) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;white&quot;</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">limit =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">space =</span> <span class="st">&quot;Lab&quot;</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Pearson</span><span class="sc">\n</span><span class="st">Correlation&quot;</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># minimal theme</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="dv">1</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span> </span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Correlation Plot without Residual Sugar, Density, and Total Sulfur Dioxide&quot;</span>)</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the heatmap</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>ggheatmap2 <span class="sc">+</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(Var2, Var1, <span class="at">label =</span> value), <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.7</span>),</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.direction =</span> <span class="st">&quot;horizontal&quot;</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_colorbar</span>(</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">barwidth =</span> <span class="dv">7</span>, <span class="at">barheight =</span> <span class="dv">1</span>,</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">title.position =</span> <span class="st">&quot;top&quot;</span>, <span class="at">title.hjust =</span> <span class="fl">0.5</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/dropping%20variables-1.png" width="672" /></p>
-<p>From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multicollinearity is no longer an issue.</p>
-<p>From here on out, we’re also going to want to convert the <code>quality</code> response variable into a binary factor so that we can use the predictors to classify the observations. We’re going to do this by labeling all of the observations that have received an above average (5 out of 10) as “good”, and the rest as “bad”, “bad” really meaning “not good”.</p>
-<p>It’s important to note that all of these numeric predictor variables (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>, <code>pH</code>, <code>sulphates</code>, <code>alcohol</code>) are not all scaled the same. As such, it’s appropriate to scale them before running any analyses.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># scaling the 8 numeric attributes</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white2</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>white_sc[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)] <span class="ot">&lt;-</span> <span class="fu">scale</span>(white_sc[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)])</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting quality into a binary factor</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">quality =</span> <span class="fu">ifelse</span>(quality <span class="sc">&gt;</span> <span class="dv">5</span>, <span class="at">yes =</span> <span class="st">&quot;good&quot;</span>, <span class="at">no =</span> <span class="st">&quot;bad&quot;</span>))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>white_sc<span class="sc">$</span>quality <span class="ot">&lt;-</span> <span class="fu">factor</span>(white_sc<span class="sc">$</span>quality, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>))</span></code></pre></div>
-<p>Now we have 8 numeric predictor variables, and one two-level categorical variable (<code>label</code>). We’re going to apply a few different classification methods in order to firstly determine which the best model for predicting is in terms of the relevant variables, and secondly to find the best classification algorithm for this data.</p>
-<p>We’re going to initialize a matrix to easily compare the quality of the different classification methods we’re going to utilize going forward, namely decision trees (with k-fold cross validation to prune the tree), k-nearest neighbor, and randomForest. The ‘full randomForest’ refers to the model using all 8 predictors whereas the ‘small randomForest’ refers to a subset of these predictors, the use of which will become clear when discussing decision trees.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initializing a matrix for records</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>records <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(records) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Accuracy Rate&quot;</span>, <span class="st">&quot;Error Rate&quot;</span>, <span class="st">&quot;AUC&quot;</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(records) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tree&quot;</span>, <span class="st">&quot;pruned.tree&quot;</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;k=10 kNN&quot;</span>, <span class="st">&quot;k=35 kNN&quot;</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;full.randomForest&quot;</span>, <span class="st">&quot;small.randomForest&quot;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>records</span></code></pre></div>
-<pre><code>               Accuracy Rate Error Rate AUC</code></pre>
-<p>tree NA NA NA pruned.tree NA NA NA k=10 kNN NA NA NA k=35 kNN NA NA NA full.randomForest NA NA NA small.randomForest NA NA NA</p>
+<p>So, we should actually remove the variables <code>residual.sugar</code> and <code>density</code>, as well as <code>total.sulfur.dioxide</code> because if its direct relationship with <code>free.sulfur.dioxide</code>, in order to address problems with multi-collinearity. We’re going to withhold removing <code>alcohol</code>, to see the if the initial effect of removing just these three correlated variables is enough to address the issue. Then we’ll show a new correlation matrix. See Figure @ref(fig:correlation-matrix2).</p>
+<div class="figure">
+<img src="wine-classification_files/figure-html/correlation-matrix2-1.png" alt="The correlation matrix without residual sugar, density, or total sulfur dioxide." width="672" />
+<p class="caption">
+The correlation matrix without residual sugar, density, or total sulfur dioxide.
+</p>
+</div>
+<p>From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multi-collinearity is no longer an issue.</p>
+<p>From here on out, we’re also going to want to convert the <code>quality</code> response variable into a binary factor so that we can use the predictors to classify the observations. We’re going to do this by labeling all of the observations that have received an above average (5 out of 10) as “good,” and the rest as “bad,” “bad” really meaning “not good.”</p>
+<p>It’s important to note that all of these numeric predictor variables (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>, <code>pH</code>, <code>sulphates</code>, <code>alcohol</code>) are not all scaled the same. As such, it’s appropriate to scale them before running any further analyses.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to circumvent the issue of scale() changing to a matrix</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>scale_this <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.vector</span>(<span class="fu">scale</span>(x))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># scaling the 8 numeric attributes</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white2 <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="sc">-</span>quality), <span class="at">.funs =</span> scale_this</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting quality into a binary factor</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(quality), <span class="sc">~</span> <span class="fu">ifelse</span>(quality <span class="sc">&gt;</span> <span class="dv">5</span>, <span class="at">yes =</span> <span class="st">&quot;good&quot;</span>, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">no =</span> <span class="st">&quot;bad&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(quality), <span class="sc">~</span> <span class="fu">factor</span>(quality, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>)))</span></code></pre></div>
+<p>Now we have 8 numeric predictor variables, and one two-level categorical variable (<code>quality</code>). We’re going to apply a few different classification methods in order to firstly determine which the best model for predicting is in terms of the relevant variables, and secondly to find the best classification algorithm for this data.</p>
 <p>In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(10) is loaded</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using a subset of 1000 obs for the training set</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>test_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(white_sc), <span class="dv">1000</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> white_sc[test_indices, ]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> white_sc[<span class="sc">-</span>test_indices, ]</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using a subset of 1000 obs for the training set</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>test_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(white_sc), <span class="dv">1000</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span> <span class="fu">slice</span>(test_indices)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="sc">-</span>test_indices)</span></code></pre></div>
 <div id="decision-tree" class="section level2">
 <h2>Decision Tree</h2>
-<p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data.</p>
+<p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data [tan_introduction_2019]. We’re going to build these models using the <code>rpart</code> package in R <span class="citation">(Therneau and Atkinson 2019)</span>.</p>
 <p>Of course, we’re going to use <code>quality</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(tree) is loaded</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting the quality (good vs bad)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">tree</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> ., <span class="at">data =</span> train,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;class&quot;</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">tree.control</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">nobs =</span> <span class="fu">nrow</span>(train),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mincut =</span> <span class="dv">5</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">minsize =</span> <span class="dv">10</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mindev =</span> .<span class="dv">003</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tree)</span></code></pre></div>
-<p>Classification tree: tree(formula = quality ~ ., data = train, control = tree.control(nobs = nrow(train), mincut = 5, minsize = 10, mindev = 0.003), method = “class”) Variables actually used in tree construction: [1] “alcohol” “volatile.acidity” “free.sulfur.dioxide” [4] “chlorides” “sulphates” “fixed.acidity”<br />
-[7] “citric.acid”<br />
-Number of terminal nodes: 16 Residual mean deviance: 0.9588 = 3722 / 3882 Misclassification error rate: 0.2324 = 906 / 3898</p>
-<p>So we can see from this summary, that in fact 6 out of the 8 predictors were used in constructing this tree: <code>alcohol</code>, <code>volatile.acidity</code>, <code>free.sulfur.dioxide</code>, <code>sulphates</code>, <code>citric.acid</code>, and <code>fixed.acidity</code>. Now we are actually going to plot the tree to visualize this.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree, <span class="at">type =</span> <span class="st">&quot;uniform&quot;</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tree, <span class="at">pretty =</span> <span class="dv">0</span>, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Classification Tree (Before Pruning)&quot;</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/plot%20decision%20tree-1.png" width="672" /></p>
-<p>We can see while looking at the tree how often <code>alcohol</code> appears and intuit from that that the amount of alcohol, whether high or low, plays at least some part in the model’s classification of a good wine.</p>
-<p>We can build a confusion matrix after using the data to predict on the test set, and then find the accuracy rate and the error rate.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a function that returns the accuracy of a confusion matrix</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>class_acc <span class="ot">&lt;-</span> <span class="cf">function</span>(conf) {</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">diag</span>(conf)) <span class="sc">/</span> <span class="fu">sum</span>(conf)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>tree_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>tree_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> tree_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>tree_conf</span></code></pre></div>
-<pre><code>  true</code></pre>
-<p>pred bad good bad 225 118 good 133 524</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the class_acc() function is defined locally</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>tree_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(tree_conf)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>tree_acc</span></code></pre></div>
-<p>[1] 0.749</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tree_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> tree_acc</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>tree_err</span></code></pre></div>
-<p>[1] 0.251</p>
-<p>With an accuracy rate of <code>0.748</code>, this decision tree model is not superb, but will still classify correctly about 3 out of 4 times.</p>
-<p>As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification).</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(ROCR) is loaded</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># getting matrix of predicted class probabilities</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>all_tree_probs <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;vector&quot;</span>))</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>tree_probs <span class="ot">&lt;-</span> all_tree_probs[, <span class="dv">2</span>]</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>tree_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(tree_probs, test<span class="sc">$</span>quality)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>tree_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the ROC curve for the decision tree</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree_roc_perf,</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>,</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;ROC Curve for tree (before pruning)&quot;</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20tree-1.png" width="672" /></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>tree_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tree_AUC <span class="ot">&lt;-</span> tree_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>tree_AUC</span></code></pre></div>
-<p>[1] 0.7885253</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adding to records matrix</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>records[<span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(tree_acc, tree_err, tree_AUC)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>records</span></code></pre></div>
-<pre><code>               Accuracy Rate Error Rate       AUC</code></pre>
-<p>tree 0.749 0.251 0.7885253 pruned.tree NA NA NA k=10 kNN NA NA NA k=35 kNN NA NA NA full.randomForest NA NA NA small.randomForest NA NA NA</p>
-<p>We see thusly that the area under the curve is <span class="math inline">\(0.788\)</span> which is slightly closer to 1 than 0.5. That is to say that it is more good than bad, but hardly so.</p>
-<div id="k-fold-cross-validation" class="section level3">
-<h3>k-fold Cross Validation</h3>
+<div id="repeated-k-fold-cross-validation-and-pruning" class="section level3">
+<h3>Repeated k-fold Cross Validation and Pruning</h3>
 <p>We can use k-fold cross-validation, which randomly partitions the dataset into folds of similar size, to see if the tree requires any pruning which can improve the model’s accuracy as well as make it more interpretable for us.</p>
-<p>In k-fold cross validation, we divide the sample into <code>k</code> sub samples, then train the model on <code>k -1</code> samples, leaving one as a holdout sample. We compute validation error on each of these samples, then average the validation error of all of them.</p>
+<p>In k-fold cross validation, we divide the sample into <code>k</code> sub samples, then train the model on <code>k-1</code> samples, leaving one as a holdout sample. We compute validation error on each of these samples, then average the validation error of all of them.</p>
 <p>The idea of cross-validation is that it will sample multiple times from the training set, with different separations. Ultimately, this creates a more robust model i.e. the tree will not be overfit.</p>
-<p>Cross validation will help us find the optimal size for the tree (in terms of number of nodes). We can plot the size against misclassification error to visualize this as well.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold CV (k = 10)</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># library(tree) is loaded</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>cv <span class="ot">&lt;-</span> <span class="fu">cv.tree</span>(tree, <span class="at">FUN =</span> prune.misclass, <span class="at">K =</span> <span class="dv">10</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>cv</span></code></pre></div>
-<p>$size [1] 16 11 8 7 6 5 4 3 1</p>
-<p>$dev [1] 1004 1004 1004 1013 1013 1007 997 1057 1205</p>
-<p>$k [1] -Inf 0.000000 1.333333 6.000000 7.000000 10.000000 40.000000 [8] 77.000000 116.000000</p>
-<p>$method [1] “misclass”</p>
-<p>attr(,“class”) [1] “prune” “tree.sequence”</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best size</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>best.cv <span class="ot">&lt;-</span> cv<span class="sc">$</span>size[<span class="fu">which.min</span>(cv<span class="sc">$</span>dev)]</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting misclass error as a function of tree size (k)</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv<span class="sc">$</span>size, cv<span class="sc">$</span>dev,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;b&quot;</span>,</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;Number of leaves, </span><span class="sc">\&#39;</span><span class="st">best</span><span class="sc">\&#39;</span><span class="st">&quot;</span>,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;Misclassification Error&quot;</span>,</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Optimal Tree Size&quot;</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> best.cv, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/cross%20validation%20of%20tree-1.png" width="672" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>best.cv</span></code></pre></div>
-<p>[1] 4</p>
-<p>So we see, after running cross-validation, we see that we should prune the tree so that it has only 7 nodes. With this knowledge we can prune the tree and run the same diagnostics on it that we did on the unpruned model to see if any improvements are apparent.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tree.pruned <span class="ot">&lt;-</span> <span class="fu">prune.tree</span>(tree,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">best =</span> best.cv,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;misclass&quot;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tree.pruned)</span></code></pre></div>
-<p>Classification tree: snip.tree(tree = tree, nodes = c(10L, 3L, 4L, 11L)) Variables actually used in tree construction: [1] “alcohol” “volatile.acidity” Number of terminal nodes: 4 Residual mean deviance: 1.054 = 4103 / 3894 Misclassification error rate: 0.2496 = 973 / 3898</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree.pruned, <span class="at">type =</span> <span class="st">&quot;uniform&quot;</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tree.pruned, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Pruned Classification Tree&quot;</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/pruning%20the%20tree-1.png" width="672" /></p>
-<p>Note that after pruning the tree, the only relevant variables used in tree construction are: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. And of course, this tree only has 7 nodes, the best tree size we determined from using cross-validation.</p>
-<p>Now we can apply the same diagnostic methods as before: looking at confusion matrix, accuracy/error rate, the ROC curve and the area underneath it, for the sake of comparison.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pruned_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree.pruned, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>pruned_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> pruned_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>pruned_conf</span></code></pre></div>
-<pre><code>  true</code></pre>
-<p>pred bad good bad 179 88 good 179 554</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pruned_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(tree_conf)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pruned_acc</span></code></pre></div>
-<p>[1] 0.749</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pruned_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> tree_acc</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>pruned_err</span></code></pre></div>
-<p>[1] 0.251</p>
-<p>We see that pruning the tree didn’t actually really improve the accuracy rate of the model at all, although it did condense the number of relevant variables. Initially, seeing that accuracy did not improve might give the impression that pruning was not meaningful, but to the contrary, the fact that we were able to prune the tree without losing any accuracy shows that the sole 3 variables we have remaining (<code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>) are just as good as classifying when using a decision tree as when using all 8 predictors.</p>
-<p>The original model being rather complex with as many as 6 predictors runs the risk of over-fitting, which is to say that the data follows the training data too closely and cannot be well generalized to new data. This is why we are inclined to favor a simpler model such as that we found after pruning with cross-validation.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ROC Curve with tree object</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># getting matrix of predicted class probabilities</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>all_pruned_probs <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(tree.pruned, test, <span class="at">type =</span> <span class="st">&quot;vector&quot;</span>))</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>pruned_probs <span class="ot">&lt;-</span> all_pruned_probs[, <span class="dv">2</span>]</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>pruned_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(pruned_probs, test<span class="sc">$</span>quality)</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>pruned_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pruned_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the ROC curve for the rpart decision tree</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pruned_roc_perf,</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>,</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;ROC Curve for Pruned tree&quot;</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/ROC%20curve%20of%20pruned%20tree%20and%20AUC-1.png" width="672" /></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pruned_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pruned_roc_pred, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>pruned_AUC <span class="ot">&lt;-</span> pruned_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>pruned_AUC</span></code></pre></div>
-<p>[1] 0.7604509</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>records[<span class="dv">2</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(pruned_acc, pruned_err, pruned_AUC)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>records</span></code></pre></div>
-<pre><code>               Accuracy Rate Error Rate       AUC</code></pre>
-<p>tree 0.749 0.251 0.7885253 pruned.tree 0.749 0.251 0.7604509 k=10 kNN NA NA NA k=35 kNN NA NA NA full.randomForest NA NA NA small.randomForest NA NA NA</p>
-<p>So while the accuracy and error rates are virtually unchanged, the area under the curve (AUC) has slightly decreased. It’s not a substantial decrease, but one could argue that it has overall made the model worse. Conversely it could be argued that the strength of the model is relatively preserved while reducing the number of variables included. This is good because it gives us a better idea of what the important variables are when it comes to classifying the wines.</p>
-<p>Now we have added both the original and the pruned tree’s respective error rates and AUC’s to the records matrix, and we can proceed to the next method of classification.</p>
+<p>We can further optimize and reduce overfitting by doing repeated k-fold cross validation which replicates the procedure multiple times and reports the mean performance across all folds and repeats. Overfitting refers to when a model is trained such that it can “predict” labels extremely well for the training data but very poorly for any data it hasn’t yet seen, such as a test set or even brand new data. There are two kinds of errors committed by a classification model: training errors and generalization errors <span class="citation">(Tan et al. 2019)</span>. The former refers to misclassification on the training data while the later refers to misclassification on unseen data (such as the test data). Ideally we would like to minimize both.</p>
+<p>Cross validation will help us find the optimal complexity value for the tree that yields the best accuracy while also being extremely robust. This method using the <code>caret</code> <span class="citation">(Kuhn 2020)</span> package finds the optimal complexity parameter (“<code>cp</code>”) for tuning and prunes the tree accordingly.</p>
+<p>Generally speaking, un-pruned decision trees that do not leverage cross-validation are prone to overfitting because they lack the element of randomness and also being overly complex. By building the model by using cross-validation to optimize the complexity parameter which determines the size of the tree, while also doing repeated random samples on the training data, we can end up with a simple, yet optimized tree that is robust and less prone to overfitting. See Figure @ref(fig:decision-tree-plot) for the decision tree plot.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(rpart) and library(caret) are loaded</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold cross validation repeated 3 times</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>caret_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">3</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Training the rpart decision tree based on the repeated cross-validation</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># library(e1071) is loaded</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>tree_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(quality <span class="sc">~</span> .,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> caret_control</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># storing final model</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> tree_cv<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="figure">
+<img src="wine-classification_files/figure-html/decision-tree-plot-1.png" alt="Decision tree built using rpart and 10-fold repeated cross-validation 3 times." width="672" />
+<p class="caption">
+Decision tree built using rpart and 10-fold repeated cross-validation 3 times.
+</p>
+</div>
+<p>We can see while looking at the tree how often <code>alcohol</code> appears and intuit from that that the amount of alcohol, whether high or low, plays at least some part in the model’s classification of a good wine. We also notice that the variables actually used in the construction of the tree were <code>alcohol</code>, <code>free.sulfur.dioxide</code>, and <code>volatile.acidity</code>. It’s notable that this decision tree doesn’t have many “leaves” because we used the optimal complexity parameter that came from the repeated cross-validation step.</p>
+<p>We can build a confusion matrix after using the data to predict on the test set, and then find the accuracy rate and the error rate. The confusion matrix is depicted as Table @ref(tab:tree-confusion-matrix).</p>
+<p>As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification). We can build the ROC curve and calculate the area underneath it using the <code>ROCR</code> package in R <span class="citation">(Sing et al. 2020)</span>.</p>
+<p>The Table @ref(tab:records-1) shows the accuracy and error rate as well as AUC for the decision tree model we have built. The ROC curve itself can be seen in Figure @ref(fig:tree-ROC-curve).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a function that returns the accuracy of a confusion matrix</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>class_acc <span class="ot">&lt;-</span> <span class="cf">function</span>(conf) {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">diag</span>(conf)) <span class="sc">/</span> <span class="fu">sum</span>(conf)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>tree_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>tree_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> tree_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># the class_acc() function is defined locally</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>tree_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(tree_conf)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>tree_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> tree_acc</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># library(ROCR is loaded)</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># getting matrix of predicted class probabilities</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>all_tree_probs <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>tree_probs <span class="ot">&lt;-</span> all_tree_probs[, <span class="dv">2</span>]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>tree_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(tree_probs, test<span class="sc">$</span>quality)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>tree_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>tree_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>tree_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(tree_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<table>
+<caption>Confusion matrix for decision tree.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">229</td>
+<td align="right">132</td>
+</tr>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">129</td>
+<td align="right">510</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="wine-classification_files/figure-html/tree-ROC-curve-1.png" alt="ROC curve of the decision tree model." width="672" />
+<p class="caption">
+ROC curve of the decision tree model.
+</p>
+</div>
+<table>
+<caption>Matrix with accuracy rates and AUCs for decision trees.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
+</tr>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p>With an accuracy rate of <code>0.739</code>, this decision tree model is not superb, but will still classify correctly about 3 out of 4 times. The area under the ROC curve is about 0.746, which is halfway between randomness (0) and a perfect model (1), showing a rather mediocre model. A perfect right angle in the upper left would indicate a perfect model and an AUC of 1, and a diagonal (as shown in the plot) depicts an AUC of 0.5, indicating an equal chance of a false positive and a true positive.</p>
+<p>Having appraised this decision tree model by its accuracy rate, error rate, and AUC, we can now we can proceed to the next method of classification.</p>
 </div>
 </div>
 <div id="k-nearest-neighbors-knn" class="section level2">
 <h2>k-Nearest Neighbors (kNN)</h2>
-<p>We’re now going to apply the k-nearest neighbors method of classification, which is a non-parametric method. k-Nearest neighbors (or kNN) is called a “lazy learning” technique because it goes through the training set every time it predicts a test sample’s quality. It finds this quality by plotting the test sample in the same dimensional space as the training data, then classifies it based on the “k nearest neighbor(s)”, i.e. if k = 10, then the quality of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation.</p>
-<p>Distance is measured in different ways, but by default the <code>knn()</code> function utilized Euclidean distance.</p>
+<p>We’re now going to apply the k-nearest neighbors method of classification, which is a non-parametric method. k-Nearest neighbors (or kNN) is called a “lazy learning” technique because it goes through the training set every time it predicts a test sample’s quality <span class="citation">(Tan et al. 2019)</span>. It finds this quality by plotting the test sample in the same dimensional space as the training data, then classifies it based on the “k nearest neighbor(s),” i.e. if k = 10, then the quality of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation. We’re going to fit this model using the <code>class</code> package in R <span class="citation">(Ripley 2020)</span>.</p>
+<p>Distance is measured in different ways, but by default the <code>knn()</code> function utilizes Euclidean distance.</p>
 <p>This is rather problematic because when calculating distance it’s assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes’ relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what’s more we scaled the remaining numeric predictors, which goes in a small way to addressing this.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(class) is loaded</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># using 20 nearest neighbors</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="cn">TRUE</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> knn_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>knn_conf</span></code></pre></div>
-<pre><code>  true</code></pre>
-<p>pred bad good bad 205 91 good 153 551</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(knn_conf)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>knn_acc</span></code></pre></div>
-<p>[1] 0.756</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> knn_acc</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>knn_err</span></code></pre></div>
-<p>[1] 0.244</p>
-<p>So, using 10 nearest neighbors was just a random estimate, and it ended up with another mediocre accuracy rate (<span class="math inline">\(0.765\)</span>) but we can look at the area under the ROC curve (AUC) and look at the strength of the test relative to the methods we have tried so far.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(dplyr) is loaded</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, <span class="dv">1</span> <span class="sc">-</span> knn_prob, knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(<span class="at">predictions =</span> knn_prob, <span class="at">labels =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the KNN ROC curve</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(knn_roc_perf,</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>,</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 10&quot;</span></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/ROC%20for%20knn-1.png" width="672" /></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>knn_AUC <span class="ot">&lt;-</span> knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>knn_AUC</span></code></pre></div>
-<p>[1] 0.6893241</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>records[<span class="dv">3</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(knn_acc, knn_err, knn_AUC)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>records</span></code></pre></div>
-<pre><code>               Accuracy Rate Error Rate       AUC</code></pre>
-<p>tree 0.749 0.251 0.7885253 pruned.tree 0.749 0.251 0.7604509 k=10 kNN 0.756 0.244 0.6893241 k=35 kNN NA NA NA full.randomForest NA NA NA small.randomForest NA NA NA</p>
-<p>So with an AUC of <span class="math inline">\(0.679\)</span>, this test is not very good. We can look at different values for <span class="math inline">\(k\)</span> and try to find the best one to use and then compare the results from that with these.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library &#39;class&#39; is loaded</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>range <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>knn_accs <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(range))</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Determining the best k for k-nearest neighbors classification</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> range) {</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> k, <span class="at">prob =</span> <span class="cn">TRUE</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> knn_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  knn_accs[k] <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(knn_conf)</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting k vs accuracy</span></span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(range, knn_accs,</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;k&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;accuracy&quot;</span>,</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;Number of Neighbors (k) vs Test Accuracy&quot;</span></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/plotting%20k%20vs%20accs-1.png" width="672" /></p>
-<p>This is interesting because accuracy seems to follow a slight negative trend but overall there are huge jumps in accuracy when incrementing only by 1. We know well that using <span class="math inline">\(k=1\)</span> will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
-<p>Here is the ROC curve demonstrating this.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>worst_knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>,</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob =</span> <span class="cn">TRUE</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>worst_knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(worst_knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>worst_knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(worst_knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, <span class="dv">1</span> <span class="sc">-</span> worst_knn_prob, worst_knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>worst_knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">predictions =</span> worst_knn_prob,</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> test<span class="sc">$</span>quality</span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>worst_knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(worst_knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the KNN ROC curve</span></span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(worst_knn_roc_perf,</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>,</span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 1&quot;</span></span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/worst%20kNN%20k%20=%201-1.png" width="672" /></p>
-<p>So we think better not to opt for <span class="math inline">\(k=1\)</span> and rather choose some <span class="math inline">\(k\)</span> like 35, which is still decently accurate, and probably less biased.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(knn) is loaded</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>new_knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">35</span>,</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob =</span> <span class="cn">TRUE</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>new_knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> new_knn_pred)</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>new_knn_conf</span></code></pre></div>
-<pre><code>  pred</code></pre>
-<p>true bad good bad 197 161 good 84 558</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy rate</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>new_knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(new_knn_conf)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>new_knn_acc</span></code></pre></div>
-<p>[1] 0.755</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error rate</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>new_knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> new_knn_acc</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>new_knn_err</span></code></pre></div>
-<p>[1] 0.245</p>
-<p>Using <span class="math inline">\(k=35\)</span> gives a slight increase in test accuracy relative to <span class="math inline">\(k=10\)</span>, although it is not very significant. Now let’s look at the ROC curve and the AUC to make our final comparison, both with the <span class="math inline">\(k=10\)</span> model, and the decision trees.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(dplyr) is loaded</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(new_knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(new_knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, <span class="dv">1</span> <span class="sc">-</span> new_knn_prob, new_knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>new_knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">predictions =</span> new_knn_prob,</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> test<span class="sc">$</span>quality</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>new_knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the KNN ROC curve</span></span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(new_knn_roc_perf,</span>
-<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>,</span>
-<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;ROC Curve for kNN, k = 35&quot;</span></span>
-<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/ROC%20for%20knn%20k=35-1.png" width="672" /></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>new_knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>new_knn_AUC <span class="ot">&lt;-</span> new_knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>new_knn_AUC</span></code></pre></div>
-<p>[1] 0.7414004</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>records[<span class="dv">4</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(new_knn_acc, new_knn_err, new_knn_AUC)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>records</span></code></pre></div>
-<pre><code>               Accuracy Rate Error Rate       AUC</code></pre>
-<p>tree 0.749 0.251 0.7885253 pruned.tree 0.749 0.251 0.7604509 k=10 kNN 0.756 0.244 0.6893241 k=35 kNN 0.755 0.245 0.7414004 full.randomForest NA NA NA small.randomForest NA NA NA</p>
-<p>So we see that although we have sacrified some accuracy, the area under the curve has increased somewhat, so it could be argued that the test has improved. What’s more, with a dataset of this dimensionality, it is most likely better to use more neighbors if one can, because otherwise you run the risk of overfitting to the training data (which is why we did not opt for <span class="math inline">\(k=1\)</span>.)</p>
-<p>So we see actually that while kNN is slightly more accurate than decision trees, the area under the ROC curve is worsened which makes it a worse test. Also, kNN is computationally rather expensive and it gets to be very complex when dealing with datasets with high dimensions (this dataset has nearly 5000 rows), so we think to rule out k-nearest neighbors when deciding what the best method of classification is.</p>
-<p>Finally we can move on to the final method of classification, randomForest.</p>
+<p>We’ll build a preliminary model using k = 10, calculate the accuracy and error rates as well as the AUC, and compare them with the previous model we build using decision trees. The confusion matrix for the model is in Table @ref(tab:knn-confusion-matrix). The comparison between this model and the decision tree model can be seen in Table @ref(tab:records-2). The ROC curve itself can be seen in Figure @ref(fig:knn-roc-curve).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(class) is loaded</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using 10 nearest neighbors</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">10</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob =</span> T</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> knn_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(knn_conf)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> knn_acc</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, <span class="dv">1</span> <span class="sc">-</span> knn_prob, knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(<span class="at">predictions =</span> knn_prob, <span class="at">labels =</span> test<span class="sc">$</span>quality)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<table>
+<caption>Confusion matrix for 10-nearest neighbors model.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">205</td>
+<td align="right">91</td>
+</tr>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">153</td>
+<td align="right">551</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Matrix with accuracy rates and AUCs for decision trees and k-nearest neighbors.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
+</tr>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
+</tr>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="wine-classification_files/figure-html/knn-roc-curve-1.png" alt="ROC curve of the k-nearest neighbors model where k=10." width="672" />
+<p class="caption">
+ROC curve of the k-nearest neighbors model where k=10.
+</p>
 </div>
-<div id="randomforest" class="section level2">
-<h2>randomForest</h2>
-<p>randomForest is similar to the decision tree method in that it builds trees, hence the name ‘random Forest’. This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that randomForest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random Forest</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using all 8 predictor attributes, on the training set</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> .,</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">8</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rf)</span></code></pre></div>
-<p>Call: randomForest(formula = quality ~ ., data = train, mtry = 8) Type of random forest: classification Number of trees: 500 No. of variables tried at each split: 8</p>
-<pre><code>    OOB estimate of  error rate: 16.96%</code></pre>
-<p>Confusion matrix: bad good class.error bad 896 386 0.3010920 good 275 2341 0.1051223</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf, <span class="at">main =</span> <span class="st">&quot;Variable Importance Plot&quot;</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/create%20randomForest-1.png" width="672" /></p>
-<p><code>meanDecreaseGini</code> refers to the “mean decrease in node impurity”. Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself.</p>
-<p>randomForest used all 8 of the predictor variables. This variable importance plot shows how ‘important’ each variable was in determining the classification. We can see that, consistent with the pruned decision tree, that <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code> are the three most important predictors.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>rf_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> rf_pred)</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>rf_conf</span></code></pre></div>
-<pre><code>  pred</code></pre>
-<p>true bad good bad 251 107 good 67 575</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>rf_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>rf_acc</span></code></pre></div>
-<p>[1] 0.826</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>rf_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>rf_err</span></code></pre></div>
-<p>[1] 0.174</p>
-<p>With an accuracy rate of <code>0.823</code>, this randomForest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far.</p>
-<p>Let’s take a look at the ROC curve and the area underneath it.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>rf_pred_probs <span class="ot">&lt;-</span> rf_pred[, <span class="dv">2</span>]</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>rf_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs, test<span class="sc">$</span>quality)</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>rf_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred,</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the curve</span></span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf_perf,</span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>,</span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;ROC Curve for randomForest with 8 variables&quot;</span></span>
-<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/ROC%20for%20randomForest-1.png" width="672" /></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>rf_AUC <span class="ot">&lt;-</span> rf_perf2<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>rf_AUC</span></code></pre></div>
-<p>[1] 0.8891906</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>records[<span class="dv">5</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(rf_acc, rf_err, rf_AUC)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>records</span></code></pre></div>
-<pre><code>               Accuracy Rate Error Rate       AUC</code></pre>
-<p>tree 0.749 0.251 0.7885253 pruned.tree 0.749 0.251 0.7604509 k=10 kNN 0.756 0.244 0.6893241 k=35 kNN 0.755 0.245 0.7414004 full.randomForest 0.826 0.174 0.8891906 small.randomForest NA NA NA</p>
-<p>The area under the ROC curve for randomForest is <code>0.887</code>, which is also a strong AUC for a classification model.</p>
-<p>So we see actually that randomForest stands head and shoulders above the other two methods, decision tree and k-nearest neighbors. This is seen in the fact that the accuracy rate, as well as the AUC, are the highest. Judging from this, we can assume that randomForest would be the most likely to correctly classify a wine based off of the attributes and data given.</p>
-<p>Recall that earlier we determined in the decision tree that the relevant variables were: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. While this randomForest model was pretty effective in utilizing all of the 8 predictors, we can take a look at a model using only these 3 as well for the sake of comparison.</p>
-<p>We have established by now that simpler models have a reduced bias and complexity, but higher variance and a higher chance of underfitting, whereas complex models (such as the full model) have the opposite issue. The good thing about randomForest is that it inherently accounts for this “Bias-Variance” tradeoff by introducing randomness with bagging (bootstrap aggregating).</p>
-<p>The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>rf2 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> alcohol <span class="sc">+</span> volatile.acidity <span class="sc">+</span> free.sulfur.dioxide,</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">3</span></span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>rf_conf2 <span class="ot">&lt;-</span> <span class="fu">table</span>(test<span class="sc">$</span>quality, rf_pred2)</span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>rf_conf2</span></code></pre></div>
-<pre><code>  rf_pred2
-   bad good</code></pre>
-<p>bad 232 126 good 71 571</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>rf_acc2 <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf2)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>rf_acc2</span></code></pre></div>
-<p>[1] 0.803</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>rf_err2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc2</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>rf_err2</span></code></pre></div>
-<p>[1] 0.197</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>rf_pred_probs2 <span class="ot">&lt;-</span> rf_pred2[, <span class="dv">2</span>]</span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>rf_roc_pred2 <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs2, test<span class="sc">$</span>quality)</span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2,</span>
-<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
-<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
-<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the curve</span></span>
-<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf_perf2,</span>
-<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>,</span>
-<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;ROC Curve for randomForest with 3 variables&quot;</span></span>
-<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="wine-classification_files/figure-html/smaller%20randomForest%20with%20ROC%20and%20AUC-1.png" width="672" /></p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>rf_perf22 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>rf_AUC2 <span class="ot">&lt;-</span> rf_perf22<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>rf_AUC2</span></code></pre></div>
-<p>[1] 0.8515354</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>records[<span class="dv">6</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(rf_acc2, rf_err2, rf_AUC2)</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>records</span></code></pre></div>
-<pre><code>               Accuracy Rate Error Rate       AUC</code></pre>
-<p>tree 0.749 0.251 0.7885253 pruned.tree 0.749 0.251 0.7604509 k=10 kNN 0.756 0.244 0.6893241 k=35 kNN 0.755 0.245 0.7414004 full.randomForest 0.826 0.174 0.8891906 small.randomForest 0.803 0.197 0.8515354</p>
-<p>The accuracy rate has actually decreased, as well as the area under the curve, but not significantly. We’re managed to actually preserve the strength of the model, both in relation to the tree and knn methods, but also relative to the original application of randomForest with all of the predictors.</p>
-<p>As such, we can opt to utilize this much smaller model for classification instead if we are concerned about complexity and bias. Having said that, because of the randomization introduced in the randomForest, it is inherently more robust so subsetting in this manner may even be unnecessary.</p>
+<p>So with k=10, the k-nearest neighbors model ended up with another mediocre accuracy rate (0.756). So with an AUC of 0.715, this test is not very good, but performed similarly to that of the decision tree model. We can look at different values for k and try to find the best one to use and then compare the results from that with these. Figure @ref(fig:finding-best-k) depicts this as a scatterplot of k against accuracy.</p>
+<div class="figure">
+<img src="wine-classification_files/figure-html/finding-best-k-1.png" alt="Testing various values of k with the k-nearest neighbors algorithm, and comparing accuracies." width="672" />
+<p class="caption">
+Testing various values of k with the k-nearest neighbors algorithm, and comparing accuracies.
+</p>
+</div>
+<p>This is interesting because accuracy seems to increase gradually, hit a peak, decrease again and slightly increase. We know well that using k = 1 will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
+<p>Figure @ref(fig:worst-knn) demonstrates this.</p>
+<div class="figure">
+<img src="wine-classification_files/figure-html/worst-knn-1.png" alt="ROC curve for k-nearest neighbors model where k=1" width="672" />
+<p class="caption">
+ROC curve for k-nearest neighbors model where k=1
+</p>
+</div>
+<p>Note that the AUC is 0.5, which is the worst possible result since it is randomly guessing (it has the same chance of a true positive as it does a false positive). So we think better not to opt for k = 1 and rather choose some k like 35, which is still decently accurate, and probably less biased. The confusion matrix for the k = 35 model can be seen in Table @ref(tab:knn-35-confusion-matrix). As with the prior models we’ll calculate the accuracy and error rate as well as the AUC, and plot the ROC curve, which can be seen in Figure @ref(fig:knn35).</p>
+<p>The comparison of accuracy rates, error rates, and AUCs is seen in Table @ref(tab:records-2).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(knn) is loaded</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>new_knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">35</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob =</span> T</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>new_knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> new_knn_pred)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy rate</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>new_knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(new_knn_conf)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error rate</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>new_knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> new_knn_acc</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># library(dplyr) is loaded</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(new_knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(new_knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                           <span class="dv">1</span> <span class="sc">-</span> new_knn_prob, new_knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>new_knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">predictions =</span> new_knn_prob,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> test<span class="sc">$</span>quality</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>new_knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, </span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                                <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                                <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>new_knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>new_knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(new_knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<table>
+<caption>Confusion matrix for 35-nearest neighbors model.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">197</td>
+<td align="right">161</td>
+</tr>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">84</td>
+<td align="right">558</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="wine-classification_files/figure-html/knn35-1.png" alt="ROC curve for k-nearest neighbors model where k=35" width="672" />
+<p class="caption">
+ROC curve for k-nearest neighbors model where k=35
+</p>
+</div>
+<table>
+<caption>Matrix comparing the accuracy rate, error rate, and AUC for the decision tree model, the 10-nearest neighbors model, and the 35-nearest neighbors model.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
+</tr>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
+</tr>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
+</tr>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p>Looking at the comparison between the models in Table @ref(tab:records-3), the area under the curve has increased somewhat while the accuracy has scarcely changed at all, so it could be argued that the test has improved. What’s more, with a dataset of this dimensionality, it is most likely better to use more neighbors if one can, because otherwise you run the risk of overfitting to the training data (which is why we did not opt for k=1.)</p>
+<p>So far when compared to the cross-validated decision tree, k-nearest neighbors (kNN) seems to be performing similarly in both accuracy and AUC, so it’s difficult to decide between them. It’s important to note that kNN is computationally rather expensive and it gets to be very complex when dealing with datasets with high dimensions (this dataset has nearly 5000 rows), so we think to rule out k-nearest neighbors when deciding what the best method of classification is, at least in comparison to decision trees.</p>
+<p>Finally we can move on to the final method of classification, random forest.</p>
+</div>
+<div id="random-forest" class="section level2">
+<h2>Random Forest</h2>
+<p>Random forest is similar to the decision tree method in that it builds trees, hence the name ‘random forest.’ This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that random forest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
+<p>As we did with the other models, we’ll calculate the accuracy rate, error rate, and AUC for this random forest model using all of the predictors. These metrics as well as the comparison between this model and the other models can be seen in Table @ref(tab:records-4). The actual ROC curve is in Figure @ref(fig:full-rf-roc). The confusion matrix is in Table @ref(tab:rf-confmat). This random forest model will be built by using the <code>randomForest</code> package in R <span class="citation">(Breiman et al. 2018)</span>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random Forest</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using all 8 predictor attributes, on the training set</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> .,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">8</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>rf_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> rf_pred)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>rf_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>rf_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>rf_pred_probs <span class="ot">&lt;-</span> rf_pred[, <span class="dv">2</span>]</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>rf_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs, test<span class="sc">$</span>quality)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>rf_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>rf_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf2<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<table>
+<caption>Confusion matrix for full random forest model.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">253</td>
+<td align="right">105</td>
+</tr>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">66</td>
+<td align="right">576</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="wine-classification_files/figure-html/full-rf-roc-1.png" alt="ROC Curve for full random forest with 8 variables." width="672" />
+<p class="caption">
+ROC Curve for full random forest with 8 variables.
+</p>
+</div>
+<table>
+<caption>Matrix comparing the accuracy rate, error rate, and AUC for the decision tre model, the 10-nearest neighbors model, the 35-nearest neighbors model, and the full random forest.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
+</tr>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
+</tr>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
+</tr>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">0.829</td>
+<td align="right">0.171</td>
+<td align="right">0.890</td>
+</tr>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p>With an accuracy rate of 0.829, this random forest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far. The area under the ROC curve for random forest is 0.892, which is also a strong AUC for a classification model and far above the competing models.</p>
+<p>So we see actually that random forest stands head and shoulders above the other two methods, decision tree and k-nearest neighbors. This is seen in the fact that the accuracy rate, as well as the AUC, are the highest. Judging from this, we can assume that random forest would be the most likely to correctly classify a wine based off of the attributes and data given.</p>
+<div id="a-smaller-random-forest-model" class="section level3">
+<h3>A smaller Random Forest model</h3>
+<p>We can look at a variable importance plot (See Figure @ref(fig:varImpPlot)) to see how the variables measure up against each other in terms of how relevant they are to the classification.</p>
+<div class="figure">
+<img src="wine-classification_files/figure-html/varImpPlot-1.png" alt="Variable Importance Plot comparing the Gini impurity index" width="672" />
+<p class="caption">
+Variable Importance Plot comparing the Gini impurity index
+</p>
+</div>
+<p><code>meanDecreaseGini</code> refers to the “mean decrease in node impurity.” Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself.</p>
+<p>This random forest model used all 8 of the predictor variables. This variable importance plot shows how ‘important’ each variable was in determining the classification. We can see that, consistent with the decision tree, that <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code> are the three most important predictors. While this random forest model was pretty effective in utilizing all of the 8 predictors, we can take a look at a model using only these 3 as well for the sake of comparison.</p>
+<p>We have established by now that simpler models have a reduced bias and complexity, but higher variance and a higher chance of under-fitting, whereas complex models (such as the full model) have the opposite issue. The good thing about random forest is that it inherently accounts for this “Bias-Variance” trade-off by introducing randomness with bagging (bootstrap aggregating).</p>
+<p>The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out. This comparison with the prior models can be seen in Table @ref(tab:records-5). The ROC curve for this model is depicted in Figure @ref(fig:partial-rf-roc) and the confusion matrix in Table @ref(tab:partial-rf-confmat).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rf2 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> alcohol <span class="sc">+</span> volatile.acidity <span class="sc">+</span> free.sulfur.dioxide,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">3</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>rf_conf2 <span class="ot">&lt;-</span> <span class="fu">table</span>(test<span class="sc">$</span>quality, rf_pred2)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>rf_acc2 <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf2)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>rf_err2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc2</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>rf_pred_probs2 <span class="ot">&lt;-</span> rf_pred2[, <span class="dv">2</span>]</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>rf_roc_pred2 <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs2, test<span class="sc">$</span>quality)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>rf_perf22 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>rf_auc2 <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf22<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<table>
+<caption>Confusion matrix for smaller random forest model.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">228</td>
+<td align="right">130</td>
+</tr>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">72</td>
+<td align="right">570</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="wine-classification_files/figure-html/partial-rf-roc-1.png" alt="ROC curve for the random forest model using predictors 'free sulfur dioxide', 'volatile acidity', and 'alcohol'." width="672" />
+<p class="caption">
+ROC curve for the random forest model using predictors ‘free sulfur dioxide,’ ‘volatile acidity,’ and ‘alcohol.’
+</p>
+</div>
+<table>
+<caption>The final matrix comparing the accuracy rates, error rates, and AUCs for all of the models.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
+</tr>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
+</tr>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
+</tr>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">0.829</td>
+<td align="right">0.171</td>
+<td align="right">0.890</td>
+</tr>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">0.798</td>
+<td align="right">0.202</td>
+<td align="right">0.854</td>
+</tr>
+</tbody>
+</table>
+<p>The accuracy rate has actually decreased from 0.829 to 0.798, as well as the area under the curve from 0.892 to 0.854, but the model remains relatively strong, at least compared to the others. We’re managed to actually preserve the strength of the model, both in relation to the tree and k-nearest neighbor methods, but also relative to the original application of random forest with all of the predictors.</p>
+<p>As such, we can opt to utilize this much smaller model for classification instead if we are concerned about complexity and bias. Having said that, because of the randomization introduced in the random forest, it is inherently more robust so sub-setting in this manner may not even be unnecessary.</p>
 </div>
 </div>
-<div id="conclusion" class="section level1">
-<h1>Conclusion</h1>
-<p>So judging from all of our findings, we have seen that in this case, randomForest is the best algorithm (out of the three we’ve compared) for classifying this wine dataset. So we have answered the question of what among these three classification algorithms is truly the best.</p>
-<p>The decision tree algorithm is useful but ultimately, randomForest is superior version of it since it aggregates many decision trees to create an optimized model that is not susceptible to overfitting. When it comes to interpretability however, a decision tree is preferred. When using a decision tree however it is important to use cross-validation to prune the tree in order to narrow it down to the most important variables.</p>
-<p>Compared to decision trees, the k-nearest neighbor algorithm has a slightly greater accuracy rate but a worse AUC. The decision tree method did however help to narrow down the three most relevant attributes: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. This finding was consistent with when we took a look at the most important variables in the randomForest model.</p>
-<p>We were able to apply this subset of attributes to the randomForest algorithm and come out with a strong model that only utilizes a few independent variables in order to classify at a high success rate. This lends strength to the argument that these three variables are the most relevant when it comes to determining the content of a good wine.</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p>Now that we have accuracy and AUC metrics for all of the models, we can compare them on a plot to judge which is the best model. See Figure @ref(fig:final-comparison).</p>
+<div class="figure">
+<img src="wine-classification_files/figure-html/final-comparison-1.png" alt="Scatterplot comparing AUC and Accuracy Rate of all models." width="960" />
+<p class="caption">
+Scatterplot comparing AUC and Accuracy Rate of all models.
+</p>
+</div>
+<p>Looking at this plot of accuracy rate against AUC, it’s quite clear that the largest random forest model is the best one, even after downsizing the model to a subset of the predictors. With that said, the smaller random forest model still comes out much stronger than the competition in comparison.</p>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>So judging from all of our findings, we have seen that in this case, random forest is the best algorithm (out of the three we’ve compared) for classifying this wine dataset. So we have answered the question of what among these three classification algorithms is truly the best.</p>
+<p>The decision tree algorithm is useful but ultimately, random forest is superior version of it since it aggregates many decision trees to create an optimized model that is not susceptible to overfitting. When it comes to interpretability however, a decision tree is preferred. When using a decision tree however it is important to use cross-validation (ideally repeatedly) to ensure the tree does not overfit while retaining interpretability.</p>
+<p>Compared to decision trees, the k-nearest neighbor algorithm has a slightly greater accuracy rate but a worse AUC. The decision tree method did however help to narrow down the three most relevant attributes: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. This finding was consistent with when we took a look at the most important variables in the random forest model.</p>
+<p>We were able to apply this subset of attributes to the random forest algorithm and come out with a strong model that only utilizes a few independent variables in order to classify at a high success rate. This lends strength to the argument that these three variables are the most relevant when it comes to determining the content of a good wine.</p>
 <p>As far as what these variables’ importance is in reality, is that sulfur dioxide is crucial for killing bacteria in wine when creating it. On the other hand, volatile acidity is an undesired trait in wine that affects flavor, that can be caused by such bacteria. So it makes sense that wine that is high in sulfur dioxide, and low in volatile acidity, is considered good.</p>
 <p>The pending questions that remain are, did we overfit or underfit to the training data when testing these different classification methods? It is also worth determining exactly the threshold for the amounts of these variables such as <code>alcohol</code>, for example finding the optimal amount of alcohol content to create a good wine.</p>
-<p>We would also like to delve more into how best to select some <span class="math inline">\(k\)</span> for kNN that maintains a high level of accuracy while also having a balance between bias and variance without either over or underfitting. We would also posit a similar question for the number of nodes in a decision tree. Finally, is dropping variables in randomForest really necessary, if the randomization inherent in it already accounts for overfitting?</p>
-<p>If we can only compare models that utilize the same set of predictors, then we should look at the pruned classification tree against the randomForest model utilizing the same attributes. We see even there that the randomForest model is superior.</p>
-<p>In conclusion we have found that randomForest is best for binary classification and that alcohol, volatile acidity, and free sulfur dioxide are the most important predictors when attempting to classify a good wine.</p>
+<p>We would also like to delve more into how best to select some k for kNN that maintains a high level of accuracy while also having a balance between bias and variance without either over or underfitting. We would also posit a similar question for the number of nodes in a decision tree. Finally, is dropping variables in random forest really necessary, if the randomization inherent in it already accounts for overfitting?</p>
+<p>If we can only compare models that utilize the same set of predictors, then we should look at the pruned classification tree against the random forest model utilizing the same attributes. We see even there that the random forest model is superior.</p>
+<p>In conclusion we have found that random forest is best for binary classification and that alcohol, volatile acidity, and free sulfur dioxide are the most important predictors when attempting to classify a good wine.</p>
 <div style="page-break-after: always;"></div>
 </div>
-<div id="references" class="section level1">
-<h1>References</h1>
-<p>Tan, Pang-Ning, Michael Steinbach, and Vipin Kumar. Introduction To Data Mining. 1st ed. Addison Wesley: Pearson, 2005. Print.</p>
-<p>R Core Team (2017). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
-<p>RStudio Team (2016). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL <a href="http://www.rstudio.com/" class="uri">http://www.rstudio.com/</a>.</p>
-<p>Lichman, M. (2013). UCI Machine Learning Repository [<a href="http://archive.ics.uci.edu/ml" class="uri">http://archive.ics.uci.edu/ml</a>]. Irvine, CA: University of California, School of Information and Computer Science.</p>
-<p>Forina, M. et al, PARVUS - An Extendible Package for Data Exploration, Classification and Correlation. Institute of Pharmaceutical and Food Analysis and Technologies, Via Brigata Salerno, 16147 Genoa, Italy.</p>
-<p>Venables, W. N. &amp; Ripley, B. D. (2002) Modern Applied Statistics with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0</p>
-<p>Sing T, Sander O, Beerenwinkel N and Lengauer T (2005). “ROCR: visualizing classifier performance in R.” <em>Bioinformatics</em>, <em>21</em>(20), pp. 7881. &lt;URL: <a href="http://rocr.bioinf.mpi-sb.mpg.de" class="uri">http://rocr.bioinf.mpi-sb.mpg.de</a>&gt;.</p>
-<p>A. Liaw and M. Wiener (2002). Classification and Regression by randomForest. R News 2(3), 18–22.</p>
-<p>Brian Ripley (2016). tree: Classification and Regression Trees. R package version 1.0-37. <a href="https://CRAN.R-project.org/package=tree" class="uri">https://CRAN.R-project.org/package=tree</a></p>
-<p>Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a></p>
-<p>Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL <a href="http://www.jstatsoft.org/v40/i01/" class="uri">http://www.jstatsoft.org/v40/i01/</a>.</p>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-randomForest" class="csl-entry">
+Breiman, Leo, Adele Cutler, Andy Liaw, and Matthew Wiener. 2018. <em>randomForest: Breiman and Cutler’s Random Forests for Classification and Regression</em>. <a href="https://www.stat.berkeley.edu/ breiman/RandomForests/">https://www.stat.berkeley.edu/ breiman/RandomForests/</a>.
+</div>
+<div id="ref-R-caret" class="csl-entry">
+Kuhn, Max. 2020. <em>Caret: Classification and Regression Training</em>. <a href="https://github.com/topepo/caret/">https://github.com/topepo/caret/</a>.
+</div>
+<div id="ref-R-class" class="csl-entry">
+Ripley, Brian. 2020. <em>Class: Functions for Classification</em>. <a href="http://www.stats.ox.ac.uk/pub/MASS4/">http://www.stats.ox.ac.uk/pub/MASS4/</a>.
+</div>
+<div id="ref-R-ROCR" class="csl-entry">
+Sing, Tobias, Oliver Sander, Niko Beerenwinkel, and Thomas Lengauer. 2020. <em>ROCR: Visualizing the Performance of Scoring Classifiers</em>. <a href="http://ipa-tys.github.io/ROCR/">http://ipa-tys.github.io/ROCR/</a>.
+</div>
+<div id="ref-tan_introduction_2019" class="csl-entry">
+Tan, Pang-Ning, Michael Steinbach, Anuj Karpatne, and Vipin Kumar. 2019. <em>Introduction to Data Mining</em>. Second edition. NY NY: Pearson.
+</div>
+<div id="ref-R-rpart" class="csl-entry">
+Therneau, Terry, and Beth Atkinson. 2019. <em>Rpart: Recursive Partitioning and Regression Trees</em>. <a href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.
+</div>
+<div id="ref-noauthor_uci_nodate" class="csl-entry">
+<span>“<span>UCI</span> <span>Machine</span> <span>Learning</span> <span>Repository</span>.”</span> n.d. Accessed November 1, 2020. <a href="https://archive.ics.uci.edu/ml/index.php">https://archive.ics.uci.edu/ml/index.php</a>.
+</div>
+</div>
 </div>
 
 
@@ -1213,7 +1224,7 @@ Number of terminal nodes: 16 Residual mean deviance: 0.9588 = 3722 / 3882 Miscla
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
