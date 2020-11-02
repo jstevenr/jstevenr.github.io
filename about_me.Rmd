@@ -59,7 +59,8 @@ In my free time, I am an avid gamer and I study languages, particularly Spanish 
 
 * **Technical**
     + R, Python, SQL
-    + Linux, Git, Bash
+    + Linux, Bash Shell
+    + Git
     + Power BI, Tableau, SAP Analytics Cloud
 * **Languages**
     + Spanish (B1), Portuguese (B1)
