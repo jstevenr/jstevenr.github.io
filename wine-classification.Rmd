@@ -697,7 +697,7 @@ As such, we can opt to utilize this much smaller model for classification instea
 
 Now that we have accuracy and AUC metrics for all of the models, we can compare them on a plot to judge which is the best model. See Figure \@ref(fig:final-comparison).
 
-```{r final-comparison, fig.cap = "Scatterplot comparing AUC and Accuracy Rate of all models.", fig.width = 10, echo = FALSE}
+```{r final-comparison, fig.cap = "Scatterplot comparing AUC and Accuracy Rate of all models.", fig.width = 7, echo = FALSE}
 # Converting records matrix into a data.frame
 # dplyr is loaded
 records_df <- as.data.frame(records)
