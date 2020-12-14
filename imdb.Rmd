@@ -23,7 +23,9 @@ navbar:
         - text: "Visualizing IMDB ratings"
           href: imdb.html
         - text: "Predicting housing prices in Boston"
-          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb        
+          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb  
+        - text: "Play Gomoku using Shiny"
+          href: https://pinchunchen.shinyapps.io/ggomoku/      
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
