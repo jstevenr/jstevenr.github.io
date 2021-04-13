@@ -70,7 +70,7 @@ In my free time, I am an avid gamer and I study both the Spanish and Portuguese 
 
 ## Work Experience
 
-* **Data Analyst**, [Saalex Solutions, Inc.](https://saalex.com), Sep 2018 - Sep 2020
+* **Data Analyst**, [Valeo Networks](https://valeonetworks.com), Sep 2018 - Sep 2020
     + Creating data visualizations and dashboards with business intelligence software to track key performance indicators and inform decision-making for the company and external clients.
     + Assisting with identifying government contracts pertaining to data analytics.
     + Building predictive models with machine learning algorithms. 
