@@ -36,9 +36,11 @@ navbar:
       
 ---
 
-<center><img src="images/circle_photo.png" width="300px" height="275px"></center>
 
 ----
+
+<center><img src="images/circle_photo.png" width="300px" height="275px"></center>
+
 
 # Welcome!
 
