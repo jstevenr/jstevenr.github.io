@@ -36,7 +36,7 @@ navbar:
       
 ---
 
-<center><img src="images/banner-beach.png" width="645px"></center>
+<center><img src="images/circle_photo.png" width="300px" height="275px"></center>
 
 ----
 
