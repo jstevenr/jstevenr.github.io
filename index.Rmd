@@ -18,10 +18,10 @@ navbar:
           href: wine-classification.html
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
-        - text: "Visualizing IMDB ratings"
-          href: imdb.html
-        - text: "Predicting housing prices in Boston"
+        - text: "Predicting housing prices"
           href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
+        - text: "Sexual network exponential random graph modeling"
+          href: ergm_models.html
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
@@ -39,45 +39,36 @@ navbar:
 
 ----
 
-<center><img src="images/circle_photo.png" width="300px" height="275px"></center>
-
-
 # Welcome!
 
 Thanks for visiting my personal website. I'm J Steven Raquel and am pursuing a Master of Science in Statistics at the University of California, Irvine.
 
 Find out more about [who I am and what I've done](about_me.html).
 
-If you know anything about data science, statistics, machine learning, artificial intelligence, or computer science, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header. 
+If you know anything about statistics, biostatistics, machine learning, epidemiology, or public health, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header. 
 
 ----
 
 ## Projects  
 
-These are some of the projects I've worked on throughout my time studying data science, and I am constantly learning and adding things to my repertoire.
+These are some of the projects I've worked on throughout my time studying statistics, and I am constantly learning and adding things to my repertoire.
+
+* #### [Exponential random graph modeling (ERGM) for a sexual social network](ergm_models.html)
+
+This paper was written for Sociology 280 and uses exponential random graph modeling to model (and simulate) the ties of a sexual social network in an indigenous community in Alberta, Canada, in which a gonorrhea outbreak had occurred. 
 
 
-### Machine Learning
+* #### [Classification algorithm comparison for wine quality](wine-classification.html)
 
-* #### [Classifying wine quality](wine-classification.html)
-
-For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms using R to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.
+For my final project for Statistics 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms using R to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.
 
 * #### [Predicting housing prices in Boston](https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb)
 
 This project utilizes various regression algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a regression model using various attributes of the housing market in Boston. 
 
-### Time Series Forecasting
-
-* #### [Forecasting bitcoin price](bitcoin.html)
+* #### [Time series forecasting cryptocurrency value](bitcoin.html)
 
 For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model using R to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.
-
-### Data Visualization
-
-* #### [Visualizing IMDB ratings](imdb.html)
-
-This is a simple visualization of film ratings on the [Internet Movie Database](imdb.com) in R, particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.
 
 ### Packages and Shiny Apps
 

@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="J Steven Raquel" />
+
+
+<title>Exponential random graph models for a gonorrhea outbreak in a First Nations indigenous community in Alberta, Canada</title>
+
+<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about_me.html">About Me</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Portfolio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="wine-classification.html">Classifying wine quality</a>
+    </li>
+    <li>
+      <a href="bitcoin.html">Forecasting bitcoin value</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices</a>
+    </li>
+    <li>
+      <a href="ergm_models.html">Sexual network exponential random graph modeling</a>
+    </li>
+    <li>
+      <a href="https://pinchunchen.shinyapps.io/ggomoku/">Play Gomoku using Shiny</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Contact Me
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="mailto:jsteven.raquel8@gmail.com">jsteven.raquel8@gmail.com</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr">GitHub</a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/jstevenr/">LinkedIn</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Exponential random graph models for a gonorrhea outbreak in a First Nations indigenous community in Alberta, Canada</h1>
+<h4 class="author">J Steven Raquel</h4>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Contact tracing for sexually transmitted diseases (STDs) such as gonorrhea, chlamydia, syphilis etc. is a persistent epidemiological problem, as it depends on individuals getting routinely tested as well as informing their sexual partners of their positive diagnosis should they receive one. Compounding this with the fact that many of these positive cases can be symptomless but still contagious creates a serious issue. Gonorrhea in particular is a disease that can be asymptomatic in both men and women who have it, that can go so far as causing infertility or lead to a life-threatening condition.</p>
+<p>This dataset concerns a localised outbreak of <em>Neisseria gonorrehoeae</em> (gonorrhea) in an indigenous First Nations community located in Alberta, Canada. It was originally analyzed in a paper by Prithwish De, et al. (2004), in which they used measures of network centrality (e.g. information centrality) to determine the association between the risk of infection between members of the network and their position within the network itself. The data was sourced from an earlier 2001 study by the same authors (De, et al. 2001) in which they formulated a plan to address the outbreak.</p>
+<p>This analysis looks at measures of centrality (degree centrality, eigenvector centrality) for the disconnected graph, as well as formulating an exponential random graph model (ERGM) for the network so as to create a basis for simulation and inference of disease propagation / sexual networking within an indigenous population. This can allow us to infer the behavior of a minority group and address their unique needs. Moreover, it also allows us to infer the probability of some ego having a certain number of ties, as well as allowing us to estimate the propensity for homosexual ties to form between individuals in this community.</p>
+</div>
+<div id="background" class="section level1">
+<h1>Background</h1>
+<div id="on-neisseria-gonorrheoeae" class="section level3">
+<h3>On Neisseria gonorrheoeae</h3>
+<p>Gonorrhea is a sexually transmitted disease/infection (STD/STI) which can be transmitted orally, vaginally or anally. Although it can have many serious side effects, it can also be symptomless, leading to individuals unknowingly infecting their partners. When untreated, it also makes HIV more susceptible to transmission, making gonorrhea itself a risk factor for the propagation of HIV. In Canada, reported cases increased by 38.9% between 2003 and 2012, with rates highest in the 20-24 year old age group. It is the second most commonly reported STI in Canada (Totten, et al. 2015).</p>
+</div>
+<div id="on-first-nations-in-alberta-canada" class="section level3">
+<h3>On First Nations in Alberta, Canada</h3>
+<p>According to the 2016 Canadian census, approximately 7% of Albertans identify as First Nations, one of the indigenous groups native to Canada, compared to approximately 5% throughout all of Canada. First Nations peoples experience a disproportionate prevalence of STDs in their population relative to other groups in Canada, due at least in part to cultural differences, and lack of access to resources such as those in more urbanized areas and more populated by non-indigenous people.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<div id="data-collection" class="section level3">
+<h3>Data Collection</h3>
+<p>The sociometric approach for enumerating a sexual network entails an iterative process in which the subject names past sexual partners, who are them traced and interviewed to identify whether they are linked and also to identify other contacts in the network (Doherty 2005). Conversely, the egocentric approach bases the network entirely on the information volunteered by the original subject. The latter approach is the method used in the collection of this data.</p>
+<p>The design suffers from incomplete-network bias when partners cannot be traced or recruited for a variety of reasons (Doherty 2005). As is typical for data collection processes in which information is nominated by the ego, and especially in the sensitive case where sexual partnering is involved, there is bound to be some information missing from the data. e.g. Self-reported behavior from an ego may not necessarily reflect their practices in reality. The data is subject to an individual possibly withholding information, or simply not having the information at all. For example, an individual may be reluctant to disclose the identity of a sexual partner if they are in a monogamous relationship and to disclose this event would mean owning up to infidelity, or perhaps if the sex was in exchange for money i.e. sex work. It could also be that the sex occurred in an anonymous context and they simply do not have the information on the individual. Societal attitudes towards sex and sexual health both in a Wester/Canadian context and also in an indigenous/Aboriginal context can and should be kept in mind when drawing conclusions from this data.</p>
+<p>The contact tracing of sexual partners is relegated to those who have a positive test result, and since such individuals may have markedly different positions within a network, tracing a network consisting solely of STI-positive partners has an inherent bias. In our case, since the STD clinical reports don’t contain complete sexual contact information, the original index case could not be identified. Questions about sexual risk factors and drug use were also omitted due to a lack of respondents (De 2001), and the lack of information on sexual practices e.g. condom usage, drug use could be considered a blind spot in this data.</p>
+</div>
+<div id="data-structure" class="section level3">
+<h3>Data Structure</h3>
+<p>This dataset, constructed in the form of an adjacency matrix, contains 89 nodes, one of which is the “event” of attending a bar (i.e. when a node has a tie with this bar node, it means they attend the bar). Two of these nodes (denoted by <code>x</code> and <code>x2</code>) are missing information about their gender which is otherwise indicated by an <code>m</code> or <code>f</code> in the label of the respective node, followed by a number with which to differentiate them. These nodes with missing data were dropped on account of their missing information and it is thought that their exclusion is mostly inconsequential on account of their both having only one tie.</p>
+<p>While the data was originally directed in its original form, we opted to symmetrize it, since this makes more sense in the context of a sexual network in which a nomination should always theoretically be reciprocated.</p>
+</div>
+</div>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p><img src="ergm_models_files/figure-html/sociogram-ggnet2-bar-1.png" width="672" /></p>
+<p>Looking at this initial sociogram, where the bar node is firmly in the center, we see that it has 17 ties to other individual nodes, which themselves have connections to at least one other node in the rest of the network. The remaining 74 edges in the dataset are between individuals. Of these 74 edges, approximately 90.5% of them are between male and female nodes, and approximately 48.6% of them are between bar-attendees and non-attendees.</p>
+<p>While the majority of ties are between individuals of the opposite sex, e.g. male-to-female or female-to-male, there are a minority of instances where individuals have a tie to individuals of the same sex, e.g. <code>m112</code> has ties with both <code>m106</code> and <code>m107</code>, who both in turn have ties to at least one female node.</p>
+<p>The node <code>m010</code> is also unique in that it happens to have ties to one female node (<code>f024</code>) and one male node (<code>m018</code>), the latter of which in turn has a tie with a female node (<code>f023</code>). The idea of men who have sex with men (MSM) or women who have sex with women (WSW) acting as bridging nodes between otherwise disparate sexual networks was something considered in the exploratory analysis but there just wasn’t enough data to delve deeper into this subject.</p>
+<p><img src="ergm_models_files/figure-html/sociogram-nobar-1.png" width="672" /></p>
+<p>There are about 9 or so subcomponents of this graph; notice that the largest among them has 3 bar attendees within it, 2 of whom have at least 5 ties to other individuals. Notice there is one isolate where a male node attended the bar but otherwise has no ties to any other node. There also a a series of smaller sub-components where there is only one edge between two nodes, one of whom is a bar attendee. The largest subcomponent of the graph includes 38 of the 86 nodes in the network, or approximately 44% of all egos.</p>
+<div id="serosorting-monogamy-and-abstinence" class="section level2">
+<h2>Serosorting, Monogamy, and Abstinence</h2>
+<p><em>Serosorting</em> refers to the practice of choosing a sexual partner assumed to be of the same status of oneself with regard to an STI, although it is mostly used in the context of HIV. It is a possible methodology to stem outbreaks without encouraging individuals explicitly to engage in either abstinence or monogamy, i.e. individuals can remain sexually active with other partners if they so wish.</p>
+<p>Note the presence of a case in the largest subcomponent, in which 6 separate nodes (<code>f019, m526, f011, m551, f022</code> and <code>m206</code>) are jointly connected through one another such that they can all reach each other in 3 steps or less, through at least two of their alters. This is the only such appearance of a “closed loop” in the entire network.</p>
+<p>It does present a situation in which these individuals who are part of the same social network can serosort amongst themselves in order to stem an outbreak before it starts propagating to the rest of the component, whilst maintaining a sexually active lifestyle with more than one person. In a case like this where we don’t know the timeline of the sexual encounters, it’s possible that any one of these people either has or will get gonorrhea at some point, so they would either have to abstain, commit, or alternatively, form a closed loop such as the one presented here. This assumes that expecting an ego to engage in abstinence or monogamy is unrealistic for them, which may be appropriate considering the context.</p>
+<p>For example, note both <code>m206</code> and <code>m551</code> of them each have a degree of 2, but their alters (<code>f019</code>, <code>f011</code>, <code>f022</code>) have a high degree. Suppose these latter three could be encouraged only to sleep with the other individuals in this loop, they would still be able to sleep with multiple people, and not spread the STI to others in the community. This is just one alternative to the common recommendations of abstinence or monogamy with respect to STI transmission reduction.</p>
+</div>
+<div id="distribution-of-ties" class="section level2">
+<h2>Distribution of ties</h2>
+<p><img src="ergm_models_files/figure-html/figure-gender-degree-histogram-1.png" width="672" /></p>
+<p>Note that the distribution in number of partners is more right skewed for women than it is for men, owing to the fact that about a third of more women in this network had 1 partner compared to men who had 1 partner. Generally men’s number of partners is more spread between 1-2 partners. The distribution is similar for both genders when looking at those having more than 2 partners.</p>
+<p>This histogram, which depicts a histogram of number of partners, colored by bar attendance, shows that a large number of non-bar patrons only have one partner; this is mostly bolstered by the fact that most of the members of the network do not frequent the bar, and also there are a sizeable number of individuals in the network who were simply alters of an ego who did attend the bar and do not have any other alters themselves.</p>
+</div>
+<div id="centrality-measures" class="section level2">
+<h2>Centrality Measures</h2>
+<p>According to Borgatti and Everett (2006), <em>centrality</em> is a summary index of a node’s position in a graph, based on sums or averages of one of several things: 1) the number of edges the node has, 2) the length of the paths that end up at the node, or 3) the proportion of paths that contain the node inside of it (not as an endpoint).</p>
+<p>Different measures of centrality depend on functions of one of these aspects and communicate different things about a node, depending on the algorithm for the centrality measure. In this paper, we’re going to look different kinds of centrality as a means of quantifying the impact of individual nodes on the network.</p>
+<p>Network centrality was covered in De, at al (2004) but in the context of the connected network, and we want to expand on this by looking at centrality within the disconnected network (which does not contain the bar node).</p>
+<div id="degree-centrality" class="section level3">
+<h3>Degree Centrality</h3>
+<p>For an undirected network such as this, then the degree of some node <span class="math inline">\(i\)</span> is just the count of ties it has to other nodes. Supposing we had some adjacency matrix <span class="math inline">\(A\)</span>, then the degree of node <span class="math inline">\(i\)</span> is equal to</p>
+<p><span class="math display">\[D_i = \sum_j a_{ij}\]</span></p>
+<p>where <span class="math inline">\(j\)</span> is the number of nodes in the network and <span class="math inline">\(a_{ij} = 1\)</span> given that node <span class="math inline">\(i\)</span> has a tie with node <span class="math inline">\(j\)</span>, and zero otherwise. In this paper “degree” will be used interchangably with “number of (sexual) partners” as these are the same thing in this context.</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Gender
+</th>
+<th style="text-align:right;">
+Mean Number of Partners
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:right;">
+1.605
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:right;">
+1.837
+</td>
+</tr>
+</tbody>
+</table>
+<p>We observe from the data that on average, men have a slightly higher number of sexual partners than women in this sample. Note that we cannot compare the mean number of partners via a t-test in this case, because in this case, the two groups influence each others’ degree.</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Attended Bar
+</th>
+<th style="text-align:right;">
+Mean Number of Partners
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1.623
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+2.118
+</td>
+</tr>
+</tbody>
+</table>
+<p>We further observe that those who attend the bar end up having an average of about 1.6 sexual partners compared to as many as 2.1 partners from those who did. Again, these two quantities are technically dependent (owing to the fact that these are not isolated samples, i.e. the bar attendees can be partnered with the non-attendees), so we can’t formally compare them with a t-test.</p>
+</div>
+<div id="eigenvector-centrality" class="section level3">
+<h3>Eigenvector Centrality</h3>
+<p>Eigenvector centrality is calculated both as a function of a node’s degree but also as a function of the degree of the nodes it is connected to. In other words, a node with a high eigenvector centrality is well-connected to nodes that are themselves well-connected. Contextually, an ego in this setting would have a high number of partners who themselves also have a high number of partners.</p>
+<p><img src="ergm_models_files/figure-html/eigenvector-centrality-1.png" width="672" /></p>
+<p>While there is a positive correlation as one would expect, there are interesting observations that can be made about the difference cross-sections of high-low centrality here. For example, for cases in which there are a high degree centrality, but still have an eigenvector centrality of 0, this implies that while that ego has many alters (partners), but these partners themselves have a degree of 1, e.g. <code>f004</code>, <code>m304</code>, <code>m306</code>.</p>
+<p>This implies that having a high degree centrality is not necessarily itself indicative of having a high impact on the network, as long as that ego’s alters have few partners. Going back to the idea around “serosorting” (partnering with individuals of the same status), it’s possible that individuals can still be sexually active with multiple partners as long as their respective partners are aware of their status and are deliberately not finding new alters themselves.</p>
+</div>
+</div>
+<div id="exponential-random-graph-model-ergm" class="section level2">
+<h2>Exponential Random Graph Model (ERGM)</h2>
+<p>Exponential random graph models (ERGMs) are a family of statistical models for social networks that permit inference about prominent patterns in the data, given the presence of other network structures (Carrington and Scott, 2011). For a given set of <span class="math inline">\(n\)</span> actors, an ERGM models an observed network <span class="math inline">\(x\)</span> by assigning a probability to every network of <span class="math inline">\(n\)</span> actors, and the form of such a model is as follows</p>
+<p><span class="math display">\[\log \big[ \frac{\Pr(Y_{ij} = 1 | y_{ij}^C)}{\Pr(Y_{ij} = 0 | y_{ij}^C)}  \big] = \sum_{A(Y_{ij})} \eta_A d_A(y)\]</span></p>
+<p>where the sum is over all configuration types <span class="math inline">\(A\)</span>.</p>
+<ul>
+<li><span class="math inline">\(y_{ij}^C\)</span> = all ties in <span class="math inline">\(y\)</span>, excepting <span class="math inline">\(y_{ij}\)</span></li>
+<li><span class="math inline">\(\eta_A\)</span> is a parameter corresponding to configuration type (effect) <span class="math inline">\(A\)</span>;</li>
+<li><span class="math inline">\(d_A(y) = z(y_{ij}^+) - z(y_{ij}^-)\)</span> is the difference score for effect <span class="math inline">\(z\)</span> if the tie between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> were added</li>
+</ul>
+<p>This equation implies that there is a probability distribution of all possible networks with <span class="math inline">\(n\)</span> nodes, with each such network having their own distinct probability.</p>
+<p>The ERGM model requires a one-mode network, so we can create one by dropping the bar node from the data while still retaining the information of bar attendance as a vertex attribute. The models were generated using a combination of both maximum likelihood and Markov Chain Monte Carlo (MCMC) via the <code>ergm</code> package. We were able to compare these using likelihood ratio tests and the Akaike Information Criterion. Thus, we were able to use frequentist techniques to determine which parameters were ideal to fit, and then ultimately fit this final model using Bayesian inference with MCMC. MCMC and the Metropolis-Hastings algorithm used in this inference are briefly explained in this literature.</p>
+<div id="markov-chain-monte-carlo-mcmc" class="section level3">
+<h3>Markov Chain Monte Carlo (MCMC)</h3>
+<p>A Markov Chain is a stochastic process that goes from one state to another, with the future state <span class="math inline">\(X_{t+1}\)</span> depending only on the current state <span class="math inline">\(X_t\)</span> at time <span class="math inline">\(t\)</span>, i.e.</p>
+<p><span class="math display">\[\Pr(X_{t+1} = x | X_t = x_t)\]</span></p>
+<p>A Monte Carlo process refers to a simulation that samples many random values from a posterior distribution of interest. Hence a Markov Chain Monte Carlo (MCMC) simulation is a simulation of a random process whose future value depends only on the current value.</p>
+<div id="metropolis-hastings-algorithm" class="section level4">
+<h4>Metropolis-Hastings Algorithm</h4>
+<p>A common MCMC algorithm is the Metropolis-Hastings algorithm, which is used in the <code>ergm()</code> function to get paramter estimates. In this algorithm, the process “randomly walks” starting from some <span class="math inline">\(\theta_0\)</span>.</p>
+<ul>
+<li>To determine whether the process advances, a “candidate value” <span class="math inline">\(\theta\*\)</span> is generated by sampling from the proposal distribution <span class="math inline">\(g(\theta\*| \theta_{s-1})\)</span> at iteration <span class="math inline">\(s\)</span>.</li>
+<li>We then derive the Metropolis-Hastings acceptance ratio <span class="math inline">\(\nu\)</span>, which is a ratio of the estimated distribution at time <span class="math inline">\(\theta\)</span> and at the proposed time <span class="math inline">\(\theta_n\)</span>.</li>
+<li>Then we derive the acceptance probability <span class="math inline">\(\rho\)</span> by taking the minimum between the acceptance ratio <span class="math inline">\(\nu\)</span> and 1, i.e. <span class="math inline">\(\rho = \text{min}(1, \eta)\)</span>.</li>
+<li>We sample <span class="math inline">\(U \sim \text{Uni}(0,1)\)</span> to and compare it to <span class="math inline">\(\rho\)</span>.</li>
+<li>If <span class="math inline">\(U &lt; \rho\)</span> then we accept the candidate value such that <span class="math inline">\(\theta_s = \theta\*\)</span> Otherwise we repeat another iteration with <span class="math inline">\(\theta_s\)</span> as before.</li>
+</ul>
+<p>After some given number of samples (some of which may be ‘thrown out’ due to burn-in or thinning), we arrive at some estimate for the parameter, which in this case, would be the estimate for the coefficient <span class="math inline">\(\eta_A\)</span> corresponding to the effect <span class="math inline">\(A\)</span> in the ERGM, where <span class="math inline">\(A\)</span> can be any of the many effects possible for an ERGM model e.g. homo/heterophily.</p>
+</div>
+</div>
+<div id="model-fitting" class="section level3">
+<h3>Model Fitting</h3>
+<p>Having delineated our techniques for estimating our parameters, we then opted to fit several different ERGM models. When fitting these models, first we started with the simplest model that only models the number of edges (this would be akin to an intercept-only model in logistic regression). We then built several more models which only had one parameter, and then compared the Akaike Information Criteria (AIC) of the models to determine which among these model parameters were worth including. Among the model parameters fit were homophily (<code>nodematch</code>), heterophily (<code>nodemix</code>) and degree (<code>degree</code>).</p>
+<div id="akaike-information-criterion-aic-and-bayesian-information-criterion-bic" class="section level4">
+<h4>Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC)</h4>
+<p>The Akaike Information Criterion (AIC) is an estimator of out-of-sample prediction error. We use it as a means of model selection, where we generally opt to select the model with the lowest AIC.</p>
+<p><span class="math display">\[AIC = -2 \ln(\mathcal{L}) + 2k\]</span></p>
+<p>Where <span class="math inline">\(\mathcal{L}\)</span> is the likelihood of the model, and <span class="math inline">\(k\)</span> is the number of parameters.</p>
+<p>The <em>Bayesian</em> Information Criterion (BIC) is similar to the AIC, but it introduces a penalty term for the number of parameters in the model. This is because a model with more parameters is generally more likely to have a lower AIC than another with less parameters; this prevents us from being as biased towards more complete models.</p>
+<p><span class="math display">\[BIC = \ln(n) k - 2 \ln (\hat{L})\]</span></p>
+<p>where <span class="math inline">\(\hat{L}\)</span> is the maximized value of the likelihood function of the model, <span class="math inline">\(n\)</span> is the number of data points, and <span class="math inline">\(k\)</span> is the number of free paramters to be estimated.</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+Table of AIC/BIC for each ERGM model
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+formula
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges
+</td>
+<td style="text-align:left;">
+725.6599
+</td>
+<td style="text-align:left;">
+731.8638
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + nodematch(“bar”)
+</td>
+<td style="text-align:left;">
+718.7543
+</td>
+<td style="text-align:left;">
+731.162
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + degree(d = c(1:2))
+</td>
+<td style="text-align:left;">
+680.3484
+</td>
+<td style="text-align:left;">
+698.9599
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + nodemix(“gender”, base = 2)
+</td>
+<td style="text-align:left;">
+669.8531
+</td>
+<td style="text-align:left;">
+688.4646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + nodefactor(“bar”)
+</td>
+<td style="text-align:left;">
+725.7581
+</td>
+<td style="text-align:left;">
+738.1658
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + nodemix(“bar”)
+</td>
+<td style="text-align:left;">
+902.9734
+</td>
+<td style="text-align:left;">
+915.3811
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + concurrent
+</td>
+<td style="text-align:left;">
+713.3946
+</td>
+<td style="text-align:left;">
+725.8023
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + isolates
+</td>
+<td style="text-align:left;">
+692.577
+</td>
+<td style="text-align:left;">
+704.9847
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gonnet_net_nobar ~ edges + kstar(2)
+</td>
+<td style="text-align:left;">
+727.3758
+</td>
+<td style="text-align:left;">
+739.7835
+</td>
+</tr>
+</tbody>
+</table>
+<p>Here we have a table depicting the various AICs/BICs for each individual ERGM model. In model selection we start with the most simple intercept model, and then gradually add effects to it. In this case, we notice that among these effects, degree, homo/heterophily for gender (<code>nodemix('gender')</code>) and isolates seemed to produce the greatest decreases in the respective information criteria. We then proceeded to fit models with these effects. There are some terms (<code>nodematch(bar)</code>, <code>concurrent</code>) that seem to improve on the intercept model but only slightly. We can fit two models that both include and exclude these extra effect(s): a full and a nested model, and compare them with a likelihood ratio test.</p>
+</div>
+<div id="likelihood-ratio-testing-for-model-selection" class="section level4">
+<h4>Likelihood Ratio Testing for Model Selection</h4>
+<p><img src="ergm_models_files/figure-html/lrtest-curve-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>This curve represents the chi-squared distribution with 2 degrees of freedom; which is the distribution of our likelihood ratio test statistic under the null hypothesis <span class="math inline">\(H_0\)</span>, which states that the nested model fits the data as well as the full model, i.e. the nested model is preferred. Should we reject this null hypothesis, we would opt for the full model with the added effect instead. The number of degrees of freedom corresponds to the number of added parameters that the full model has over the nested model.</p>
+<p>The red line in this curve represents the 95% critical value of the distribution, the point at which we would reject the null hypothesis. Note that our test statistic <span class="math inline">\(LRT\)</span>, denoted by the dashed blue line, falls beyond this critical value, hence we have enough evidence at a <span class="math inline">\(0.05\)</span> significance level to reject <span class="math inline">\(H_0\)</span>.</p>
+<p>Thus, we conclude that the nested model does <em>not</em> fit the data as well as the full model and hence we opt to include the additional terms in the full model.</p>
+</div>
+</div>
+<div id="goodness-of-fit" class="section level3">
+<h3>Goodness of Fit</h3>
+<p><img src="ergm_models_files/figure-html/goodness-of-fit-1.png" width="672" /></p>
+<p>The <code>gof()</code> function for goodness of fit tests several different aspects of the network, namely degree, edgewise shared partners, and geodesic distances. Each of these illustrates the distribution of the network at a different level: node, edge, and dyad, respectively.</p>
+<p>The function works by simulating similar networks based on the fitted ERGM model, and observes their respective distributions and how the true values of the observed network compared to it. As we can see, the true values of the model statistics fall squarely in the middle of the estimates drawn by the boxplots of the simulations. We also see that degree of 1 and 2 are well represented in the networks, in fact one might notice that this distribution is remarkably close to that of the histogram of the degree distribution formulated earlier in this paper. Edgewise shared partners (triangles) were not something commonly observed in this dataset, and this plot corroborates that. Finally, geodesic distances were fairly low among connected nodes and a large proportion of the nodes were themselves isolated from the majority of the other nodes because they were part of an isolated subcomponent.</p>
+<p>Overall we find that the goodness of fit for this ERGM model is satisfactory, so we can proceed to model diagnostics, particularly the diagnostics of the respective MCMC chains.</p>
+</div>
+<div id="model-diagnostics" class="section level3">
+<h3>Model Diagnostics</h3>
+<p>When using MCMC chains for parameter estimation, our goal is for the chains to converge, showing that we have found a reasonable estimate for our respective parameter. We can diagnose this by looking at traceplots of the MCMC chain as well as the density curves. We want to see the traceplot have constant variance (homoskedascticity), oscillating around 0, and for the density plot to be likewise centered at 0 and shaped like a bell curve.</p>
+<p><img src="ergm_models_files/figure-html/model-diagnostics-1.png" width="672" /><img src="ergm_models_files/figure-html/model-diagnostics-2.png" width="672" /><img src="ergm_models_files/figure-html/model-diagnostics-3.png" width="672" /></p>
+<p>Most of the traceplots and density plots given by the MCMC diagnostics show us that the respective MCMC chains have converged, so our model estimates are sound. We do notice that in the case of the estimate for the F-F nodemix term, the distribution deviates somewhat from this, but this could be easily attributed to the lack of F-F ties in the dataset. We would like to comment that with F-F as the reference class with respect to this parameter, the M-F and M-M terms do converge easily–but for the sake of a more meaningful interpretation, we opted to treat M-F ties as baseline here. The isolates term also does not seem like it converges so this throws its inclusion in the model somewhat into question as well (it would not be unreasonably to drop this term from the model).</p>
+</div>
+</div>
+<div id="results" class="section level2">
+<h2>Results</h2>
+<p>Recall the equation for the ERGM model</p>
+<p><span class="math display">\[\log \big[ \frac{\Pr(Y_{ij} = 1 | y_{ij}^C)}{\Pr(Y_{ij} = 0 | y_{ij}^C)}  \big] = \sum_{A(Y_{ij})} \eta_A d_A(y)\]</span></p>
+<p>The coefficients represent the <em>weight</em> of the log-odds of a tie for a 1 unit increase in the effect (or in the case of a categorical variable, its inclusion), with all other effects held constant. A positive weight implies that the probability of a tie increases with the inclusion of that effect, and conversely a negative weight implies that the probability decreases with its inclusion.</p>
+<p>Similar to interpreting logistic regression, we can convert from the log-odds to probability accordingly:</p>
+<p><span class="math display">\[\begin{aligned}
+\log \big[ \frac{\Pr(Y_{ij} = 1 | y_{ij}^C)}{\Pr(Y_{ij} = 0 | y_{ij}^C)}  \big] &amp; = \eta_1 d_1(y) + \eta_2 d_2(y) + ... + \eta_6 d_6(y) \\
+\frac{\Pr(Y_{ij} = 1 | y_{ij}^C)}{\Pr(Y_{ij} = 0 | y_{ij}^C)} &amp; = \exp(\eta_1 d_1(y) + \eta_2 d_2(y) + ... + \eta_6 d_6(y)) \\
+\frac{\Pr(Y_{ij} = 1 | y_{ij}^C)}{\Pr(Y_{ij} = 0 | y_{ij}^C)} &amp; = \exp(\eta_1 d_1(y)) \times \exp(\eta_2 d_2(y)) \times ... \times \exp(\eta_6 d_6(y))
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\eta_i\)</span> is the <span class="math inline">\(i\)</span> effect (e.g. degree), and <span class="math inline">\(d_i(y)\)</span> is the difference score for the inclusion of the <span class="math inline">\(i\)</span>th effect.</p>
+<p>Because of the properties of the exponential function, a single-unit increase in some effect (in the discrete or continuous case), or the inclusion of some effect (in the categorical case) has a <em>multiplicative</em> effect on the odds of a tie forming, namely <span class="math inline">\(\exp(d_A(y))\)</span> for the effect <span class="math inline">\(A\)</span>, while all other effects are held constant.</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+Coefficient estimates based on both Markov Chain Monte Carlo and Maximum Likelihood Estimation.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+MCMC Estimate
+</th>
+<th style="text-align:right;">
+MLE Estimate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+edges
+</td>
+<td style="text-align:right;">
+-1.800
+</td>
+<td style="text-align:right;">
+-1.786
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+isolates
+</td>
+<td style="text-align:right;">
+-0.289
+</td>
+<td style="text-align:right;">
+-0.179
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+degree1
+</td>
+<td style="text-align:right;">
+2.658
+</td>
+<td style="text-align:right;">
+2.674
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+degree2
+</td>
+<td style="text-align:right;">
+1.419
+</td>
+<td style="text-align:right;">
+1.426
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mix.gender.F.F
+</td>
+<td style="text-align:right;">
+-3.563
+</td>
+<td style="text-align:right;">
+-3.544
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mix.gender.M.M
+</td>
+<td style="text-align:right;">
+-1.691
+</td>
+<td style="text-align:right;">
+-1.704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nodematch.bar
+</td>
+<td style="text-align:right;">
+-0.721
+</td>
+<td style="text-align:right;">
+-0.720
+</td>
+</tr>
+</tbody>
+</table>
+<p>These interpretations are based on the MCMC estimates.</p>
+<p>The terms denoted by the <code>degree()</code> component of the ERGM formula help us see whether the structure of the network can be explained by degree distribution. Converting from log-odds to probability is done in R by the <code>plogis()</code> function which executes the following calculation</p>
+<p><span class="math display">\[p = \frac{\exp(\beta_A)}{1 + \exp(\beta_A)}\]</span></p>
+<p>where <span class="math inline">\(\exp(\beta_1)\)</span> is the conditional odds of a tie forming given a one-unit change in some effect statistic <span class="math inline">\(\beta\)</span> for the effect <span class="math inline">\(A\)</span>.</p>
+<p>Because edges (<span class="math inline">\(\eta_1\)</span>), isolates (<span class="math inline">\(\eta_2\)</span>,) degree (<span class="math inline">\(\eta_3, \eta_4\)</span>) are functions of ties, we have to interpret the effect their changes have on the (log-)odds in unison. Namely, changes to degree imply changes to the number of total edges in the network as well as potentially the decreasing of isolates in the network.</p>
+<p>If we assume that all nodes that a focal node may connect to are all isolates, we can interpret degree’s respective “contributions”, as well as the other coefficients accordingly.</p>
+<ul>
+<li><p>For some change in degree from 0 to 1, the log-odds of a tie of any effect would change by <span class="math inline">\((d_1(y) - d_2(y) + 2d_3(y)) \approx 3.806\)</span>.</p></li>
+<li><p>For some change in degree from 1 to 2, the log-odds of a tie of any effect would change by <span class="math inline">\((2 d_1(y) - 2 d_2(y) + 4 d_3(y) + d_4(y)) - d_1(y) \approx 9.030737\)</span></p></li>
+<li><p><span class="math inline">\(d_5(y) \approx -3.563\)</span> implies that the odds of a tie forming between two female nodes is about <span class="math inline">\(\exp(-3.563) \approx 0.03\)</span> times lower than that of an M-F tie, all other effects equal.</p></li>
+<li><p><span class="math inline">\(d_6(y) \approx 1.691\)</span> implies that the odds of a tie forming between two male nodes is about <span class="math inline">\(\exp(-1.691) \approx 0.184\)</span> times lower than that of an M-F tie, all other effects equal.</p></li>
+<li><p><span class="math inline">\(d_7(y) \approx -0.721\)</span> implies that the odds of a within-group tie for bar forming (i.e. attendees with attendees, or non-attendees with non-attendees) is given by <span class="math inline">\(\exp(-0.721) = 0.486\)</span>, all other effects held equal.</p></li>
+</ul>
+</div>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>Our goal in this paper was to determine whether the attributes of gender and bar attendance were meaningful in the formation of ties in this sexual network, and quantifying these relationships using a model created under the exponential random graph model (ERGM) framework. We were able to create a model using Markov Chain Monte Carlo techniques, to achieve this. Ultimately we found that degree (number of partners) does well to explain the structure of the network, and that the attendance of a common venue has some influence on the propagation of the STI in the network as well. We also talked about different measures of network centrality in the disconnected graph (degree centrality, eigenvector centrality) and how they can be used to quantify one’s impact on the network. It is noted that degree centrality in particular is short-sighted and that the <em>correlation</em> between centrality measures brings light to how one’s impact in the network may not necessarily scale linearly with the number of one’s partners.</p>
+<p>The ERGM model gave us a model that defines the structure of the network with regard to degree and number of isolates, and the propensity for ties to form between and across groups e.g. those who attended the bar and also across genders. Furthermore this gives us an estimator for the propensity of homosexual ties to form within the First Nations community which has broader applications for sociology with respect to sexual network formation. It also gives us an estimate of the propensity of links to form between individuals who attend a given venue, which can form the basis for such analysis to be applied to a network with more venues, or indeed other places where individuals meet each other, such as online (e.g. dating apps). Finally, it gives us estimates for the probabilities of a node having a certain number of ties, which can be vital for estimating epidemiological spread.</p>
+<div id="remaining-questions" class="section level2">
+<h2>Remaining Questions</h2>
+<p>There are many unanswered questions, owing mostly to the lack of completeness of the data, e.g. how is it that all of the individuals who attended the bar, do not have any ties with one another? It was noted in the 2001 study by De, et al. that questions about sexual risk factors or drug use were ignored and eventually excluded as a result; it could potentially be the case that exceedingly risky behaviors e.g. anonymous unprotected sex, drug use / sharing intravenous needles, etc. could be the unifying attribute that unites these bar attendees together, aside from attendance to the bar itself.</p>
+<p>Being that the data was taken from a population of First Nations, it would also be interesting to see the larger network in which First Nations sexually sort with non-First Nations individuals. Cultural factors do play a determining role in sexual network formation, and different cultures often have varying access to information and resources with respect to STIs, so the interplay of the respective racial groups, and the extent to which the information they carry is meaningfully transferred, is another outstanding question. For example, if safe sex is <em>more normalized</em> in non-indigenous populations, is a heterophilic tie between an indigenous person, and a non-indigenous person, more or less likely to follow safe sex practices, e.g. condom usage?</p>
+<div id="future-applications" class="section level3">
+<h3>Future Applications</h3>
+<p>In an epidemiological context, these results demonstrate that ERGMs can be applied to a sexual network, including one in which geographical information is a component. There are several different determinants to sexual network formation and a dataset that was more complete with this kind of information, be it demographical (e.g. ethnicity, race, religion, class), or geographical (e.g. city, state), would be able to apply these techniques in a more advanced and critically applicable way. It is crucial that epidemiologists and sociologists delve into techniques that can accurately model sexual behavior, as typical approaches to epidemic modeling, e.g. the SIR model (in which a population is placed into three components based on being either susceptible, infectious, or recovered), are short-sighted with regard their application in STI epidemiology, as their parameterizations make unrealistic assumptions such as “random mixing”.</p>
+<p>Techniques around intervention can also be devised based on the results of modeling an exponential random graph model. For example, consider our quantification of the effect that attending this local bar has in the area, on the dissemination of an STI in a community. This only quantified the effect of one location, but suppose the dataset contained information on <em>multiple</em> venues of contact, then we would be able to specifically model the effect each individual venue has on the probability of a tie forming, and hence, the odds of an outbreak taking place. From there, public health officials can then strategically determine which among these locations would be the best to actively intervene or extend outreach to. This is especially critical in the case of indigenous communities such as First Nations.</p>
+<p>While encouraging abstinence and monogamy are common responses in public health to STI epidemics, there is still the yet unexplored possibility of encouraging individuals to form closed loops amongst their partners in which they share the same status, and also to share these partners themselves (see the example of the closed loop of 6 nodes earlier in the literature). This can prevent entirely new branches in the sexual network from forming, without expecting egos to abstain from sex completely or to commit to one individual.</p>
+</div>
+</div>
+<div id="advantages-of-using-network-analysis-ergms" class="section level2">
+<h2>Advantages of Using Network Analysis / ERGMs</h2>
+<p>One of the critical advantages that network analysis has over traditional epidemiological approaches in a sexual network context is that it is at least somewhat robust to the missingness of data that is typical of egocentric network designs. While missingness of data can lead to issues such as computational intractibility when estimating parameters, network measures such as degree centrality are fairly robust to these issues (although this varies depending on the metric). Moreover, the flexibility that Markov Chain Monte Carlo brings to otherwise computationally intractable situations is also a benefit.</p>
+<p>Another advantage of ERGMs in particularly with respect to sexual networks is that they are effective in modeling relationships on egocentric data, as long as we have <em>some</em> information on the attributes on the alters, especially with respect to demographics. For example, suppose an individual has anonymous sex with someone else, perhaps through sex work, and as such doesn’t know their identity but can still share pertinent information (e.g. their gender, age, ethnicity, etc.) that can be utilized as vertex attributes in the analysis.</p>
+<p>One of the by-products of the ERGM model was the ability of estimating the propensity of homosexual ties to form within this network, between either pairs of females or males. As mentioned earlier, First Nations and other indigenous societies do hold different views toward LGBTQ and gender non-conforming individuals, e.g. their recognition of “two spirit” people who identify outside of the typical M-F gender binary. Further research would be well spent comparing this propensity as a baseline to non-indigenous communities and comparing how these networks form and the epidemiology of STIs therein.</p>
+</div>
+<div id="closing-thoughts" class="section level2">
+<h2>Closing Thoughts</h2>
+<p>If we were to repeat this analysis on a similar dataset, we probably would have opted to choose a dataset with more features, such that the ERGM methodology could have had more room to work, particularly with respect to parameters like homophily and heterophily. With that said, we leave this analysis as a broad framework to be built upon by future sociologists and epidemiologists to expand the approach to modeling sexual networks and the propagation of STIs such as gonorrhea.</p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Carrington, P. and Scott, J., 2011. <em>The SAGE handbook of social network analysis. 1st ed.</em> Los Angeles [etc.]: SAGE Publications, pp.484-500.</p>
+<p>De P, Singh AE, Wong T, et al. 2004. “Sexual network analysis of a gonorrhea outbreak.” <em>Sexually Transmitted Infections</em> 80:280-285.</p>
+<p>De, Prithwish M.HSc<em>; Singh, Ameeta E. BMBS, MSc, FRCPC†; Wong, Tom MD, MPH, FRCPC</em>; Yacoub, Wadieh MBBCh, MSc, FRCPC‡ “Outbreak of Neisseria gonorrhoeae in Northern Alberta, Canada.” Sexually Transmitted Diseases: June 2003 - Volume 30 - Issue 6 - p 497-501.</p>
+<p>Handcock M, Hunter D, Butts C, Goodreau S, Krivitsky P, Morris M (2018). <em>ergm: Fit, Simulate and Diagnose Exponential-Family Models for Networks</em>. The Statnet Project (&lt;URL: <a href="http://www.statnet.org" class="uri">http://www.statnet.org</a>&gt;). R package version 3.9.4, &lt;URL: <a href="https://CRAN.R-project.org/package=ergm" class="uri">https://CRAN.R-project.org/package=ergm</a>&gt;.</p>
+<p>Hunter D, Handcock M, Butts C, Goodreau S, Morris M (2008). “ergm: A Package to Fit, Simulate and Diagnose Exponential-Family Models for Networks.” <em>Journal of Statistical Software</em>, <em>24</em>(3), 1-29.</p>
+<p>Irene A. Doherty, Nancy S. Padian, Cameron Marlow, Sevgi O. Aral, Determinants and Consequences of Sexual Networks as They Affect the Spread of Sexually Transmitted Infections, The Journal of Infectious Diseases, Volume 191, Issue Supplement_1, February 2005, Pages S42–S54, <a href="https://doi.org/10.1086/425277" class="uri">https://doi.org/10.1086/425277</a></p>
+<p>Public Health Agency of Canada. Report on sexually transmitted infections in Canada: 2011. Centre for Communicable Diseases and Infection Control, Infectious Disease Prevention and Control Branch, Public Health Agency of Canada; 2014. 2011. <a href="http://publications.gc.ca/site/eng/469949/publication.html" class="uri">http://publications.gc.ca/site/eng/469949/publication.html</a>.</p>
+<p>Valente TW. Social networks and health: models, methods, and applications. New York: Oxford University Press, 2010.</p>
+<p>van der Pol, J. Introduction to Network Modeling Using Exponential Random Graph Models (ERGM): Theory and an Application Using R-Project. Comput Econ 54, 845–875 (2019). <a href="https://doi.org/10.1007/s10614-018-9853-2" class="uri">https://doi.org/10.1007/s10614-018-9853-2</a></p>
+<p>Wasserman, S. and Faust, K., 1994. Social network analysis: methods and applications. Cambridge: Cambridge University Press.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

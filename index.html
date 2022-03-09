@@ -13,7 +13,7 @@
 
 <title>J Steven Raquel</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -65,6 +65,7 @@
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -85,6 +86,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -237,7 +241,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -250,7 +254,7 @@ $(document).ready(function () {
   <a href="about_me.html">About Me</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Portfolio
      
     <span class="caret"></span>
@@ -263,10 +267,10 @@ $(document).ready(function () {
       <a href="bitcoin.html">Forecasting bitcoin value</a>
     </li>
     <li>
-      <a href="imdb.html">Visualizing IMDB ratings</a>
+      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices</a>
     </li>
     <li>
-      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices in Boston</a>
+      <a href="ergm_models.html">Sexual network exponential random graph modeling</a>
     </li>
     <li>
       <a href="https://pinchunchen.shinyapps.io/ggomoku/">Play Gomoku using Shiny</a>
@@ -274,7 +278,7 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Contact Me
      
     <span class="caret"></span>
@@ -309,43 +313,31 @@ $(document).ready(function () {
 
 
 <hr />
-<center>
-<img src="images/circle_photo.png" width="300px" height="275px">
-</center>
 <div id="welcome" class="section level1">
 <h1>Welcome!</h1>
 <p>Thanks for visiting my personal website. I’m J Steven Raquel and am pursuing a Master of Science in Statistics at the University of California, Irvine.</p>
 <p>Find out more about <a href="about_me.html">who I am and what I’ve done</a>.</p>
-<p>If you know anything about data science, statistics, machine learning, artificial intelligence, or computer science, feel free to get in touch with me! I have a lot to learn so I’m eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header.</p>
+<p>If you know anything about statistics, biostatistics, machine learning, epidemiology, or public health, feel free to get in touch with me! I have a lot to learn so I’m eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header.</p>
 <hr />
 <div id="projects" class="section level2">
 <h2>Projects</h2>
-<p>These are some of the projects I’ve worked on throughout my time studying data science, and I am constantly learning and adding things to my repertoire.</p>
-<div id="machine-learning" class="section level3">
-<h3>Machine Learning</h3>
+<p>These are some of the projects I’ve worked on throughout my time studying statistics, and I am constantly learning and adding things to my repertoire.</p>
 <ul>
-<li><h4 id="classifying-wine-quality"><a href="wine-classification.html">Classifying wine quality</a></h4></li>
+<li><h4 id="exponential-random-graph-modeling-ergm-for-a-sexual-social-network"><a href="ergm_models.html">Exponential random graph modeling (ERGM) for a sexual social network</a></h4></li>
 </ul>
-<p>For my final project for PSTAT 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms using R to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.</p>
+<p>This paper was written for Sociology 280 and uses exponential random graph modeling to model (and simulate) the ties of a sexual social network in an indigenous community in Alberta, Canada, in which a gonorrhea outbreak had occurred.</p>
+<ul>
+<li><h4 id="classification-algorithm-comparison-for-wine-quality"><a href="wine-classification.html">Classification algorithm comparison for wine quality</a></h4></li>
+</ul>
+<p>For my final project for Statistics 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms using R to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.</p>
 <ul>
 <li><h4 id="predicting-housing-prices-in-boston"><a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices in Boston</a></h4></li>
 </ul>
 <p>This project utilizes various regression algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a regression model using various attributes of the housing market in Boston.</p>
-</div>
-<div id="time-series-forecasting" class="section level3">
-<h3>Time Series Forecasting</h3>
 <ul>
-<li><h4 id="forecasting-bitcoin-price"><a href="bitcoin.html">Forecasting bitcoin price</a></h4></li>
+<li><h4 id="time-series-forecasting-cryptocurrency-value"><a href="bitcoin.html">Time series forecasting cryptocurrency value</a></h4></li>
 </ul>
 <p>For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model using R to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.</p>
-</div>
-<div id="data-visualization" class="section level3">
-<h3>Data Visualization</h3>
-<ul>
-<li><h4 id="visualizing-imdb-ratings"><a href="imdb.html">Visualizing IMDB ratings</a></h4></li>
-</ul>
-<p>This is a simple visualization of film ratings on the <a href="imdb.com">Internet Movie Database</a> in R, particularly focusing on the separate decades and the best and worst of each, as well as the trend of film ratings in general.</p>
-</div>
 <div id="packages-and-shiny-apps" class="section level3">
 <h3>Packages and Shiny Apps</h3>
 <ul>

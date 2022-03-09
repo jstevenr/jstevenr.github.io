@@ -20,10 +20,10 @@ navbar:
           href: wine-classification.html
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
-        - text: "Visualizing IMDB ratings"
-          href: imdb.html
-        - text: "Predicting housing prices in Boston"
+        - text: "Predicting housing prices"
           href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
+        - text: "Sexual network exponential random graph modeling"
+          href: ergm_models.html
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
