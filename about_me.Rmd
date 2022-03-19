@@ -58,7 +58,7 @@ In my free time, I am an avid gamer and I study both the Spanish and Portuguese 
 
 * **Statistics M.S.**, University of California, Irvine, Estimated Completion June 2022
     + Designed the `ggomoku` R package and Shiny app as a pair project
-    + Coursework in Probability and Statistical Theory, Statistical Methods, Bayesian Data Analysis, Statistical Methods
+    + Coursework in Probability and Statistical Theory, Statistical Methods, Bayesian Data Analysis, Statistical Methods, Infectious Disease Modeling, Spatial Statistics, Social Network Data, Survival Analysis
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
     + Coursework in Data Mining, Regression Analysis, Stochastic Processes, Non-Parametric Methods, Time Series, Advanced Statistical Methods, SAS Programming, Statistical Data Science
