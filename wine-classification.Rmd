@@ -24,14 +24,16 @@ navbar:
       href: about_me.html
     - text: "Portfolio"
       menu:
+        - text: "Spatial modeling of school gun violence"
+          href: matern-spatial.html
+        - text: "Sexual network exponential random graph modeling"
+          href: ergm_models.html
         - text: "Classifying wine quality"
           href: wine-classification.html
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Predicting housing prices"
           href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
-        - text: "Sexual network exponential random graph modeling"
-          href: ergm_models.html
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
@@ -177,7 +179,7 @@ So, we should actually remove the variables `residual.sugar` and `density`, as w
 
 ```{r correlation-matrix2, fig.cap="The correlation matrix without residual sugar, density, or total sulfur dioxide.", echo = FALSE}
 # removing three predictors
-white2 <- white %>% select(-c("residual.sugar", "density", "total.sulfur.dioxide"))
+white2 <- white %>% dplyr::select(-c("residual.sugar", "density", "total.sulfur.dioxide"))
 cormat2 <- white2 %>% cor() %>% round(2)
 
 # Reorder the correlation matrix

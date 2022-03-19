@@ -16,14 +16,16 @@ navbar:
       href: about_me.html
     - text: "Portfolio"
       menu:
+        - text: "Spatial modeling of school gun violence"
+          href: matern-spatial.html
+        - text: "Sexual network exponential random graph modeling"
+          href: ergm_models.html
         - text: "Classifying wine quality"
           href: wine-classification.html
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Predicting housing prices"
           href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
-        - text: "Sexual network exponential random graph modeling"
-          href: ergm_models.html
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
@@ -34,6 +36,7 @@ navbar:
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
+
 ---
 
 This was my final project for PSTAT 174, Time Series, Fall 2017. It has been changed slightly from the time it was completed to this version you see here. 

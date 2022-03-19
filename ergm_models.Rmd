@@ -26,14 +26,16 @@ navbar:
       href: about_me.html
     - text: "Portfolio"
       menu:
+        - text: "Spatial modeling of school gun violence"
+          href: matern-spatial.html
+        - text: "Sexual network exponential random graph modeling"
+          href: ergm_models.html
         - text: "Classifying wine quality"
           href: wine-classification.html
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Predicting housing prices"
           href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
-        - text: "Sexual network exponential random graph modeling"
-          href: ergm_models.html
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
@@ -243,8 +245,6 @@ gonnet_nobar_df %>%
 ```
 
 Note that the distribution in number of partners is more right skewed for women than it is for men, owing to the fact that about a third of more women in this network had 1 partner compared to men who had 1 partner. Generally men's number of partners is more spread between 1-2 partners. The distribution is similar for both genders when looking at those having more than 2 partners. 
-
-This histogram, which depicts a histogram of number of partners, colored by bar attendance, shows that a large number of non-bar patrons only have one partner; this is mostly bolstered by the fact that most of the members of the network do not frequent the bar, and also there are a sizeable number of individuals in the network who were simply alters of an ego who did attend the bar and do not have any other alters themselves.
 
 ## Centrality Measures
 
