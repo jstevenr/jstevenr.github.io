@@ -348,7 +348,7 @@ csr_plot <- ggplot() +
   geom_sf(data = us_states) +
   geom_sf(data = sim1_sf) + 
   theme(axis.title = element_blank()) +
-  ggtitle("An inhomogeneous Poisson process") +
+  ggtitle("A homogeneous Poisson process") +
   theme_bw() +
   theme(
     axis.title = element_blank(),
@@ -362,7 +362,7 @@ csr_plot <- ggplot() +
 
 csr_plot +
   plot_annotation(
-    caption = "Data was simulated from an intercept only Poisson process model."
+    caption = "This is what the distribution of events would look like under a homogenous Poisson process model with complete spatial randomness."
   )
 ```
 
