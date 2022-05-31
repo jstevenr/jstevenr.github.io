@@ -38,7 +38,7 @@ navbar:
 
 ----
 
-<left><img src="images/linkedin2_small.png" width="150px" height="150px"></left>
+<left><img src="images/new_bw.png" width="300px" height="300px"></left>
 
 # Introduction
 
@@ -72,6 +72,11 @@ In my free time, I am an avid gamer and I study both the Spanish and Portuguese 
     + Power BI, Tableau, SAP Analytics Cloud
 * **Languages**
     + Spanish (B1), Portuguese (B1)
+
+## Research Experience
+
+* **University of California, Irvine**, Mar 2022 - Jun 2022
+    + Worked with studying the spatial distribution of cancer and immune system cells with respect to cancer outcome, under the supervision of Dr. Veronica Berrocal.
 
 ## Work Experience
 
