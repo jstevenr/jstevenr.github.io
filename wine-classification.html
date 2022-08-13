@@ -506,49 +506,136 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Comparing supervised machine learning algorithms in classifying wine quality</h1>
+<h1 class="title toc-ignore">Comparing supervised machine learning
+algorithms in classifying wine quality</h1>
 
 </div>
 
 
-<p>This paper was originally written as a final project for PSTAT 131 Data Mining at UC Santa Barbara in spring 2017. It was revised heavily for STATS 295 Advanced R at UC Irvine. A version of this project written in Python can be found on my GitHub <a href="https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb">here</a>.</p>
+<p>This paper was originally written as a final project for PSTAT 131
+Data Mining at UC Santa Barbara in spring 2017. It was revised heavily
+for STATS 295 Advanced R at UC Irvine. A version of this project written
+in Python can be found on my GitHub <a
+href="https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb">here</a>.</p>
 <hr />
 <div id="abstract" class="section level1">
 <h1>Abstract</h1>
-<p>There are many different machine learning techniques useful for classification. This paper compares various supervised learning algorithms, namely decision trees, k-nearest neighbors, and random forest in order to determine which is the most effective for binary classification. The usefulness of cross-validation and the necessity of randomness to ensure robustness is also discussed in this paper. We utilize a free and openly sourced dataset available on the UC Irvine Machine Learning Repository which includes several different attributes of wine including alcohol content, sulfur dioxide, and acidity, among others, and use these different ML algorithms to classify each of them as either good or bad. We found that the models that performed the best overall were random forest, but acknowledge that they suffer from a lack of interpretability on account of being a black-box algorithm.</p>
+<p>There are many different machine learning techniques useful for
+classification. This paper compares various supervised learning
+algorithms, namely decision trees, k-nearest neighbors, and random
+forest in order to determine which is the most effective for binary
+classification. The usefulness of cross-validation and the necessity of
+randomness to ensure robustness is also discussed in this paper. We
+utilize a free and openly sourced dataset available on the UC Irvine
+Machine Learning Repository which includes several different attributes
+of wine including alcohol content, sulfur dioxide, and acidity, among
+others, and use these different ML algorithms to classify each of them
+as either good or bad. We found that the models that performed the best
+overall were random forest, but acknowledge that they suffer from a lack
+of interpretability on account of being a black-box algorithm.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The importance of identifying what constitutes wine quality is a question of interest to many; whether you produce wine or consume it. While wine tasting as a profession has a long history, the application of statistics and machine learning to determine wine quality is comparatively much younger. Taking a dataset that has pre-existing quality scores assigned to different wines, we can apply supervised learning machine learning algorithms to attempt to determine which among them performs best when classifying the quality of the wine, and what attributes they determined were the most relevant in that classification.</p>
+<p>The importance of identifying what constitutes wine quality is a
+question of interest to many; whether you produce wine or consume it.
+While wine tasting as a profession has a long history, the application
+of statistics and machine learning to determine wine quality is
+comparatively much younger. Taking a dataset that has pre-existing
+quality scores assigned to different wines, we can apply supervised
+learning machine learning algorithms to attempt to determine which among
+them performs best when classifying the quality of the wine, and what
+attributes they determined were the most relevant in that
+classification.</p>
 </div>
 <div id="background" class="section level1">
 <h1>Background</h1>
-<p>We use this white wine quality dataset, and all of its attributes (e.g. sulfur dioxide content, pH) to determine what constitutes a “good” (or above average) quality wine. We used the R statistical computing language to conduct the analyses in this report. The data were found on the UC Irvine Machine Learning Repository <span class="citation">(<span>“<span>UCI</span> <span>Machine</span> <span>Learning</span> <span>Repository</span>”</span> n.d.)</span>.</p>
-<p>Knowing what makes a good wine was an interesting question because it allows us to look at “taste” in a different way–without formal training in wine tasting, we can determine algorithmically how and why a wine is good using machine learning.</p>
-<p>We utilized random forest, decision trees, and k-nearest neighbors to classify each observation as either good or bad based off of these attributes, while varying the number of variables, nodes, and number of neighbors and comparing within and between these methods.</p>
-<p>In this report, we find the accuracy, error rates, and area under the ROC curve (AUC) of each of the three methods and ultimately came to determine that random forest was the most effective in terms of accuracy and AUC. It works well as a generalization of the decision tree method, and as an algorithm it is robust, but it falls short in terms of interpretability. kNN on the other hand is slow to compute with a dataset of this dimensionality, as well as weaker in its accuracy both in absolute terms and relative to the other methods we have tested here.</p>
+<p>We use this white wine quality dataset, and all of its attributes
+(e.g. sulfur dioxide content, pH) to determine what constitutes a “good”
+(or above average) quality wine. We used the R statistical computing
+language to conduct the analyses in this report. The data were found on
+the UC Irvine Machine Learning Repository <span
+class="citation">(<span>“<span>UCI</span> <span>Machine</span>
+<span>Learning</span> <span>Repository</span>”</span> n.d.)</span>.</p>
+<p>Knowing what makes a good wine was an interesting question because it
+allows us to look at “taste” in a different way–without formal training
+in wine tasting, we can determine algorithmically how and why a wine is
+good using machine learning.</p>
+<p>We utilized random forest, decision trees, and k-nearest neighbors to
+classify each observation as either good or bad based off of these
+attributes, while varying the number of variables, nodes, and number of
+neighbors and comparing within and between these methods.</p>
+<p>In this report, we find the accuracy, error rates, and area under the
+ROC curve (AUC) of each of the three methods and ultimately came to
+determine that random forest was the most effective in terms of accuracy
+and AUC. It works well as a generalization of the decision tree method,
+and as an algorithm it is robust, but it falls short in terms of
+interpretability. kNN on the other hand is slow to compute with a
+dataset of this dimensionality, as well as weaker in its accuracy both
+in absolute terms and relative to the other methods we have tested
+here.</p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
-<p>First we can look at the correlation matrix of the dataset, to see if any predictors are highly correlated with one another. We may have to take out these predictors in order to avoid multicollinearity, which can invalidate results. Having said this, multicollinearity is less of an issue with decision trees, and even less so with random forest, both of which are going to be used in this analysis. See Figure @ref(fig:correlation-matrix) for the correlation matrix.</p>
+<p>First we can look at the correlation matrix of the dataset, to see if
+any predictors are highly correlated with one another. We may have to
+take out these predictors in order to avoid multicollinearity, which can
+invalidate results. Having said this, multicollinearity is less of an
+issue with decision trees, and even less so with random forest, both of
+which are going to be used in this analysis. See Figure
+@ref(fig:correlation-matrix) for the correlation matrix.</p>
 <div class="figure">
 <img src="wine-classification_files/figure-html/correlation-matrix-1.png" alt="The full correlation matrix of the data." width="672" />
 <p class="caption">
 The full correlation matrix of the data.
 </p>
 </div>
-<p>Taking a look at the correlation coefficients <span class="math inline">\(r\)</span> for the predictor variables, we see that <code>density</code> is strongly correlated with <code>residual.sugar</code> (<span class="math inline">\(r = 0.84\)</span>) and <code>alcohol</code> (<span class="math inline">\(r = -0.78\)</span>), and moderately correlated with <code>total.sulfur.dioxide</code> (<span class="math inline">\(r = 0.53\)</span>). <code>free.sulfur.dioxide</code> and <code>total.sulfur.dioxide</code> are also moderately correlated with each other (<span class="math inline">\(r = 0.62\)</span>) although this is trivially known because of course, free sulfur dioxide is incorporated into the total sulfur dioxide.</p>
-<p>Aside from that correlations are all very low, including (and especially) <code>quality</code>, the response variable, with the predictors.</p>
-<p>So, we should actually remove the variables <code>residual.sugar</code> and <code>density</code>, as well as <code>total.sulfur.dioxide</code> because if its direct relationship with <code>free.sulfur.dioxide</code>, in order to address problems with multi-collinearity. We’re going to withhold removing <code>alcohol</code>, to see the if the initial effect of removing just these three correlated variables is enough to address the issue. Then we’ll show a new correlation matrix. See Figure @ref(fig:correlation-matrix2).</p>
+<p>Taking a look at the correlation coefficients <span
+class="math inline">\(r\)</span> for the predictor variables, we see
+that <code>density</code> is strongly correlated with
+<code>residual.sugar</code> (<span class="math inline">\(r =
+0.84\)</span>) and <code>alcohol</code> (<span class="math inline">\(r =
+-0.78\)</span>), and moderately correlated with
+<code>total.sulfur.dioxide</code> (<span class="math inline">\(r =
+0.53\)</span>). <code>free.sulfur.dioxide</code> and
+<code>total.sulfur.dioxide</code> are also moderately correlated with
+each other (<span class="math inline">\(r = 0.62\)</span>) although this
+is trivially known because of course, free sulfur dioxide is
+incorporated into the total sulfur dioxide.</p>
+<p>Aside from that correlations are all very low, including (and
+especially) <code>quality</code>, the response variable, with the
+predictors.</p>
+<p>So, we should actually remove the variables
+<code>residual.sugar</code> and <code>density</code>, as well as
+<code>total.sulfur.dioxide</code> because if its direct relationship
+with <code>free.sulfur.dioxide</code>, in order to address problems with
+multi-collinearity. We’re going to withhold removing
+<code>alcohol</code>, to see the if the initial effect of removing just
+these three correlated variables is enough to address the issue. Then
+we’ll show a new correlation matrix. See Figure
+@ref(fig:correlation-matrix2).</p>
 <div class="figure">
 <img src="wine-classification_files/figure-html/correlation-matrix2-1.png" alt="The correlation matrix without residual sugar, density, or total sulfur dioxide." width="672" />
 <p class="caption">
-The correlation matrix without residual sugar, density, or total sulfur dioxide.
+The correlation matrix without residual sugar, density, or total sulfur
+dioxide.
 </p>
 </div>
-<p>From the new correlation matrix it appears that none of the predictors now have too high or a correlation with each other, and we can decide that multi-collinearity is no longer an issue.</p>
-<p>From here on out, we’re also going to want to convert the <code>quality</code> response variable into a binary factor so that we can use the predictors to classify the observations. We’re going to do this by labeling all of the observations that have received an above average (5 out of 10) as “good,” and the rest as “bad,” “bad” really meaning “not good.”</p>
-<p>It’s important to note that all of these numeric predictor variables (<code>fixed.acidity</code>, <code>volatile.acidity</code>, <code>citric.acid</code>, <code>chlorides</code>, <code>free.sulfur.dioxide</code>, <code>pH</code>, <code>sulphates</code>, <code>alcohol</code>) are not all scaled the same. As such, it’s appropriate to scale them before running any further analyses.</p>
+<p>From the new correlation matrix it appears that none of the
+predictors now have too high or a correlation with each other, and we
+can decide that multi-collinearity is no longer an issue.</p>
+<p>From here on out, we’re also going to want to convert the
+<code>quality</code> response variable into a binary factor so that we
+can use the predictors to classify the observations. We’re going to do
+this by labeling all of the observations that have received an above
+average (5 out of 10) as “good”, and the rest as “bad”, “bad” really
+meaning “not good”.</p>
+<p>It’s important to note that all of these numeric predictor variables
+(<code>fixed.acidity</code>, <code>volatile.acidity</code>,
+<code>citric.acid</code>, <code>chlorides</code>,
+<code>free.sulfur.dioxide</code>, <code>pH</code>,
+<code>sulphates</code>, <code>alcohol</code>) are not all scaled the
+same. As such, it’s appropriate to scale them before running any further
+analyses.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to circumvent the issue of scale() changing to a matrix</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>scale_this <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.vector</span>(<span class="fu">scale</span>(x))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -563,8 +650,16 @@ The correlation matrix without residual sugar, density, or total sulfur dioxide.
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">no =</span> <span class="st">&quot;bad&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(quality), <span class="sc">~</span> <span class="fu">factor</span>(quality, </span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>)))</span></code></pre></div>
-<p>Now we have 8 numeric predictor variables, and one two-level categorical variable (<code>quality</code>). We’re going to apply a few different classification methods in order to firstly determine which the best model for predicting is in terms of the relevant variables, and secondly to find the best classification algorithm for this data.</p>
-<p>In order to apply machine learning algorithms to this dataset, we need to stratify the dataset into a training set and a test set. The first set will be used to teach the classification model how to predict, depending on the algorithm chosen. We then apply the algorithm to the test set, and see how accurate the classification was.</p>
+<p>Now we have 8 numeric predictor variables, and one two-level
+categorical variable (<code>quality</code>). We’re going to apply a few
+different classification methods in order to firstly determine which the
+best model for predicting is in terms of the relevant variables, and
+secondly to find the best classification algorithm for this data.</p>
+<p>In order to apply machine learning algorithms to this dataset, we
+need to stratify the dataset into a training set and a test set. The
+first set will be used to teach the classification model how to predict,
+depending on the algorithm chosen. We then apply the algorithm to the
+test set, and see how accurate the classification was.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using a subset of 1000 obs for the training set</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>test_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(white_sc), <span class="dv">1000</span>)</span>
@@ -572,16 +667,54 @@ The correlation matrix without residual sugar, density, or total sulfur dioxide.
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="sc">-</span>test_indices)</span></code></pre></div>
 <div id="decision-tree" class="section level2">
 <h2>Decision Tree</h2>
-<p>The first method we are going to perform on this dataset, is Decision Trees. Decision tree is a non-parametric classification method, which uses a set of rules to predict that each observation belongs to the most commonly occurring class label of training data [tan_introduction_2019]. We’re going to build these models using the <code>rpart</code> package in R <span class="citation">(Therneau and Atkinson 2019)</span>.</p>
-<p>Of course, we’re going to use <code>quality</code> as a response variable, and each of the now 8 remaining numeric attributes as predictors.</p>
-<div id="repeated-k-fold-cross-validation-and-pruning" class="section level3">
+<p>The first method we are going to perform on this dataset, is Decision
+Trees. Decision tree is a non-parametric classification method, which
+uses a set of rules to predict that each observation belongs to the most
+commonly occurring class label of training data [tan_introduction_2019].
+We’re going to build these models using the <code>rpart</code> package
+in R <span class="citation">(Therneau and Atkinson 2019)</span>.</p>
+<p>Of course, we’re going to use <code>quality</code> as a response
+variable, and each of the now 8 remaining numeric attributes as
+predictors.</p>
+<div id="repeated-k-fold-cross-validation-and-pruning"
+class="section level3">
 <h3>Repeated k-fold Cross Validation and Pruning</h3>
-<p>We can use k-fold cross-validation, which randomly partitions the dataset into folds of similar size, to see if the tree requires any pruning which can improve the model’s accuracy as well as make it more interpretable for us.</p>
-<p>In k-fold cross validation, we divide the sample into <code>k</code> sub samples, then train the model on <code>k-1</code> samples, leaving one as a holdout sample. We compute validation error on each of these samples, then average the validation error of all of them.</p>
-<p>The idea of cross-validation is that it will sample multiple times from the training set, with different separations. Ultimately, this creates a more robust model i.e. the tree will not be overfit.</p>
-<p>We can further optimize and reduce overfitting by doing repeated k-fold cross validation which replicates the procedure multiple times and reports the mean performance across all folds and repeats. Overfitting refers to when a model is trained such that it can “predict” labels extremely well for the training data but very poorly for any data it hasn’t yet seen, such as a test set or even brand new data. There are two kinds of errors committed by a classification model: training errors and generalization errors <span class="citation">(Tan et al. 2019)</span>. The former refers to misclassification on the training data while the later refers to misclassification on unseen data (such as the test data). Ideally we would like to minimize both.</p>
-<p>Cross validation will help us find the optimal complexity value for the tree that yields the best accuracy while also being extremely robust. This method using the <code>caret</code> <span class="citation">(Kuhn 2020)</span> package finds the optimal complexity parameter (“<code>cp</code>”) for tuning and prunes the tree accordingly.</p>
-<p>Generally speaking, un-pruned decision trees that do not leverage cross-validation are prone to overfitting because they lack the element of randomness and also being overly complex. By building the model by using cross-validation to optimize the complexity parameter which determines the size of the tree, while also doing repeated random samples on the training data, we can end up with a simple, yet optimized tree that is robust and less prone to overfitting. See Figure @ref(fig:decision-tree-plot) for the decision tree plot.</p>
+<p>We can use k-fold cross-validation, which randomly partitions the
+dataset into folds of similar size, to see if the tree requires any
+pruning which can improve the model’s accuracy as well as make it more
+interpretable for us.</p>
+<p>In k-fold cross validation, we divide the sample into <code>k</code>
+sub samples, then train the model on <code>k-1</code> samples, leaving
+one as a holdout sample. We compute validation error on each of these
+samples, then average the validation error of all of them.</p>
+<p>The idea of cross-validation is that it will sample multiple times
+from the training set, with different separations. Ultimately, this
+creates a more robust model i.e. the tree will not be overfit.</p>
+<p>We can further optimize and reduce overfitting by doing repeated
+k-fold cross validation which replicates the procedure multiple times
+and reports the mean performance across all folds and repeats.
+Overfitting refers to when a model is trained such that it can “predict”
+labels extremely well for the training data but very poorly for any data
+it hasn’t yet seen, such as a test set or even brand new data. There are
+two kinds of errors committed by a classification model: training errors
+and generalization errors <span class="citation">(Tan et al.
+2019)</span>. The former refers to misclassification on the training
+data while the later refers to misclassification on unseen data (such as
+the test data). Ideally we would like to minimize both.</p>
+<p>Cross validation will help us find the optimal complexity value for
+the tree that yields the best accuracy while also being extremely
+robust. This method using the <code>caret</code> <span
+class="citation">(Kuhn 2020)</span> package finds the optimal complexity
+parameter (“<code>cp</code>”) for tuning and prunes the tree
+accordingly.</p>
+<p>Generally speaking, un-pruned decision trees that do not leverage
+cross-validation are prone to overfitting because they lack the element
+of randomness and also being overly complex. By building the model by
+using cross-validation to optimize the complexity parameter which
+determines the size of the tree, while also doing repeated random
+samples on the training data, we can end up with a simple, yet optimized
+tree that is robust and less prone to overfitting. See Figure
+@ref(fig:decision-tree-plot) for the decision tree plot.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(rpart) and library(caret) are loaded</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold cross validation repeated 3 times</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
@@ -601,13 +734,34 @@ The correlation matrix without residual sugar, density, or total sulfur dioxide.
 <div class="figure">
 <img src="wine-classification_files/figure-html/decision-tree-plot-1.png" alt="Decision tree built using rpart and 10-fold repeated cross-validation 3 times." width="672" />
 <p class="caption">
-Decision tree built using rpart and 10-fold repeated cross-validation 3 times.
+Decision tree built using rpart and 10-fold repeated cross-validation 3
+times.
 </p>
 </div>
-<p>We can see while looking at the tree how often <code>alcohol</code> appears and intuit from that that the amount of alcohol, whether high or low, plays at least some part in the model’s classification of a good wine. We also notice that the variables actually used in the construction of the tree were <code>alcohol</code>, <code>free.sulfur.dioxide</code>, and <code>volatile.acidity</code>. It’s notable that this decision tree doesn’t have many “leaves” because we used the optimal complexity parameter that came from the repeated cross-validation step.</p>
-<p>We can build a confusion matrix after using the data to predict on the test set, and then find the accuracy rate and the error rate. The confusion matrix is depicted as Table @ref(tab:tree-confusion-matrix).</p>
-<p>As an alternative metric to quantify the robustness of this method, we can use the Receiver Operating Characteristic (ROC) curve and the area underneath it (AUC). The ROC curve plots the false positive rate against the true positive rate, and the area underneath it falls between either 0.5 or 1, 0.5 being the worst (random classification), and 1 being the best (perfect classification). We can build the ROC curve and calculate the area underneath it using the <code>ROCR</code> package in R <span class="citation">(Sing et al. 2020)</span>.</p>
-<p>The Table @ref(tab:records-1) shows the accuracy and error rate as well as AUC for the decision tree model we have built. The ROC curve itself can be seen in Figure @ref(fig:tree-ROC-curve).</p>
+<p>We can see while looking at the tree how often <code>alcohol</code>
+appears and intuit from that that the amount of alcohol, whether high or
+low, plays at least some part in the model’s classification of a good
+wine. We also notice that the variables actually used in the
+construction of the tree were <code>alcohol</code>,
+<code>free.sulfur.dioxide</code>, and <code>volatile.acidity</code>.
+It’s notable that this decision tree doesn’t have many “leaves” because
+we used the optimal complexity parameter that came from the repeated
+cross-validation step.</p>
+<p>We can build a confusion matrix after using the data to predict on
+the test set, and then find the accuracy rate and the error rate. The
+confusion matrix is depicted as Table
+@ref(tab:tree-confusion-matrix).</p>
+<p>As an alternative metric to quantify the robustness of this method,
+we can use the Receiver Operating Characteristic (ROC) curve and the
+area underneath it (AUC). The ROC curve plots the false positive rate
+against the true positive rate, and the area underneath it falls between
+either 0.5 or 1, 0.5 being the worst (random classification), and 1
+being the best (perfect classification). We can build the ROC curve and
+calculate the area underneath it using the <code>ROCR</code> package in
+R <span class="citation">(Sing et al. 2020)</span>.</p>
+<p>The Table @ref(tab:records-1) shows the accuracy and error rate as
+well as AUC for the decision tree model we have built. The ROC curve
+itself can be seen in Figure @ref(fig:tree-ROC-curve).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a function that returns the accuracy of a confusion matrix</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>class_acc <span class="ot">&lt;-</span> <span class="cf">function</span>(conf) {</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">diag</span>(conf)) <span class="sc">/</span> <span class="fu">sum</span>(conf)</span>
@@ -772,16 +926,51 @@ NA
 </tr>
 </tbody>
 </table>
-<p>With an accuracy rate of <code>0.739</code>, this decision tree model is not superb, but will still classify correctly about 3 out of 4 times. The area under the ROC curve is about 0.746, which is halfway between randomness (0) and a perfect model (1), showing a rather mediocre model. A perfect right angle in the upper left would indicate a perfect model and an AUC of 1, and a diagonal (as shown in the plot) depicts an AUC of 0.5, indicating an equal chance of a false positive and a true positive.</p>
-<p>Having appraised this decision tree model by its accuracy rate, error rate, and AUC, we can now we can proceed to the next method of classification.</p>
+<p>With an accuracy rate of <code>0.739</code>, this decision tree model
+is not superb, but will still classify correctly about 3 out of 4 times.
+The area under the ROC curve is about 0.746, which is halfway between
+randomness (0) and a perfect model (1), showing a rather mediocre model.
+A perfect right angle in the upper left would indicate a perfect model
+and an AUC of 1, and a diagonal (as shown in the plot) depicts an AUC of
+0.5, indicating an equal chance of a false positive and a true
+positive.</p>
+<p>Having appraised this decision tree model by its accuracy rate, error
+rate, and AUC, we can now we can proceed to the next method of
+classification.</p>
 </div>
 </div>
 <div id="k-nearest-neighbors-knn" class="section level2">
 <h2>k-Nearest Neighbors (kNN)</h2>
-<p>We’re now going to apply the k-nearest neighbors method of classification, which is a non-parametric method. k-Nearest neighbors (or kNN) is called a “lazy learning” technique because it goes through the training set every time it predicts a test sample’s quality <span class="citation">(Tan et al. 2019)</span>. It finds this quality by plotting the test sample in the same dimensional space as the training data, then classifies it based on the “k nearest neighbor(s),” i.e. if k = 10, then the quality of the 10 nearest neighbors in the training data to the test data observation will be applied to that observation. We’re going to fit this model using the <code>class</code> package in R <span class="citation">(Ripley 2020)</span>.</p>
-<p>Distance is measured in different ways, but by default the <code>knn()</code> function utilizes Euclidean distance.</p>
-<p>This is rather problematic because when calculating distance it’s assumed that attributes have the same effect, while this is not generally true. So the distance metric (Euclidean distance in this case) does not take into account the attributes’ relationships with each other, which can result in misclassification. So already we have determined a shortcoming in the kNN method before we have even applied it. Although of course, we already dropped the predictors that were highly correlated with each other, and what’s more we scaled the remaining numeric predictors, which goes in a small way to addressing this.</p>
-<p>We’ll build a preliminary model using k = 10, calculate the accuracy and error rates as well as the AUC, and compare them with the previous model we build using decision trees. The confusion matrix for the model is in Table @ref(tab:knn-confusion-matrix). The comparison between this model and the decision tree model can be seen in Table @ref(tab:records-2). The ROC curve itself can be seen in Figure @ref(fig:knn-roc-curve).</p>
+<p>We’re now going to apply the k-nearest neighbors method of
+classification, which is a non-parametric method. k-Nearest neighbors
+(or kNN) is called a “lazy learning” technique because it goes through
+the training set every time it predicts a test sample’s quality <span
+class="citation">(Tan et al. 2019)</span>. It finds this quality by
+plotting the test sample in the same dimensional space as the training
+data, then classifies it based on the “k nearest neighbor(s)”, i.e. if k
+= 10, then the quality of the 10 nearest neighbors in the training data
+to the test data observation will be applied to that observation. We’re
+going to fit this model using the <code>class</code> package in R <span
+class="citation">(Ripley 2020)</span>.</p>
+<p>Distance is measured in different ways, but by default the
+<code>knn()</code> function utilizes Euclidean distance.</p>
+<p>This is rather problematic because when calculating distance it’s
+assumed that attributes have the same effect, while this is not
+generally true. So the distance metric (Euclidean distance in this case)
+does not take into account the attributes’ relationships with each
+other, which can result in misclassification. So already we have
+determined a shortcoming in the kNN method before we have even applied
+it. Although of course, we already dropped the predictors that were
+highly correlated with each other, and what’s more we scaled the
+remaining numeric predictors, which goes in a small way to addressing
+this.</p>
+<p>We’ll build a preliminary model using k = 10, calculate the accuracy
+and error rates as well as the AUC, and compare them with the previous
+model we build using decision trees. The confusion matrix for the model
+is in Table @ref(tab:knn-confusion-matrix). The comparison between this
+model and the decision tree model can be seen in Table
+@ref(tab:records-2). The ROC curve itself can be seen in Figure
+@ref(fig:knn-roc-curve).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(class) is loaded</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using 10 nearest neighbors</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
@@ -855,7 +1044,8 @@ good
 </table>
 <table>
 <caption>
-Matrix with accuracy rates and AUCs for decision trees and k-nearest neighbors.
+Matrix with accuracy rates and AUCs for decision trees and k-nearest
+neighbors.
 </caption>
 <thead>
 <tr>
@@ -951,14 +1141,26 @@ NA
 ROC curve of the k-nearest neighbors model where k=10.
 </p>
 </div>
-<p>So with k=10, the k-nearest neighbors model ended up with another mediocre accuracy rate (0.756). So with an AUC of 0.715, this test is not very good, but performed similarly to that of the decision tree model. We can look at different values for k and try to find the best one to use and then compare the results from that with these. Figure @ref(fig:finding-best-k) depicts this as a scatterplot of k against accuracy.</p>
+<p>So with k=10, the k-nearest neighbors model ended up with another
+mediocre accuracy rate (0.756). So with an AUC of 0.715, this test is
+not very good, but performed similarly to that of the decision tree
+model. We can look at different values for k and try to find the best
+one to use and then compare the results from that with these. Figure
+@ref(fig:finding-best-k) depicts this as a scatterplot of k against
+accuracy.</p>
 <div class="figure">
 <img src="wine-classification_files/figure-html/finding-best-k-1.png" alt="Testing various values of k with the k-nearest neighbors algorithm, and comparing accuracies." width="672" />
 <p class="caption">
-Testing various values of k with the k-nearest neighbors algorithm, and comparing accuracies.
+Testing various values of k with the k-nearest neighbors algorithm, and
+comparing accuracies.
 </p>
 </div>
-<p>This is interesting because accuracy seems to increase gradually, hit a peak, decrease again and slightly increase. We know well that using k = 1 will result in a very low bias and high variance, and this also means that we are fitting too closely to the training dataset and therefore, overfitting. This makes for a bad model that cannot be well generalized to new data.</p>
+<p>This is interesting because accuracy seems to increase gradually, hit
+a peak, decrease again and slightly increase. We know well that using k
+= 1 will result in a very low bias and high variance, and this also
+means that we are fitting too closely to the training dataset and
+therefore, overfitting. This makes for a bad model that cannot be well
+generalized to new data.</p>
 <p>Figure @ref(fig:worst-knn) demonstrates this.</p>
 <div class="figure">
 <img src="wine-classification_files/figure-html/worst-knn-1.png" alt="ROC curve for k-nearest neighbors model where k=1" width="672" />
@@ -966,8 +1168,16 @@ Testing various values of k with the k-nearest neighbors algorithm, and comparin
 ROC curve for k-nearest neighbors model where k=1
 </p>
 </div>
-<p>Note that the AUC is 0.5, which is the worst possible result since it is randomly guessing (it has the same chance of a true positive as it does a false positive). So we think better not to opt for k = 1 and rather choose some k like 35, which is still decently accurate, and probably less biased. The confusion matrix for the k = 35 model can be seen in Table @ref(tab:knn-35-confusion-matrix). As with the prior models we’ll calculate the accuracy and error rate as well as the AUC, and plot the ROC curve, which can be seen in Figure @ref(fig:knn35).</p>
-<p>The comparison of accuracy rates, error rates, and AUCs is seen in Table @ref(tab:records-2).</p>
+<p>Note that the AUC is 0.5, which is the worst possible result since it
+is randomly guessing (it has the same chance of a true positive as it
+does a false positive). So we think better not to opt for k = 1 and
+rather choose some k like 35, which is still decently accurate, and
+probably less biased. The confusion matrix for the k = 35 model can be
+seen in Table @ref(tab:knn-35-confusion-matrix). As with the prior
+models we’ll calculate the accuracy and error rate as well as the AUC,
+and plot the ROC curve, which can be seen in Figure @ref(fig:knn35).</p>
+<p>The comparison of accuracy rates, error rates, and AUCs is seen in
+Table @ref(tab:records-2).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(knn) is loaded</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>new_knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
@@ -1049,7 +1259,9 @@ ROC curve for k-nearest neighbors model where k=35
 </div>
 <table>
 <caption>
-Matrix comparing the accuracy rate, error rate, and AUC for the decision tree model, the 10-nearest neighbors model, and the 35-nearest neighbors model.
+Matrix comparing the accuracy rate, error rate, and AUC for the decision
+tree model, the 10-nearest neighbors model, and the 35-nearest neighbors
+model.
 </caption>
 <thead>
 <tr>
@@ -1139,14 +1351,41 @@ NA
 </tr>
 </tbody>
 </table>
-<p>Looking at the comparison between the models in Table @ref(tab:records-3), the area under the curve has increased somewhat while the accuracy has scarcely changed at all, so it could be argued that the test has improved. What’s more, with a dataset of this dimensionality, it is most likely better to use more neighbors if one can, because otherwise you run the risk of overfitting to the training data (which is why we did not opt for k=1.)</p>
-<p>So far when compared to the cross-validated decision tree, k-nearest neighbors (kNN) seems to be performing similarly in both accuracy and AUC, so it’s difficult to decide between them. It’s important to note that kNN is computationally rather expensive and it gets to be very complex when dealing with datasets with high dimensions (this dataset has nearly 5000 rows), so we think to rule out k-nearest neighbors when deciding what the best method of classification is, at least in comparison to decision trees.</p>
-<p>Finally we can move on to the final method of classification, random forest.</p>
+<p>Looking at the comparison between the models in Table
+@ref(tab:records-3), the area under the curve has increased somewhat
+while the accuracy has scarcely changed at all, so it could be argued
+that the test has improved. What’s more, with a dataset of this
+dimensionality, it is most likely better to use more neighbors if one
+can, because otherwise you run the risk of overfitting to the training
+data (which is why we did not opt for k=1.)</p>
+<p>So far when compared to the cross-validated decision tree, k-nearest
+neighbors (kNN) seems to be performing similarly in both accuracy and
+AUC, so it’s difficult to decide between them. It’s important to note
+that kNN is computationally rather expensive and it gets to be very
+complex when dealing with datasets with high dimensions (this dataset
+has nearly 5000 rows), so we think to rule out k-nearest neighbors when
+deciding what the best method of classification is, at least in
+comparison to decision trees.</p>
+<p>Finally we can move on to the final method of classification, random
+forest.</p>
 </div>
 <div id="random-forest" class="section level2">
 <h2>Random Forest</h2>
-<p>Random forest is similar to the decision tree method in that it builds trees, hence the name ‘random forest.’ This is an ensemble learning method which creates a multitude of decision trees, and outputting the class that occurs most frequently among them. The advantage that random forest has over decision trees is the element of randomness which guards against the pitfall of overfitting that decision trees run into on their own.</p>
-<p>As we did with the other models, we’ll calculate the accuracy rate, error rate, and AUC for this random forest model using all of the predictors. These metrics as well as the comparison between this model and the other models can be seen in Table @ref(tab:records-4). The actual ROC curve is in Figure @ref(fig:full-rf-roc). The confusion matrix is in Table @ref(tab:rf-confmat). This random forest model will be built by using the <code>randomForest</code> package in R <span class="citation">(Breiman et al. 2018)</span>.</p>
+<p>Random forest is similar to the decision tree method in that it
+builds trees, hence the name ‘random forest’. This is an ensemble
+learning method which creates a multitude of decision trees, and
+outputting the class that occurs most frequently among them. The
+advantage that random forest has over decision trees is the element of
+randomness which guards against the pitfall of overfitting that decision
+trees run into on their own.</p>
+<p>As we did with the other models, we’ll calculate the accuracy rate,
+error rate, and AUC for this random forest model using all of the
+predictors. These metrics as well as the comparison between this model
+and the other models can be seen in Table @ref(tab:records-4). The
+actual ROC curve is in Figure @ref(fig:full-rf-roc). The confusion
+matrix is in Table @ref(tab:rf-confmat). This random forest model will
+be built by using the <code>randomForest</code> package in R <span
+class="citation">(Breiman et al. 2018)</span>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random Forest</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using all 8 predictor attributes, on the training set</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
@@ -1225,7 +1464,9 @@ ROC Curve for full random forest with 8 variables.
 </div>
 <table>
 <caption>
-Matrix comparing the accuracy rate, error rate, and AUC for the decision tre model, the 10-nearest neighbors model, the 35-nearest neighbors model, and the full random forest.
+Matrix comparing the accuracy rate, error rate, and AUC for the decision
+tre model, the 10-nearest neighbors model, the 35-nearest neighbors
+model, and the full random forest.
 </caption>
 <thead>
 <tr>
@@ -1315,21 +1556,52 @@ NA
 </tr>
 </tbody>
 </table>
-<p>With an accuracy rate of 0.829, this random forest model is looking pretty good so far, and it already is more accurate than any method we’ve tried thus far. The area under the ROC curve for random forest is 0.892, which is also a strong AUC for a classification model and far above the competing models.</p>
-<p>So we see actually that random forest stands head and shoulders above the other two methods, decision tree and k-nearest neighbors. This is seen in the fact that the accuracy rate, as well as the AUC, are the highest. Judging from this, we can assume that random forest would be the most likely to correctly classify a wine based off of the attributes and data given.</p>
+<p>With an accuracy rate of 0.829, this random forest model is looking
+pretty good so far, and it already is more accurate than any method
+we’ve tried thus far. The area under the ROC curve for random forest is
+0.892, which is also a strong AUC for a classification model and far
+above the competing models.</p>
+<p>So we see actually that random forest stands head and shoulders above
+the other two methods, decision tree and k-nearest neighbors. This is
+seen in the fact that the accuracy rate, as well as the AUC, are the
+highest. Judging from this, we can assume that random forest would be
+the most likely to correctly classify a wine based off of the attributes
+and data given.</p>
 <div id="a-smaller-random-forest-model" class="section level3">
 <h3>A smaller Random Forest model</h3>
-<p>We can look at a variable importance plot (See Figure @ref(fig:varImpPlot)) to see how the variables measure up against each other in terms of how relevant they are to the classification.</p>
+<p>We can look at a variable importance plot (See Figure
+@ref(fig:varImpPlot)) to see how the variables measure up against each
+other in terms of how relevant they are to the classification.</p>
 <div class="figure">
 <img src="wine-classification_files/figure-html/varImpPlot-1.png" alt="Variable Importance Plot comparing the Gini impurity index" width="672" />
 <p class="caption">
 Variable Importance Plot comparing the Gini impurity index
 </p>
 </div>
-<p><code>meanDecreaseGini</code> refers to the “mean decrease in node impurity.” Impurity is a way that the optimal condition of a tree is determined, and this plot shows how each variable individually affects the weighted impurity of the tree itself.</p>
-<p>This random forest model used all 8 of the predictor variables. This variable importance plot shows how ‘important’ each variable was in determining the classification. We can see that, consistent with the decision tree, that <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code> are the three most important predictors. While this random forest model was pretty effective in utilizing all of the 8 predictors, we can take a look at a model using only these 3 as well for the sake of comparison.</p>
-<p>We have established by now that simpler models have a reduced bias and complexity, but higher variance and a higher chance of under-fitting, whereas complex models (such as the full model) have the opposite issue. The good thing about random forest is that it inherently accounts for this “Bias-Variance” trade-off by introducing randomness with bagging (bootstrap aggregating).</p>
-<p>The question here is whether or not making the model simpler is worthwhile, but we can build the simple model and compare their metrics to find out. This comparison with the prior models can be seen in Table @ref(tab:records-5). The ROC curve for this model is depicted in Figure @ref(fig:partial-rf-roc) and the confusion matrix in Table @ref(tab:partial-rf-confmat).</p>
+<p><code>meanDecreaseGini</code> refers to the “mean decrease in node
+impurity”. Impurity is a way that the optimal condition of a tree is
+determined, and this plot shows how each variable individually affects
+the weighted impurity of the tree itself.</p>
+<p>This random forest model used all 8 of the predictor variables. This
+variable importance plot shows how ‘important’ each variable was in
+determining the classification. We can see that, consistent with the
+decision tree, that <code>alcohol</code>, <code>volatile.acidity</code>,
+and <code>free.sulfur.dioxide</code> are the three most important
+predictors. While this random forest model was pretty effective in
+utilizing all of the 8 predictors, we can take a look at a model using
+only these 3 as well for the sake of comparison.</p>
+<p>We have established by now that simpler models have a reduced bias
+and complexity, but higher variance and a higher chance of
+under-fitting, whereas complex models (such as the full model) have the
+opposite issue. The good thing about random forest is that it inherently
+accounts for this “Bias-Variance” trade-off by introducing randomness
+with bagging (bootstrap aggregating).</p>
+<p>The question here is whether or not making the model simpler is
+worthwhile, but we can build the simple model and compare their metrics
+to find out. This comparison with the prior models can be seen in Table
+@ref(tab:records-5). The ROC curve for this model is depicted in Figure
+@ref(fig:partial-rf-roc) and the confusion matrix in Table
+@ref(tab:partial-rf-confmat).</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rf2 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> alcohol <span class="sc">+</span> volatile.acidity <span class="sc">+</span> free.sulfur.dioxide,</span>
@@ -1400,12 +1672,14 @@ good
 <div class="figure">
 <img src="wine-classification_files/figure-html/partial-rf-roc-1.png" alt="ROC curve for the random forest model using predictors 'free sulfur dioxide', 'volatile acidity', and 'alcohol'." width="672" />
 <p class="caption">
-ROC curve for the random forest model using predictors ‘free sulfur dioxide,’ ‘volatile acidity,’ and ‘alcohol.’
+ROC curve for the random forest model using predictors ‘free sulfur
+dioxide’, ‘volatile acidity’, and ‘alcohol’.
 </p>
 </div>
 <table>
 <caption>
-The final matrix comparing the accuracy rates, error rates, and AUCs for all of the models.
+The final matrix comparing the accuracy rates, error rates, and AUCs for
+all of the models.
 </caption>
 <thead>
 <tr>
@@ -1495,58 +1769,127 @@ small Random Forest
 </tr>
 </tbody>
 </table>
-<p>The accuracy rate has actually decreased from 0.829 to 0.798, as well as the area under the curve from 0.892 to 0.854, but the model remains relatively strong, at least compared to the others. We’re managed to actually preserve the strength of the model, both in relation to the tree and k-nearest neighbor methods, but also relative to the original application of random forest with all of the predictors.</p>
-<p>As such, we can opt to utilize this much smaller model for classification instead if we are concerned about complexity and bias. Having said that, because of the randomization introduced in the random forest, it is inherently more robust so sub-setting in this manner may not even be unnecessary.</p>
+<p>The accuracy rate has actually decreased from 0.829 to 0.798, as well
+as the area under the curve from 0.892 to 0.854, but the model remains
+relatively strong, at least compared to the others. We’re managed to
+actually preserve the strength of the model, both in relation to the
+tree and k-nearest neighbor methods, but also relative to the original
+application of random forest with all of the predictors.</p>
+<p>As such, we can opt to utilize this much smaller model for
+classification instead if we are concerned about complexity and bias.
+Having said that, because of the randomization introduced in the random
+forest, it is inherently more robust so sub-setting in this manner may
+not even be unnecessary.</p>
 </div>
 </div>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
-<p>Now that we have accuracy and AUC metrics for all of the models, we can compare them on a plot to judge which is the best model. See Figure @ref(fig:final-comparison).</p>
+<p>Now that we have accuracy and AUC metrics for all of the models, we
+can compare them on a plot to judge which is the best model. See Figure
+@ref(fig:final-comparison).</p>
 <div class="figure">
 <img src="wine-classification_files/figure-html/final-comparison-1.png" alt="Scatterplot comparing AUC and Accuracy Rate of all models." width="672" />
 <p class="caption">
 Scatterplot comparing AUC and Accuracy Rate of all models.
 </p>
 </div>
-<p>Looking at this plot of accuracy rate against AUC, it’s quite clear that the largest random forest model is the best one, even after downsizing the model to a subset of the predictors. With that said, the smaller random forest model still comes out much stronger than the competition in comparison.</p>
+<p>Looking at this plot of accuracy rate against AUC, it’s quite clear
+that the largest random forest model is the best one, even after
+downsizing the model to a subset of the predictors. With that said, the
+smaller random forest model still comes out much stronger than the
+competition in comparison.</p>
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>
-<p>So judging from all of our findings, we have seen that in this case, random forest is the best algorithm (out of the three we’ve compared) for classifying this wine dataset. So we have answered the question of what among these three classification algorithms is truly the best.</p>
-<p>The decision tree algorithm is useful but ultimately, random forest is superior version of it since it aggregates many decision trees to create an optimized model that is not susceptible to overfitting. When it comes to interpretability however, a decision tree is preferred. When using a decision tree however it is important to use cross-validation (ideally repeatedly) to ensure the tree does not overfit while retaining interpretability.</p>
-<p>Compared to decision trees, the k-nearest neighbor algorithm has a slightly greater accuracy rate but a worse AUC. The decision tree method did however help to narrow down the three most relevant attributes: <code>alcohol</code>, <code>volatile.acidity</code>, and <code>free.sulfur.dioxide</code>. This finding was consistent with when we took a look at the most important variables in the random forest model.</p>
-<p>We were able to apply this subset of attributes to the random forest algorithm and come out with a strong model that only utilizes a few independent variables in order to classify at a high success rate. This lends strength to the argument that these three variables are the most relevant when it comes to determining the content of a good wine.</p>
-<p>As far as what these variables’ importance is in reality, is that sulfur dioxide is crucial for killing bacteria in wine when creating it. On the other hand, volatile acidity is an undesired trait in wine that affects flavor, that can be caused by such bacteria. So it makes sense that wine that is high in sulfur dioxide, and low in volatile acidity, is considered good.</p>
-<p>The pending questions that remain are, did we overfit or underfit to the training data when testing these different classification methods? It is also worth determining exactly the threshold for the amounts of these variables such as <code>alcohol</code>, for example finding the optimal amount of alcohol content to create a good wine.</p>
-<p>We would also like to delve more into how best to select some k for kNN that maintains a high level of accuracy while also having a balance between bias and variance without either over or underfitting. We would also posit a similar question for the number of nodes in a decision tree. Finally, is dropping variables in random forest really necessary, if the randomization inherent in it already accounts for overfitting?</p>
-<p>If we can only compare models that utilize the same set of predictors, then we should look at the pruned classification tree against the random forest model utilizing the same attributes. We see even there that the random forest model is superior.</p>
-<p>In conclusion we have found that random forest is best for binary classification and that alcohol, volatile acidity, and free sulfur dioxide are the most important predictors when attempting to classify a good wine.</p>
+<p>So judging from all of our findings, we have seen that in this case,
+random forest is the best algorithm (out of the three we’ve compared)
+for classifying this wine dataset. So we have answered the question of
+what among these three classification algorithms is truly the best.</p>
+<p>The decision tree algorithm is useful but ultimately, random forest
+is superior version of it since it aggregates many decision trees to
+create an optimized model that is not susceptible to overfitting. When
+it comes to interpretability however, a decision tree is preferred. When
+using a decision tree however it is important to use cross-validation
+(ideally repeatedly) to ensure the tree does not overfit while retaining
+interpretability.</p>
+<p>Compared to decision trees, the k-nearest neighbor algorithm has a
+slightly greater accuracy rate but a worse AUC. The decision tree method
+did however help to narrow down the three most relevant attributes:
+<code>alcohol</code>, <code>volatile.acidity</code>, and
+<code>free.sulfur.dioxide</code>. This finding was consistent with when
+we took a look at the most important variables in the random forest
+model.</p>
+<p>We were able to apply this subset of attributes to the random forest
+algorithm and come out with a strong model that only utilizes a few
+independent variables in order to classify at a high success rate. This
+lends strength to the argument that these three variables are the most
+relevant when it comes to determining the content of a good wine.</p>
+<p>As far as what these variables’ importance is in reality, is that
+sulfur dioxide is crucial for killing bacteria in wine when creating it.
+On the other hand, volatile acidity is an undesired trait in wine that
+affects flavor, that can be caused by such bacteria. So it makes sense
+that wine that is high in sulfur dioxide, and low in volatile acidity,
+is considered good.</p>
+<p>The pending questions that remain are, did we overfit or underfit to
+the training data when testing these different classification methods?
+It is also worth determining exactly the threshold for the amounts of
+these variables such as <code>alcohol</code>, for example finding the
+optimal amount of alcohol content to create a good wine.</p>
+<p>We would also like to delve more into how best to select some k for
+kNN that maintains a high level of accuracy while also having a balance
+between bias and variance without either over or underfitting. We would
+also posit a similar question for the number of nodes in a decision
+tree. Finally, is dropping variables in random forest really necessary,
+if the randomization inherent in it already accounts for
+overfitting?</p>
+<p>If we can only compare models that utilize the same set of
+predictors, then we should look at the pruned classification tree
+against the random forest model utilizing the same attributes. We see
+even there that the random forest model is superior.</p>
+<p>In conclusion we have found that random forest is best for binary
+classification and that alcohol, volatile acidity, and free sulfur
+dioxide are the most important predictors when attempting to classify a
+good wine.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-R-randomForest" class="csl-entry">
-Breiman, Leo, Adele Cutler, Andy Liaw, and Matthew Wiener. 2018. <em>randomForest: Breiman and Cutler’s Random Forests for Classification and Regression</em>. <a href="https://www.stat.berkeley.edu/~breiman/RandomForests/">https://www.stat.berkeley.edu/~breiman/RandomForests/</a>.
+Breiman, Leo, Adele Cutler, Andy Liaw, and Matthew Wiener. 2018.
+<em>randomForest: Breiman and Cutler’s Random Forests for Classification
+and Regression</em>. <a
+href="https://www.stat.berkeley.edu/~breiman/RandomForests/">https://www.stat.berkeley.edu/~breiman/RandomForests/</a>.
 </div>
 <div id="ref-R-caret" class="csl-entry">
-Kuhn, Max. 2020. <em>Caret: Classification and Regression Training</em>. <a href="https://github.com/topepo/caret/">https://github.com/topepo/caret/</a>.
+Kuhn, Max. 2020. <em>Caret: Classification and Regression Training</em>.
+<a
+href="https://github.com/topepo/caret/">https://github.com/topepo/caret/</a>.
 </div>
 <div id="ref-R-class" class="csl-entry">
-Ripley, Brian. 2020. <em>Class: Functions for Classification</em>. <a href="http://www.stats.ox.ac.uk/pub/MASS4/">http://www.stats.ox.ac.uk/pub/MASS4/</a>.
+Ripley, Brian. 2020. <em>Class: Functions for Classification</em>. <a
+href="http://www.stats.ox.ac.uk/pub/MASS4/">http://www.stats.ox.ac.uk/pub/MASS4/</a>.
 </div>
 <div id="ref-R-ROCR" class="csl-entry">
-Sing, Tobias, Oliver Sander, Niko Beerenwinkel, and Thomas Lengauer. 2020. <em>ROCR: Visualizing the Performance of Scoring Classifiers</em>. <a href="http://ipa-tys.github.io/ROCR/">http://ipa-tys.github.io/ROCR/</a>.
+Sing, Tobias, Oliver Sander, Niko Beerenwinkel, and Thomas Lengauer.
+2020. <em>ROCR: Visualizing the Performance of Scoring Classifiers</em>.
+<a
+href="http://ipa-tys.github.io/ROCR/">http://ipa-tys.github.io/ROCR/</a>.
 </div>
 <div id="ref-tan_introduction_2019" class="csl-entry">
-Tan, Pang-Ning, Michael Steinbach, Anuj Karpatne, and Vipin Kumar. 2019. <em>Introduction to Data Mining</em>. Second edition. NY NY: Pearson.
+Tan, Pang-Ning, Michael Steinbach, Anuj Karpatne, and Vipin Kumar. 2019.
+<em>Introduction to Data Mining</em>. Second edition. NY NY: Pearson.
 </div>
 <div id="ref-R-rpart" class="csl-entry">
-Therneau, Terry, and Beth Atkinson. 2019. <em>Rpart: Recursive Partitioning and Regression Trees</em>. <a href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.
+Therneau, Terry, and Beth Atkinson. 2019. <em>Rpart: Recursive
+Partitioning and Regression Trees</em>. <a
+href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.
 </div>
 <div id="ref-noauthor_uci_nodate" class="csl-entry">
-<span>“<span>UCI</span> <span>Machine</span> <span>Learning</span> <span>Repository</span>.”</span> n.d. Accessed November 1, 2020. <a href="https://archive.ics.uci.edu/ml/index.php">https://archive.ics.uci.edu/ml/index.php</a>.
+<span>“<span>UCI</span> <span>Machine</span> <span>Learning</span>
+<span>Repository</span>.”</span> n.d. Accessed November 1, 2020. <a
+href="https://archive.ics.uci.edu/ml/index.php">https://archive.ics.uci.edu/ml/index.php</a>.
 </div>
 </div>
 </div>

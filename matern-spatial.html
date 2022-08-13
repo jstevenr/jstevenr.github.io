@@ -313,7 +313,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Spatial modeling of school shootings as a Matern clustered point process</h1>
+<h1 class="title toc-ignore">Spatial modeling of school shootings as a
+Matern clustered point process</h1>
 <h4 class="author">J Steven Raquel</h4>
 
 </div>
@@ -321,45 +322,132 @@ $(document).ready(function () {
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The prevalence of gun violence in schools in the United States has been referred to both as an epidemic and a public health crisis, and one that has steadily increased over the past several decades, as can be seen by the following plot. Apart from the trauma that such an event can bring to a community, there is also resonant fear that such incidents inspire copycat events on a local and a larger scale. This spatial analysis attempts to model the incidence of these shootings as a Poisson point process, in order to ascertain whether the locations and events occur with complete spatial randomness, and thereafter create a model with which these events can be predicted. Ultimately, a Cox Matern cluster process model was decided upon, which lead us to conclude that school shooting events may in fact give rise to future school shootings around them.</p>
+<p>The prevalence of gun violence in schools in the United States has
+been referred to both as an epidemic and a public health crisis, and one
+that has steadily increased over the past several decades, as can be
+seen by the following plot. Apart from the trauma that such an event can
+bring to a community, there is also resonant fear that such incidents
+inspire copycat events on a local and a larger scale. This spatial
+analysis attempts to model the incidence of these shootings as a Poisson
+point process, in order to ascertain whether the locations and events
+occur with complete spatial randomness, and thereafter create a model
+with which these events can be predicted. Ultimately, a Cox Matern
+cluster process model was decided upon, which lead us to conclude that
+school shooting events may in fact give rise to future school shootings
+around them.</p>
 <p><img src="matern-spatial_files/figure-html/ts-plot-1990-2019-1.png" width="672" /></p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p>The data was sourced directly from the K-12 School Shooting Database made available by the Center for Homeland Defense and Security, and was specifically subset to between the years of 1990-2019. The information that comprises the dataset was determined by a specific process which entailed asking what exactly comprises a school shooting. Although the original database contains shootings ruled accidental (from misuse of a firearm) as well as incidences of gang-related gun violence on school grounds, suicide, or using a firearm to damage school property, we did not opt to consider this data as relevant to this study in particular. Targeted events related to domestic situations such as incidents between the perpetrator and their bully, or the escalation of disputes such as fistfights in which one person pulls out a firearm however, were ruled school shootings for the purposes of this study.</p>
+<p>The data was sourced directly from the K-12 School Shooting Database
+made available by the Center for Homeland Defense and Security, and was
+specifically subset to between the years of 1990-2019. The information
+that comprises the dataset was determined by a specific process which
+entailed asking what exactly comprises a school shooting. Although the
+original database contains shootings ruled accidental (from misuse of a
+firearm) as well as incidences of gang-related gun violence on school
+grounds, suicide, or using a firearm to damage school property, we did
+not opt to consider this data as relevant to this study in particular.
+Targeted events related to domestic situations such as incidents between
+the perpetrator and their bully, or the escalation of disputes such as
+fistfights in which one person pulls out a firearm however, were ruled
+school shootings for the purposes of this study.</p>
 </div>
 <div id="exploratory-data-analysis" class="section level2">
 <h2>Exploratory Data Analysis</h2>
-<p>As we can see from the following plots, these events tend to occur in and around the same places, which gives credence to our hypothesis that the events exhibit a clustered pattern. We notice in fact, that there are areas that seem relatively untouched by school shootings in the western United States, whereas shootings all across the South, Midwest and the East Coast recur a great deal. While the West Coast is somewhat blighted by school shootings, particularly in the San Francisco and Los Angeles metropolitan areas, along with major cities in the Pacific Northwest), it is not nearly at the rate experienced by the other side of the US. A visual mapping of the kernel density of this point pattern is placed in the Appendix for reference.</p>
+<p>As we can see from the following plots, these events tend to occur in
+and around the same places, which gives credence to our hypothesis that
+the events exhibit a clustered pattern. We notice in fact, that there
+are areas that seem relatively untouched by school shootings in the
+western United States, whereas shootings all across the South, Midwest
+and the East Coast recur a great deal. While the West Coast is somewhat
+blighted by school shootings, particularly in the San Francisco and Los
+Angeles metropolitan areas, along with major cities in the Pacific
+Northwest), it is not nearly at the rate experienced by the other side
+of the US. A visual mapping of the kernel density of this point pattern
+is placed in the Appendix for reference.</p>
 <p><img src="matern-spatial_files/figure-html/plot-point-pattern-9019-1.png" width="672" /></p>
 <p><img src="matern-spatial_files/figure-html/plot-point-patterns-1.png" width="672" /></p>
-<p>One thing that it is important to note, as with many spatial analyses that relate to events caused by humans, that the rate of these events do correlate in areas with high population density, i.e. there are more school shootings in states where many people live, particularly California and Florida (see Appendix for a plot of population per state in 2019). While the implications of this will not be well explored in this literature, it is important to take note of as a confounding factor when asking questions about the frequency of these events.</p>
+<p>One thing that it is important to note, as with many spatial analyses
+that relate to events caused by humans, that the rate of these events do
+correlate in areas with high population density, i.e. there are more
+school shootings in states where many people live, particularly
+California and Florida (see Appendix for a plot of population per state
+in 2019). While the implications of this will not be well explored in
+this literature, it is important to take note of as a confounding factor
+when asking questions about the frequency of these events.</p>
 </div>
 <div id="point-pattern-analysis" class="section level2">
 <h2>Point Pattern Analysis</h2>
-<p>With respect to the coordinate-level data, as with any spatial point pattern analysis, we are concerned with the following three questions, 1) whether the points are located at random, 2) whether they are clustered, and 3) whether they are a regular point pattern.</p>
-<p>The hypothesis of <em>complete spatial randomness</em>, or a homogeneous Poisson process, asserts the following:</p>
+<p>With respect to the coordinate-level data, as with any spatial point
+pattern analysis, we are concerned with the following three questions,
+1) whether the points are located at random, 2) whether they are
+clustered, and 3) whether they are a regular point pattern.</p>
+<p>The hypothesis of <em>complete spatial randomness</em>, or a
+homogeneous Poisson process, asserts the following:</p>
 <ul>
-<li>The number of events in any region <span class="math inline">\(S\)</span> with area <span class="math inline">\(|S|\)</span> follows a Poisson distribution with mean <span class="math inline">\(\lambda |S|\)</span>, where <span class="math inline">\(\lambda\)</span> is the intensity, i.e. <span class="math inline">\(\lambda\)</span> does not change over <span class="math inline">\(S\)</span></li>
-<li>Given <span class="math inline">\(n\)</span> events in <span class="math inline">\(S\)</span>, the points <span class="math inline">\(s_i\)</span> are independently located according to the uniform distribution on <span class="math inline">\(S\)</span>, i.e. there is no interaction amongst events.</li>
+<li>The number of events in any region <span
+class="math inline">\(S\)</span> with area <span
+class="math inline">\(|S|\)</span> follows a Poisson distribution with
+mean <span class="math inline">\(\lambda |S|\)</span>, where <span
+class="math inline">\(\lambda\)</span> is the intensity, i.e. <span
+class="math inline">\(\lambda\)</span> does not change over <span
+class="math inline">\(S\)</span></li>
+<li>Given <span class="math inline">\(n\)</span> events in <span
+class="math inline">\(S\)</span>, the points <span
+class="math inline">\(s_i\)</span> are independently located according
+to the uniform distribution on <span class="math inline">\(S\)</span>,
+i.e. there is no interaction amongst events.</li>
 </ul>
-<p>The intensity function <span class="math inline">\(\lambda(s)\)</span>, also known as the first-order property of the spatial point process, is defined as</p>
-<p><span class="math display">\[\lambda(s) = \lim_{|\Delta s| \to 0} \frac{E[N(\Delta s)]}{| \Delta s|}\]</span></p>
-<p>In a homogeneous Poisson process the distribution of events is scattered all throughout the space such that there are no clusters anywhere nor any consistent pattern, an example of this can be seen by the following plot.</p>
+<p>The intensity function <span
+class="math inline">\(\lambda(s)\)</span>, also known as the first-order
+property of the spatial point process, is defined as</p>
+<p><span class="math display">\[\lambda(s) = \lim_{|\Delta s| \to 0}
+\frac{E[N(\Delta s)]}{| \Delta s|}\]</span></p>
+<p>In a homogeneous Poisson process the distribution of events is
+scattered all throughout the space such that there are no clusters
+anywhere nor any consistent pattern, an example of this can be seen by
+the following plot.</p>
 <p><img src="matern-spatial_files/figure-html/plot-simulate-ppm-1.png" width="672" /></p>
-<p>We want to test formally that the data does not follow such a distribution. We can do this by conducting a quadrat test.</p>
+<p>We want to test formally that the data does not follow such a
+distribution. We can do this by conducting a quadrat test.</p>
 <div id="quadrat-test" class="section level3">
 <h3>Quadrat Test</h3>
-<p>As a tool for diagnosing complete spatial randomness, we can split up the spatial domain into what are referred to as <em>quadrats</em>, small subsets of the event space, and counting the number of events contained within each quadrat. We can test against the hypothesis of complete spatial randomness by generating a <span class="math inline">\(\chi^2\)</span> test statistic based on the number of expected vs observed events in each quadrat.</p>
+<p>As a tool for diagnosing complete spatial randomness, we can split up
+the spatial domain into what are referred to as <em>quadrats</em>, small
+subsets of the event space, and counting the number of events contained
+within each quadrat. We can test against the hypothesis of complete
+spatial randomness by generating a <span
+class="math inline">\(\chi^2\)</span> test statistic based on the number
+of expected vs observed events in each quadrat.</p>
 <p>The quadrat plot of the process is given by the following:</p>
 <p><img src="matern-spatial_files/figure-html/plot-quadrats-1990-2019-1.png" width="672" /></p>
-<p>It’s important to note the count of events contained within each quadrat is dependent on the definition of these dimensions, so they can be subject to misleading conclusions as a result. Since the continental United States is not shaped like a simple polygon, dividing it into a reasonable number of equitable and reasonably defined quadrats is not an easy task and this is a shortcoming we have to recognize.</p>
-<p>One methodology for testing for clustering is a Monte Carlo quadrat test in which we take a number of simulations of patterns under the null hypothesis e.g. the homogeneous Poisson point pattern we observed, and compute a Pearson’s <span class="math inline">\(\chi^2\)</span> test statistic based on the expected and observed counts in each quadrat, and their residuals. The alternative hypothesis varies depending on the test, but we want to determine specifically whether 1) the pattern is homogeneous or not and 2) whether the pattern is clustered.</p>
-<p>The <span class="math inline">\(\chi^2\)</span> test statistic is given as follows</p>
-<p><span class="math display">\[\chi^2 = \sum_{i=1}^n \frac{(O_i - E_i)^2}{E_i}\]</span></p>
-<p>where <span class="math inline">\(O_i\)</span> is the number of observed events, <span class="math inline">\(E_i\)</span> is the number of expected events under the null hypothesis <span class="math inline">\(H_0\)</span> of complete spatial randomness, and <span class="math inline">\(n\)</span> is the total number of events.</p>
+<p>It’s important to note the count of events contained within each
+quadrat is dependent on the definition of these dimensions, so they can
+be subject to misleading conclusions as a result. Since the continental
+United States is not shaped like a simple polygon, dividing it into a
+reasonable number of equitable and reasonably defined quadrats is not an
+easy task and this is a shortcoming we have to recognize.</p>
+<p>One methodology for testing for clustering is a Monte Carlo quadrat
+test in which we take a number of simulations of patterns under the null
+hypothesis e.g. the homogeneous Poisson point pattern we observed, and
+compute a Pearson’s <span class="math inline">\(\chi^2\)</span> test
+statistic based on the expected and observed counts in each quadrat, and
+their residuals. The alternative hypothesis varies depending on the
+test, but we want to determine specifically whether 1) the pattern is
+homogeneous or not and 2) whether the pattern is clustered.</p>
+<p>The <span class="math inline">\(\chi^2\)</span> test statistic is
+given as follows</p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^n \frac{(O_i -
+E_i)^2}{E_i}\]</span></p>
+<p>where <span class="math inline">\(O_i\)</span> is the number of
+observed events, <span class="math inline">\(E_i\)</span> is the number
+of expected events under the null hypothesis <span
+class="math inline">\(H_0\)</span> of complete spatial randomness, and
+<span class="math inline">\(n\)</span> is the total number of
+events.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 The results of the quadrat tests of the point process.
@@ -420,63 +508,216 @@ reject H0
 </tr>
 </tbody>
 </table>
-<p>Based on this table, we have the results of two separate quadrat tests for our point pattern <span class="math inline">\(X\)</span>, with the null hypothesis of complete spatial randomness against the corresponding alternative hypotheses of 1) <span class="math inline">\(X\)</span> not being a homogeneous Poisson process and 2) <span class="math inline">\(X\)</span> being a clustered point pattern.</p>
-<p>In both cases, our test returns a corresponding p-value of approximately zero, so we have evidence to reject <span class="math inline">\(H_0\)</span> in both cases and conclude that we have respectively in <span class="math inline">\(X\)</span> not only an inhomogeneous Poisson process but a clustered point pattern as well. We can further illustrate this via Ripley’s K-function, or more specifically, a transformation of it.</p>
+<p>Based on this table, we have the results of two separate quadrat
+tests for our point pattern <span class="math inline">\(X\)</span>, with
+the null hypothesis of complete spatial randomness against the
+corresponding alternative hypotheses of 1) <span
+class="math inline">\(X\)</span> not being a homogeneous Poisson process
+and 2) <span class="math inline">\(X\)</span> being a clustered point
+pattern.</p>
+<p>In both cases, our test returns a corresponding p-value of
+approximately zero, so we have evidence to reject <span
+class="math inline">\(H_0\)</span> in both cases and conclude that we
+have respectively in <span class="math inline">\(X\)</span> not only an
+inhomogeneous Poisson process but a clustered point pattern as well. We
+can further illustrate this via Ripley’s K-function, or more
+specifically, a transformation of it.</p>
 </div>
 <div id="ripleys-k-function-and-the-g-function" class="section level3">
 <h3>Ripley’s K-function and the G-function</h3>
-<p>Ripley’s K-function of a point process is defined so that <span class="math inline">\(\lambda K(r)\)</span> equals the expected number of additional random points within a distance <span class="math inline">\(r\)</span> of a typical random point of the point process <span class="math inline">\(X\)</span>, and is determined by the second order moment properties of <span class="math inline">\(X\)</span>. Deviations between the empirical and theoretical K-function give us evidence of spatial clustering or regularity.</p>
+<p>Ripley’s K-function of a point process is defined so that <span
+class="math inline">\(\lambda K(r)\)</span> equals the expected number
+of additional random points within a distance <span
+class="math inline">\(r\)</span> of a typical random point of the point
+process <span class="math inline">\(X\)</span>, and is determined by the
+second order moment properties of <span
+class="math inline">\(X\)</span>. Deviations between the empirical and
+theoretical K-function give us evidence of spatial clustering or
+regularity.</p>
 <p><span class="math display">\[K(r) = \pi r ^2\]</span></p>
-<p>There are various transformations of the K-function, for example the L-function proposed by Julian Besag, which stabilizes the variance, or the G-function, which is the cumulative distribution function of the distance from a typical random point of <span class="math inline">\(X\)</span> to the nearest other point of <span class="math inline">\(X\)</span>, which is particularly effective in diagnosing clustering behavior in a point process.</p>
+<p>There are various transformations of the K-function, for example the
+L-function proposed by Julian Besag, which stabilizes the variance, or
+the G-function, which is the cumulative distribution function of the
+distance from a typical random point of <span
+class="math inline">\(X\)</span> to the nearest other point of <span
+class="math inline">\(X\)</span>, which is particularly effective in
+diagnosing clustering behavior in a point process.</p>
 <p>The G-function is given by</p>
-<p><span class="math display">\[G(r) = 1 - \exp(-\lambda  \pi r^2) = 1 - \exp(-\lambda K(r))\]</span></p>
-<p>We can generate an “envelope” of simulated G-functions based on a spatially random Poisson point pattern, and compare our empirical G-function from the data to ascertain whether the point pattern <span class="math inline">\(X\)</span> has complete spatial randomness or if it is clustered.</p>
+<p><span class="math display">\[G(r) = 1 - \exp(-\lambda  \pi r^2) = 1 -
+\exp(-\lambda K(r))\]</span></p>
+<p>We can generate an “envelope” of simulated G-functions based on a
+spatially random Poisson point pattern, and compare our empirical
+G-function from the data to ascertain whether the point pattern <span
+class="math inline">\(X\)</span> has complete spatial randomness or if
+it is clustered.</p>
 <p><img src="matern-spatial_files/figure-html/plot-G-function-1.png" width="672" /></p>
-<p>Contained in this figure we do see a marked difference where the empirical G-function exceeds the theoretical G-function up to approximately <span class="math inline">\(r = 1\)</span>, after which point it crosses the envelope of the point process which exhibits CSR and emerges underneath it. This does give us evidence that the underlying point process is clustered, which agrees with the earlier conclusion of our quadrat test.</p>
+<p>Contained in this figure we do see a marked difference where the
+empirical G-function exceeds the theoretical G-function up to
+approximately <span class="math inline">\(r = 1\)</span>, after which
+point it crosses the envelope of the point process which exhibits CSR
+and emerges underneath it. This does give us evidence that the
+underlying point process is clustered, which agrees with the earlier
+conclusion of our quadrat test.</p>
 </div>
 </div>
 <div id="modeling" class="section level2">
 <h2>Modeling</h2>
-<div id="the-inhomogeneous-poisson-point-process" class="section level3">
+<div id="the-inhomogeneous-poisson-point-process"
+class="section level3">
 <h3>The inhomogeneous Poisson point process</h3>
-<p>Given that we have confirmed via the quadrat tests and G-function that the Poisson process is inhomogeneous as well as clustered, our goal at this point is to develop a model with which we can estimate the intensity function <span class="math inline">\(\lambda(s)\)</span>.</p>
-<p>There are two different methods that we can model this clustered process: the first, the inhomogeneous Poisson process, assumes that the process varies spatially as a function of certain covariates, and assumes that the events themselves are independent. In this context an inhomogeneous Poisson process assumes that the rate of school shootings (independently) varies across the spatial domain, which is the continental United States.</p>
-<p>The second method, the Cox process, which is itself a generalization of the inhomogeneous Poisson process, treats the intensity function <span class="math inline">\(\lambda(s)\)</span> itself as a stochastic process that we can model in the same manner as the first method. The latter also assumes that the events are not independent of each other. A more benign example of such a process might be the growth of a forest, since trees leave seeds around them which then can grow into even more trees. In this context, a Cox process model assumes that one school shooting event can create even more.</p>
-<p>For an inhomogeneous Poisson process, given the number of events <span class="math inline">\(N(B)\)</span> in a subset <span class="math inline">\(B\)</span> of the spatial domain <span class="math inline">\(S\)</span>, the likelihood of an inhomogeneous point process is given by</p>
-<p><span class="math display">\[P(N(B) = n) \Pi^n_{i=1} P(x_i = s_i) = \frac{1}{n!} \exp(- \int_B \lambda(s) ds) \Pi^n_{i=1} \lambda(s_i)\]</span></p>
+<p>Given that we have confirmed via the quadrat tests and G-function
+that the Poisson process is inhomogeneous as well as clustered, our goal
+at this point is to develop a model with which we can estimate the
+intensity function <span class="math inline">\(\lambda(s)\)</span>.</p>
+<p>There are two different methods that we can model this clustered
+process: the first, the inhomogeneous Poisson process, assumes that the
+process varies spatially as a function of certain covariates, and
+assumes that the events themselves are independent. In this context an
+inhomogeneous Poisson process assumes that the rate of school shootings
+(independently) varies across the spatial domain, which is the
+continental United States.</p>
+<p>The second method, the Cox process, which is itself a generalization
+of the inhomogeneous Poisson process, treats the intensity function
+<span class="math inline">\(\lambda(s)\)</span> itself as a stochastic
+process that we can model in the same manner as the first method. The
+latter also assumes that the events are not independent of each other. A
+more benign example of such a process might be the growth of a forest,
+since trees leave seeds around them which then can grow into even more
+trees. In this context, a Cox process model assumes that one school
+shooting event can create even more.</p>
+<p>For an inhomogeneous Poisson process, given the number of events
+<span class="math inline">\(N(B)\)</span> in a subset <span
+class="math inline">\(B\)</span> of the spatial domain <span
+class="math inline">\(S\)</span>, the likelihood of an inhomogeneous
+point process is given by</p>
+<p><span class="math display">\[P(N(B) = n) \Pi^n_{i=1} P(x_i = s_i) =
+\frac{1}{n!} \exp(- \int_B \lambda(s) ds) \Pi^n_{i=1}
+\lambda(s_i)\]</span></p>
 <p>and the log-likelihood is proportional to</p>
-<p><span class="math display">\[\log(\lambda(s))= \sum_{j=1}^p \beta_j x_j(s)\]</span></p>
+<p><span class="math display">\[\log(\lambda(s))= \sum_{j=1}^p \beta_j
+x_j(s)\]</span></p>
 <p>We can then model the intensity function as</p>
-<p><span class="math display">\[\log (\lambda(s)) = \sum_{j=1}^p \beta_j x_j(s)\]</span></p>
-<p>where <span class="math inline">\(x_j(s), j = 1,...p\)</span> are <span class="math inline">\(p\)</span> covariates, such that the log-likelihood is a function of the parameter coefficients <span class="math inline">\(\beta_j\)</span>.</p>
-<p>We fit a clustered inhomogeneous Poisson point process model, using the Matern cluster algorithm. We do not use any other covariates other than the coordinates in this model. We can use the same methodology of a quadrat test as we enacted earlier to test the model’s appropriateness, except this time the model under the null hypothesis <span class="math inline">\(H_0\)</span> follows that of the estimated intensity function <span class="math inline">\(\lambda(s)\)</span> of our fitted model, rather than that of a homogeneous Poisson process. Our alternative hypothesis <span class="math inline">\(H_A\)</span> is that the true underlying pattern is more clustered than that of the null model. The envelope of the K-function also confirms this, as the K-function is higher than the theoretical fitted K-function.</p>
+<p><span class="math display">\[\log (\lambda(s)) = \sum_{j=1}^p \beta_j
+x_j(s)\]</span></p>
+<p>where <span class="math inline">\(x_j(s), j = 1,...p\)</span> are
+<span class="math inline">\(p\)</span> covariates, such that the
+log-likelihood is a function of the parameter coefficients <span
+class="math inline">\(\beta_j\)</span>.</p>
+<p>We fit a clustered inhomogeneous Poisson point process model, using
+the Matern cluster algorithm. We do not use any other covariates other
+than the coordinates in this model. We can use the same methodology of a
+quadrat test as we enacted earlier to test the model’s appropriateness,
+except this time the model under the null hypothesis <span
+class="math inline">\(H_0\)</span> follows that of the estimated
+intensity function <span class="math inline">\(\lambda(s)\)</span> of
+our fitted model, rather than that of a homogeneous Poisson process. Our
+alternative hypothesis <span class="math inline">\(H_A\)</span> is that
+the true underlying pattern is more clustered than that of the null
+model. The envelope of the K-function also confirms this, as the
+K-function is higher than the theoretical fitted K-function.</p>
 <p><img src="matern-spatial_files/figure-html/plot-fit2-envelope-1.png" width="672" /></p>
-<p>With a <span class="math inline">\(\chi^2\)</span> test-statistic of <span class="math inline">\(228.81\)</span>, we have a p-value of <span class="math inline">\(0.001\)</span> which gives us sufficient evidence to reject the fitted inhomogeneous Poisson process model under the null hypothesis, and conclude that the true underlying Poisson process is even more clustered than that of this model.</p>
-<p>Having ruled this model out, we want to move on to the Cox point process model, more specifically, the Matern cluster point process.</p>
+<p>With a <span class="math inline">\(\chi^2\)</span> test-statistic of
+<span class="math inline">\(228.81\)</span>, we have a p-value of <span
+class="math inline">\(0.001\)</span> which gives us sufficient evidence
+to reject the fitted inhomogeneous Poisson process model under the null
+hypothesis, and conclude that the true underlying Poisson process is
+even more clustered than that of this model.</p>
+<p>Having ruled this model out, we want to move on to the Cox point
+process model, more specifically, the Matern cluster point process.</p>
 </div>
-<div id="cox-processes-and-the-matern-cluster-process-model" class="section level3">
+<div id="cox-processes-and-the-matern-cluster-process-model"
+class="section level3">
 <h3>Cox processes and the Matern cluster process model</h3>
-<p>Cox process models treat the intensity function <span class="math inline">\(\lambda(s)\)</span> as a stochastic process, adding a significant layer of complexity (and flexibility) relative to the somewhat inflexible inhomogeneous Poisson process model. More specifically we will be discussing the Matern cluster process model.</p>
-<p>The Matern cluster point process is formed by taking a pattern of “parent” points, generated according to some Poisson process with intensity parameter <span class="math inline">\(\kappa\)</span>, and then generating around it a random number of “offspring” which is itself a Poisson random variable with mean <span class="math inline">\(\mu\)</span>. The locations of the offspring are independent and identically distributed via a Uniform distribution in a radius around the parent defined by the parameter <span class="math inline">\(R\)</span>, also known as the scale.</p>
-<p>Our goal is to minimize the discrepancy between the estimated model and the data, given some constraints. This discrepancy criterion <span class="math inline">\(D(\theta)\)</span> is given by</p>
-<p><span class="math display">\[D(\theta) = \int_0^{r_0} w(t)[(\hat K(t))^c - (K(t;\theta))^c]^2 dt\]</span></p>
-<p>where we have some parameters <span class="math inline">\(r_0\)</span>, <span class="math inline">\(c\)</span>, and the weight function <span class="math inline">\(w(r)\)</span>. Minimizing this function is known as the method of minimum contrast.</p>
-<p>It works by first computing the K function, and then deriving the theoretical expected K value under the point process model. The model is then fit by tuning the optimal parameter values which minimizes the difference between the theoretical and empirical K-functions.</p>
+<p>Cox process models treat the intensity function <span
+class="math inline">\(\lambda(s)\)</span> as a stochastic process,
+adding a significant layer of complexity (and flexibility) relative to
+the somewhat inflexible inhomogeneous Poisson process model. More
+specifically we will be discussing the Matern cluster process model.</p>
+<p>The Matern cluster point process is formed by taking a pattern of
+“parent” points, generated according to some Poisson process with
+intensity parameter <span class="math inline">\(\kappa\)</span>, and
+then generating around it a random number of “offspring” which is itself
+a Poisson random variable with mean <span
+class="math inline">\(\mu\)</span>. The locations of the offspring are
+independent and identically distributed via a Uniform distribution in a
+radius around the parent defined by the parameter <span
+class="math inline">\(R\)</span>, also known as the scale.</p>
+<p>Our goal is to minimize the discrepancy between the estimated model
+and the data, given some constraints. This discrepancy criterion <span
+class="math inline">\(D(\theta)\)</span> is given by</p>
+<p><span class="math display">\[D(\theta) = \int_0^{r_0} w(t)[(\hat
+K(t))^c - (K(t;\theta))^c]^2 dt\]</span></p>
+<p>where we have some parameters <span
+class="math inline">\(r_0\)</span>, <span
+class="math inline">\(c\)</span>, and the weight function <span
+class="math inline">\(w(r)\)</span>. Minimizing this function is known
+as the method of minimum contrast.</p>
+<p>It works by first computing the K function, and then deriving the
+theoretical expected K value under the point process model. The model is
+then fit by tuning the optimal parameter values which minimizes the
+difference between the theoretical and empirical K-functions.</p>
 <p>The theoretical K-function of this process is given by</p>
-<p><span class="math display">\[K(r) = \pi r^2 + \frac{h\large(\frac{r}{2R}\large)}{\kappa}\]</span></p>
-<p>and the theoretical intensity of the process is <span class="math inline">\(\lambda = \kappa \mu\)</span>.</p>
-<p>Recall that earlier we fit an inhomogeneous Poisson point process model using the Matern cluster algorithm to define the clusters. The model that was fit returned estimates for not only the intensity function <span class="math inline">\(\lambda(s)\)</span>, but also <span class="math inline">\(\kappa\)</span>, the intensity parameter of the parent points’ pattern, and the scale parameter <span class="math inline">\(R\)</span> for the range around which the offspring come from the parent. We can use these fitted values as a starting point from which we can run the model and hopefully converge to a reasonable estimate. For values of <span class="math inline">\(c\)</span> and <span class="math inline">\(w(t)\)</span>, we want to opt for <span class="math inline">\(c=0.25\)</span> and a weight function of <span class="math inline">\(w(t) = 1\)</span>, as these are well suited to well-clustered data.</p>
+<p><span class="math display">\[K(r) = \pi r^2 +
+\frac{h\large(\frac{r}{2R}\large)}{\kappa}\]</span></p>
+<p>and the theoretical intensity of the process is <span
+class="math inline">\(\lambda = \kappa \mu\)</span>.</p>
+<p>Recall that earlier we fit an inhomogeneous Poisson point process
+model using the Matern cluster algorithm to define the clusters. The
+model that was fit returned estimates for not only the intensity
+function <span class="math inline">\(\lambda(s)\)</span>, but also <span
+class="math inline">\(\kappa\)</span>, the intensity parameter of the
+parent points’ pattern, and the scale parameter <span
+class="math inline">\(R\)</span> for the range around which the
+offspring come from the parent. We can use these fitted values as a
+starting point from which we can run the model and hopefully converge to
+a reasonable estimate. For values of <span
+class="math inline">\(c\)</span> and <span
+class="math inline">\(w(t)\)</span>, we want to opt for <span
+class="math inline">\(c=0.25\)</span> and a weight function of <span
+class="math inline">\(w(t) = 1\)</span>, as these are well suited to
+well-clustered data.</p>
 <p><img src="matern-spatial_files/figure-html/plot-matern-process-1.png" width="672" /></p>
-<p>This figure gives the theoretical and empirical K-functions of the Matern cluster process model. The cyan line is the homogeneous Poisson process, which we have long since established is ill-fitted to the data. The black line is our empirical K-function, and the red line is the theoretical K-function under the model.</p>
-<p>Based off of this plot of the K-function, it appears in fact that the Matern cluster process model fit using the intensity and parameter estimates from the inhomogeneous Poisson process model fit earlier is fairly consistent at estimating the true underlying process given that the discrepancy between the theoretical and empirical K-functions is very low even up to very large distances.</p>
+<p>This figure gives the theoretical and empirical K-functions of the
+Matern cluster process model. The cyan line is the homogeneous Poisson
+process, which we have long since established is ill-fitted to the data.
+The black line is our empirical K-function, and the red line is the
+theoretical K-function under the model.</p>
+<p>Based off of this plot of the K-function, it appears in fact that the
+Matern cluster process model fit using the intensity and parameter
+estimates from the inhomogeneous Poisson process model fit earlier is
+fairly consistent at estimating the true underlying process given that
+the discrepancy between the theoretical and empirical K-functions is
+very low even up to very large distances.</p>
 </div>
 </div>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
-<p>It’s been debated at length as to whether incidences of school shootings give rise to future events, as long as they’ve been happening in the modern day. With respect to how this model applies in context, we have established that it’s indeed possible that this is the case, as demonstrated by how well the proposed Matern process model fits to the empirical process.</p>
-<p>The model gives a recommended range of <span class="math inline">\(R\)</span> to be <span class="math inline">\([0, 6.0633]\)</span>, which is the range around some event around which other future events may occur. The model converges to the range <span class="math inline">\(R \approx 3.3597\)</span> and <span class="math inline">\(\kappa \approx 0.0144\)</span>, which is the intensity of the random variable for parent events, which contextually refer to those events which inspire others. The range gives us the approximate radius around some event that some future event may take place.</p>
-<p>Ascertaining the reason as to why this happens would have to be left for some future work, perhaps incorporating some of the unused categorical variables that were included in the data, such as whether the event was preplanned. The data can also be looked at on an areal level against population size and compared next to the accessibility of both mental healthcare and guns (as shown in the Appendix). One also wonders how one might model these tragedies from a spatiotemporal perspective, as it is well documented how events have been on the rise in the past several years (also shown in the Appendix).</p>
+<p>It’s been debated at length as to whether incidences of school
+shootings give rise to future events, as long as they’ve been happening
+in the modern day. With respect to how this model applies in context, we
+have established that it’s indeed possible that this is the case, as
+demonstrated by how well the proposed Matern process model fits to the
+empirical process.</p>
+<p>The model gives a recommended range of <span
+class="math inline">\(R\)</span> to be <span class="math inline">\([0,
+6.0633]\)</span>, which is the range around some event around which
+other future events may occur. The model converges to the range <span
+class="math inline">\(R \approx 3.3597\)</span> and <span
+class="math inline">\(\kappa \approx 0.0144\)</span>, which is the
+intensity of the random variable for parent events, which contextually
+refer to those events which inspire others. The range gives us the
+approximate radius around some event that some future event may take
+place.</p>
+<p>Ascertaining the reason as to why this happens would have to be left
+for some future work, perhaps incorporating some of the unused
+categorical variables that were included in the data, such as whether
+the event was preplanned. The data can also be looked at on an areal
+level against population size and compared next to the accessibility of
+both mental healthcare and guns (as shown in the Appendix). One also
+wonders how one might model these tragedies from a spatiotemporal
+perspective, as it is well documented how events have been on the rise
+in the past several years (also shown in the Appendix).</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 Parameter values chosen for the Matern cluster model.
@@ -516,19 +757,46 @@ w(t)
 </table>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>This Matern cluster process model should be seen first and foremost as a building block upon which future work by individuals in public health, sociology, criminology, etc. can build. As with any instances of tragedy, many unresolved questions remain. Our hope is that some level of positive inspiration can happen from studying these events such that we can become better equipped at averting and dealing with these tragedies.</p>
+<p>This Matern cluster process model should be seen first and foremost
+as a building block upon which future work by individuals in public
+health, sociology, criminology, etc. can build. As with any instances of
+tragedy, many unresolved questions remain. Our hope is that some level
+of positive inspiration can happen from studying these events such that
+we can become better equipped at averting and dealing with these
+tragedies.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
-<p>Adrian Baddeley, Ege Rubak, Rolf Turner (2015). Spatial Point Patterns: Methodology and Applications with R. London: Chapman and Hall/CRC Press, 2015. URL <a href="https://www.routledge.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/" class="uri">https://www.routledge.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/</a></p>
-<p>Bivand, Roger S. and Wong, David W. S. (2018) Comparing implementations of global and local indicators of spatial association TEST, 27(3), 716-748. URL <a href="https://doi.org/10.1007/s11749-018-0599-x" class="uri">https://doi.org/10.1007/s11749-018-0599-x</a></p>
-<p>Hellebuyck, M., Halpern, M., Nguyen, T. and Fritze, D., 2018. The State of Mental Health in America. p.9.</p>
-<p>Paez A (2021). An Introduction to Spatial Data Analysis and Statistics: A Course in R. McMaster Invisible Press. ISBN: 978-1-7778515-0-7</p>
-<p>Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R Journal 10 (1), 439-446, <a href="https://doi.org/10.32614/RJ-2018-009" class="uri">https://doi.org/10.32614/RJ-2018-009</a></p>
-<p>Riedman, D., Jernegan, E. and O’Neill, D., 2020. K-12 School Shooting Database. [online] Center for Homeland Defense and Security. Available at: <a href="https://www.chds.us/ssdb/" class="uri">https://www.chds.us/ssdb/</a> [Accessed 15 March 2022].</p>
-<p>Siegel, M., 2022. State-by-State Firearm Law Data | State Firearm Laws. [online] Statefirearmlaws.org. Available at: <a href="http://www.statefirearmlaws.org/" class="uri">http://www.statefirearmlaws.org/</a> [Accessed 15 March 2022].</p>
+<p>Adrian Baddeley, Ege Rubak, Rolf Turner (2015). Spatial Point
+Patterns: Methodology and Applications with R. London: Chapman and
+Hall/CRC Press, 2015. URL <a
+href="https://www.routledge.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/"
+class="uri">https://www.routledge.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/</a></p>
+<p>Bivand, Roger S. and Wong, David W. S. (2018) Comparing
+implementations of global and local indicators of spatial association
+TEST, 27(3), 716-748. URL <a
+href="https://doi.org/10.1007/s11749-018-0599-x"
+class="uri">https://doi.org/10.1007/s11749-018-0599-x</a></p>
+<p>Hellebuyck, M., Halpern, M., Nguyen, T. and Fritze, D., 2018. The
+State of Mental Health in America. p.9.</p>
+<p>Paez A (2021). An Introduction to Spatial Data Analysis and
+Statistics: A Course in R. McMaster Invisible Press. ISBN:
+978-1-7778515-0-7</p>
+<p>Pebesma, E., 2018. Simple Features for R: Standardized Support for
+Spatial Vector Data. The R Journal 10 (1), 439-446, <a
+href="https://doi.org/10.32614/RJ-2018-009"
+class="uri">https://doi.org/10.32614/RJ-2018-009</a></p>
+<p>Riedman, D., Jernegan, E. and O’Neill, D., 2020. K-12 School Shooting
+Database. [online] Center for Homeland Defense and Security. Available
+at: <a href="https://www.chds.us/ssdb/"
+class="uri">https://www.chds.us/ssdb/</a> [Accessed 15 March 2022].</p>
+<p>Siegel, M., 2022. State-by-State Firearm Law Data | State Firearm
+Laws. [online] Statefirearmlaws.org. Available at: <a
+href="http://www.statefirearmlaws.org/"
+class="uri">http://www.statefirearmlaws.org/</a> [Accessed 15 March
+2022].</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div id="appendix" class="section level1">
@@ -543,7 +811,8 @@ w(t)
 <pre><code>Conditional Monte Carlo test of fitted Poisson model &#39;fit1&#39; using
 quadrat counts
 Test statistic: Pearson X2 statistic</code></pre>
-<p>data: data from fit1 X2 = 214.11, = NA, p-value = 5e-04 alternative hypothesis: clustered</p>
+<p>data: data from fit1 X2 = 214.11, = NA, p-value = 5e-04 alternative
+hypothesis: clustered</p>
 <p>Quadrats: 23 tiles (irregular windows)</p>
 </div>
 
