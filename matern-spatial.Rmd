@@ -315,7 +315,9 @@ In a homogeneous Poisson process the distribution of events is scattered all thr
 ```{r create-ppp, warning = F}
 # reading the data
 # from readr (part of tidyverse)
-df_9019 <- df %>% filter(Date >= "1990-01-1" & Date <= "2019-12-31")
+df_9019 <- df %>% 
+  filter(Date >= "1990-01-1" & Date <= "2019-12-31") %>%
+  filter(!is.na(Preplanned))
 
 ## getting shapefile of the US
 us_map <- map("usa",plot=F)
@@ -330,10 +332,14 @@ us_poly <- matrix(cbind(us_boundaries_x[1:6886],us_boundaries_y[1:6886]),
 ## Creating the window of the spatial point pattern.
 us_win <- owin(poly=us_poly)
 
+test <- df_9019 %>% filter(!is.na(Preplanned))
+
 # creating ppp objects with the coordinates and the windows
 ppp_9019 <- ppp(x = df_9019$lon, y = df_9019$lat,
                 window = us_win,
-                marks = df_9019 %>% dplyr::select(Preplanned))
+                marks = df_9019 %>% 
+                  filter(!is.na(Preplanned)) %>%
+                  dplyr::select(Preplanned))
 ```
 
 ```{r plot-simulate-ppm}
@@ -341,7 +347,8 @@ ppp_9019 <- ppp(x = df_9019$lon, y = df_9019$lat,
 fit_hpp <- ppm(ppp_9019 ~ 1)
 sim1 <- simulate(fit_hpp)
 # converting to sf for plotting
-sim1_sf <- st_as_sf(sim1) %>% st_set_crs(4269)
+sim1_sf <- st_as_sf(sim1) %>% 
+  st_set_crs(4269)
 
 
 csr_plot <- ggplot() + 

@@ -237,7 +237,7 @@ For example, note both `m206` and `m551` of them each have a degree of 2, but th
 # histogram of degree by gender
 gonnet_nobar_df %>%
   ggplot(aes(x = degree, fill = gender)) +
-  geom_histogram(binwidth =1,position = "dodge", colour = "black", lwd = 0.75) + 
+  geom_histogram(binwidth =1,position = "dodge", colour = "black", lwd = 0.75, stat = "count") + 
   ggtitle("Histogram of # of Partners, by Gender") +
   theme_bw() + 
   scale_x_discrete("# of Partners", breaks = 0:7, labels = 0:7, limits = c(0:7)) + 

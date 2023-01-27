@@ -38,7 +38,7 @@ navbar:
 
 ----
 
-<left><img src="images/new_bw.png" width="300px" height="300px"></left>
+<left><img src="images/self_prof.jpg" width="308px" height="410px"></left>
 
 # Introduction
 
@@ -76,10 +76,10 @@ In my free time, I am an avid gamer and I study languages such as Spanish, Portu
 ## Research Experience
 
 * **University of California, Irvine**, Jul 2022 - Present
-    + Working as a graduate student researcher studying spatial data regarding equitable access to water infracstructure as a member of the Water Equity Lab under Dr. Maura Allaire.
+    + Studying spatial data regarding equitable access to water infrastructure as a member of the Water Equity Lab under Dr. Maura Allaire.
 
 * **University of California, Irvine**, Mar 2022 - Jun 2022
-    + Worked with studying the spatial distribution of cancer and immune system cells with respect to cancer outcome, under the supervision of Dr. Veronica Berrocal.
+    + Studying the spatial distribution of cancer and immune system cells with respect to cancer outcome, under the supervision of Dr. Veronica Berrocal.
 
 ## Work Experience
 

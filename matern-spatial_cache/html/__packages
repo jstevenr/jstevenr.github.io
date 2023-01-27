@@ -45,6 +45,7 @@ lattice
 latticeExtra
 GGally
 stargazer
+timechange
 lubridate
 sf
 sp
@@ -57,8 +58,9 @@ spatstat.data
 spatstat.geom
 spatstat.random
 nlme
+spatstat.explore
 rpart
-spatstat.core
+spatstat.model
 spatstat.linnet
 spatstat
 patchwork

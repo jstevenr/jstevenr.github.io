@@ -13,7 +13,7 @@
 
 <title>Forecasting bitcoin value with ARIMA</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -146,13 +146,20 @@ code span.wa { color: #da4453; } /* Warning */
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -247,11 +254,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -280,8 +291,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -289,16 +300,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -556,7 +560,7 @@ line or ‘line of best fit’.</p>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Opening Price of Bitcoin&quot;</span>) <span class="sc">+</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">level =</span> <span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="bitcoin_files/figure-html/initial%20plot-1.png" width="672" /></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>open <span class="ot">&lt;-</span> <span class="fu">as.ts</span>(df_sub<span class="sc">$</span>Open)</span></code></pre></div>
 </div>
@@ -642,13 +646,13 @@ transformed data.</p>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;USD (after log transformation)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Series after Box-Cox&quot;</span>) <span class="sc">+</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">level =</span> <span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of type ts. Defaulting to continuous.</code></pre>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting to continuous.
+## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="bitcoin_files/figure-html/box-cox%20transformation-1.png" width="672" /></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comparing the variances of original and transformed data</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(open)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comparing the variances of original and transformed data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(open)</span></code></pre></div>
 <pre><code>## [1] 14166.75</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(df_sub<span class="sc">$</span>Open_tr)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(df_sub<span class="sc">$</span>Open_tr)</span></code></pre></div>
 <pre><code>## [1] 0.06487496</code></pre>
 <p>Obviously the data still has a linear trend, but the variance is much
 smaller. We haven’t differenced yet, so the upward trend is still
@@ -666,10 +670,10 @@ time apart, in this case, <span class="math inline">\(d = 1\)</span>,
 which is to say one day apart. So our differenced (and transformed) data
 will represent the change from each value to the next, one day at a
 time.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>open_diff <span class="ot">&lt;-</span> <span class="fu">diff</span>(df_sub<span class="sc">$</span>Open_tr, <span class="at">lag =</span> <span class="dv">1</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(open_diff) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Series after Differencing at lag 1 after Box-Cox&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>open_diff <span class="ot">&lt;-</span> <span class="fu">diff</span>(df_sub<span class="sc">$</span>Open_tr, <span class="at">lag =</span> <span class="dv">1</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(open_diff) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Series after Differencing at lag 1 after Box-Cox&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/differencing-1.png" width="672" /></p>
 <p>Note that the y-intercept for the trend line is now approximately
 zero, so our upward trend has been nullified by the differencing. It
@@ -681,8 +685,8 @@ at certain points, and at other times very large. We can however proceed
 with an augmented Dickey-Fuller test which will determine whether the
 data is stationary or not by checking against null hypothesis that the
 sample has a unit root. If it doesn’t, then it is stationary.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(tseries) is loaded</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(open_diff, <span class="at">alternative =</span> <span class="st">&quot;stationary&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(tseries) is loaded</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(open_diff, <span class="at">alternative =</span> <span class="st">&quot;stationary&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning in adf.test(open_diff, alternative = &quot;stationary&quot;): p-value smaller than
 ## printed p-value</code></pre>
 <pre><code>## 
@@ -710,10 +714,10 @@ can get ideas on what the orders are by using the
 as the ACF and PACF of our transformed series. We’ll include <span
 class="math inline">\(\lambda = 0\)</span> as a part of our function so
 that it estimates a model of our Box-Cox transformed data.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(forecast) is loaded</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># stepwise and approximation = F is slower, but more accurate</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>auto.fit <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(open, <span class="at">stepwise =</span> F, <span class="at">approximation =</span> F, <span class="at">lambda =</span> <span class="dv">0</span>, <span class="at">ic =</span> <span class="st">&quot;aicc&quot;</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>auto.fit</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(forecast) is loaded</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># stepwise and approximation = F is slower, but more accurate</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>auto.fit <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(open, <span class="at">stepwise =</span> F, <span class="at">approximation =</span> F, <span class="at">lambda =</span> <span class="dv">0</span>, <span class="at">ic =</span> <span class="st">&quot;aicc&quot;</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>auto.fit</span></code></pre></div>
 <pre><code>## Series: open 
 ## ARIMA(0,1,4) with drift 
 ## Box Cox transformation: lambda= 0 
@@ -737,10 +741,10 @@ drift.</p>
 <p>We are given an ARIMA(0,1,4) model in this case which means it was
 differenced at lag 1 just like we did earlier, and also the order is
 <span class="math inline">\(q = 4\)</span>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(open_diff) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ACF of transformed data&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(open_diff) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ACF of transformed data&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/ACF-PACF%20of%20differenced%20data-1.png" width="672" /></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggPacf</span>(open_diff) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;PACF of transformed data&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggPacf</span>(open_diff) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;PACF of transformed data&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/ACF-PACF%20of%20differenced%20data-2.png" width="672" /></p>
 <p>The ACF at lag 1 is not significantly far form zero, so we don’t
 difference further lest we overdifference the series.</p>
@@ -768,27 +772,27 @@ in the model diagnostics.</p>
 <h2>Model Selection</h2>
 <p>For now we will just use the AICc to select a couple of models and
 determine later on if the residuals will be an issue.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix of AIC values for p and q</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(qpcR) and library(forecast) are loaded</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>AICc.mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">ncol =</span> <span class="dv">5</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;p =&quot;</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>),</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;q =&quot;</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># simulating arima models for p,q = 0,1,2,3,4 and d = 1</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    AICc.mat[p <span class="sc">+</span> <span class="dv">1</span>, q <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">AICc</span>(<span class="fu">Arima</span>(open,</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">order =</span> <span class="fu">c</span>(p, <span class="dv">1</span>, q),</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="at">lambda =</span> <span class="dv">0</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co"># printing matrix</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>AICc.mat</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix of AIC values for p and q</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(qpcR) and library(forecast) are loaded</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>AICc.mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">ncol =</span> <span class="dv">5</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;p =&quot;</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;q =&quot;</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># simulating arima models for p,q = 0,1,2,3,4 and d = 1</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    AICc.mat[p <span class="sc">+</span> <span class="dv">1</span>, q <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">AICc</span>(<span class="fu">Arima</span>(open,</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">order =</span> <span class="fu">c</span>(p, <span class="dv">1</span>, q),</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="at">lambda =</span> <span class="dv">0</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co"># printing matrix</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>AICc.mat</span></code></pre></div>
 <pre><code>##           q = 0     q = 1     q = 2     q = 3     q = 4
 ## p = 0 -1541.736 -1540.275 -1539.475 -1537.564 -1544.742
 ## p = 1 -1540.202 -1538.621 -1537.460 -1539.345 -1543.171
@@ -808,9 +812,9 @@ fact to stick to models in which at least one of <span
 class="math inline">\(p\)</span> and <span
 class="math inline">\(q\)</span> is no larger than 1, since this is
 likely to lead to overfitting.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA(1,1,2)</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>fit112 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(open, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>fit112</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA(1,1,2)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>fit112 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(open, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>fit112</span></code></pre></div>
 <pre><code>## Series: open 
 ## ARIMA(1,1,2) 
 ## Box Cox transformation: lambda= 0 
@@ -822,9 +826,9 @@ likely to lead to overfitting.</p>
 ## 
 ## sigma^2 = 0.0008555:  log likelihood = 772.76
 ## AIC=-1537.53   AICc=-1537.41   BIC=-1521.93</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA(2,1,1)</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>fit211 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(open, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>fit211</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA(2,1,1)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fit211 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(open, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>fit211</span></code></pre></div>
 <pre><code>## Series: open 
 ## ARIMA(2,1,1) 
 ## Box Cox transformation: lambda= 0 
@@ -868,28 +872,28 @@ differencing. The Shapiro-Wilk tests against the null hypothesis that
 the data are Normal, the other important condition of an ARIMA model’s
 validity. Here we create a matrix comparing the p-values of each of the
 hypothesis tests on each model.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>resids112 <span class="ot">&lt;-</span> fit112<span class="sc">$</span>residuals</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>resids211 <span class="ot">&lt;-</span> fit211<span class="sc">$</span>residuals</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">length</span>(open)))</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># a matrix comparing p-values for the three different tests</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>diag.mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;ARIMA(1,1,2)&quot;</span>, <span class="st">&quot;ARIMA(2,1,1)&quot;</span>),</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;Ljung-Box&quot;</span>, <span class="st">&quot;McLeod-Li&quot;</span>, <span class="st">&quot;Shapiro-Wilk&quot;</span>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="co"># testing ARIMA(0,1,0) residuals</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids112, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">0</span>)<span class="sc">$</span>p.value</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids112<span class="sc">^</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">0</span>)<span class="sc">$</span>p.value</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">1</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(resids112)<span class="sc">$</span>p.value</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co"># testing ARIMA(2,1,0) residuals</span></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">2</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids211, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">2</span>)<span class="sc">$</span>p.value</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">2</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids211<span class="sc">^</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">2</span>)<span class="sc">$</span>p.value</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">2</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(resids211)<span class="sc">$</span>p.value</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix of p-values</span></span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diag.mat, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>resids112 <span class="ot">&lt;-</span> fit112<span class="sc">$</span>residuals</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>resids211 <span class="ot">&lt;-</span> fit211<span class="sc">$</span>residuals</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">length</span>(open)))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># a matrix comparing p-values for the three different tests</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>diag.mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;ARIMA(1,1,2)&quot;</span>, <span class="st">&quot;ARIMA(2,1,1)&quot;</span>),</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;Ljung-Box&quot;</span>, <span class="st">&quot;McLeod-Li&quot;</span>, <span class="st">&quot;Shapiro-Wilk&quot;</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># testing ARIMA(0,1,0) residuals</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids112, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">0</span>)<span class="sc">$</span>p.value</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids112<span class="sc">^</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">0</span>)<span class="sc">$</span>p.value</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">1</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(resids112)<span class="sc">$</span>p.value</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co"># testing ARIMA(2,1,0) residuals</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">2</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids211, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">2</span>)<span class="sc">$</span>p.value</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">2</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(resids211<span class="sc">^</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">lag =</span> k, <span class="at">fitdf =</span> <span class="dv">2</span>)<span class="sc">$</span>p.value</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>diag.mat[<span class="dv">2</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(resids211)<span class="sc">$</span>p.value</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix of p-values</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diag.mat, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##              Ljung-Box McLeod-Li Shapiro-Wilk
 ## ARIMA(1,1,2)     0.670         0            0
 ## ARIMA(2,1,1)     0.558         0            0</code></pre>
@@ -916,31 +920,31 @@ model and proceed with forecasting anyway, just to see what happens.</p>
 <p>Now we will proceed with forecasting the next 10 values in the time
 series using both the ARIMA(1,1,2) and the ARIMA(2,1,1) models, and
 compare the results with each other and with the true values.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(forecast) is loaded</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>forecast112 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(df_sub<span class="sc">$</span>Open, <span class="at">model =</span> fit112, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>forecast211 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(df_sub<span class="sc">$</span>Open, <span class="at">model =</span> fit211, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting true values and the forecasts</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>df_add <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">subset</span>(Date <span class="sc">&gt;=</span> <span class="st">&quot;2015-10-09&quot;</span> <span class="sc">&amp;</span> Date <span class="sc">&lt;=</span> <span class="st">&quot;2016-10-18&quot;</span>)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>open_add <span class="ot">&lt;-</span> <span class="fu">as.ts</span>(df_add<span class="sc">$</span>Open)</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># True Values</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(open_add, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;True Values for Opening Price of Bitcoin, 2016-08-03 - 2016-10-18&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 300 row(s) containing missing values (geom_path).</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(forecast) is loaded</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>forecast112 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(df_sub<span class="sc">$</span>Open, <span class="at">model =</span> fit112, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>forecast211 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(df_sub<span class="sc">$</span>Open, <span class="at">model =</span> fit211, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting true values and the forecasts</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>df_add <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">subset</span>(Date <span class="sc">&gt;=</span> <span class="st">&quot;2015-10-09&quot;</span> <span class="sc">&amp;</span> Date <span class="sc">&lt;=</span> <span class="st">&quot;2016-10-18&quot;</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>open_add <span class="ot">&lt;-</span> <span class="fu">as.ts</span>(df_add<span class="sc">$</span>Open)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># True Values</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(open_add, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;True Values for Opening Price of Bitcoin, 2016-08-03 - 2016-10-18&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 300 rows containing missing values (`geom_line()`).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-1.png" width="672" /></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA(1,1,2)</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast112, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(1,1,2) Forecast for Opening Price of Bitcoin, 10 Days ahead&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 299 row(s) containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA(1,1,2)</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast112, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(1,1,2) Forecast for Opening Price of Bitcoin, 10 Days ahead&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 299 rows containing missing values (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 1 row containing missing values (`geom_line()`).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-2.png" width="672" /></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA (2,1,1)</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast211, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(2,1,1) Forecast for Opening Price of Bitcoin, 10 Days ahead&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 299 row(s) containing missing values (geom_path).
-## Removed 1 row(s) containing missing values (geom_path).</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARIMA (2,1,1)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(forecast211, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(2,1,1) Forecast for Opening Price of Bitcoin, 10 Days ahead&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 299 rows containing missing values (`geom_line()`).
+## Removed 1 row containing missing values (`geom_line()`).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-3.png" width="672" /></p>
 <p>As we can see, the ARIMA(2,1,1) is very similar to the ARIMA(1,1,2)
 since both models had confidence intervals for their parameters that
@@ -956,15 +960,15 @@ percent difference between the prediction and the true value (the column
 <code>pct.diff</code>). A value of <span
 class="math inline">\(4.43\)</span> means that the predicted value is
 4.43% <em>bigger</em> than the true value.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>true <span class="ot">&lt;-</span> df_add<span class="sc">$</span>Open[<span class="dv">366</span><span class="sc">:</span><span class="dv">375</span>]</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data.frame of ARIMA(1,1,2) forecasts</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>df112 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">true =</span> true, <span class="at">pred =</span> forecast112<span class="sc">$</span>mean,</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> forecast112<span class="sc">$</span>lower[, <span class="dv">2</span>],</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> forecast112<span class="sc">$</span>upper[, <span class="dv">2</span>],</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pct.diff =</span> <span class="fu">round</span>((forecast112<span class="sc">$</span>mean <span class="sc">-</span> true) <span class="sc">/</span> true, <span class="dv">4</span>) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>df112</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>true <span class="ot">&lt;-</span> df_add<span class="sc">$</span>Open[<span class="dv">366</span><span class="sc">:</span><span class="dv">375</span>]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data.frame of ARIMA(1,1,2) forecasts</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>df112 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">true =</span> true, <span class="at">pred =</span> forecast112<span class="sc">$</span>mean,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> forecast112<span class="sc">$</span>lower[, <span class="dv">2</span>],</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> forecast112<span class="sc">$</span>upper[, <span class="dv">2</span>],</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pct.diff =</span> <span class="fu">round</span>((forecast112<span class="sc">$</span>mean <span class="sc">-</span> true) <span class="sc">/</span> true, <span class="dv">4</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>df112</span></code></pre></div>
 <pre><code>##      true     pred    lower    upper pct.diff
 ## 1  617.34 617.5206 583.1163 653.9548     0.03
 ## 2  619.17 617.2694 568.3204 670.4343    -0.31
@@ -976,14 +980,14 @@ class="math inline">\(4.43\)</span> means that the predicted value is
 ## 8  640.31 617.2549 525.4775 725.0618    -3.60
 ## 9  639.08 617.2549 520.4648 732.0449    -3.42
 ## 10 641.82 617.2549 515.7634 738.7179    -3.83</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.frame of ARIMA(2,1,1) forecasts</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>df211 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">true =</span> true, <span class="at">pred =</span> forecast211<span class="sc">$</span>mean,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> forecast211<span class="sc">$</span>lower[, <span class="dv">2</span>],</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> forecast211<span class="sc">$</span>upper[, <span class="dv">2</span>],</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pct.diff =</span> <span class="fu">round</span>((forecast211<span class="sc">$</span>mean <span class="sc">-</span> true) <span class="sc">/</span> true, <span class="dv">4</span>) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>df211</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.frame of ARIMA(2,1,1) forecasts</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df211 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">true =</span> true, <span class="at">pred =</span> forecast211<span class="sc">$</span>mean,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> forecast211<span class="sc">$</span>lower[, <span class="dv">2</span>],</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> forecast211<span class="sc">$</span>upper[, <span class="dv">2</span>],</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pct.diff =</span> <span class="fu">round</span>((forecast211<span class="sc">$</span>mean <span class="sc">-</span> true) <span class="sc">/</span> true, <span class="dv">4</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>df211</span></code></pre></div>
 <pre><code>##      true     pred    lower    upper pct.diff
 ## 1  617.34 617.5149 583.1276 653.9301     0.03
 ## 2  619.17 617.2013 568.2658 670.3509    -0.32
@@ -995,10 +999,10 @@ class="math inline">\(4.43\)</span> means that the predicted value is
 ## 8  640.31 617.2016 526.2325 723.8963    -3.61
 ## 9  639.08 617.2016 521.2804 730.7734    -3.42
 ## 10 641.82 617.2016 516.6340 737.3456    -3.84</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the average error</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df112<span class="sc">$</span>pct.diff)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the average error</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df112<span class="sc">$</span>pct.diff)</span></code></pre></div>
 <pre><code>## [1] -2.111</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df211<span class="sc">$</span>pct.diff)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df211<span class="sc">$</span>pct.diff)</span></code></pre></div>
 <pre><code>## [1] -2.119</code></pre>
 <p>On average, the predictions of the ARIMA(1,1,2) model were closer to
 the true values of the data, although it was very close, with both being
@@ -1076,36 +1080,36 @@ Series with R. Springer New York, 2009.</p>
 </div>
 <div id="appendix" class="section level1">
 <h1>Appendix</h1>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pretty much all code is included in the body of the report</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>fit211<span class="sc">$</span>coef[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="co"># the 2 AR coefficients</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pretty much all code is included in the body of the report</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>fit211<span class="sc">$</span>coef[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="co"># the 2 AR coefficients</span></span></code></pre></div>
 <pre><code>##         ar1         ar2 
 ##  0.02867388 -0.06710986</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RESIDUALS</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># residual plots have clear heteroskedasticity</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(resids112, <span class="at">main =</span> <span class="st">&quot;ARIMA(1,1,2) Residuals&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RESIDUALS</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># residual plots have clear heteroskedasticity</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(resids112, <span class="at">main =</span> <span class="st">&quot;ARIMA(1,1,2) Residuals&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-1.png" width="672" /></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(resids211, <span class="at">main =</span> <span class="st">&quot;ARIMA(2,1,1) Residuals&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(resids211, <span class="at">main =</span> <span class="st">&quot;ARIMA(2,1,1) Residuals&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-2.png" width="672" /></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># QQ-plots of residuals</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(resids112, <span class="at">main =</span> <span class="st">&quot;Standardized Residuals of ARIMA(1,1,2)&quot;</span>)</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(resids112)</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(resids211, <span class="at">main =</span> <span class="st">&quot;Standardized Residuals of ARIMA(2,1,1)&quot;</span>)</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(resids211)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># QQ-plots of residuals</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(resids112, <span class="at">main =</span> <span class="st">&quot;Standardized Residuals of ARIMA(1,1,2)&quot;</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(resids112)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(resids211, <span class="at">main =</span> <span class="st">&quot;Standardized Residuals of ARIMA(2,1,1)&quot;</span>)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(resids211)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-3.png" width="672" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF of residuals</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># shows they are uncorrelated at every lag i.e. white noise</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids112) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(1,1,2) Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF of residuals</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># shows they are uncorrelated at every lag i.e. white noise</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids112) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(1,1,2) Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-4.png" width="672" /></p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids211) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(2,1,1) Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids211) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(2,1,1) Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-5.png" width="672" /></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF of squared residuals</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co"># not uncorrelated, i.e. not white noise</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids112<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(1,1,2) Squared Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF of squared residuals</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># not uncorrelated, i.e. not white noise</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids112<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(1,1,2) Squared Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-6.png" width="672" /></p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids211<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(2,1,1) Squared Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(resids211<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(2,1,1) Squared Residuals&#39; ACF&quot;</span>)</span></code></pre></div>
 <p><img src="bitcoin_files/figure-html/spec.arma%20and%20plot.roots-7.png" width="672" /></p>
 </div>
 
