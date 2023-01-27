@@ -42,9 +42,9 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I'm currently enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018.
+My name is J. Steven Raquel. I'm currently enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018.
 
-In my free time, I am an avid gamer and I study languages such as Spanish, Portuguese, and Tagalog.
+In my free time, I am an avid gamer and I study languages such as Spanish, Portuguese, and Tagalog. I also enjoy brewing specialty coffee at home. 
 
 * Email: jsteven.raquel8@gmail.com
 * GitHub: [jstevenr](https://github.com/jstevenr)
