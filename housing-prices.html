@@ -1108,27 +1108,27 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a h
 <span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>mse_RF <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_RF), <span class="dv">3</span>)</span>
 <span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>rmse_RF <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_RF), <span class="dv">3</span>)</span>
 <span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_RF))</span></code></pre></div>
-<pre><code>## 30.416 is the Mean Squared Error.</code></pre>
+<pre><code>## 30.853 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb42"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_RF))</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
-<pre><code>## 5.515 is the Root Mean Squared Error.</code></pre>
+<pre><code>## 5.555 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb44"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>r2_RF <span class="op">=</span> <span class="bu">round</span>(model_RF.score(X_test, y_test), <span class="dv">3</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_RF))</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
-<pre><code>## 0.7 is the R-squared.</code></pre>
+<pre><code>## 0.695 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb46"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>residuals_RF <span class="op">=</span> y_test <span class="op">-</span> predictions_RF</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>residual_tests(residuals_RF)</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
-<pre><code>## -0.162 is the mean of the residuals.
-## 0.823 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+<pre><code>## -0.122 is the mean of the residuals.
+## 0.828 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
-## 2.101 is the test-statistic for the Durbin-Watson test.
+## 2.092 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb48"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plot_model_diagnostics(predictions_RF, y_test, residuals_RF)</span>
@@ -1296,7 +1296,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a h
 <pre><code>##              Algorithm    MSE  RMSE    R2
 ## 0       OLS Regression  38.40  6.20  0.62
 ## 1        Decision Tree  32.84  5.73  0.68
-## 2        Random Forest  30.42  5.51  0.70
+## 2        Random Forest  30.85  5.55  0.69
 ## 3    Gradient Boosting  29.23  5.41  0.71
 ## 4  k-Nearest Neighbors  31.01  5.57  0.69</code></pre>
 <div class="sourceCode" id="cb71"><pre

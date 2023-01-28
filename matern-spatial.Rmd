@@ -4,6 +4,9 @@ author: J Steven Raquel
 
 output:
   html_document:
+    toc: true
+    toc_float: true
+    keep_tex: true
     includes:
       in_header: 
         header.html  
