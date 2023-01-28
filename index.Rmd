@@ -44,7 +44,7 @@ navbar:
 
 <left><img src="images/self_prof.jpg" width="308px" height="410px"></left>
 
-Welcome and thank you for visiting my personal website! I'm J Steven Raquel and I am pursuing a Master of Science in Statistics at the University of California, Irvine. 
+Welcome and thank you for visiting my personal website! I'm J. Steven Raquel and I am pursuing a Master of Science in Statistics at the University of California, Irvine. 
 
 Find out more about [who I am and what I've done](about_me.html).
 
