@@ -41,9 +41,7 @@ navbar:
 
 # Introduction
 
-My name is J. Steven Raquel. I'm enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018, with a concentration in applied statistics.
-
-In my free time, I am an avid gamer and I study languages such as Spanish, Portuguese, and Tagalog. I also enjoy brewing specialty coffee at home. 
+My name is J. Steven Raquel. I'm enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018, with a concentration in applied statistics. My career interests lie within the fields of biostatistics, epidemiology, public health, and clinical trials.
 
 * Pronouns: he/him/his
 * Email: jsteven.raquel8@gmail.com
@@ -52,15 +50,15 @@ In my free time, I am an avid gamer and I study languages such as Spanish, Portu
 
 ### Frequently Asked Questions (FAQ)
 
-*1) How did you get into the statistics field? What are your career aspirations?*
+**1) How did you get into the statistics field?**
 
 I started out as a pre-economics major when I was a first-year at UC Santa Barbara. At some point I ended up switching into the pre-financial math and statistics track and enjoyed the math/statistics coursework so much that I eventually switched into the full statistics degree. An infectious diseases course I took as a second-year Masters student inspired me to shift my career focus towards biostatistics and public health.
 
-*2) What does the J in your name stand for? What do you prefer to go by?*
+**2) What does the J in your name stand for? What do you prefer to go by?**
 
-Legally, the J has no meaning! "J. Steven" is my legal first name. My paternal grandfather's name started with J, and his father's name was Estevan-- my name is an homage to them both. Most of my friends/acquaintances call me J, but my family calls me Steven.
+Legally, the J has no meaning! "J. Steven" is my legal first name. My paternal grandfather's name started with J, and his father's name was Estevan-- my name is an homage to them both. Most of my friends/acquaintances call me J, but my family calls me Steven. You are free to refer to me either way that you like!
 
-*3) What are your other interests / what do you like to do in your free time?*
+**3) What are your other interests / what do you like to do in your free time?**
 
 I am an avid PC gamer and I like to study languages such as Spanish and Portuguese. Among my other interests are world history, culture, and coffee. I am also a proud uncle to my niece/nephew. 
 
