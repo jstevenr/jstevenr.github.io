@@ -38,7 +38,7 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
-```{python}
+```{python, include = F}
 # loading libraries
 import pandas as pd
 import numpy as np
@@ -69,6 +69,12 @@ import warnings
 warnings.filterwarnings('ignore')
 ```
 
+## Disclaimer
+
+It has since brought to my attention since using this dataset, that according to [this article](https://medium.com/@docintangible/racist-data-destruction-113e3eff54a8) by M Carlisle that this Boston housing dataset has an ethical problem in that the authors of the dataset engineered a non-invertible variable "B" assuming that racial self-segregation had a positive impact on house prices ([source](https://www.researchgate.net/publication/4974606_Hedonic_housing_prices_and_the_demand_for_clean_air)). Moreover the goal of the research that led to the creation of this dataset was to study the impact of air quality but it did not give adequate demonstration of the validity of this assumption.
+
+As such please keep this in mind as this rudimentary analysis was made long before this information was brought to light; and I encourage folks who are interested to read the sources provided and use alternative datasets for similar projects. I present this project unedited from its original form as it was written in 2019.
+
 ## Introduction
 
 This project utilizes a variety of linear regression algorithms in order to predict the housing price in the city of Boston, or `MEDV`. These are all of the variables in the dataset. This data is maintained in the `datasets` module of `sklearn` but it can also be found online on the UCI Machine Learning Repository or from Kaggle.com. 
@@ -89,11 +95,6 @@ This project utilizes a variety of linear regression algorithms in order to pred
     MEDV - Median value of owner-occupied homes in $1000s
     
 So first we will read in the data. 
-
-**Note (01/27/23)**:  
-> It has since brought to my attention since using this dataset, that according to [this article](https://medium.com/@docintangible/racist-data-destruction-113e3eff54a8) by M Carlisle that this Boston housing dataset has an ethical problem in that the authors of the dataset engineered a non-invertible variable "B" assuming that racial self-segregation had a positive impact on house prices ([source](https://www.researchgate.net/publication/4974606_Hedonic_housing_prices_and_the_demand_for_clean_air)). Moreover the goal of the research that led to the creation of this dataset was to study the impact of air quality but it did not give adequate demonstration of the validity of this assumption.
-
-As such please keep this in mind as this rudimentary analysis was made long before this information was brought to light; and I encourage folks who are interested to read the sources provided and use alternative datasets.
 
 ```{python}
 # loading data
