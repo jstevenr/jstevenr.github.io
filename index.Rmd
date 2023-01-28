@@ -23,7 +23,7 @@ navbar:
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Predicting housing prices"
-          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
+          href: housing-prices.ipynb
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
@@ -42,7 +42,7 @@ navbar:
 
 # Welcome!
 
-Thanks for visiting my personal website. I'm J Steven Raquel and am pursuing a Master of Science in Statistics at the University of California, Irvine.
+Thanks for visiting my personal website. I'm J Steven Raquel and I am pursuing a Master of Science in Statistics at the University of California, Irvine.
 
 Find out more about [who I am and what I've done](about_me.html).
 
@@ -67,7 +67,7 @@ This paper was written for Sociology 280 and uses exponential random graph model
 
 For my final project for Statistics 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms using R to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.
 
-* #### [Predicting housing prices in Boston](https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb)
+* #### [Predicting housing prices in Boston](housing-prices.html)
 
 This project utilizes various regression algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a regression model using various attributes of the housing market in Boston. 
 

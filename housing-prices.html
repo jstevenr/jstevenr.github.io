@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Predicting housing prices with linear regression</title>
+
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #232629;
+    color: #7a7c7d;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+div.sourceCode
+  { color: #cfcfc2; background-color: #232629; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #cfcfc2; } /* Normal */
+code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+code span.an { color: #3f8058; } /* Annotation */
+code span.at { color: #2980b9; } /* Attribute */
+code span.bn { color: #f67400; } /* BaseN */
+code span.bu { color: #7f8c8d; } /* BuiltIn */
+code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #3daee9; } /* Char */
+code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+code span.co { color: #7a7c7d; } /* Comment */
+code span.cv { color: #7f8c8d; } /* CommentVar */
+code span.do { color: #a43340; } /* Documentation */
+code span.dt { color: #2980b9; } /* DataType */
+code span.dv { color: #f67400; } /* DecVal */
+code span.er { color: #da4453; text-decoration: underline; } /* Error */
+code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+code span.fl { color: #f67400; } /* Float */
+code span.fu { color: #8e44ad; } /* Function */
+code span.im { color: #27ae60; } /* Import */
+code span.in { color: #c45b00; } /* Information */
+code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+code span.op { color: #cfcfc2; } /* Operator */
+code span.ot { color: #27ae60; } /* Other */
+code span.pp { color: #27ae60; } /* Preprocessor */
+code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #da4453; } /* SpecialString */
+code span.st { color: #f44f4f; } /* String */
+code span.va { color: #27aeae; } /* Variable */
+code span.vs { color: #da4453; } /* VerbatimString */
+code span.wa { color: #da4453; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about_me.html">About Me</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Portfolio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="matern-spatial.html">Spatial modeling of school gun violence</a>
+    </li>
+    <li>
+      <a href="ergm_models.html">Sexual network exponential random graph modeling</a>
+    </li>
+    <li>
+      <a href="wine-classification.html">Classifying wine quality</a>
+    </li>
+    <li>
+      <a href="bitcoin.html">Forecasting bitcoin value</a>
+    </li>
+    <li>
+      <a href="housing-prices.html">Predicting housing prices</a>
+    </li>
+    <li>
+      <a href="https://pinchunchen.shinyapps.io/ggomoku/">Play Gomoku using Shiny</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Contact Me
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="mailto:jsteven.raquel8@gmail.com">jsteven.raquel8@gmail.com</a>
+    </li>
+    <li>
+      <a href="https://github.com/jstevenr">GitHub</a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/jstevenr/">LinkedIn</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Predicting housing prices with linear
+regression</h1>
+
+</div>
+
+
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># %matplotlib inline</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sns.set_palette(<span class="st">&quot;coolwarm&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">&#39;ggplot&#39;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.stattools <span class="im">import</span> durbin_watson</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, GridSearchCV</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBRegressor</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsRegressor</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tkinter <span class="im">as</span> tk</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">&#39;ignore&#39;</span>)</span></code></pre></div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This project utilizes a variety of linear regression algorithms in
+order to predict the housing price in the city of Boston, or
+<code>MEDV</code>. These are all of the variables in the dataset. This
+data is maintained in the <code>datasets</code> module of
+<code>sklearn</code> but it can also be found online on the UCI Machine
+Learning Repository or from Kaggle.com.</p>
+<pre><code>CRIM - per capita crime rate by town
+ZN - proportion of residential land zoned for lots over 25,000 sq.ft.
+INDUS - proportion of non-retail business acres per town.
+CHAS - Charles River dummy variable (1 if tract bounds river; 0 otherwise)
+NOX - nitric oxides concentration (parts per 10 million)
+RM - average number of rooms per dwelling
+AGE - proportion of owner-occupied units built prior to 1940
+DIS - weighted distances to five Boston employment centres
+RAD - index of accessibility to radial highways
+TAX - full-value property-tax rate per \$10,000
+PTRATIO - pupil-teacher ratio by town
+B - 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
+LSTAT - % lower status of the population
+MEDV - Median value of owner-occupied homes in $1000s</code></pre>
+<p>So first we will read in the data.</p>
+<p><strong>Note (01/27/23)</strong>:<br />
+&gt; It has since brought to my attention since using this dataset, that
+according to <a
+href="https://medium.com/@docintangible/racist-data-destruction-113e3eff54a8">this
+article</a> by M Carlisle that this Boston housing dataset has an
+ethical problem in that the authors of the dataset engineered a
+non-invertible variable “B” assuming that racial self-segregation had a
+positive impact on house prices (<a
+href="https://www.researchgate.net/publication/4974606_Hedonic_housing_prices_and_the_demand_for_clean_air">source</a>).
+Moreover the goal of the research that led to the creation of this
+dataset was to study the impact of air quality but it did not give
+adequate demonstration of the validity of this assumption.</p>
+<p>As such please keep this in mind as this rudimentary analysis was
+made long before this information was brought to light; and I encourage
+folks who are interested to read the sources provided and use
+alternative datasets.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>boston <span class="op">=</span> pd.read_csv(<span class="st">&quot;boston_housing.csv&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> boston</span></code></pre></div>
+<p>First we can look at the first few observations and also check for
+any missing values.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Looking at the top of the dataset</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking for missing values</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print(df.isnull().any())</span></span></code></pre></div>
+<pre><code>##       CRIM    ZN  INDUS  CHAS    NOX  ...  TAX  PTRATIO   BLACK  LSTAT  MEDV
+## 0  0.00632  18.0   2.31     0  0.538  ...  296     15.3  396.90   4.98  24.0
+## 1  0.02731   0.0   7.07     0  0.469  ...  242     17.8  396.90   9.14  21.6
+## 2  0.02729   0.0   7.07     0  0.469  ...  242     17.8  392.83   4.03  34.7
+## 3  0.03237   0.0   2.18     0  0.458  ...  222     18.7  394.63   2.94  33.4
+## 4  0.06905   0.0   2.18     0  0.458  ...  222     18.7  396.90   5.33  36.2
+## 
+## [5 rows x 14 columns]</code></pre>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.describe())</span></code></pre></div>
+<pre><code>##              CRIM          ZN       INDUS  ...       BLACK       LSTAT        MEDV
+## count  506.000000  506.000000  506.000000  ...  506.000000  506.000000  506.000000
+## mean     3.613524   11.363636   11.136779  ...  356.674032   12.653063   22.532806
+## std      8.601545   23.322453    6.860353  ...   91.294864    7.141062    9.197104
+## min      0.006320    0.000000    0.460000  ...    0.320000    1.730000    5.000000
+## 25%      0.082045    0.000000    5.190000  ...  375.377500    6.950000   17.025000
+## 50%      0.256510    0.000000    9.690000  ...  391.440000   11.360000   21.200000
+## 75%      3.677083   12.500000   18.100000  ...  396.225000   16.955000   25.000000
+## max     88.976200  100.000000   27.740000  ...  396.900000   37.970000   50.000000
+## 
+## [8 rows x 14 columns]</code></pre>
+<p>So note that there are no missing variables, although it should be
+noted that the <code>CHAS</code> and <code>RAD</code> variables are
+categorical rather than continuous variables.</p>
+<div id="data-visualization" class="section level3">
+<h3>Data Visualization</h3>
+<p>As an introductory step it is good to visualize the response variable
+against the target variables.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># response vs the continuous target variables</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(data <span class="op">=</span> df, height <span class="op">=</span> <span class="dv">3</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             y_vars <span class="op">=</span> [<span class="st">&#39;MEDV&#39;</span>],</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             x_vars <span class="op">=</span> [<span class="st">&#39;CRIM&#39;</span>, <span class="st">&#39;ZN&#39;</span>, <span class="st">&#39;INDUS&#39;</span>, <span class="st">&#39;RM&#39;</span>, <span class="st">&#39;AGE&#39;</span>])</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-4-1.png" width="738" /></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(data <span class="op">=</span> df, height <span class="op">=</span> <span class="dv">3</span>, y_vars <span class="op">=</span> [<span class="st">&#39;MEDV&#39;</span>],</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            x_vars <span class="op">=</span> [<span class="st">&#39;PTRATIO&#39;</span>, <span class="st">&#39;LSTAT&#39;</span>, <span class="st">&#39;RAD&#39;</span>, <span class="st">&#39;CHAS&#39;</span>])</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-4-2.png" width="588" /></p>
+<p>A cursory glance at the scatterplots of the response and target
+variables show that <code>RM</code> and <code>LSTAT</code> have
+something of a linear relationship with <code>MEDV</code>. The rest of
+the variables don’t seem to show much of a correlation. We can
+scrutinize this further by looking at a correlation matrix. This will
+help us determine which features to include in the final model, a
+process known as <em>feature selection</em>.</p>
+</div>
+</div>
+<div id="feature-selection" class="section level2">
+<h2>Feature Selection</h2>
+<div id="correlation-matrix" class="section level3">
+<h3>Correlation Matrix</h3>
+<p>This will tell us if any of the features are highly correlated with
+one another, which is bad since one of the assumptions of regression is
+that the features are independent from one another. We can also look at
+how the response variable correlates with the features.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting style for seaborn</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.set_context(<span class="st">&quot;notebook&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">&quot;darkgrid&quot;</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 significant figures</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">&quot;display.precision&quot;</span>, <span class="dv">2</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation matrix</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df.corr()</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, vmax <span class="op">=</span> <span class="fl">.8</span>, linewidths <span class="op">=</span> <span class="fl">0.01</span>, square <span class="op">=</span> <span class="va">True</span>, annot <span class="op">=</span> <span class="va">True</span>, cmap <span class="op">=</span> <span class="st">&#39;coolwarm&#39;</span>, linecolor <span class="op">=</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Correlation Matrix&#39;</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-5-5.png" width="960" /></p>
+<p>As we expected from our graphs, we notice that the features that
+correlate the highest with <code>MEDV</code> are <code>RM</code>, the
+average number of rooms, and <code>LSTAT</code>, the percent lower
+status of the population.</p>
+<p><code>DIS</code>, which is weighted distances to Boston’s employment
+centers, has a strong negative correlation with 3 variables:
+<code>INDUS</code>, the proportion of non-business acres,
+<code>NOX</code>, the concentration of nitric oxides, and
+<code>AGE</code>, the proportion of homes built before 1940.</p>
+</div>
+<div id="multicollinearity" class="section level3">
+<h3>Multicollinearity</h3>
+<p>In building regression models we don’t want to have highly correlated
+features, otherwise known as <em>multicollinearity</em>.
+Multicollinearity can result in inaccurate estimations of the regression
+coefficients, give false p-values when conducting tests, and worst of
+all, degrade the predictability of the model, among other problems.</p>
+<p>In general when building a model you want to have something less
+complex (i.e. less features) to reduce overfitting and correlated
+features tend to give similar information about the response variable.
+Therefore I am going to check which features have excessive correlation
+with the other features (&gt; 0.75) and drop them from the dataset.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assigning the response variable as y and the target variables as X</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">&#39;MEDV&#39;</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df.drop(<span class="st">&#39;MEDV&#39;</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># drop features that are highly correlated with other features</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix of absolute values of correlation</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="op">=</span> X.corr().<span class="bu">abs</span>()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Select upper triangle of correlation matrix</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>upper <span class="op">=</span> corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k<span class="op">=</span><span class="dv">1</span>).astype(np.<span class="bu">bool</span>))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Find index of feature columns with correlation greater than 0.75</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>to_drop <span class="op">=</span> [column <span class="cf">for</span> column <span class="kw">in</span> upper.columns <span class="cf">if</span> <span class="bu">any</span>(upper[column] <span class="op">&gt;</span> <span class="fl">0.75</span>)]</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(to_drop)</span></code></pre></div>
+<pre><code>## [&#39;NOX&#39;, &#39;DIS&#39;, &#39;TAX&#39;]</code></pre>
+<p>It appears that <code>NOX</code>, <code>DIS</code>, and
+<code>TAX</code> are highly correlated with one another so I am going to
+drop them from the dataset.</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop the highly correlated features</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.drop(X[to_drop], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>X.head()</span></code></pre></div>
+<pre><code>##        CRIM    ZN  INDUS  CHAS    RM   AGE  RAD  PTRATIO   BLACK  LSTAT
+## 0  6.32e-03  18.0   2.31     0  6.58  65.2    1     15.3  396.90   4.98
+## 1  2.73e-02   0.0   7.07     0  6.42  78.9    2     17.8  396.90   9.14
+## 2  2.73e-02   0.0   7.07     0  7.18  61.1    2     17.8  392.83   4.03
+## 3  3.24e-02   0.0   2.18     0  7.00  45.8    3     18.7  394.63   2.94
+## 4  6.91e-02   0.0   2.18     0  7.15  54.2    3     18.7  396.90   5.33</code></pre>
+<p>Now that we’ve taken care of that, we want to look at the
+distribution of the response variable, <code>MEDV</code>, by visualizing
+it in a histogram and a normal probability plot.</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># histogram and normal probability plot</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sns.distplot(y, hist <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> stats.probplot(y, plot <span class="op">=</span> plt)</span></code></pre></div>
+</div>
+<div id="assumptions" class="section level3">
+<h3>Assumptions</h3>
+<p>To be able to apply linear regression analysis, we have to ensure
+that the assumptions are fulfilled. These are as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Linearity of the residuals</li>
+<li>Independence of the residuals</li>
+<li>Normality of the residuals with a mean of 0</li>
+<li>Homoskedasticity of the residuals</li>
+</ol>
+<div id="normality" class="section level4">
+<h4>Normality</h4>
+<p>Now let’s look at the distributions of these two variables to see if
+they follow a Normal distribution. We can also conduct a Shapiro-Wilk
+test, which tests the null hypothesis that the data is from a Normal
+distribution. The test returns a W-statistic, which itself has a
+p-value. If the p-value of the test statistic is below our alpha level
+of 0.05, then we reject the null hypothesis and conclude that the data
+is not from a Normal distribution.</p>
+<div id="the-central-limit-theorem" class="section level5">
+<h5>The Central Limit Theorem</h5>
+<p>It is important to point out that while Normality is an assumption,
+even when it is violated it doesn’t necessarily invalidate the model. It
+is commonly understood that non-Normal residuals is fairly typical in
+the “real world” and the Central Limit Theorem (which stipulates that
+data conforms to a Normal distribution at a large enough sample size,
+generally <span class="math inline">\(n &gt; 15\)</span>) generally
+takes precedence.</p>
+</div>
+</div>
+<div id="multicollinearity-1" class="section level4">
+<h4>Multicollinearity</h4>
+<p>The third assumption has to do with multicollinearity. We already
+established early on that several other variables had correlation with
+one another and dropped those features, and <code>LSTAT</code> and
+<code>RM</code> had a moderate correlation coefficient of <span
+class="math inline">\(-0.61\)</span>, which we don’t think is enough to
+consider them multicollinear.</p>
+</div>
+<div id="independent-residuals" class="section level4">
+<h4>Independent Residuals</h4>
+<p>Next we need to check that the residuals of the data are independent
+from each other. Another way to describe this would be autocorrelation
+of the residuals. We can test this with a Durbin-Watson test. If the
+test statistic of the test is between 1.5 and 2.5, then there is little
+to no autocorrelation. Below 2 is considered positive autocorrelation
+and above 2 is considered negative autocorrelation. 2 would mean no
+autocorrelation at all.</p>
+</div>
+<div id="mse-and-r-squared" class="section level4">
+<h4>MSE and R-squared</h4>
+<p>In predicting for continuous variables such as in linear regression,
+you have a few different metrics to quantify the strength and accuracy
+of your model. The first is the <em>Mean Squared Error</em>, or MSE. It
+is one of a few ‘loss’ functions used to quantify the strength of a
+regression model. It is effectively the average of the squares of the
+errors, or</p>
+<p><span class="math display">\[MSE = \frac{1}{n} \sum_{i=1}^{n}(y_i -
+\hat{y}_i)^2\]</span></p>
+<p>where <span class="math inline">\(y_i\)</span> is the true value of
+the response variable given input <span
+class="math inline">\(X_i\)</span> and <span
+class="math inline">\(\hat{y}_i\)</span> is the predicted value. It
+quantifies how far away the predictions are from the true values, and
+the closer it is to zero, the better.</p>
+<p><em>R-squared</em> (<span class="math inline">\(R^2\)</span>),
+otherwise known as the coefficient of determination, is the percentage
+of the variation in the response that is explained by the model, hence
+it is always between 0 and 1, where 1 means that 100% of the variation
+in the response is explained by the model.</p>
+<p>After splitting and scaling the data, we can put together a function
+that builds the model, fits it, calculates the evaluation metrics like
+the MSE and R-squared, and tests the assumptions.</p>
+</div>
+<div id="trainingtest-split" class="section level4">
+<h4>Training/Test Split</h4>
+<p>In order to build our model and test it, we do a split of the data
+between a training set and a test set. Basically when fitting a model,
+you “train” it on the training set (typically a much bigger subset of
+the data), then apply the model to the test set. Essentially the model
+looks at what values for <span class="math inline">\(X\)</span> (target
+variable(s)) return what values for <span
+class="math inline">\(y\)</span> (response variable) in the training
+set, then uses the test set of <span class="math inline">\(X\)</span>
+values to make predictions for <span class="math inline">\(y\)</span>.
+Then to evaluate the model, we compare the predictions that the model
+made (<span class="math inline">\(\hat{y}\)</span>) against the true
+values of <span class="math inline">\(y\)</span> (the test set).</p>
+</div>
+<div id="cross-validation-and-parameter-tuning" class="section level4">
+<h4>Cross-Validation and Parameter Tuning</h4>
+<p>Cross validation is the process of training learners using one set of
+data, and testing it using a different set. While there are different
+kinds of cross-validation methods, we are using k-fold cross validation.
+In this case, the dataset is divided into <span
+class="math inline">\(k\)</span> subsets (or folds) and each fold is
+used as a test set with the rest used as a training set. Then the
+average errors across all <span class="math inline">\(k\)</span> trials
+is computed. The variance is reduced the higher <span
+class="math inline">\(k\)</span> is, but obviously this can get rather
+computationally expensive once you get into larger datasets and high
+values of <span class="math inline">\(k\)</span>.</p>
+<p>It is important to distinguish that this train/test split during
+cross-validation is distinct from the train/test split of the data that
+happens in the initial data preparation process. In this case, the
+training data (80% of the dataset) is split into <span
+class="math inline">\(k\)</span> folds to be trained and tested on, and
+later the optimized, cross-validated model is tested on the 20% of test
+data we set aside at the beginning. This test data is always to be kept
+separate in the model training process to reduce overfitting.</p>
+<p>Parameter tuning is the process of selecting the values for a model’s
+parameters that maximize the model’s accuracy. The function
+<code>GridSearchCV</code> (from <code>sklearn.model_selection</code>)
+uses 3-fold cross validation by default and tests a number of different
+values for the parameters of a model, such as the number of estimators.
+We can use it to choose the optimal parameters for each of the models we
+are going to fit.</p>
+</div>
+<div id="variable-importance" class="section level4">
+<h4>Variable Importance</h4>
+<p>Some of the models we are going to fit have a
+<code>feature_importance</code> attribute that allows us to visualize
+the varying strengths of each feature on the model itself. This can help
+us determine which features are most crucial in predicting the response,
+and maybe even build a smaller model based on those crucial
+features.</p>
+<p>In previous runs of this code I had checked the variable importance
+of the ‘full’ model which used all the available variables, minus the
+ones that were collinear. It ended up that <code>RM</code> and
+<code>LSTAT</code> were the most important variables in all of the
+models, so I decided to try a model that only uses those two variables.
+This makes sense since these were the two variables that had a
+significant correlation with the response variable.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data Preparation</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X[[<span class="st">&#39;RM&#39;</span>, <span class="st">&#39;LSTAT&#39;</span>]]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># split between training and testing sets, (70/30 split)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size <span class="op">=</span> <span class="fl">0.3</span>, random_state <span class="op">=</span> <span class="dv">100</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># scaling the data</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler().fit(X_train)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># scaling the training and test splits and adding the column names back</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> scaler.transform(X_train)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.DataFrame(X_train, columns <span class="op">=</span> X.columns)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> scaler.transform(X_test)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.DataFrame(X_test, columns <span class="op">=</span> X.columns)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function that finds the mean of the residuals, tests for Normality and independence</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> residual_tests(residuals):</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mean of the residuals</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    residuals_mean <span class="op">=</span> <span class="bu">round</span>(np.mean(residuals), <span class="dv">3</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the mean of the residuals.&quot;</span>.<span class="bu">format</span>(residuals_mean))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Checking for Normality of the residuals, Shapiro-Wilk test</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    W_stat, p <span class="op">=</span> stats.shapiro(residuals)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    W_stat <span class="op">=</span> <span class="bu">round</span>(W_stat, <span class="dv">3</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> <span class="bu">round</span>(p, <span class="dv">3</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the test-statistic for the Shapiro-Wilk test with a p-value of </span><span class="sc">{}</span><span class="st">.&quot;</span>.<span class="bu">format</span>(W_stat, p))</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p <span class="op">&lt;</span> <span class="fl">0.05</span>: </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We conclude that the residuals are not Normally distributed.&quot;</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We conclude that the residuals are Normally distributed.&quot;</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Checking independence of the residuals, Durbin-Watson test</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    dw <span class="op">=</span> <span class="bu">round</span>(durbin_watson(residuals), <span class="dv">3</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the test-statistic for the Durbin-Watson test.&quot;</span>.<span class="bu">format</span>(dw))</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dw <span class="op">&gt;</span> <span class="fl">2.5</span> <span class="kw">and</span> dw <span class="op">&lt;=</span> <span class="dv">4</span>:</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We conclude there is strong negative autocorrelation in the residuals.&quot;</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dw <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> dw <span class="op">&lt;</span> <span class="fl">1.5</span>:</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We conclude there is strong positive autocorrelation in the residuals.&quot;</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function that plots the predicted values against the true values, the residual plot, and the QQ-plot of the residuals</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># requires seaborn and matplotlib.pyplot</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_model_diagnostics(y_pred, y_test, residuals):</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predictions vs True Values</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    sns.regplot(x <span class="op">=</span> y_pred, y <span class="op">=</span> y_test, ci <span class="op">=</span> <span class="va">None</span>, scatter_kws <span class="op">=</span> {<span class="st">&#39;color&#39;</span>: <span class="st">&#39;b&#39;</span>}, line_kws <span class="op">=</span> {<span class="st">&#39;color&#39;</span>: <span class="st">&#39;r&#39;</span>})</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">&#39;Predictions&#39;</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">&#39;True Values&#39;</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">&quot;Predictions vs True Values&quot;</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Residual Plot</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    sns.residplot(x <span class="op">=</span> y_pred, y <span class="op">=</span> y_test, lowess <span class="op">=</span> <span class="va">True</span>, scatter_kws <span class="op">=</span> {<span class="st">&#39;color&#39;</span>: <span class="st">&#39;b&#39;</span>}, line_kws <span class="op">=</span> {<span class="st">&#39;color&#39;</span>: <span class="st">&#39;r&#39;</span>})</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">&quot;Residual Plot&quot;</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># QQ-plot</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    stats.probplot(residuals, plot <span class="op">=</span> plt)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">&quot;QQ-plot of the Residuals&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to plot variable importance, only works for estimators with feature_importances_ attribute</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_variable_importance(model):</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    importances <span class="op">=</span> model.best_estimator_.feature_importances_</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort feature importances in descending order</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    indices <span class="op">=</span> np.argsort(importances)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rearrange feature names so they match the sorted feature importances</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> <span class="bu">list</span>(X.columns.values)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> [names[i] <span class="cf">for</span> i <span class="kw">in</span> indices]</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create plot</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">&quot;Feature Importance&quot;</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    plt.bar(<span class="bu">range</span>(X_train.shape[<span class="dv">1</span>]), importances[indices])</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    plt.xticks(<span class="bu">range</span>(X_train.shape[<span class="dv">1</span>]), names, rotation<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to plot 3D scatterplot of the model</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_3d_scatter(X_test, y_pred, y_test, x, y, z, title, color):</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    test_df <span class="op">=</span> X_test.copy()</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    test_df[<span class="st">&#39;MEDV_pred&#39;</span>] <span class="op">=</span> y_pred.tolist()</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    test_df[<span class="st">&#39;MEDV_true&#39;</span>] <span class="op">=</span> y_test.tolist()</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    test_df[<span class="st">&#39;Residual&#39;</span>] <span class="op">=</span> test_df[<span class="st">&#39;MEDV_true&#39;</span>] <span class="op">-</span> test_df[<span class="st">&#39;MEDV_pred&#39;</span>]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Visualizing the OLS Predictions</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter_3d(test_df, x <span class="op">=</span> x, y <span class="op">=</span> y, z <span class="op">=</span> z, </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                        title <span class="op">=</span> title,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                        color <span class="op">=</span> color)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    fig.show()</span></code></pre></div>
+</div>
+<div id="ordinary-least-squares-ols-regression" class="section level4">
+<h4>Ordinary Least Squares (OLS) Regression</h4>
+<p>First we will start with the simplest of machine learning algorithms,
+the ordinary least squares linear regression model. We use the function
+to fit the model and test it against the assumptions, so that we can
+evaluate the strength of the model within context. We can also help
+diagnose model issues by plotting the predictions against the true
+values and plot the residuals as well.</p>
+<p>The implementation of multiple linear regression with multiple
+features (independent variables) appears like so:</p>
+<p><span class="math display">\[ y = \beta_0 + \beta_1x_1 + ... +
+\beta_nx_n \]</span></p>
+<p>Where <span class="math inline">\(y\)</span> is the response, <span
+class="math inline">\(x_i\)</span> is the feature (or input variable),
+<span class="math inline">\(\beta_0\)</span> is the intercept, and <span
+class="math inline">\(\beta_1\)</span> through <span
+class="math inline">\(\beta_n\)</span> are the coefficients for each of
+the <span class="math inline">\(n\)</span> independent variables.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Regression Model</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>regr_LR <span class="op">=</span> LinearRegression()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Hyper-parameter tuning</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>parameters_LR <span class="op">=</span> {<span class="st">&#39;fit_intercept&#39;</span>: [<span class="va">True</span>, <span class="va">False</span>], <span class="st">&#39;copy_X&#39;</span>: [<span class="va">True</span>, <span class="va">False</span>]}</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>grid_LR <span class="op">=</span> GridSearchCV(estimator <span class="op">=</span> regr_LR, param_grid <span class="op">=</span> parameters_LR)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>model_LR <span class="op">=</span> grid_LR.fit(X_train, y_train)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>predictions_LR <span class="op">=</span> model_LR.predict(X_test)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># MSE </span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>mse_LR <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_LR), <span class="dv">3</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>rmse_LR <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_LR), <span class="dv">3</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_LR))</span></code></pre></div>
+<pre><code>## 38.397 is the Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_LR))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+<pre><code>## 6.197 is the Root Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>r2_LR <span class="op">=</span> <span class="bu">round</span>(model_LR.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_LR))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+<pre><code>## 0.621 is the R-squared.</code></pre>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>residuals_LR <span class="op">=</span> y_test <span class="op">-</span> predictions_LR</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>residual_tests(residuals_LR)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting model diagnostics</span></span></code></pre></div>
+<pre><code>## -0.012 is the mean of the residuals.
+## 0.846 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+## We conclude that the residuals are not Normally distributed.
+## 2.106 is the test-statistic for the Durbin-Watson test.
+## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plot_model_diagnostics(predictions_LR, y_test, residuals_LR)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting model</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_LR, y_test, x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>               title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from OLS Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+<p>We see that the mean of the residuals is approximately zero and that
+they are also independently distributed. Although the residuals of the
+model are not from a Normal distribution based on our tests and this
+QQ-plot, the sample size (504) is sufficiently large enough for us to
+bypass this assumption. In practice, residuals seldom fulfill this
+requirement.</p>
+<p>Looking at the residual plot however, we see a trend in how they are
+distributed (note the curve in the red line). Ideally this red line
+would be as horizontal as possible. Note the imbalance on the Y-axis
+with how the residuals are distributed. These all point towards the
+conclusion that this model might not be the strongest.</p>
+</div>
+</div>
+<div id="decision-tree" class="section level3">
+<h3>Decision Tree</h3>
+<p>Decision trees are a simple machine learning model that can be
+utilized for classification and also for regression, which is our use
+case. The algorithm works in much the same way it does for a
+classification problem as it does for regression, where it chooses a
+label. In the regression case, it chooses between ‘leaves’ which are the
+splits in the data.</p>
+<p>For example, suppose in our training set we have values for <span
+class="math inline">\(x\)</span> ranging from 1-100, and each value for
+<span class="math inline">\(x\)</span> corresponds to a value for <span
+class="math inline">\(y\)</span>. The algorithm can split these values
+into ranges, such as 1-25, 25-50, 50-75, 75-100. It will then take a
+value for <span class="math inline">\(y\)</span> that represents that
+range for <span class="math inline">\(x\)</span>.</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Decision Tree Regression</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>regr_DT <span class="op">=</span> DecisionTreeRegressor(random_state <span class="op">=</span> <span class="dv">10</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Hyper-parameter tuning</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>parameters_DT <span class="op">=</span> {<span class="st">&#39;max_features&#39;</span>: [<span class="st">&#39;sqrt&#39;</span>, <span class="st">&#39;log2&#39;</span>, <span class="va">None</span>], <span class="st">&#39;max_depth&#39;</span>: <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">20</span>)}</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>grid_DT <span class="op">=</span> GridSearchCV(estimator <span class="op">=</span> regr_DT, param_grid <span class="op">=</span> parameters_DT)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>model_DT <span class="op">=</span> grid_DT.fit(X_train, y_train)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>predictions_DT <span class="op">=</span> model_DT.predict(X_test)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># MSE </span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>mse_DT <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_DT), <span class="dv">3</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>rmse_DT <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_DT), <span class="dv">3</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_DT))</span></code></pre></div>
+<pre><code>## 32.842 is the Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_DT))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+<pre><code>## 5.731 is the Root Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>r2_DT <span class="op">=</span> <span class="bu">round</span>(model_DT.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_DT))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+<pre><code>## 0.676 is the R-squared.</code></pre>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>residuals_DT <span class="op">=</span> y_test <span class="op">-</span> predictions_DT</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>residual_tests(residuals_DT)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
+<pre><code>## 0.039 is the mean of the residuals.
+## 0.813 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+## We conclude that the residuals are not Normally distributed.
+## 2.177 is the test-statistic for the Durbin-Watson test.
+## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>plot_model_diagnostics(predictions_DT, y_test, residuals_DT)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting variable importance</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>plot_variable_importance(model_DT)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting model</span></span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-15-7.png" width="672" /></p>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_DT, y_test, x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>               title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Decision Tree Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+</div>
+<div id="random-forest" class="section level3">
+<h3>Random Forest</h3>
+<p>Random forest is a machine learning algorithm that, true to its name,
+utilizes decision trees. It is a bootstrap aggregation (bagging) method
+that leverages many decision trees. This ensemble learning technique
+helps minimize overfitting which is a problem common when utilizing
+decision trees. It also introduces an element of randomness that makes
+it more robust.</p>
+<p>While Random Forests, like decision trees, can be utilized for
+classification, this is a regression problem since we are predicting a
+continuous response variable rather than a categorical one.</p>
+<p>It works by sampling multiple subsamples (with replacement) from the
+training dataset, then trains many decision trees for regression, where
+each leaf node outputs the mean of all of the label values in the node
+itself. The “forest” then returns the average of the predictions of all
+of the decision trees.</p>
+<p>While the randomness and scale of the algorithm makes it effectively
+reduce overfitting, it suffers from a lack of interpretability, making
+it a ‘black-box’ algorithm.</p>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest Regressor</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>regr_RF <span class="op">=</span> RandomForestRegressor()</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Hyper-parameter tuning</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>parameters_RF <span class="op">=</span> {<span class="st">&#39;n_estimators&#39;</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>], </span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;max_depth&#39;</span>: [<span class="dv">3</span>, <span class="va">None</span>],</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;max_features&#39;</span>: [<span class="dv">1</span>,<span class="dv">2</span>]}</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>grid_RF <span class="op">=</span> GridSearchCV(estimator <span class="op">=</span> regr_RF, param_grid <span class="op">=</span> parameters_RF)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>model_RF <span class="op">=</span> grid_RF.fit(X_train, y_train)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>predictions_RF <span class="op">=</span> model_RF.predict(X_test)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="co"># MSE </span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>mse_RF <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_RF), <span class="dv">3</span>)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>rmse_RF <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_RF), <span class="dv">3</span>)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_RF))</span></code></pre></div>
+<pre><code>## 30.416 is the Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_RF))</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+<pre><code>## 5.515 is the Root Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>r2_RF <span class="op">=</span> <span class="bu">round</span>(model_RF.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_RF))</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+<pre><code>## 0.7 is the R-squared.</code></pre>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>residuals_RF <span class="op">=</span> y_test <span class="op">-</span> predictions_RF</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>residual_tests(residuals_RF)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
+<pre><code>## -0.162 is the mean of the residuals.
+## 0.823 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+## We conclude that the residuals are not Normally distributed.
+## 2.101 is the test-statistic for the Durbin-Watson test.
+## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plot_model_diagnostics(predictions_RF, y_test, residuals_RF)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot variable importance</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>plot_variable_importance(model_RF)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting model</span></span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-16-9.png" width="672" /></p>
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_RF, y_test, </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Random Forest Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+</div>
+<div id="gradient-boosting" class="section level3">
+<h3>Gradient Boosting</h3>
+<p>Boosting is a sequential technique which works on the principle of
+tree ensembles, like random forests. The basic idea behind boosting
+algorithms is building a weak model, making conclusions about the
+various feature importance and parameters, and then using those
+conclusions to build a new, stronger model. One of the drawbacks of a
+single decision/regression tree is that it fails to include predictive
+power from multiple, overlapping regions of the feature space.</p>
+<p>Gradient boosting works by fitting a model to the data, <span
+class="math inline">\(F_1(x) = y\)</span>, then fits a model to the
+residuals, <span class="math inline">\(h_1(x) = y - F_1(x)\)</span>, and
+then creates a new model, <span class="math inline">\(F_2(x) = F_1(x) +
+h_1(x)\)</span>, and it continues over and over.</p>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gradient Boosting Regressor</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>regr_XGB <span class="op">=</span> XGBRegressor(random_state <span class="op">=</span> <span class="dv">10</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Hyper-parameter tuning</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>parameters_XGB <span class="op">=</span> {<span class="st">&#39;n_estimators&#39;</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>],</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;max_depth&#39;</span>: [<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>], </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;learning_rate&#39;</span>: [<span class="fl">0.1</span>, <span class="fl">0.2</span>]}</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>             <span class="co">#&#39;min_samples_split&#39;: [2,3,4,5],</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co">#               &#39;loss&#39;: [&#39;ls&#39;]}</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>grid_XGB <span class="op">=</span> GridSearchCV(estimator <span class="op">=</span> regr_XGB, param_grid <span class="op">=</span> parameters_XGB)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>model_XGB <span class="op">=</span> grid_XGB.fit(X_train, y_train)</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>predictions_XGB <span class="op">=</span> model_XGB.predict(X_test)</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="co"># MSE </span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>mse_XGB <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_XGB), <span class="dv">3</span>)</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>rmse_XGB <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_XGB), <span class="dv">3</span>)</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_XGB))</span></code></pre></div>
+<pre><code>## 29.235 is the Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_XGB))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+<pre><code>## 5.407 is the Root Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>r2_XGB <span class="op">=</span> <span class="bu">round</span>(model_XGB.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_XGB))</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+<pre><code>## 0.711 is the R-squared.</code></pre>
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>residuals_XGB <span class="op">=</span> y_test <span class="op">-</span> predictions_XGB</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>residual_tests(residuals_XGB)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
+<pre><code>## 0.324 is the mean of the residuals.
+## 0.801 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+## We conclude that the residuals are not Normally distributed.
+## 2.122 is the test-statistic for the Durbin-Watson test.
+## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
+<div class="sourceCode" id="cb58"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>plot_model_diagnostics(predictions_XGB, y_test, residuals_XGB)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot variable importance</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>plot_variable_importance(model_XGB)</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting model</span></span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-17-11.png" width="672" /></p>
+<div class="sourceCode" id="cb59"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_XGB, y_test, </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>, </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Gradient Boosting Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+</div>
+<div id="k-nearest-neighbors" class="section level3">
+<h3>k-Nearest Neighbors</h3>
+<p>Unlike decision trees and random forests, k-Nearest Neighbors is an
+unsupervised learning technique. It can also be utilized for both
+classification and regression. This algorithm uses “feature similarity”
+to predict the values of new data points, which means that predictions
+are made based on how closely a given value resembles others in the data
+set. The name of the algorithm refers to the number of “neighbors” (or
+nearby data point), <span class="math inline">\(k\)</span>, that are
+considered when determining the predicted value of a data point.</p>
+<div class="sourceCode" id="cb60"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KNN Regression</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>regr_KNN <span class="op">=</span> KNeighborsRegressor()</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Hyper-parameter tuning</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>parameters_KNN <span class="op">=</span> {<span class="st">&#39;n_neighbors&#39;</span>: <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">11</span>), <span class="st">&#39;weights&#39;</span>: [<span class="st">&#39;uniform&#39;</span>, <span class="st">&#39;distance&#39;</span>], </span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;metric&#39;</span>: [<span class="st">&#39;euclidean&#39;</span>, <span class="st">&#39;manhattan&#39;</span>],</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;algorithm&#39;</span>: [<span class="st">&#39;auto&#39;</span>, <span class="st">&#39;ball_tree&#39;</span>, <span class="st">&#39;kd_tree&#39;</span>, <span class="st">&#39;brute&#39;</span>]}</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>grid_KNN <span class="op">=</span> GridSearchCV(estimator <span class="op">=</span> regr_KNN, param_grid <span class="op">=</span> parameters_KNN)</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>model_KNN <span class="op">=</span> grid_KNN.fit(X_train, y_train)</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>predictions_KNN <span class="op">=</span> model_KNN.predict(X_test)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="co"># MSE </span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>mse_KNN <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_KNN), <span class="dv">3</span>)</span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>rmse_KNN <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_KNN), <span class="dv">3</span>)</span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_KNN))</span></code></pre></div>
+<pre><code>## 31.013 is the Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb62"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_KNN))</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+<pre><code>## 5.569 is the Root Mean Squared Error.</code></pre>
+<div class="sourceCode" id="cb64"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>r2_KNN <span class="op">=</span> <span class="bu">round</span>(model_KNN.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_KNN))</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+<pre><code>## 0.694 is the R-squared.</code></pre>
+<div class="sourceCode" id="cb66"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>residuals_KNN <span class="op">=</span> y_test <span class="op">-</span> predictions_KNN</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>residual_tests(residuals_KNN)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
+<pre><code>## 0.02 is the mean of the residuals.
+## 0.776 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+## We conclude that the residuals are not Normally distributed.
+## 2.177 is the test-statistic for the Durbin-Watson test.
+## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
+<div class="sourceCode" id="cb68"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>plot_model_diagnostics(predictions_KNN, y_test, residuals_KNN)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting model</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_KNN, y_test, </span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from k-Nearest Neighbors Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+</div>
+<div id="comparing-algorithms" class="section level3">
+<h3>Comparing Algorithms</h3>
+<p>Now that we have calculated the MSE and the R-squared for all of the
+different models, we want to compare them. We want to minimize the MSE
+and maximize the R-squared. In order to pick the best model, we can plot
+these two values for each of the models onto a scatterplot. The best
+model would have a low MSE and a high R2, so ideally it would be in the
+upper left quadrant of the plot, where MSE is on the x-axis and
+R-squared in on the y-axis.</p>
+<div class="sourceCode" id="cb69"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initializing a matrix that will be filled with MSE and R-squared</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>records_full <span class="op">=</span> []</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>algorithms <span class="op">=</span> (<span class="st">&#39;OLS Regression&#39;</span>, <span class="st">&#39;Decision Tree&#39;</span>, <span class="st">&#39;Random Forest&#39;</span>, <span class="st">&#39;Gradient Boosting&#39;</span>, <span class="st">&#39;k-Nearest Neighbors&#39;</span>)</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>mse_all <span class="op">=</span> (mse_LR, mse_DT, mse_RF, mse_XGB, mse_KNN)</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>rmse_all <span class="op">=</span> (rmse_LR, rmse_DT, rmse_RF, rmse_XGB, rmse_KNN)</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>r2_all <span class="op">=</span> (r2_LR, r2_DT, r2_RF, r2_XGB, r2_KNN)</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filling matrix in with values</span></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">5</span>):</span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>    records_full.append({<span class="st">&#39;Algorithm&#39;</span>: algorithms[i], </span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&#39;MSE&#39;</span>: mse_all[i], </span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&#39;RMSE&#39;</span>: rmse_all[i],</span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&#39;R2&#39;</span>: r2_all[i]})</span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a><span class="co"># converting into a DataFrame</span></span>
+<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>records_full <span class="op">=</span> pd.DataFrame(records_full)</span>
+<span id="cb69-17"><a href="#cb69-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(records_full)</span></code></pre></div>
+<pre><code>##              Algorithm    MSE  RMSE    R2
+## 0       OLS Regression  38.40  6.20  0.62
+## 1        Decision Tree  32.84  5.73  0.68
+## 2        Random Forest  30.42  5.51  0.70
+## 3    Gradient Boosting  29.23  5.41  0.71
+## 4  k-Nearest Neighbors  31.01  5.57  0.69</code></pre>
+<div class="sourceCode" id="cb71"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.scatterplot(x <span class="op">=</span> <span class="st">&#39;MSE&#39;</span>, y <span class="op">=</span> <span class="st">&#39;R2&#39;</span>, data <span class="op">=</span> records_full, hue <span class="op">=</span> <span class="st">&#39;Algorithm&#39;</span>)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>g.legend(loc <span class="op">=</span> <span class="st">&#39;center left&#39;</span>, bbox_to_anchor <span class="op">=</span> (<span class="fl">1.25</span>, <span class="fl">0.5</span>), ncol <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;MSE vs R-squared, by Algorithm, Small Models&#39;</span>)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-19-13.png" width="672" /></p>
+<p>So the gradient boosting model is the strongest one in this case, and
+the very simple linear regression model is the worst performing. This
+illustrates the difference between a very complex model and a very
+simple one and how effective they are, respectively. Note the clear
+negative correlation between R2 and MSE. This makes sense since the
+greater the error of the model (MSE), the less variance in the response
+variable that would be explained by the predictors (R-squared). Also
+notable is that the decision tree model was ‘worse’ than both gradient
+boosting and random forest, this is at least in part due to the fact
+that they are ensemble applications of decision trees.</p>
+<div id="feature-trimming" class="section level4">
+<h4>Feature Trimming</h4>
+<p>Recall that earlier I mentioned using a larger model that included
+more features to fit the regression models. When testing them I found
+that the strongest models actually lost some of the coefficient of
+determination (with the strongest model only losing 0.1) and the simpler
+models pretty much stayed the same or got slightly more effective.</p>
+<p>Since the strongest model only lost <code>0.1</code> from the
+R-squared, I decided it was worth it to drop the excess features. In the
+original model there were 11 dependent variables and in the more
+conservative one there are only 2, and the R-squared coefficient is
+still relatively strong.</p>
+<p>It’s important to note that the most complex and effective models,
+gradient boosting and random forest, were the most hit hard by losing
+the other features. Conversely, the other models got stronger or stayed
+about the same. This lends credence to the idea that simple models
+prefer less features (or don’t need many features) whereas the complex
+ones are better when it comes to using many features.</p>
+</div>
+</div>
+</div>
+<div id="predictions" class="section level2">
+<h2>Predictions</h2>
+<p>Now that we know which model is the best, we can use it to generate
+predictions. Again the response variable in this case is
+<code>MEDV</code> or the median value of the home, in the thousands. Our
+independent variables are <code>LSTAT</code>, the % lower status of the
+population, and <code>RM</code> the average number of rooms. So suppose
+we have a new house whose <code>LSTAT</code> is 14 and whose
+<code>RM</code> is 6.</p>
+<p>Recall that the training and the test data were scaled to a Normal
+distribution with the <code>StandardScaler</code> function. We will have
+to scale any new input data as well so that our model can recognize
+it.</p>
+<p>It’s important also to note that the gradient boosted model, as well
+as the random forest and decision tree models, are not good at
+extrapolating to data that is outside of the range the data was trained
+on. For example, if the data was only taught to predict
+<code>MEDV</code> based on values of <code>RM</code> between 3 and 10,
+it will not have a good prediction for an <code>RM</code> of 12. This is
+a problem inherent to decision tree models and the models that utilize
+them e.g. gradient boosting trees, random forest.</p>
+<div class="sourceCode" id="cb72"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating new data</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> pd.DataFrame({<span class="st">&#39;RM&#39;</span>: [<span class="dv">6</span>], <span class="st">&#39;LSTAT&#39;</span>: [<span class="dv">14</span>]})</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co"># scaling new data</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> scaler.transform(new_data)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> pd.DataFrame(new_data, columns <span class="op">=</span> [<span class="st">&#39;RM&#39;</span>, <span class="st">&#39;LSTAT&#39;</span>])</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Prediction</span></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>model_XGB.predict(new_data)[<span class="dv">0</span>]</span></code></pre></div>
+<pre><code>## 20.005268</code></pre>
+<p>As you can see the expected value for <code>MEDV</code> is about 20,
+or $20k.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
@@ -224,6 +227,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -231,6 +297,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -270,7 +346,7 @@ $(document).ready(function () {
       <a href="bitcoin.html">Forecasting bitcoin value</a>
     </li>
     <li>
-      <a href="https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb">Predicting housing prices</a>
+      <a href="housing-prices.html">Predicting housing prices</a>
     </li>
     <li>
       <a href="https://pinchunchen.shinyapps.io/ggomoku/">Play Gomoku using Shiny</a>
@@ -316,20 +392,42 @@ $(document).ready(function () {
 <p><left><img src="images/self_prof.jpg" width="308px" height="410px"></left></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>My name is J Steven Raquel. I’m currently enrolled at the University
-of California, Irvine pursuing a Master of Science in Statistics. I
+<p>My name is J. Steven Raquel. I’m enrolled at the University of
+California, Irvine pursuing a Master of Science in Statistics. I
 graduated from the University of California, Santa Barbara, with a B.S.
-in Statistical Science in 2018.</p>
-<p>In my free time, I am an avid gamer and I study languages such as
-Spanish, Portuguese, and Tagalog.</p>
+in Statistical Science in 2018, with a concentration in applied
+statistics.</p>
 <ul>
+<li>Pronouns: he/him/his</li>
 <li>Email: <a href="mailto:jsteven.raquel8@gmail.com"
 class="email">jsteven.raquel8@gmail.com</a></li>
 <li>GitHub: <a href="https://github.com/jstevenr">jstevenr</a></li>
 <li>LinkedIn: <a
 href="https://www.linkedin.com/in/jstevenr/">jstevenr</a></li>
 </ul>
+<div id="frequently-asked-questions-faq" class="section level3">
+<h3>Frequently Asked Questions (FAQ)</h3>
+<p><em>1) How did you get into the statistics field? What are your
+career aspirations?</em></p>
+<p>I started out as a pre-economics major when I was a first-year at UC
+Santa Barbara. I fared poorly in the early courses, and ended up
+switching into pre-financial math and statistics, and enjoyed the
+math/statistics coursework so much that I eventually switched wholesale
+into the statistics degree. An infectious diseases course I took as a
+second-year Masters student inspired me to shift my career focus towards
+biostatistics and public health.</p>
+<p><em>2) What does the J in your name stand for?</em></p>
+<p>Legally, nothing! “J. Steven” is my legal first name. My paternal
+grandfather’s name started with J, and his father’s name was Estevan– my
+name is a homage to both of them. Most of my friends/acquaintances call
+me J, but my family calls me Steven.</p>
+<p><em>3) What are your other interests / what do you like to do in your
+free time?</em></p>
+<p>I am an avid PC gamer and I like to study languages such as Spanish
+and Portuguese. Among my other interests are world history, culture, and
+coffee. I am also a proud uncle to my niece/nephew.</p>
 <hr />
+</div>
 </div>
 <div id="resume" class="section level1">
 <h1>Resume</h1>
@@ -362,9 +460,8 @@ Methods, SAS Programming, Statistical Data Science</li>
 <li><strong>Technical</strong>
 <ul>
 <li>R, Python, SQL</li>
-<li>Linux, Bash Shell</li>
-<li>Git</li>
-<li>Power BI, Tableau, SAP Analytics Cloud</li>
+<li>Windows, Linux</li>
+<li>Bash Shell, Git</li>
 </ul></li>
 <li><strong>Languages</strong>
 <ul>
@@ -381,6 +478,8 @@ Present
 <li>Studying spatial data regarding equitable access to water
 infrastructure as a member of the Water Equity Lab under Dr. Maura
 Allaire.</li>
+<li>Designing functions that allow ease of working with spatial data
+within</li>
 </ul></li>
 <li><strong>University of California, Irvine</strong>, Mar 2022 - Jun
 2022
@@ -478,6 +577,8 @@ campaign.</li>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -510,6 +611,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

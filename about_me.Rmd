@@ -3,6 +3,8 @@ title: "About Me"
 
 output:
   html_document:
+    toc: true
+    toc_float: true
     keep_tex: true
     includes:
       in_header: 
@@ -23,7 +25,7 @@ navbar:
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Predicting housing prices"
-          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
+          href: housing-prices.html
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
@@ -42,13 +44,26 @@ navbar:
 
 # Introduction
 
-My name is J Steven Raquel. I'm currently enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018.
+My name is J. Steven Raquel. I'm enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018, with a concentration in applied statistics.
 
-In my free time, I am an avid gamer and I study languages such as Spanish, Portuguese, and Tagalog.
-
+* Pronouns: he/him/his
 * Email: jsteven.raquel8@gmail.com
 * GitHub: [jstevenr](https://github.com/jstevenr)
 * LinkedIn: [jstevenr](https://www.linkedin.com/in/jstevenr/)
+
+### Frequently Asked Questions (FAQ)
+
+*1) How did you get into the statistics field? What are your career aspirations?*
+
+I started out as a pre-economics major when I was a first-year at UC Santa Barbara. I fared poorly in the early courses, and ended up switching into pre-financial math and statistics, and enjoyed the math/statistics coursework so much that I eventually switched wholesale into the statistics degree. An infectious diseases course I took as a second-year Masters student inspired me to shift my career focus towards biostatistics and public health.
+
+*2) What does the J in your name stand for?*
+
+Legally, nothing! "J. Steven" is my legal first name. My paternal grandfather's name started with J, and his father's name was Estevan-- my name is a homage to both of them. Most of my friends/acquaintances call me J, but my family calls me Steven.
+
+*3) What are your other interests / what do you like to do in your free time?*
+
+I am an avid PC gamer and I like to study languages such as Spanish and Portuguese. Among my other interests are world history, culture, and coffee. I am also a proud uncle to my niece/nephew. 
 
 ----
 
@@ -67,9 +82,8 @@ In my free time, I am an avid gamer and I study languages such as Spanish, Portu
 
 * **Technical**
     + R, Python, SQL
-    + Linux, Bash Shell
-    + Git
-    + Power BI, Tableau, SAP Analytics Cloud
+    + Windows, Linux
+    + Bash Shell, Git
 * **Languages**
     + Spanish (B1), Portuguese (B1)
 
@@ -77,6 +91,7 @@ In my free time, I am an avid gamer and I study languages such as Spanish, Portu
 
 * **University of California, Irvine**, Jul 2022 - Present
     + Studying spatial data regarding equitable access to water infrastructure as a member of the Water Equity Lab under Dr. Maura Allaire.
+    + Designing functions that allow ease of working with spatial data within
 
 * **University of California, Irvine**, Mar 2022 - Jun 2022
     + Studying the spatial distribution of cancer and immune system cells with respect to cancer outcome, under the supervision of Dr. Veronica Berrocal.
