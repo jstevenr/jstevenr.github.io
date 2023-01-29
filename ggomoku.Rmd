@@ -1,5 +1,5 @@
 ---
-title: "ggomoku - Play Gomoku within R"
+title: "ggomoku - Play Gomoku as a Shiny App"
 author: "J Steven Raquel & Pin-Chun Chen"
 output:
   html_document:
@@ -70,6 +70,7 @@ In keeping with 'standard' Gomoku, one must have exactly 5 tiles in a row to win
 
 
 # Optional ('house') Rules
+
 Players can opt to follow the following rules to make the game more fair, as Black has a significant advantage by virtue of being able to move first.
 
 The rule of three and three bans a move that simultaneously forms two open rows of three tiles i.e. two rows that are not blocked at either end.
@@ -78,5 +79,5 @@ The rule of four and four bans a move that simultaneously forms two rows of four
 
 ```{r shiny-app, echo = F}
 include_app(url = "https://pinchunchen.shinyapps.io/ggomoku/",
-            height = "600px")
+            height = "1000px")
 ```
