@@ -37,7 +37,7 @@ navbar:
         - text: "Predicting housing prices"
           href: housing-prices.html
         - text: "Play Gomoku using Shiny"
-          href: https://pinchunchen.shinyapps.io/ggomoku/
+          href: ggomoku.html
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"
@@ -46,6 +46,7 @@ navbar:
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
+
 ---
 
 This paper was originally written as a final project for PSTAT 131 Data Mining at UC Santa Barbara in spring 2017. It was revised heavily for STATS 295 Advanced R at UC Irvine. A version of this project written in Python can be found on my GitHub [here](https://github.com/jstevenr/wine-classification-python/blob/master/wine-quality.ipynb).

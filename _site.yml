@@ -21,7 +21,7 @@ navbar:
         - text: "Predicting housing prices"
           href: housing-prices.html
         - text: "Play Gomoku using Shiny"
-          href: https://pinchunchen.shinyapps.io/ggomoku/
+          href: ggomoku.html
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"

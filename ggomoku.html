@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="J Steven Raquel &amp; Pin-Chun Chen" />
 
 
-<title>Resume</title>
+<title>ggomoku - Play Gomoku within R</title>
 
 <script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -310,158 +311,55 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Resume</h1>
+<h1 class="title toc-ignore">ggomoku - Play Gomoku within R</h1>
+<h4 class="author">J Steven Raquel &amp; Pin-Chun Chen</h4>
 
 </div>
 
 
-<p>Detail-oriented individual with years of experience in data analysis,
-visualization, and modeling with a variety of data types including
-categorical, longitudinal, disease data, social network data, and
-spatial data. Looking to leverage this experience with a role in public
-health as a statistician or statistical programmer.</p>
-<div id="education" class="section level2">
-<h2>Education</h2>
-<ul>
-<li><strong>Statistics M.S.</strong>, University of California, Irvine
-Estimated Completion March 2023
-<ul>
-<li>Coursework in Probability and Statistical Theory, Statistical
-Methods, Bayesian Data Analysis, Infectious Disease Modeling, Spatial
-Statistics, Social Network Data, Survival Analysis</li>
-<li>Designed the <code>ggomoku</code> R package and Shiny app as a pair
-project</li>
-</ul></li>
-<li><strong>Statistical Science B.S.</strong>, University of California,
-Santa Barbara, June 2018
-<ul>
-<li>Concentration in Applied Statistics</li>
-<li>Coursework in Data Mining, Regression Analysis, Stochastic
-Processes, Non-Parametric Methods, Time Series, Advanced Statistical
-Methods, SAS Programming, Statistical Data Science</li>
-</ul></li>
-</ul>
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p>Gomoku (also known as Five in a Row) is a 2-player game where one
+player uses white tiles and the other uses black tiles. As in standard
+Gomoku, this version of the game is played on a 19 x 19 board.</p>
+<p>Each player has 60 tiles that they take turns placing on the
+intersections of the grid. Each player’s goal is to place an unbroken
+row of five tiles of their own color either horizontally, vertically, or
+diagonally.</p>
+<p>This Shiny app is an implementation of the <code>ggomoku</code>
+package designed by Pin-Chun Chen and J Steven Raquel, ported over to
+Shiny. It allows players to play the game of Gomoku within Shiny as
+opposed to R.</p>
+<p>This Gomoku game is also hosted on <a
+href="https://pinchunchen.shinyapps.io/ggomoku/">this website</a>.</p>
+<p>The GitHub repository for the game is located <a
+href="https://github.com/pinchunc/ggomoku-shiny">here</a>.</p>
+<p>You can install the game as a package in R into your own R
+installation via this <a
+href="https://github.com/pinchunc/ggomoku">GitHub repo</a>.</p>
 </div>
-<div id="skills" class="section level2">
-<h2>Skills</h2>
-<ul>
-<li><strong>Software Tools and Languages</strong>
-<ul>
-<li>R, Python, SQL, SAS, Stata</li>
-<li>Windows, Linux</li>
-<li>Bash Shell, Git</li>
-<li>LaTeX, Markdown</li>
-</ul></li>
-<li><strong>Languages</strong>
-<ul>
-<li>Spanish (B1), Portuguese (B1)</li>
-</ul></li>
-</ul>
+<div id="rules" class="section level1">
+<h1>Rules</h1>
+<p>Black goes first.</p>
+<p>A tile of the same color cannot be added twice in a row.</p>
+<p>A tile cannot replace an existing tile on the board.</p>
+<p>The tile must be placed within the range of the board (a whole number
+between 1 and the board size).</p>
+<p>In keeping with ‘standard’ Gomoku, one must have exactly 5 tiles in a
+row to win, greater than 5 does not count.</p>
 </div>
-<div id="research-experience" class="section level2">
-<h2>Research Experience</h2>
-<ul>
-<li><strong>University of California, Irvine</strong>, Mar 2022 - Jun
-2022
-<ul>
-<li>Studying the spatial distribution of cancer and immune system cells
-with respect to cancer outcome, under the supervision of Dr. Veronica
-Berrocal.</li>
-</ul></li>
-</ul>
-</div>
-<div id="work-experience" class="section level2">
-<h2>Work Experience</h2>
-<ul>
-<li><strong>Water Equity Lab Project Policy Analyst</strong> <a
-href="https://www.uci.edu/">Water Equity Lab, UC Irvine</a>, Jul 2022 -
-Present
-<ul>
-<li>Analyzing and processing vector and raster data pertaining to
-equitable access to water infrastructure across minority
-demographics.</li>
-<li>Authored and documented functions to streamline productivity in the
-team.</li>
-</ul></li>
-<li><strong>Data Analyst</strong>, <a
-href="https://valeonetworks.com">Valeo Networks</a>, Sep 2018 - Sep 2020
-<ul>
-<li>Creating data visualizations and dashboards with business
-intelligence software to track key performance indicators and inform
-decision-making for the company and external clients.</li>
-<li>Assisting with identifying government contracts pertaining to data
-analytics.</li>
-<li>Building predictive models with machine learning algorithms.</li>
-</ul></li>
-<li><strong>Production Coordinator</strong>, <a
-href="https://kcsb.org">91.9 KCSB-FM in Santa Barbara</a>, Nov 2017 -
-June 2018
-<ul>
-<li>Timely produced excellent public service announcements (PSAs) and
-event promotions conforming with FCC guidelines.</li>
-<li>Organized and trained volunteers to create PSAs and event
-promotions.</li>
-</ul></li>
-<li><strong>Arctic Data Center Intern</strong>, <a
-href="https://www.nceas.ucsb.edu/">National Center of Ecological
-Analysis and Synthesis</a>, Sep 2016 - Sep 2017
-<ul>
-<li>Expertly maintained metadata for federally funded data
-repository.</li>
-<li>Improved team efficiency in data cleaning, by writing original
-functions and teaching other members how to use R.</li>
-</ul></li>
-<li><strong>Business &amp; Financial Planning Assistant</strong>, <a
-href="https://www.housing.ucsb.edu/home">UCSB Housing, Dining &amp;
-Auxiliary Enterprises</a>, May 2016 - Sep 2016
-<ul>
-<li>Efficiently memorized reports, wrote checks, tracked spending and
-prepared documentation.</li>
-<li>Noted areas where the department was overspending, resulting in
-savings.</li>
-</ul></li>
-</ul>
-</div>
-<div id="volunteer-experience" class="section level2">
-<h2>Volunteer Experience</h2>
-<ul>
-<li><strong>Radio Programmer</strong>, <a href="https://kcsb.org/">91.9
-KCSB-FM in Santa Barbara</a>, Jun 2017 - Jun 2018
-<ul>
-<li>Ran a weekly college radio music show called ‘The Company of
-Lazarus’.</li>
-<li>Operated a radio control board.</li>
-</ul></li>
-<li><strong>Secretary</strong>, <a
-href="https://orgsync.com/66953/chapter">oSTEM Inc. @ UC Santa
-Barbara</a>, May 2016 - Apr 2017
-<ul>
-<li>Reaching out to STEM majors who are part of the LGBTQ
-community.</li>
-<li>Educating on the importance of LGBTQ visibility and
-inclusivity.</li>
-</ul></li>
-<li><strong>Student Mentor</strong>, Isla Vista Elementary, Sep 2016 -
-Jun 2017
-<ul>
-<li>Acted as a mentor and role model for a 6th grade student for a
-year.</li>
-</ul></li>
-<li><strong>Panelist</strong>, UCSB Mental Health Conference, 2016, 2017
-<ul>
-<li>Took part on a panel to share personal experiences related to mental
-illness and advise on how to cope and intervene.</li>
-</ul></li>
-<li><strong>Peer Volunteer</strong>, <a
-href="https://lifeoftheparty.sa.ucsb.edu/">Life of the Party</a>, UCSB
-Alcohol &amp; Drug Program, Jan 2016 - May 2016
-<ul>
-<li>Encouraging the use of safer partying practices in Isla Vista,
-California.</li>
-<li>Collaborated for a campus-wide “Be Safe and Pace” awareness
-campaign.</li>
-</ul></li>
-</ul>
+<div id="optional-house-rules" class="section level1">
+<h1>Optional (‘house’) Rules</h1>
+<p>Players can opt to follow the following rules to make the game more
+fair, as Black has a significant advantage by virtue of being able to
+move first.</p>
+<p>The rule of three and three bans a move that simultaneously forms two
+open rows of three tiles i.e. two rows that are not blocked at either
+end.</p>
+<p>The rule of four and four bans a move that simultaneously forms two
+rows of four open tiles (open or otherwise).</p>
+<iframe src="https://pinchunchen.shinyapps.io/ggomoku/?showcase=0" width="672" height="600px" data-external="1">
+</iframe>
 </div>
 
 
