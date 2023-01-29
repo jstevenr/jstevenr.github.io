@@ -12,7 +12,9 @@ navbar:
   left:
     - text: "About Me"
       href: about_me.html
-    - text: "Portfolio"
+    - text: "Resume"
+      href: resume.html
+    - text: "Projects"
       menu:
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
@@ -23,7 +25,7 @@ navbar:
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Predicting housing prices"
-          href: housing-prices.ipynb
+          href: housing-prices.html
         - text: "Play Gomoku using Shiny"
           href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
@@ -34,7 +36,6 @@ navbar:
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
-   
 ---
 
 

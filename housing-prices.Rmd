@@ -14,7 +14,9 @@ navbar:
   left:
     - text: "About Me"
       href: about_me.html
-    - text: "Portfolio"
+    - text: "Resume"
+      href: resume.html
+    - text: "Projects"
       menu:
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
