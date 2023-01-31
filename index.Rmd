@@ -47,7 +47,7 @@ navbar:
 
 Welcome and thank you for visiting my personal website! I'm J. Steven Raquel and I am pursuing a Master of Science in Statistics at the University of California, Irvine. 
 
-Find out more about [who I am and what I've done](about_me.html).
+Find out more about [who I am](about_me.html) and [what I've done](resume.html).
 
 If you know anything about statistics, biostatistics, machine learning, epidemiology, or public health, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header. 
 
@@ -80,7 +80,7 @@ For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenk
 
 ### Packages and Shiny Apps
 
-* #### [Play Gomoku (Five in a Row)](https://pinchunchen.shinyapps.io/ggomoku/)
+* #### [Play Gomoku (Five in a Row)](ggomoku.html)
 
 Together with my partner [Pin-Chun Chen](https://sites.uci.edu/pinchunchen/), we designed an R package called `ggomoku` that allowed you to play the board game [Gomoku](https://en.wikipedia.org/wiki/Gomoku). The source code for the package can be found on [GitHub](https://github.com/stats295r-fa20/package-group11).
 
