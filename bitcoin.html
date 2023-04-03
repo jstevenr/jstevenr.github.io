@@ -13,7 +13,7 @@
 
 <title>Forecasting bitcoin value with ARIMA</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -442,6 +442,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="esrd-survival.html">Survival analysis of kidney disease patients</a>
+    </li>
+    <li>
       <a href="matern-spatial.html">Spatial modeling of school gun violence</a>
     </li>
     <li>
@@ -649,7 +652,8 @@ transformed data.</p>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;USD (after log transformation)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Series after Box-Cox&quot;</span>) <span class="sc">+</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">level =</span> <span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting to continuous.
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting
+## to continuous.
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="bitcoin_files/figure-html/box-cox%20transformation-1.png" width="672" /></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comparing the variances of original and transformed data</span></span>

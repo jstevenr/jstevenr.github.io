@@ -14,6 +14,8 @@ navbar:
       href: resume.html
     - text: "Projects"
       menu:
+        - text: "Survival analysis of kidney disease patients"
+          href: esrd-survival.html
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
         - text: "Sexual network exponential random graph modeling"
@@ -40,7 +42,7 @@ Detail-oriented individual with years of experience in data analysis, visualizat
 
 ## Education
 
-* **Statistics M.S.**, University of California, Irvine Estimated Completion March 2023
+* **Statistics M.S.**, University of California, Irvine, March 2023
     + Coursework in Probability and Statistical Theory, Statistical Methods in Linear Models, Categorical Data and Longitudinal Data, Bayesian Data Analysis, Infectious Disease Modeling, Spatial Statistics, Social Network Data, Survival Analysis
     + Designed the `ggomoku` R package and Shiny app as a pair project
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018

@@ -16,6 +16,8 @@ navbar:
       href: resume.html
     - text: "Projects"
       menu:
+        - text: "Survival analysis of kidney disease patients"
+          href: esrd-survival.html
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
         - text: "Sexual network exponential random graph modeling"
@@ -45,7 +47,7 @@ navbar:
 
 <left><img src="images/self_prof.jpg" width="308px" height="410px"></left>
 
-Welcome and thank you for visiting my personal website! I'm J. Steven Raquel and I am pursuing a Master of Science in Statistics at the University of California, Irvine. 
+Welcome and thank you for visiting my personal website! I'm J. Steven Raquel and I have a Master of Science in Statistics degree from the University of California, Irvine.
 
 Find out more about [who I am](about_me.html) and [what I've done](resume.html).
 
@@ -56,6 +58,10 @@ If you know anything about statistics, biostatistics, machine learning, epidemio
 ## Projects  
 
 These are some of the projects I've worked on throughout my time studying statistics, and I am constantly learning and adding things to my repertoire.
+
+* #### [Modeling human serum albumin's association with mortality among end stage renal disease patients](esrd-survival.html)
+
+This paper was written for STATS 255 Survival Analysis and models human serum albumin's relationship with the survival of end-stage renal disease patients, both as a static and time-varying covariate. 
 
 * #### [Spatial modeling the incidences of gun violence in K-12 schools](matern-spatial.html)
 

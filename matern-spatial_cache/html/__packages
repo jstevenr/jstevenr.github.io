@@ -45,6 +45,14 @@ lattice
 latticeExtra
 GGally
 stargazer
+survival
+ggsurvfit
+KMsurv
+ggpubr
+survminer
+gtsummary
+Epi
+gridExtra
 timechange
 lubridate
 sf
