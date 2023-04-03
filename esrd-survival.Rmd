@@ -196,7 +196,27 @@ There are a number of ties--moments in time where more than one individual died-
 
 _Confounding variables_, or confounders, are variables which are causally associated with the predictor of interest and causally associated to the outcome of interest. Failing to account for confounders results in biased analyses and potentially misleading results. We tested formally for confounding variables first by following known causal pathways e.g. being overweight/obese is a risk factor for diabetes, so we suspected high BMI to be causally related to diabetes, knowing both are a risk factor for death. Then we conducted log-rank tests and Chi-squared tests for independence, establishing relationships between the outcome (death) and the predictor in question. 
 
-We know a priori that smoking is associated with diabetes, which itself is associated with a higher risk of mortality. Nicotine and other chemicals in cigarettes affects insulin production, which can cause diabetes. Additionally, a high BMI (i.e. being overweight or obese) is a known risk factor for both death and diabetes. Both smoking and an unhealthy BMI are associated with a higher risk of mortality relative to non-smoking and a healthy BMI, hence we believe both of these variables make for potential confounders in our model. We were able to support these results through conducting individual log-rank tests both with and without stratifying on the respective confounder.
+We know a priori that smoking is associated with diabetes, which itself is associated with a higher risk of mortality. Nicotine and other chemicals in cigarettes affects insulin production, which can cause diabetes. Additionally, a high BMI (i.e. being overweight or obese) is a known risk factor for both death and diabetes. Both smoking and an unhealthy BMI are associated with a higher risk of mortality relative to non-smoking and a healthy BMI, hence we believe both of these variables make for potential confounders in our model. We were able to support these results through conducting individual log-rank tests both with and without stratifying on the respective confounder. 
+
+```{r confounders, include = T}
+# smoking 
+lr1 <- survdiff(Surv(tdeath, death) ~ diabetes, data = usrds) # fail to reject H0
+lr2 <- survdiff(Surv(tdeath, death) ~ diabetes + strata(smokegrp), data = usrds) # reject H0
+lr3 <- survdiff(Surv(tdeath, death) ~ diabetes + strata(bmi_grp), data = usrds) # reject H0
+
+
+lr_tbl <- data.frame(
+  model = c("Diabetes alone", 
+            "Diabetes, stratified by smoking group",
+            "Diabetes, stratified by BMI group"),
+  p = c(lr1$pvalue, lr2$pvalue, lr3$pvalue) %>% round(3)
+) 
+
+lr_tbl %>%
+    kbl(caption = "The respective p-values of the log-rank tests of the survival functions, testing the hypothesis that the survival curves are the same. Note that without stratification, diabetes is not significant at a 0.05 alpha level.") %>% 
+  kable_styling(full_width = F, latex_option = "scale_down") 
+```
+
 
 Other potential confounders which we do not have data on but may still be relevant in terms of the research question are variables such as a history of drug use or a history of alcohol use. Alcohol and drug use have an adverse effect on the cardiovascular system (Gardner 2015), and poor heart health is associated with increased risk of mortality.
 
