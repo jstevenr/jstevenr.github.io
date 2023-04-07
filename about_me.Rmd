@@ -45,7 +45,7 @@ navbar:
 
 # Introduction
 
-My name is J. Steven Raquel. I'm enrolled at the University of California, Irvine pursuing a Master of Science in Statistics. I graduated from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018, with a concentration in applied statistics. My career interests lie within the fields of biostatistics, epidemiology, public health, and clinical trials.
+My name is J. Steven Raquel. I graduated from the University of California, Irvine with an M.S. in Statistics in 2023, and from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018. My career interests lie within the fields of biostatistics, epidemiology, public health, and clinical trials.
 
 * Pronouns: he/him/his
 * Email: jsteven.raquel8@gmail.com
@@ -64,4 +64,4 @@ Legally, the J has no meaning! "J. Steven" is my legal first name. My paternal g
 
 **3) What are your other interests / what do you like to do in your free time?**
 
-I am an avid PC gamer and I like to study languages such as Spanish and Portuguese. Among my other interests are world history, culture, and coffee. I am also a proud uncle to my niece/nephew. 
+In my free time I am an avid gamer and I like to study languages such as Spanish and Portuguese. Among my other interests are world history, culture, and specialty coffee. I am also a proud uncle to my niece and nephew.
