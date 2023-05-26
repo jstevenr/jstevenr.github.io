@@ -9,16 +9,15 @@ output:
     includes:
       in_header: 
         header.html
-
 navbar:
   title: "Home"
   left:
     - text: "About Me"
       href: about_me.html
-    - text: "Resume"
-      href: resume.html
-    - text: "Projects"
+    - text: "Portfolio"
       menu:
+        - text: "Survival analysis of kidney disease patients"
+          href: esrd-survival.html
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
         - text: "Sexual network exponential random graph modeling"
@@ -28,9 +27,9 @@ navbar:
         - text: "Forecasting bitcoin value"
           href: bitcoin.html
         - text: "Predicting housing prices"
-          href: housing-prices.html
+          href: https://github.com/jstevenr/housing-price-regression/blob/master/housing-prices.ipynb
         - text: "Play Gomoku using Shiny"
-          href: ggomoku.html
+          href: https://pinchunchen.shinyapps.io/ggomoku/
     - text: "Contact Me"
       menu:
         - text: "jsteven.raquel8@gmail.com"

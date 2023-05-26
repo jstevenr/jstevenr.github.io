@@ -14,6 +14,8 @@ navbar:
       href: resume.html
     - text: "Projects"
       menu:
+        - text: "Survival analysis of kidney disease patients"
+          href: esrd-survival.html
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
         - text: "Sexual network exponential random graph modeling"
@@ -36,14 +38,12 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
-Detail-oriented individual with years of experience in data analysis, visualization, and modeling with a variety of data types
-including categorical, longitudinal, disease data, social network data, and spatial data. Looking to leverage this experience with a
-role in public health as a statistician or statistical programmer.
+Detail-oriented individual with years of experience in data analysis, visualization, and modeling with a variety of data types, including categorical, longitudinal, survival, time series, network data, and spatial data. Looking to leverage this experience with a role in public health as a statistician or statistical programmer.
 
 ## Education
 
-* **Statistics M.S.**, University of California, Irvine Estimated Completion March 2023
-    + Coursework in Probability and Statistical Theory, Statistical Methods, Bayesian Data Analysis, Infectious Disease Modeling, Spatial Statistics, Social Network Data, Survival Analysis
+* **Statistics M.S.**, University of California, Irvine, March 2023
+    + Coursework in Probability and Statistical Theory, Statistical Methods in Linear Models, Categorical Data and Longitudinal Data, Bayesian Data Analysis, Infectious Disease Modeling, Spatial Statistics, Social Network Data, Survival Analysis
     + Designed the `ggomoku` R package and Shiny app as a pair project
 * **Statistical Science B.S.**, University of California, Santa Barbara, June 2018
     + Concentration in Applied Statistics
@@ -54,8 +54,8 @@ role in public health as a statistician or statistical programmer.
 * **Software Tools and Languages**
     + R, Python, SQL, SAS, Stata
     + Windows, Linux
-    + Bash Shell, Git
-    + LaTeX, Markdown
+    + Bash Shell, Git, Markdown, LaTeX
+    + Microsoft Excel, Microsoft Power BI, Tableau, SAP Analytics Cloud
 * **Languages**
     + Spanish (B1), Portuguese (B1)
 

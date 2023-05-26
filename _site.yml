@@ -10,6 +10,8 @@ navbar:
       href: resume.html
     - text: "Projects"
       menu:
+        - text: "Survival analysis of kidney disease patients"
+          href: esrd-survival.html
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
         - text: "Sexual network exponential random graph modeling"

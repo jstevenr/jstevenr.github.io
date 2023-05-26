@@ -18,6 +18,8 @@ navbar:
       href: resume.html
     - text: "Projects"
       menu:
+        - text: "Survival analysis of kidney disease patients"
+          href: esrd-survival.html
         - text: "Spatial modeling of school gun violence"
           href: matern-spatial.html
         - text: "Sexual network exponential random graph modeling"
@@ -53,6 +55,7 @@ import plotly.express as px
 
 from scipy import stats
 from statsmodels.stats.stattools import durbin_watson
+
 
 from sklearn import datasets
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -171,7 +174,7 @@ X = df.drop('MEDV', axis = 1)
 corr_matrix = X.corr().abs()
 
 # Select upper triangle of correlation matrix
-upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
+upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
 
 # Find index of feature columns with correlation greater than 0.75
 to_drop = [column for column in upper.columns if any(upper[column] > 0.75)]
