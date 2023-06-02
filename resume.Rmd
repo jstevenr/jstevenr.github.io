@@ -38,7 +38,7 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
-Detail-oriented individual with years of experience in data analysis, visualization, and modeling with a variety of data types, including categorical, longitudinal, survival, time series, network data, and spatial data. Looking to leverage this experience with a role in public health as a statistician or statistical programmer.
+Detail-oriented individual with multiple years of experience in data analysis, visualization, and modeling with a variety of data types including categorical, longitudinal, disease data, social network data, and spatial data, and strong background in R programming. Looking for a full-time position in a programmer or analyst role in which I can leverage my skills and expertise.
 
 ## Education
 
@@ -66,7 +66,7 @@ Detail-oriented individual with years of experience in data analysis, visualizat
 
 ## Work Experience
 
-* **Water Equity Lab Project Policy Analyst** [Water Equity Lab, UC Irvine](https://www.uci.edu/), Jul 2022 - Mar 2023
+* **Water Equity Lab Project Policy Analyst** [Water Equity Lab, UC Irvine](https://www.uci.edu/), Jul 2022 - Apr 2023
     + Analyzing and processing vector and raster data pertaining to equitable access to water infrastructure across minority
 demographics.
     + Authored and documented functions to streamline productivity in the team.
