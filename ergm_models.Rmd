@@ -375,7 +375,7 @@ $$BIC = \ln(n) k - 2 \ln (\hat{L})$$
 where $\hat{L}$ is the maximized value of the likelihood function of the model, $n$ is the number of data points, and $k$ is the number of free paramters to be estimated. 
 
 \singlespacing
-```{r small-ergms, echo = F, cache = T, include = F}
+```{r small-ergms, echo = T, cache = T, include = T}
 # quitely is ran here so not to output all the model building steps
 set.seed(55)
 # library(ergm) is loaded
@@ -392,7 +392,7 @@ ergm_model4 <- quietly(ergm)(gonnet_net_nobar ~ edges +
 ergm_model5 <- quietly(ergm)(gonnet_net_nobar ~ edges + nodefactor("bar"))$result
 # heterophily on bar attendance
 ergm_model6 <- quietly(ergm)(gonnet_net_nobar ~ edges + nodemix("bar"))$result
-# numbero f nodes with degree 2+
+# number of nodes with degree 2+
 ergm_model9 <- quietly(ergm)(gonnet_net_nobar ~ edges + concurrent)$result
 # isolates
 ergm_model10 <- quietly(ergm)(gonnet_net_nobar ~ edges + isolates)$result
@@ -426,7 +426,9 @@ Here we have a table depicting the various AICs/BICs for each individual ERGM mo
  
 \singlespacing
 
-```{r ergm-model-fitting, echo = F, results = 'hide'}
+#### Likelihood Ratio Testing for Model Selection
+
+```{r ergm-model-fitting, echo = T, results = 'hide'}
 set.seed(55)
 # quietly is used to suppress output
 ergm_model7 <- quietly(ergm)(gonnet_net_nobar ~ 
@@ -444,9 +446,10 @@ ergm_model8 <- quietly(ergm)(gonnet_net_nobar ~
                       nodemix("gender", base = 2) +
                       nodematch("bar")
                       )$result
-```
 
-#### Likelihood Ratio Testing for Model Selection
+# likelihood ratio test
+lrtest <- lmtest::lrtest(ergm_model8, ergm_model7)
+```
 
 ```{r lrtest-curve, echo = F, fig.height = 3, fig.align = 'center'}
 set.seed(55)
@@ -486,9 +489,9 @@ Thus, we conclude that the nested model does _not_ fit the data as well as the f
 
 ### Goodness of Fit 
 
-```{r goodness-of-fit, echo = F}
+```{r goodness-of-fit, echo = T, message = F}
 par(mfrow = c(2,2))
-model8_gof <- gof(ergm_model8, gof = ~ model)
+model8_gof <- ergm::gof(ergm_model8, GOF = ~ degree + espartners + distance + model)
 plot(model8_gof, "model statistics")
 ```
 

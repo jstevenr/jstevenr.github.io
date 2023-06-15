@@ -56,7 +56,7 @@ navbar:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, include = FALSE)
+knitr::opts_chunk$set(echo = F, include = F)
 library(survival)
 library(dplyr)
 library(tidyr)
@@ -198,13 +198,14 @@ _Confounding variables_, or confounders, are variables which are causally associ
 
 We know a priori that smoking is associated with diabetes, which itself is associated with a higher risk of mortality. Nicotine and other chemicals in cigarettes affects insulin production, which can cause diabetes. Additionally, a high BMI (i.e. being overweight or obese) is a known risk factor for both death and diabetes. Both smoking and an unhealthy BMI are associated with a higher risk of mortality relative to non-smoking and a healthy BMI, hence we believe both of these variables make for potential confounders in our model. We were able to support these results through conducting individual log-rank tests both with and without stratifying on the respective confounder. 
 
-```{r confounders, include = T}
+```{r confounders, echo = T, include = T}
 # smoking 
 lr1 <- survdiff(Surv(tdeath, death) ~ diabetes, data = usrds) # fail to reject H0
 lr2 <- survdiff(Surv(tdeath, death) ~ diabetes + strata(smokegrp), data = usrds) # reject H0
 lr3 <- survdiff(Surv(tdeath, death) ~ diabetes + strata(bmi_grp), data = usrds) # reject H0
+```
 
-
+```{r confounders-table}
 lr_tbl <- data.frame(
   model = c("Diabetes alone", 
             "Diabetes, stratified by smoking group",
@@ -260,7 +261,7 @@ The inclusion of an interaction term in the Cox model introduces a concept calle
 
 In the following figure we are looking at the survival function between the aforementioned levels of albumin, but are also introducing a second covariate, this time with only two levels: history of cardiovascular disease. Immediately we can see that the golden curve, which corresponds to low baseline albumin and a history of cardiovascular disease, is starkly different from any other survival function. The top two curves, in green and blue, are those which correspond to subjects without a history of cardiovascular disease and had medium or high amounts of albumin at baseline, respectively. 
 
-```{r km-baseline-albumin-cvd, include = T}
+```{r km-baseline-albumin-cvd, echo = T,include = T}
 # K-M survival estimate
 survfit2(Surv(tdeath, death) ~ albumin0_grp + hist.cvd, data = usrds) %>% 
   ggsurvfit() +
@@ -284,7 +285,7 @@ The cumulative hazard plot shows intersection between the blue, red, and pink cu
 
 Based on prior knowledge, scrutinizing survival curves, and conducting log-rank tests, we decided to include race, appearance of undernourishment, cholesterol, age, and diabetes as additional variables in the Cox model in addition to albumin. History of cardiovascular disease was included as an effect modification in two different models, while body mass index and smoking were both regarded as confounding variables, particularly with respect to their causal relationship with diabetes.
 
-```{r fitting-models, include = F}
+```{r fitting-models, echo = T, include = T}
 coxph_1a <- coxph(Surv(tdeath, death) ~ 
                     albumin.0 + racegrp +
                     undnour + log(cholest) + age + 
