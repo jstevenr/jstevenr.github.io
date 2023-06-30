@@ -38,7 +38,7 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
-Detail-oriented individual with multiple years of experience in data analysis, visualization, and modeling with a variety of data types including categorical, longitudinal, disease data, social network data, and spatial data, and strong background in R programming. Looking for a full-time position in a programmer or analyst role in which I can leverage my skills and expertise.
+Statistician with a strong academic background and expertise in statistical analysis and modeling, seeking a challenging position as a statistician or analyst. With a Master’s degree in Statistics and coursework covering advanced statistical methodologies, I am equipped with the skills to design and implement statistical studies, analyze complex data sets, and provide evidence-based insights in the field of healthcare or research. Proficient in various programming languages such as R and Python, I am eager to apply my statistical expertise to contribute to meaningful research projects, clinical trials, and public health initiatives.
 
 ## Education
 
@@ -62,25 +62,26 @@ Detail-oriented individual with multiple years of experience in data analysis, v
 ## Research Experience
 
 * **University of California, Irvine**, Mar 2022 - Jun 2022
-    + Studying the spatial distribution of cancer and immune system cells with respect to cancer outcome, under the supervision of Dr. Veronica Berrocal.
+    + Collaborated with Dr. Veronica Berrocal to analyze and visualize the spatial distribution of immune system cells relative to cancer outcome. Employed advanced statistical techniques and designed custom R functions to handle large-scale spatial data.
 
 ## Work Experience
 
 * **Water Equity Lab Project Policy Analyst** [Water Equity Lab, UC Irvine](https://www.uci.edu/), Jul 2022 - Apr 2023
-    + Analyzing and processing vector and raster data pertaining to equitable access to water infrastructure across minority
+    + Analyzed and processed vector and raster data to identify disparities in access to water infrastructure among minority
 demographics.
-    + Authored and documented functions to streamline productivity in the team.
+    + Developed over 50 R functions utilizing the sf package, resulting in streamlined productivity for the team.
 
 * **Data Analyst**, [Valeo Networks](https://valeonetworks.com), Sep 2018 - Sep 2020
-    + Creating data visualizations and dashboards with business intelligence software to track key performance indicators and inform decision-making for the company and external clients.
-    + Assisting with identifying government contracts pertaining to data analytics.
-    + Building predictive models with machine learning algorithms. 
+    + Implemented predictive analytics solutions to identify trends and patterns in large datasets, contributing to data-driven decision-making.
+    + Created a multiple linear regression pricing model in R, resulting in improved pricing strategies for a client’s business.
+    + Developed interactive dashboards using Power BI, SAP Analytics Cloud, and BrightGauge to visualize key performance indicators and track business metrics.
 * **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org), Nov 2017 - June 2018
     + Timely produced excellent public service announcements (PSAs) and event promotions conforming with FCC guidelines.
     + Organized and trained volunteers to create PSAs and event promotions.
-* **Arctic Data Center Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/), Sep 2016 - Sep 2017
-    + Expertly maintained metadata for federally funded data repository.
-    + Improved team efficiency in data cleaning, by writing original functions and teaching other members how to use R. 
+* **Scientific Computing Data Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/), Sep 2016 - Sep 2017
+    + Maintained metadata for an NSF-funded data repository, ensuring accurate documentation and efficient data retrieval processes.
+    + Conducted comprehensive data cleaning and pre-processing tasks on large and small datasets using R, ensuring data quality for analysis.
+    + Facilitated knowledge sharing within the team by providing training and support on efficient programming techniques in R.
 * **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home), May 2016 - Sep 2016
     + Efficiently memorized reports, wrote checks, tracked spending and prepared documentation.
     + Noted areas where the department was overspending, resulting in savings.

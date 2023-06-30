@@ -61,20 +61,21 @@ These are some of the projects I've worked on throughout my time studying statis
 
 * #### [Modeling human serum albumin's association with mortality among end stage renal disease patients](esrd-survival.html)
 
-This paper was written for STATS 255 Survival Analysis and models human serum albumin's relationship with the survival of end-stage renal disease patients, both as a static and time-varying covariate. 
+This paper was written for STATS 255 Survival Analysis, in which I conducted a comprehensive survival analysis using the Cox proportional hazards model to investigate the association between mortality and human serum albumin levels, accounting for confounding variables such as smoking history and body mass index.
 
 * #### [Spatial modeling the incidences of gun violence in K-12 schools](matern-spatial.html)
 
-This paper was written for STATS 295 Spatial Statistics and showcases the usage of a Matern cluster point process to model the incidence of gun violence in K-12 schools between the years of 1990-2019. 
+This paper was written for STATS 295 Spatial Statistics, in which I developed a Matern cluster process model to study the incidence of gun violence in K-12 schools across the United States. Employed spatial statistics techniques to identify patterns and factors contributing to gun violence occurrences.
 
 * #### [Exponential random graph modeling (ERGM) for a sexual social network](ergm_models.html)
 
-This paper was written for Sociology 280 and uses exponential random graph modeling to model (and simulate) the ties of a sexual social network in an indigenous community in Alberta, Canada, in which a gonorrhea outbreak had occurred. 
+This paper was written for Sociology 280, in which I applied an exponential random graph model (ERGM) to analyze and simulate the spread of gonorrhea in a First Nations community in Alberta, Canada. Examined network structures and social factors influencing disease transmission.
 
 
 * #### [Classification algorithm comparison for wine quality](wine-classification.html)
 
-For my final project for Statistics 131 Data Mining, I used and compared the decision tree, randomForest and k-Nearest Neighbors algorithms using R to determine the quality of a wine and what the best algorithm was for classification. I also came to determine what attributes were most important towards a good wine.
+For my final project for Statistics 131 Data Mining, in which I utilized decision tree, k-nearest neighbors, and random forest algorithms in R to predict wine quality based on various wine
+attributes. Conducted feature selection, model training, and evaluation to develop accurate classification models.
 
 * #### [Predicting housing prices in Boston](housing-prices.html)
 
