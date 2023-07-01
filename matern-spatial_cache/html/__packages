@@ -1,3 +1,10 @@
+base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
 tseries
 forecast
 MASS
@@ -18,6 +25,7 @@ readr
 purrr
 stringr
 forcats
+lubridate
 statnet.common
 network
 sna
@@ -46,8 +54,6 @@ survminer
 gtsummary
 Epi
 gridExtra
-timechange
-lubridate
 sf
 sp
 spData
