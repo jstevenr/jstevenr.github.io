@@ -566,8 +566,7 @@ line or ‘line of best fit’.</p>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Opening Price of Bitcoin&quot;</span>) <span class="sc">+</span></span>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">level =</span> <span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula
-## = &#39;y ~ x&#39;</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="bitcoin_files/figure-html/initial%20plot-1.png" width="672" /></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>open <span class="ot">&lt;-</span> <span class="fu">as.ts</span>(df_sub<span class="sc">$</span>Open)</span></code></pre></div>
 </div>
@@ -653,12 +652,8 @@ transformed data.</p>
 <span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;USD (after log transformation)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Series after Box-Cox&quot;</span>) <span class="sc">+</span></span>
 <span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="at">level =</span> <span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## Don&#39;t know how to
-## automatically pick scale for
-## object of type &lt;ts&gt;.
-## Defaulting to continuous.
-## `geom_smooth()` using formula
-## = &#39;y ~ x&#39;</code></pre>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type &lt;ts&gt;. Defaulting to continuous.
+## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="bitcoin_files/figure-html/box-cox%20transformation-1.png" width="672" /></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># comparing the variances of original and transformed data</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">var</span>(open)</span></code></pre></div>
@@ -943,29 +938,19 @@ compare the results with each other and with the true values.</p>
 <span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co"># True Values</span></span>
 <span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="fu">autoplot</span>(open_add, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
 <span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;True Values for Opening Price of Bitcoin, 2016-08-03 - 2016-10-18&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 300 rows containing
-## missing values
-## (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 300 rows containing missing values (`geom_line()`).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-1.png" width="672" /></p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co"># ARIMA(1,1,2)</span></span>
 <span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">autoplot</span>(forecast112, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
 <span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(1,1,2) Forecast for Opening Price of Bitcoin, 10 Days ahead&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 299 rows containing
-## missing values
-## (`geom_line()`).</code></pre>
-<pre><code>## Warning: Removed 1 row containing
-## missing values
-## (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 299 rows containing missing values (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 1 row containing missing values (`geom_line()`).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-2.png" width="672" /></p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co"># ARIMA (2,1,1)</span></span>
 <span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">autoplot</span>(forecast211, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">375</span>)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days from 10/09/15&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;USD&quot;</span>) <span class="sc">+</span></span>
 <span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ARIMA(2,1,1) Forecast for Opening Price of Bitcoin, 10 Days ahead&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 299 rows containing
-## missing values
-## (`geom_line()`).
-## Removed 1 row containing
-## missing values
-## (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 299 rows containing missing values (`geom_line()`).
+## Removed 1 row containing missing values (`geom_line()`).</code></pre>
 <p><img src="bitcoin_files/figure-html/forecasting-3.png" width="672" /></p>
 <p>As we can see, the ARIMA(2,1,1) is very similar to the ARIMA(1,1,2)
 since both models had confidence intervals for their parameters that
