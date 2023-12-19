@@ -38,7 +38,7 @@ navbar:
           href: https://www.linkedin.com/in/jstevenr/
 ---
 
-Programmer/analyst with a strong academic background and expertise in statistical analysis and modeling, seeking a challenging position as a statistician or data analyst. With a Master's degree in Statistics and coursework covering advanced statistical methodologies, I am equipped with the skills to handle large volumes of data, analyze complex datasets and provide evidence-based insights. Proficient in various programming languages such as R and Python, I am eager to apply my statistical expertise to contribute to meaningful projects, including those pertaining to public health, business, social science, and technology.
+Programmer/analyst with a strong academic background and expertise in statistical analysis and modeling. With a Master's degree in Statistics and coursework covering advanced statistical methodologies, I am equipped with the skills to handle large volumes of data, analyze complex datasets and provide evidence-based insights. Proficient in various programming languages such as R and Python, I am eager to apply my statistical expertise to contribute to meaningful projects, including those pertaining to public health, public welfare, business, social science, and technology.
 
 ## Education
 
@@ -66,7 +66,8 @@ Programmer/analyst with a strong academic background and expertise in statistica
 
 ## Work Experience
 
-* **Water Equity Lab Project Policy Analyst** [Water Equity Lab, UC Irvine](https://www.uci.edu/), Jul 2022 - Apr 2023
+* **Research Data Specialist I**, [California Department of Social Services](https://cdss.ca.gov), Dec 2023 - Present
+* **Water Equity Lab Project Policy Analyst**, [Water Equity Lab, UC Irvine](https://www.uci.edu/), Jul 2022 - Apr 2023
     + Analyzed and processed vector and raster data to identify disparities in access to water infrastructure among minority
 demographics.
     + Developed over 50 R functions utilizing the sf package, resulting in streamlined productivity for the team.

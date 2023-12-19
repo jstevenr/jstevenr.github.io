@@ -56,7 +56,7 @@ library(sp)
 library(spdep)
 library(raster) 
 library(maps) # to get map shapefiles
-library(maptools)
+# library(maptools)
 library(spatstat) # spatial statistics
 library(patchwork) # for plotting ggplots
 library(RColorBrewer)

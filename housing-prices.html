@@ -13,7 +13,7 @@
 
 <title>Predicting housing prices with linear regression</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -550,9 +550,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 any missing values.</p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Looking at the top of the dataset</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="bu">print</span>(df.head())</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># Checking for missing values</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># print(df.isnull().any())</span></span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="bu">print</span>(df.head())</span></code></pre></div>
 <pre><code>##       CRIM    ZN  INDUS  CHAS    NOX  ...  TAX  PTRATIO   BLACK  LSTAT  MEDV
 ## 0  0.00632  18.0   2.31     0  0.538  ...  296     15.3  396.90   4.98  24.0
 ## 1  0.02731   0.0   7.07     0  0.469  ...  242     17.8  396.90   9.14  21.6
@@ -562,7 +560,9 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a hr
 ## 
 ## [5 rows x 14 columns]</code></pre>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="bu">print</span>(df.describe())</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Checking for missing values</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># print(df.isnull().any())</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="bu">print</span>(df.describe())</span></code></pre></div>
 <pre><code>##              CRIM          ZN       INDUS  ...       BLACK       LSTAT        MEDV
 ## count  506.000000  506.000000  506.000000  ...  506.000000  506.000000  506.000000
 ## mean     3.613524   11.363636   11.136779  ...  356.674032   12.653063   22.532806
@@ -590,7 +590,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a hr
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>sns.pairplot(data <span class="op">=</span> df, height <span class="op">=</span> <span class="dv">3</span>, y_vars <span class="op">=</span> [<span class="st">&#39;MEDV&#39;</span>],</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>            x_vars <span class="op">=</span> [<span class="st">&#39;PTRATIO&#39;</span>, <span class="st">&#39;LSTAT&#39;</span>, <span class="st">&#39;RAD&#39;</span>, <span class="st">&#39;CHAS&#39;</span>])</span></code></pre></div>
-<p><img src="housing-prices_files/figure-html/unnamed-chunk-4-2.png" width="588" /></p>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-4-2.png" width="588" /><img src="housing-prices_files/figure-html/unnamed-chunk-4-3.png" width="1152" /></p>
 <p>A cursory glance at the scatterplots of the response and target
 variables show that <code>RM</code> and <code>LSTAT</code> have
 something of a linear relationship with <code>MEDV</code>. The rest of
@@ -622,7 +622,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>sns.heatmap(corr, vmax <span class="op">=</span> <span class="fl">.8</span>, linewidths <span class="op">=</span> <span class="fl">0.01</span>, square <span class="op">=</span> <span class="va">True</span>, annot <span class="op">=</span> <span class="va">True</span>, cmap <span class="op">=</span> <span class="st">&#39;coolwarm&#39;</span>, linecolor <span class="op">=</span> <span class="st">&#39;white&#39;</span>)</span>
 <span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>plt.title(<span class="st">&#39;Correlation Matrix&#39;</span>)</span>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="housing-prices_files/figure-html/unnamed-chunk-5-5.png" width="960" /></p>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-5-7.png" width="960" /><img src="housing-prices_files/figure-html/unnamed-chunk-5-8.png" width="1440" /></p>
 <p>As we expected from our graphs, we notice that the features that
 correlate the highest with <code>MEDV</code> are <code>RM</code>, the
 average number of rooms, and <code>LSTAT</code>, the percent lower
@@ -682,6 +682,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a h
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>sns.distplot(y, hist <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>res <span class="op">=</span> stats.probplot(y, plot <span class="op">=</span> plt)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-8-11.png" width="672" /></p>
 </div>
 <div id="assumptions" class="section level3">
 <h3>Assumptions</h3>
@@ -831,6 +832,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a h
 <span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a></span>
 <span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>X_test <span class="op">=</span> scaler.transform(X_test)</span>
 <span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>X_test <span class="op">=</span> pd.DataFrame(X_test, columns <span class="op">=</span> X.columns)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-9-13.png" width="672" /></p>
 <div class="sourceCode" id="cb16"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># function that finds the mean of the residuals, tests for Normality and independence</span></span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
@@ -951,32 +953,32 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a h
 <span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_LR))</span></code></pre></div>
 <pre><code>## 38.397 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb22"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_LR))</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_LR))</span></code></pre></div>
 <pre><code>## 6.197 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb24"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>r2_LR <span class="op">=</span> <span class="bu">round</span>(model_LR.score(X_test, y_test), <span class="dv">3</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_LR))</span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    </span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>r2_LR <span class="op">=</span> <span class="bu">round</span>(model_LR.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_LR))</span></code></pre></div>
 <pre><code>## 0.621 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb26"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>residuals_LR <span class="op">=</span> y_test <span class="op">-</span> predictions_LR</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>residual_tests(residuals_LR)</span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co"># Plotting model diagnostics</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>    </span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>residuals_LR <span class="op">=</span> y_test <span class="op">-</span> predictions_LR</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>residual_tests(residuals_LR)</span></code></pre></div>
 <pre><code>## -0.012 is the mean of the residuals.
 ## 0.846 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
 ## 2.106 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb28"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>plot_model_diagnostics(predictions_LR, y_test, residuals_LR)</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co"># Plotting model</span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_LR, y_test, x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>               title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from OLS Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co"># Plotting model diagnostics</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>plot_model_diagnostics(predictions_LR, y_test, residuals_LR)</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co"># Plotting model</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_LR, y_test, x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>               title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from OLS Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-14-15.png" width="672" /></p>
 <p>We see that the mean of the residuals is approximately zero and that
 they are also independently distributed. Although the residuals of the
 model are not from a Normal distribution based on our tests and this
@@ -1021,37 +1023,36 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a h
 <span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_DT))</span></code></pre></div>
 <pre><code>## 32.842 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb31"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_DT))</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_DT))</span></code></pre></div>
 <pre><code>## 5.731 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb33"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>r2_DT <span class="op">=</span> <span class="bu">round</span>(model_DT.score(X_test, y_test), <span class="dv">3</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_DT))</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>    </span>
-<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>r2_DT <span class="op">=</span> <span class="bu">round</span>(model_DT.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_DT))</span></code></pre></div>
 <pre><code>## 0.676 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb35"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>residuals_DT <span class="op">=</span> y_test <span class="op">-</span> predictions_DT</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>residual_tests(residuals_DT)</span>
-<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>    </span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>residuals_DT <span class="op">=</span> y_test <span class="op">-</span> predictions_DT</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>residual_tests(residuals_DT)</span></code></pre></div>
 <pre><code>## 0.039 is the mean of the residuals.
 ## 0.813 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
 ## 2.177 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb37"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>plot_model_diagnostics(predictions_DT, y_test, residuals_DT)</span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="co"># Plotting variable importance</span></span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>plot_variable_importance(model_DT)</span>
-<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="co"># Plotting model</span></span></code></pre></div>
-<p><img src="housing-prices_files/figure-html/unnamed-chunk-15-7.png" width="672" /></p>
+class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>plot_model_diagnostics(predictions_DT, y_test, residuals_DT)</span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a><span class="co"># Plotting variable importance</span></span>
+<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a>plot_variable_importance(model_DT)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-15-17.png" width="672" /></p>
 <div class="sourceCode" id="cb38"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_DT, y_test, x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
-<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>               title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Decision Tree Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="co"># Plotting model</span></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_DT, y_test, x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>               title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Decision Tree Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-15-18.png" width="672" /></p>
 </div>
 <div id="random-forest" class="section level3">
 <h3>Random Forest</h3>
@@ -1088,40 +1089,39 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a h
 <span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a>mse_RF <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_RF), <span class="dv">3</span>)</span>
 <span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a>rmse_RF <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_RF), <span class="dv">3</span>)</span>
 <span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_RF))</span></code></pre></div>
-<pre><code>## 30.02 is the Mean Squared Error.</code></pre>
+<pre><code>## 29.93 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb41"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_RF))</span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
-<pre><code>## 5.479 is the Root Mean Squared Error.</code></pre>
+class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_RF))</span></code></pre></div>
+<pre><code>## 5.471 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb43"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>r2_RF <span class="op">=</span> <span class="bu">round</span>(model_RF.score(X_test, y_test), <span class="dv">3</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_RF))</span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>    </span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>r2_RF <span class="op">=</span> <span class="bu">round</span>(model_RF.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_RF))</span></code></pre></div>
 <pre><code>## 0.704 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb45"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>residuals_RF <span class="op">=</span> y_test <span class="op">-</span> predictions_RF</span>
-<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>residual_tests(residuals_RF)</span>
-<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
-<pre><code>## 0.096 is the mean of the residuals.
-## 0.818 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>    </span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>residuals_RF <span class="op">=</span> y_test <span class="op">-</span> predictions_RF</span>
+<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>residual_tests(residuals_RF)</span></code></pre></div>
+<pre><code>## -0.149 is the mean of the residuals.
+## 0.822 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
-## 2.18 is the test-statistic for the Durbin-Watson test.
+## 2.099 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb47"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>plot_model_diagnostics(predictions_RF, y_test, residuals_RF)</span>
-<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a><span class="co"># plot variable importance</span></span>
-<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>plot_variable_importance(model_RF)</span>
-<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a></span>
-<span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a><span class="co"># Plotting model</span></span></code></pre></div>
-<p><img src="housing-prices_files/figure-html/unnamed-chunk-16-9.png" width="672" /></p>
+class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a>plot_model_diagnostics(predictions_RF, y_test, residuals_RF)</span>
+<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a><span class="co"># plot variable importance</span></span>
+<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>plot_variable_importance(model_RF)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-16-21.png" width="672" /></p>
 <div class="sourceCode" id="cb48"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_RF, y_test, </span>
-<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
-<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Random Forest Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a></span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="co"># Plotting model</span></span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_RF, y_test, </span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Random Forest Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-16-22.png" width="672" /></p>
 </div>
 <div id="gradient-boosting" class="section level3">
 <h3>Gradient Boosting</h3>
@@ -1157,38 +1157,37 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a h
 <span id="cb49-17"><a href="#cb49-17" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_XGB))</span></code></pre></div>
 <pre><code>## 29.235 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb51"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_XGB))</span>
-<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_XGB))</span></code></pre></div>
 <pre><code>## 5.407 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb53"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>r2_XGB <span class="op">=</span> <span class="bu">round</span>(model_XGB.score(X_test, y_test), <span class="dv">3</span>)</span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_XGB))</span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>    </span>
-<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>r2_XGB <span class="op">=</span> <span class="bu">round</span>(model_XGB.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_XGB))</span></code></pre></div>
 <pre><code>## 0.711 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb55"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>residuals_XGB <span class="op">=</span> y_test <span class="op">-</span> predictions_XGB</span>
-<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a>residual_tests(residuals_XGB)</span>
-<span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>    </span>
+<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
+<span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a>residuals_XGB <span class="op">=</span> y_test <span class="op">-</span> predictions_XGB</span>
+<span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a>residual_tests(residuals_XGB)</span></code></pre></div>
 <pre><code>## 0.324 is the mean of the residuals.
 ## 0.801 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
 ## 2.122 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb57"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a>plot_model_diagnostics(predictions_XGB, y_test, residuals_XGB)</span>
-<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a><span class="co"># plot variable importance</span></span>
-<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a>plot_variable_importance(model_XGB)</span>
-<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a></span>
-<span id="cb57-6"><a href="#cb57-6" tabindex="-1"></a><span class="co"># Plotting model</span></span></code></pre></div>
-<p><img src="housing-prices_files/figure-html/unnamed-chunk-17-11.png" width="672" /></p>
+class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a>plot_model_diagnostics(predictions_XGB, y_test, residuals_XGB)</span>
+<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a><span class="co"># plot variable importance</span></span>
+<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a>plot_variable_importance(model_XGB)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-17-25.png" width="672" /></p>
 <div class="sourceCode" id="cb58"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_XGB, y_test, </span>
-<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>, </span>
-<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Gradient Boosting Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a></span>
+<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a><span class="co"># Plotting model</span></span>
+<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_XGB, y_test, </span>
+<span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>, </span>
+<span id="cb58-5"><a href="#cb58-5" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from Gradient Boosting Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-17-26.png" width="672" /></p>
 </div>
 <div id="k-nearest-neighbors" class="section level3">
 <h3>k-Nearest Neighbors</h3>
@@ -1218,33 +1217,33 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a h
 <span id="cb59-15"><a href="#cb59-15" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_KNN))</span></code></pre></div>
 <pre><code>## 31.013 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb61"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_KNN))</span>
-<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a></span>
-<span id="cb61-3"><a href="#cb61-3" tabindex="-1"></a><span class="co"># R-squared</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_KNN))</span></code></pre></div>
 <pre><code>## 5.569 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb63"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a>r2_KNN <span class="op">=</span> <span class="bu">round</span>(model_KNN.score(X_test, y_test), <span class="dv">3</span>)</span>
-<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_KNN))</span>
-<span id="cb63-3"><a href="#cb63-3" tabindex="-1"></a>    </span>
-<span id="cb63-4"><a href="#cb63-4" tabindex="-1"></a><span class="co"># Residuals</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
+<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a>r2_KNN <span class="op">=</span> <span class="bu">round</span>(model_KNN.score(X_test, y_test), <span class="dv">3</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_KNN))</span></code></pre></div>
 <pre><code>## 0.694 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb65"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a>residuals_KNN <span class="op">=</span> y_test <span class="op">-</span> predictions_KNN</span>
-<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a>residual_tests(residuals_KNN)</span>
-<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a></span>
-<span id="cb65-4"><a href="#cb65-4" tabindex="-1"></a><span class="co"># Plotting</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a>    </span>
+<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
+<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a>residuals_KNN <span class="op">=</span> y_test <span class="op">-</span> predictions_KNN</span>
+<span id="cb65-4"><a href="#cb65-4" tabindex="-1"></a>residual_tests(residuals_KNN)</span></code></pre></div>
 <pre><code>## 0.02 is the mean of the residuals.
 ## 0.776 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
 ## 2.177 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb67"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a>plot_model_diagnostics(predictions_KNN, y_test, residuals_KNN)</span>
-<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a></span>
-<span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a><span class="co"># Plotting model</span></span>
-<span id="cb67-4"><a href="#cb67-4" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_KNN, y_test, </span>
-<span id="cb67-5"><a href="#cb67-5" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
-<span id="cb67-6"><a href="#cb67-6" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from k-Nearest Neighbors Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a></span>
+<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a>plot_model_diagnostics(predictions_KNN, y_test, residuals_KNN)</span>
+<span id="cb67-4"><a href="#cb67-4" tabindex="-1"></a></span>
+<span id="cb67-5"><a href="#cb67-5" tabindex="-1"></a><span class="co"># Plotting model</span></span>
+<span id="cb67-6"><a href="#cb67-6" tabindex="-1"></a>plot_3d_scatter(X_test, predictions_KNN, y_test, </span>
+<span id="cb67-7"><a href="#cb67-7" tabindex="-1"></a>                x <span class="op">=</span> <span class="st">&#39;RM&#39;</span>, y <span class="op">=</span> <span class="st">&#39;LSTAT&#39;</span>, z <span class="op">=</span> <span class="st">&#39;MEDV_pred&#39;</span>,</span>
+<span id="cb67-8"><a href="#cb67-8" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">&#39;Plot of Predictions from k-Nearest Neighbors Model&#39;</span>, color <span class="op">=</span> <span class="st">&#39;Residual&#39;</span>)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-18-29.png" width="672" /></p>
 </div>
 <div id="comparing-algorithms" class="section level3">
 <h3>Comparing Algorithms</h3>
@@ -1276,15 +1275,16 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a h
 <pre><code>##              Algorithm    MSE  RMSE    R2
 ## 0       OLS Regression  38.40  6.20  0.62
 ## 1        Decision Tree  32.84  5.73  0.68
-## 2        Random Forest  30.02  5.48  0.70
+## 2        Random Forest  29.93  5.47  0.70
 ## 3    Gradient Boosting  29.23  5.41  0.71
 ## 4  k-Nearest Neighbors  31.01  5.57  0.69</code></pre>
 <div class="sourceCode" id="cb70"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a>plt.figure()</span>
-<span id="cb70-2"><a href="#cb70-2" tabindex="-1"></a>g <span class="op">=</span> sns.scatterplot(x <span class="op">=</span> <span class="st">&#39;MSE&#39;</span>, y <span class="op">=</span> <span class="st">&#39;R2&#39;</span>, data <span class="op">=</span> records_full, hue <span class="op">=</span> <span class="st">&#39;Algorithm&#39;</span>)</span>
-<span id="cb70-3"><a href="#cb70-3" tabindex="-1"></a>g.legend(loc <span class="op">=</span> <span class="st">&#39;center left&#39;</span>, bbox_to_anchor <span class="op">=</span> (<span class="fl">1.25</span>, <span class="fl">0.5</span>), ncol <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb70-4"><a href="#cb70-4" tabindex="-1"></a>plt.title(<span class="st">&#39;MSE vs R-squared, by Algorithm, Small Models&#39;</span>)</span></code></pre></div>
-<p><img src="housing-prices_files/figure-html/unnamed-chunk-19-13.png" width="672" /></p>
+class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a></span>
+<span id="cb70-2"><a href="#cb70-2" tabindex="-1"></a>plt.figure()</span>
+<span id="cb70-3"><a href="#cb70-3" tabindex="-1"></a>g <span class="op">=</span> sns.scatterplot(x <span class="op">=</span> <span class="st">&#39;MSE&#39;</span>, y <span class="op">=</span> <span class="st">&#39;R2&#39;</span>, data <span class="op">=</span> records_full, hue <span class="op">=</span> <span class="st">&#39;Algorithm&#39;</span>)</span>
+<span id="cb70-4"><a href="#cb70-4" tabindex="-1"></a>g.legend(loc <span class="op">=</span> <span class="st">&#39;center left&#39;</span>, bbox_to_anchor <span class="op">=</span> (<span class="fl">1.25</span>, <span class="fl">0.5</span>), ncol <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb70-5"><a href="#cb70-5" tabindex="-1"></a>plt.title(<span class="st">&#39;MSE vs R-squared, by Algorithm, Small Models&#39;</span>)</span></code></pre></div>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-19-31.png" width="672" /></p>
 <p>So the gradient boosting model is the strongest one in this case, and
 the very simple linear regression model is the worst performing. This
 illustrates the difference between a very complex model and a very
@@ -1346,6 +1346,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a h
 <span id="cb71-6"><a href="#cb71-6" tabindex="-1"></a><span class="co"># Prediction</span></span>
 <span id="cb71-7"><a href="#cb71-7" tabindex="-1"></a>model_XGB.predict(new_data)[<span class="dv">0</span>]</span></code></pre></div>
 <pre><code>## 20.005268</code></pre>
+<p><img src="housing-prices_files/figure-html/unnamed-chunk-20-33.png" width="672" /></p>
 <p>As you can see the expected value for <code>MEDV</code> is about 20,
 or $20k.</p>
 </div>
