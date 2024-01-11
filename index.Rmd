@@ -47,11 +47,11 @@ navbar:
 
 <left><img src="images/self_prof.jpg" width="308px" height="410px"></left>
 
-Welcome and thank you for visiting my personal website! I'm J. Steven Raquel and I have a Master of Science in Statistics degree from the University of California, Irvine.
+Welcome and thank you for visiting my personal website! I'm J. Steven Raquel and I am a data scientist with a Master of Science in Statistics degree from the University of California, Irvine. I work for the California Department of Social Services in the Analysis and Modeling Unit of the Research, Automation and Data Division. 
 
 Find out more about [who I am](about_me.html) and [what I've done](resume.html).
 
-If you know anything about statistics, biostatistics, machine learning, epidemiology, or public health, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header. 
+If you know anything about statistics, data science, or public policy, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header. 
 
 ----
 
