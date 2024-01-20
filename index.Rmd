@@ -43,47 +43,42 @@ navbar:
 
 ----
 
-# Welcome!
-
 <left><img src="images/self_prof.jpg" width="308px" height="410px"></left>
 
-Welcome and thank you for visiting my personal website! I'm J. Steven Raquel and I am a data scientist with a Master of Science in Statistics degree from the University of California, Irvine. I work for the California Department of Social Services in the Analysis and Modeling Unit of the Research, Automation and Data Division. 
+Welcome and thank you for visiting my website! My name is J. Steven Raquel and I am proud to call myself a scientist who makes a difference. I currently work with the State of California's Department of Social Services in the Analysis and Modeling Unit within the Research, Automation, and Data Division. I graduated from the University of California, Irvine with an M.S. in Statistics in 2023, and from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018. 
 
 Find out more about [who I am](about_me.html) and [what I've done](resume.html).
-
-If you know anything about statistics, data science, or public policy, feel free to get in touch with me! I have a lot to learn so I'm eager to touch base with folks with similar interests. You can find my email, GitHub and LinkedIn under Contact Me in the header. 
 
 ----
 
 ## Projects  
 
-These are some of the projects I've worked on throughout my time studying statistics, and I am constantly learning and adding things to my repertoire.
+These are some of the projects I've worked on throughout my time studying statistics.
 
 * #### [Modeling human serum albumin's association with mortality among end stage renal disease patients](esrd-survival.html)
 
-This paper was written for STATS 255 Survival Analysis, in which I conducted a comprehensive survival analysis using the Cox proportional hazards model to investigate the association between mortality and human serum albumin levels, accounting for confounding variables such as smoking history and body mass index.
+I conducted a comprehensive survival analysis using the Cox proportional hazards model to investigate the association between mortality and human serum albumin levels, accounting for confounding variables such as smoking history and body mass index.
 
 * #### [Spatial modeling the incidences of gun violence in K-12 schools](matern-spatial.html)
 
-This paper was written for STATS 295 Spatial Statistics, in which I developed a Matern cluster process model to study the incidence of gun violence in K-12 schools across the United States. Employed spatial statistics techniques to identify patterns and factors contributing to gun violence occurrences.
+I developed a Matern cluster process model to study the incidence of gun violence in K-12 schools across the United States. Employed spatial statistics techniques to identify patterns and factors contributing to gun violence occurrences.
 
 * #### [Exponential random graph modeling (ERGM) for a sexual social network](ergm_models.html)
 
-This paper was written for Sociology 280, in which I applied an exponential random graph model (ERGM) to analyze and simulate the spread of gonorrhea in a First Nations community in Alberta, Canada. Examined network structures and social factors influencing disease transmission.
+I applied an exponential random graph model (ERGM) to analyze and simulate the spread of gonorrhea in a First Nations community in Alberta, Canada. Examined network structures and social factors influencing disease transmission.
 
 
 * #### [Classification algorithm comparison for wine quality](wine-classification.html)
 
-For my final project for Statistics 131 Data Mining, in which I utilized decision tree, k-nearest neighbors, and random forest algorithms in R to predict wine quality based on various wine
-attributes. Conducted feature selection, model training, and evaluation to develop accurate classification models.
+I utilized decision tree, k-nearest neighbors, and random forest algorithms in R to predict wine quality based on various wine attributes. Conducted feature selection, model training, and evaluation to develop accurate classification models.
 
 * #### [Predicting housing prices in Boston](housing-prices.html)
 
-This project utilizes various regression algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a regression model using various attributes of the housing market in Boston. 
+I utilized various regression algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a regression model using various attributes of the housing market in Boston. 
 
 * #### [Time series forecasting cryptocurrency value](bitcoin.html)
 
-For my final project in PSTAT 147 Time Series, I attempted to apply the Box-Jenkins ARIMA model using R to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.
+I applied the Box-Jenkins ARIMA model using R to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.
 
 ### Packages and Shiny Apps
 

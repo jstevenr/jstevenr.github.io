@@ -60,7 +60,6 @@ spData
 spdep
 raster
 maps
-maptools
 spatstat.data
 spatstat.geom
 spatstat.random
