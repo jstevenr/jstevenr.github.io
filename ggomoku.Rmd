@@ -37,6 +37,8 @@ navbar:
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
+        - text: "Twitter"
+          href: https://twitter.com/jsteven_r/
 ---
 
 ```{r setup, include=FALSE}
