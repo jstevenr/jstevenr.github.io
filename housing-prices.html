@@ -1092,24 +1092,24 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a h
 <span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a>mse_RF <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_RF), <span class="dv">3</span>)</span>
 <span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a>rmse_RF <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_RF), <span class="dv">3</span>)</span>
 <span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_RF))</span></code></pre></div>
-<pre><code>## 29.964 is the Mean Squared Error.</code></pre>
+<pre><code>## 31.433 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb41"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_RF))</span></code></pre></div>
-<pre><code>## 5.474 is the Root Mean Squared Error.</code></pre>
+<pre><code>## 5.607 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb43"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
 <span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>r2_RF <span class="op">=</span> <span class="bu">round</span>(model_RF.score(X_test, y_test), <span class="dv">3</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_RF))</span></code></pre></div>
-<pre><code>## 0.704 is the R-squared.</code></pre>
+<pre><code>## 0.69 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb45"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>    </span>
 <span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
 <span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>residuals_RF <span class="op">=</span> y_test <span class="op">-</span> predictions_RF</span>
 <span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>residual_tests(residuals_RF)</span></code></pre></div>
-<pre><code>## -0.085 is the mean of the residuals.
-## 0.835 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+<pre><code>## 0.006 is the mean of the residuals.
+## 0.846 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
-## 2.098 is the test-statistic for the Durbin-Watson test.
+## 2.125 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb47"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
@@ -1278,7 +1278,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a h
 <pre><code>##              Algorithm    MSE  RMSE    R2
 ## 0       OLS Regression  38.40  6.20  0.62
 ## 1        Decision Tree  32.84  5.73  0.68
-## 2        Random Forest  29.96  5.47  0.70
+## 2        Random Forest  31.43  5.61  0.69
 ## 3    Gradient Boosting  29.23  5.41  0.71
 ## 4  k-Nearest Neighbors  31.01  5.57  0.69</code></pre>
 <div class="sourceCode" id="cb70"><pre

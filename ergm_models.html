@@ -977,6 +977,15 @@ estimated.</p>
 <span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>ergm_model10 <span class="ot">&lt;-</span> <span class="fu">quietly</span>(ergm)(gonnet_net_nobar <span class="sc">~</span> edges <span class="sc">+</span> isolates)<span class="sc">$</span>result</span>
 <span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co"># kstar</span></span>
 <span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>ergm_model11 <span class="ot">&lt;-</span> <span class="fu">quietly</span>(ergm)(gonnet_net_nobar <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">kstar</span>(<span class="dv">2</span>))<span class="sc">$</span>result</span></code></pre></div>
+<pre><code>## Warning: This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.
+## This object was fit with &#39;ergm&#39; version 4.5.0 or earlier. Summarizing it with version 4.6 or later may return incorrect results or fail.</code></pre>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 Table of AIC/BIC for each ERGM model
@@ -1111,26 +1120,26 @@ model, and compare them with a likelihood ratio test.</p>
 <div id="likelihood-ratio-testing-for-model-selection"
 class="section level4">
 <h4>Likelihood Ratio Testing for Model Selection</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">55</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># quietly is used to suppress output</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>ergm_model7 <span class="ot">&lt;-</span> <span class="fu">quietly</span>(ergm)(gonnet_net_nobar <span class="sc">~</span> </span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                      edges <span class="sc">+</span> </span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>                      <span class="fu">isolates</span>()<span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>                      <span class="fu">degree</span>(<span class="at">d =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)) <span class="sc">+</span> </span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>                      <span class="fu">nodemix</span>(<span class="st">&quot;gender&quot;</span>, <span class="at">base =</span> <span class="dv">2</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>                      )<span class="sc">$</span>result</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>ergm_model8 <span class="ot">&lt;-</span> <span class="fu">quietly</span>(ergm)(gonnet_net_nobar <span class="sc">~</span> </span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>                      edges <span class="sc">+</span> </span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>                      <span class="fu">isolates</span>() <span class="sc">+</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>                      <span class="fu">degree</span>(<span class="at">d =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)) <span class="sc">+</span> </span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>                      <span class="fu">nodemix</span>(<span class="st">&quot;gender&quot;</span>, <span class="at">base =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>                      <span class="fu">nodematch</span>(<span class="st">&quot;bar&quot;</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>                      )<span class="sc">$</span>result</span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co"># likelihood ratio test</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>lrtest <span class="ot">&lt;-</span> lmtest<span class="sc">::</span><span class="fu">lrtest</span>(ergm_model8, ergm_model7)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">55</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># quietly is used to suppress output</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>ergm_model7 <span class="ot">&lt;-</span> <span class="fu">quietly</span>(ergm)(gonnet_net_nobar <span class="sc">~</span> </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                      edges <span class="sc">+</span> </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>                      <span class="fu">isolates</span>()<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>                      <span class="fu">degree</span>(<span class="at">d =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>                      <span class="fu">nodemix</span>(<span class="st">&quot;gender&quot;</span>, <span class="at">base =</span> <span class="dv">2</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>                      )<span class="sc">$</span>result</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>ergm_model8 <span class="ot">&lt;-</span> <span class="fu">quietly</span>(ergm)(gonnet_net_nobar <span class="sc">~</span> </span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>                      edges <span class="sc">+</span> </span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>                      <span class="fu">isolates</span>() <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>                      <span class="fu">degree</span>(<span class="at">d =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>                      <span class="fu">nodemix</span>(<span class="st">&quot;gender&quot;</span>, <span class="at">base =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>                      <span class="fu">nodematch</span>(<span class="st">&quot;bar&quot;</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>                      )<span class="sc">$</span>result</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co"># likelihood ratio test</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>lrtest <span class="ot">&lt;-</span> lmtest<span class="sc">::</span><span class="fu">lrtest</span>(ergm_model8, ergm_model7)</span></code></pre></div>
 <p><img src="ergm_models_files/figure-html/lrtest-curve-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This curve represents the chi-squared distribution with 2 degrees of
 freedom; which is the distribution of our likelihood ratio test
@@ -1155,9 +1164,9 @@ additional terms in the full model.</p>
 </div>
 <div id="goodness-of-fit" class="section level3">
 <h3>Goodness of Fit</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>model8_gof <span class="ot">&lt;-</span> ergm<span class="sc">::</span><span class="fu">gof</span>(ergm_model8, <span class="at">GOF =</span> <span class="sc">~</span> degree <span class="sc">+</span> espartners <span class="sc">+</span> distance <span class="sc">+</span> model)</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">plot</span>(model8_gof, <span class="st">&quot;model statistics&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>model8_gof <span class="ot">&lt;-</span> ergm<span class="sc">::</span><span class="fu">gof</span>(ergm_model8, <span class="at">GOF =</span> <span class="sc">~</span> degree <span class="sc">+</span> espartners <span class="sc">+</span> distance <span class="sc">+</span> model)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">plot</span>(model8_gof, <span class="st">&quot;model statistics&quot;</span>)</span></code></pre></div>
 <p><img src="ergm_models_files/figure-html/goodness-of-fit-1.png" width="672" /></p>
 <p>The <code>gof()</code> function for goodness of fit tests several
 different aspects of the network, namely degree, edgewise shared

@@ -84,6 +84,10 @@ I applied the Box-Jenkins ARIMA model using R to several observations of the ope
 
 ### Packages and Shiny Apps
 
+* #### canectar: Draw elegant maps of California in the shape of a honeycomb
+
+I authored a package in R that utilized spatial data frames from the `sf` package and the visualization capabilities of the `tmap` package for the purpose of drawing county-level hexbin plots in the shape of the state of California. 
+
 * #### [Play Gomoku (Five in a Row)](ggomoku.html)
 
 Together with my partner [Pin-Chun Chen](https://sites.uci.edu/pinchunchen/), we designed an R package called `ggomoku` that allowed you to play the board game [Gomoku](https://en.wikipedia.org/wiki/Gomoku). The source code for the package can be found on [GitHub](https://github.com/stats295r-fa20/package-group11).

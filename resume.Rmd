@@ -72,6 +72,7 @@ Data scientist with a strong academic background and expertise in statistical an
 * **Research Data Specialist**, [State of California, Department of Social Services](https://cdss.ca.gov), Dec 2023 - Present
     + Co-developing a data-imbued methodology to counter electronic benefits transfer (EBT) theft.
     + Utilizing Python, R and SQL and data warehousing platforms such as Snowflake to analyze data.
+    + Developed the `canectar` R package which generates hexagonal choropleth (hexbin) plots for county-level data in the shape of the state of California. 
     + Authoring documentation on the long-term adoption of replicable coding standards.
 * **Water Equity Lab Project Policy Analyst**, [Water Equity Lab, UC Irvine](https://www.uci.edu/), Jul 2022 - Apr 2023
     + Analyzed and processed vector and raster data to identify disparities in access to water infrastructure among minority

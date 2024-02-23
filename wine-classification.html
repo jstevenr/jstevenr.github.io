@@ -801,43 +801,24 @@ itself can be seen in Figure @ref(fig:tree-ROC-curve).</p>
 <span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>tree_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)</span>
 <span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>tree_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(tree_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for decision tree.
-</caption>
+<caption>Confusion matrix for decision tree.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-229
-</td>
-<td style="text-align:right;">
-132
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">229</td>
+<td align="right">132</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-129
-</td>
-<td style="text-align:right;">
-510
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">129</td>
+<td align="right">510</td>
 </tr>
 </tbody>
 </table>
@@ -848,94 +829,52 @@ ROC curve of the decision tree model.
 </p>
 </div>
 <table>
-<caption>
-Matrix with accuracy rates and AUCs for decision trees.
-</caption>
+<caption>Matrix with accuracy rates and AUCs for decision
+trees.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1015,136 +954,74 @@ model and the decision tree model can be seen in Table
 <span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
 <span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for 10-nearest neighbors model.
-</caption>
+<caption>Confusion matrix for 10-nearest neighbors model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-205
-</td>
-<td style="text-align:right;">
-91
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">205</td>
+<td align="right">91</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-153
-</td>
-<td style="text-align:right;">
-551
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">153</td>
+<td align="right">551</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption>
-Matrix with accuracy rates and AUCs for decision trees and k-nearest
-neighbors.
-</caption>
+<caption>Matrix with accuracy rates and AUCs for decision trees and
+k-nearest neighbors.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1224,43 +1101,24 @@ Table @ref(tab:records-2).</p>
 <span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>new_knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
 <span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>new_knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(new_knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for 35-nearest neighbors model.
-</caption>
+<caption>Confusion matrix for 35-nearest neighbors model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-197
-</td>
-<td style="text-align:right;">
-161
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">197</td>
+<td align="right">161</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-84
-</td>
-<td style="text-align:right;">
-558
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">84</td>
+<td align="right">558</td>
 </tr>
 </tbody>
 </table>
@@ -1271,96 +1129,53 @@ ROC curve for k-nearest neighbors model where k=35
 </p>
 </div>
 <table>
-<caption>
-Matrix comparing the accuracy rate, error rate, and AUC for the decision
-tree model, the 10-nearest neighbors model, and the 35-nearest neighbors
-model.
-</caption>
+<caption>Matrix comparing the accuracy rate, error rate, and AUC for the
+decision tree model, the 10-nearest neighbors model, and the 35-nearest
+neighbors model.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.755
-</td>
-<td style="text-align:right;">
-0.245
-</td>
-<td style="text-align:right;">
-0.741
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1429,43 +1244,24 @@ class="citation">(Breiman et al. 2018)</span>.</p>
 <span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
 <span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>rf_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf2<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for full random forest model.
-</caption>
+<caption>Confusion matrix for full random forest model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-253
-</td>
-<td style="text-align:right;">
-105
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">253</td>
+<td align="right">105</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:right;">
-576
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">66</td>
+<td align="right">576</td>
 </tr>
 </tbody>
 </table>
@@ -1476,96 +1272,53 @@ ROC Curve for full random forest with 8 variables.
 </p>
 </div>
 <table>
-<caption>
-Matrix comparing the accuracy rate, error rate, and AUC for the decision
-tre model, the 10-nearest neighbors model, the 35-nearest neighbors
-model, and the full random forest.
-</caption>
+<caption>Matrix comparing the accuracy rate, error rate, and AUC for the
+decision tre model, the 10-nearest neighbors model, the 35-nearest
+neighbors model, and the full random forest.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.755
-</td>
-<td style="text-align:right;">
-0.245
-</td>
-<td style="text-align:right;">
-0.741
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-0.829
-</td>
-<td style="text-align:right;">
-0.171
-</td>
-<td style="text-align:right;">
-0.890
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">0.829</td>
+<td align="right">0.171</td>
+<td align="right">0.890</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1642,43 +1395,24 @@ to find out. This comparison with the prior models can be seen in Table
 <span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>rf_perf22 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
 <span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>rf_auc2 <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf22<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for smaller random forest model.
-</caption>
+<caption>Confusion matrix for smaller random forest model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-228
-</td>
-<td style="text-align:right;">
-130
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">228</td>
+<td align="right">130</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-72
-</td>
-<td style="text-align:right;">
-570
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">72</td>
+<td align="right">570</td>
 </tr>
 </tbody>
 </table>
@@ -1690,95 +1424,52 @@ dioxide’, ‘volatile acidity’, and ‘alcohol’.
 </p>
 </div>
 <table>
-<caption>
-The final matrix comparing the accuracy rates, error rates, and AUCs for
-all of the models.
-</caption>
+<caption>The final matrix comparing the accuracy rates, error rates, and
+AUCs for all of the models.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.755
-</td>
-<td style="text-align:right;">
-0.245
-</td>
-<td style="text-align:right;">
-0.741
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-0.829
-</td>
-<td style="text-align:right;">
-0.171
-</td>
-<td style="text-align:right;">
-0.890
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">0.829</td>
+<td align="right">0.171</td>
+<td align="right">0.890</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-0.798
-</td>
-<td style="text-align:right;">
-0.202
-</td>
-<td style="text-align:right;">
-0.854
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">0.798</td>
+<td align="right">0.202</td>
+<td align="right">0.854</td>
 </tr>
 </tbody>
 </table>
