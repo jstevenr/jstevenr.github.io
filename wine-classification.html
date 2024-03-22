@@ -13,7 +13,7 @@
 
 <title>Comparing supervised machine learning algorithms in classifying wine quality</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -502,6 +502,9 @@ div.tocify {
     <li>
       <a href="https://www.linkedin.com/in/jstevenr/">LinkedIn</a>
     </li>
+    <li>
+      <a href="https://twitter.com/jsteven_r/">Twitter</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -646,20 +649,20 @@ meaning “not good”.</p>
 <code>sulphates</code>, <code>alcohol</code>) are not all scaled the
 same. As such, it’s appropriate to scale them before running any further
 analyses.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to circumvent the issue of scale() changing to a matrix</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>scale_this <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.vector</span>(<span class="fu">scale</span>(x))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># scaling the 8 numeric attributes</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white2 <span class="sc">%&gt;%</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="sc">-</span>quality), <span class="at">.funs =</span> scale_this</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting quality into a binary factor</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(quality), <span class="sc">~</span> <span class="fu">ifelse</span>(quality <span class="sc">&gt;</span> <span class="dv">5</span>, <span class="at">yes =</span> <span class="st">&quot;good&quot;</span>, </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">no =</span> <span class="st">&quot;bad&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(quality), <span class="sc">~</span> <span class="fu">factor</span>(quality, </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># to circumvent the issue of scale() changing to a matrix</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>scale_this <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.vector</span>(<span class="fu">scale</span>(x))</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># scaling the 8 numeric attributes</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white2 <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="sc">-</span>quality), <span class="at">.funs =</span> scale_this</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  )</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># Converting quality into a binary factor</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>white_sc <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(quality), <span class="sc">~</span> <span class="fu">ifelse</span>(quality <span class="sc">&gt;</span> <span class="dv">5</span>, <span class="at">yes =</span> <span class="st">&quot;good&quot;</span>, </span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>                                    <span class="at">no =</span> <span class="st">&quot;bad&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(quality), <span class="sc">~</span> <span class="fu">factor</span>(quality, </span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>                                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;good&quot;</span>)))</span></code></pre></div>
 <p>Now we have 8 numeric predictor variables, and one two-level
 categorical variable (<code>quality</code>). We’re going to apply a few
 different classification methods in order to firstly determine which the
@@ -670,11 +673,11 @@ need to stratify the dataset into a training set and a test set. The
 first set will be used to teach the classification model how to predict,
 depending on the algorithm chosen. We then apply the algorithm to the
 test set, and see how accurate the classification was.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using a subset of 1000 obs for the training set</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>test_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(white_sc), <span class="dv">1000</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span> <span class="fu">slice</span>(test_indices)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="sc">-</span>test_indices)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># using a subset of 1000 obs for the training set</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>test_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(white_sc), <span class="dv">1000</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>test <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span> <span class="fu">slice</span>(test_indices)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>train <span class="ot">&lt;-</span> white_sc <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="sc">-</span>test_indices)</span></code></pre></div>
 <div id="decision-tree" class="section level2">
 <h2>Decision Tree</h2>
 <p>The first method we are going to perform on this dataset, is Decision
@@ -725,22 +728,22 @@ determines the size of the tree, while also doing repeated random
 samples on the training data, we can end up with a simple, yet optimized
 tree that is robust and less prone to overfitting. See Figure
 @ref(fig:decision-tree-plot) for the decision tree plot.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(rpart) and library(caret) are loaded</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold cross validation repeated 3 times</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>caret_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">3</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Training the rpart decision tree based on the repeated cross-validation</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># library(e1071) is loaded</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>tree_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(quality <span class="sc">~</span> .,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> caret_control</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># storing final model</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> tree_cv<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># library(rpart) and library(caret) are loaded</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># 10-fold cross validation repeated 3 times</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>caret_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>                              <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">3</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># Training the rpart decision tree based on the repeated cross-validation</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co"># library(e1071) is loaded</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>tree_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(quality <span class="sc">~</span> .,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="at">trControl =</span> caret_control</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co"># storing final model</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>tree <span class="ot">&lt;-</span> tree_cv<span class="sc">$</span>finalModel</span></code></pre></div>
 <div class="figure">
 <img src="wine-classification_files/figure-html/decision-tree-plot-1.png" alt="Decision tree built using rpart and 10-fold repeated cross-validation 3 times." width="672" />
 <p class="caption">
@@ -772,69 +775,50 @@ R <span class="citation">(Sing et al. 2020)</span>.</p>
 <p>The Table @ref(tab:records-1) shows the accuracy and error rate as
 well as AUC for the decision tree model we have built. The ROC curve
 itself can be seen in Figure @ref(fig:tree-ROC-curve).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a function that returns the accuracy of a confusion matrix</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>class_acc <span class="ot">&lt;-</span> <span class="cf">function</span>(conf) {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">diag</span>(conf)) <span class="sc">/</span> <span class="fu">sum</span>(conf)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>tree_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>tree_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> tree_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># the class_acc() function is defined locally</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>tree_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(tree_conf)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>tree_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> tree_acc</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># library(ROCR is loaded)</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># getting matrix of predicted class probabilities</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>all_tree_probs <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>tree_probs <span class="ot">&lt;-</span> all_tree_probs[, <span class="dv">2</span>]</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>tree_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(tree_probs, test<span class="sc">$</span>quality)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>tree_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>tree_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>tree_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(tree_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># a function that returns the accuracy of a confusion matrix</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>class_acc <span class="ot">&lt;-</span> <span class="cf">function</span>(conf) {</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">diag</span>(conf)) <span class="sc">/</span> <span class="fu">sum</span>(conf)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>tree_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>tree_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> tree_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># the class_acc() function is defined locally</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>tree_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(tree_conf)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># misclassification error</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>tree_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> tree_acc</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># library(ROCR is loaded)</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co"># getting matrix of predicted class probabilities</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>all_tree_probs <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(tree, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>tree_probs <span class="ot">&lt;-</span> all_tree_probs[, <span class="dv">2</span>]</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>tree_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(tree_probs, test<span class="sc">$</span>quality)</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>tree_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>tree_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(tree_roc_pred, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>tree_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(tree_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for decision tree.
-</caption>
+<caption>Confusion matrix for decision tree.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-229
-</td>
-<td style="text-align:right;">
-132
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">229</td>
+<td align="right">132</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-129
-</td>
-<td style="text-align:right;">
-510
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">129</td>
+<td align="right">510</td>
 </tr>
 </tbody>
 </table>
@@ -845,94 +829,52 @@ ROC curve of the decision tree model.
 </p>
 </div>
 <table>
-<caption>
-Matrix with accuracy rates and AUCs for decision trees.
-</caption>
+<caption>Matrix with accuracy rates and AUCs for decision
+trees.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -981,167 +923,105 @@ is in Table @ref(tab:knn-confusion-matrix). The comparison between this
 model and the decision tree model can be seen in Table
 @ref(tab:records-2). The ROC curve itself can be seen in Figure
 @ref(fig:knn-roc-curve).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(class) is loaded</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using 10 nearest neighbors</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">10</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob =</span> T</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> knn_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(knn_conf)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> knn_acc</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, <span class="dv">1</span> <span class="sc">-</span> knn_prob, knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(<span class="at">predictions =</span> knn_prob, <span class="at">labels =</span> test<span class="sc">$</span>quality)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred,</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># library(class) is loaded</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># using 10 nearest neighbors</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">10</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  <span class="at">prob =</span> T</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">pred =</span> knn_pred, <span class="at">true =</span> test<span class="sc">$</span>quality)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co"># accuracy</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(knn_conf)</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co"># misclassification error</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> knn_acc</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, <span class="dv">1</span> <span class="sc">-</span> knn_prob, knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(<span class="at">predictions =</span> knn_prob, <span class="at">labels =</span> test<span class="sc">$</span>quality)</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred,</span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>)</span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for 10-nearest neighbors model.
-</caption>
+<caption>Confusion matrix for 10-nearest neighbors model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-205
-</td>
-<td style="text-align:right;">
-91
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">205</td>
+<td align="right">91</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-153
-</td>
-<td style="text-align:right;">
-551
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">153</td>
+<td align="right">551</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption>
-Matrix with accuracy rates and AUCs for decision trees and k-nearest
-neighbors.
-</caption>
+<caption>Matrix with accuracy rates and AUCs for decision trees and
+k-nearest neighbors.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1188,76 +1068,57 @@ models we’ll calculate the accuracy and error rate as well as the AUC,
 and plot the ROC curve, which can be seen in Figure @ref(fig:knn35).</p>
 <p>The comparison of accuracy rates, error rates, and AUCs is seen in
 Table @ref(tab:records-2).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(knn) is loaded</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>new_knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">35</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob =</span> T</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>new_knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> new_knn_pred)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy rate</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>new_knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(new_knn_conf)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># misclassification error rate</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>new_knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> new_knn_acc</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># library(dplyr) is loaded</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(new_knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(new_knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, </span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                           <span class="dv">1</span> <span class="sc">-</span> new_knn_prob, new_knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>new_knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">predictions =</span> new_knn_prob,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> test<span class="sc">$</span>quality</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>new_knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, </span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                                <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, </span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                                <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>new_knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>new_knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(new_knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># library(knn) is loaded</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>new_knn_pred <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">train =</span> train[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">test =</span> test[, <span class="sc">-</span><span class="dv">9</span>],</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="at">cl =</span> train<span class="sc">$</span>quality,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">35</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="at">prob =</span> T</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>new_knn_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> new_knn_pred)</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># accuracy rate</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>new_knn_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(new_knn_conf)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co"># misclassification error rate</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>new_knn_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> new_knn_acc</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co"># Creating the ROC curve for knn</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># library(dplyr) is loaded</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="fu">attr</span>(new_knn_pred, <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>new_knn_prob <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">ifelse</span>(new_knn_pred <span class="sc">==</span> <span class="st">&quot;-1&quot;</span>, </span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>                           <span class="dv">1</span> <span class="sc">-</span> new_knn_prob, new_knn_prob) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>new_knn_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>  <span class="at">predictions =</span> new_knn_prob,</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>  <span class="at">labels =</span> test<span class="sc">$</span>quality</span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>)</span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>new_knn_roc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, </span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>                                <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, </span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>                                <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co"># Area under the knn curve</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>new_knn_auc_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(new_knn_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>new_knn_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(new_knn_auc_perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for 35-nearest neighbors model.
-</caption>
+<caption>Confusion matrix for 35-nearest neighbors model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-197
-</td>
-<td style="text-align:right;">
-161
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">197</td>
+<td align="right">161</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-84
-</td>
-<td style="text-align:right;">
-558
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">84</td>
+<td align="right">558</td>
 </tr>
 </tbody>
 </table>
@@ -1268,96 +1129,53 @@ ROC curve for k-nearest neighbors model where k=35
 </p>
 </div>
 <table>
-<caption>
-Matrix comparing the accuracy rate, error rate, and AUC for the decision
-tree model, the 10-nearest neighbors model, and the 35-nearest neighbors
-model.
-</caption>
+<caption>Matrix comparing the accuracy rate, error rate, and AUC for the
+decision tree model, the 10-nearest neighbors model, and the 35-nearest
+neighbors model.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.755
-</td>
-<td style="text-align:right;">
-0.245
-</td>
-<td style="text-align:right;">
-0.741
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1396,73 +1214,54 @@ actual ROC curve is in Figure @ref(fig:full-rf-roc). The confusion
 matrix is in Table @ref(tab:rf-confmat). This random forest model will
 be built by using the <code>randomForest</code> package in R <span
 class="citation">(Breiman et al. 2018)</span>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Random Forest</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using all 8 predictor attributes, on the training set</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> .,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">8</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>rf_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> rf_pred)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>rf_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>rf_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>rf_pred_probs <span class="ot">&lt;-</span> rf_pred[, <span class="dv">2</span>]</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>rf_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs, test<span class="sc">$</span>quality)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>rf_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred,</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>rf_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf2<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="do">### Random Forest</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># using all 8 predictor attributes, on the training set</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> .,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">8</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>rf_conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">true =</span> test<span class="sc">$</span>quality, <span class="at">pred =</span> rf_pred)</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>rf_acc <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf)</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>rf_err <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>rf_pred <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>rf_pred_probs <span class="ot">&lt;-</span> rf_pred[, <span class="dv">2</span>]</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>rf_roc_pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs, test<span class="sc">$</span>quality)</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>rf_perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred,</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>)</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>rf_auc <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf2<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for full random forest model.
-</caption>
+<caption>Confusion matrix for full random forest model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-253
-</td>
-<td style="text-align:right;">
-105
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">253</td>
+<td align="right">105</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:right;">
-576
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">66</td>
+<td align="right">576</td>
 </tr>
 </tbody>
 </table>
@@ -1473,96 +1272,53 @@ ROC Curve for full random forest with 8 variables.
 </p>
 </div>
 <table>
-<caption>
-Matrix comparing the accuracy rate, error rate, and AUC for the decision
-tre model, the 10-nearest neighbors model, the 35-nearest neighbors
-model, and the full random forest.
-</caption>
+<caption>Matrix comparing the accuracy rate, error rate, and AUC for the
+decision tre model, the 10-nearest neighbors model, the 35-nearest
+neighbors model, and the full random forest.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.755
-</td>
-<td style="text-align:right;">
-0.245
-</td>
-<td style="text-align:right;">
-0.741
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-0.829
-</td>
-<td style="text-align:right;">
-0.171
-</td>
-<td style="text-align:right;">
-0.890
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">0.829</td>
+<td align="right">0.171</td>
+<td align="right">0.890</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1612,70 +1368,51 @@ to find out. This comparison with the prior models can be seen in Table
 @ref(tab:records-5). The ROC curve for this model is depicted in Figure
 @ref(fig:partial-rf-roc) and the confusion matrix in Table
 @ref(tab:partial-rf-confmat).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rf2 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> alcohol <span class="sc">+</span> volatile.acidity <span class="sc">+</span> free.sulfur.dioxide,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">3</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>rf_conf2 <span class="ot">&lt;-</span> <span class="fu">table</span>(test<span class="sc">$</span>quality, rf_pred2)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>rf_acc2 <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf2)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>rf_err2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc2</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>rf_pred_probs2 <span class="ot">&lt;-</span> rf_pred2[, <span class="dv">2</span>]</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>rf_roc_pred2 <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs2, test<span class="sc">$</span>quality)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2,</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>rf_perf22 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>rf_auc2 <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf22<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>rf2 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">formula =</span> quality <span class="sc">~</span> alcohol <span class="sc">+</span> volatile.acidity <span class="sc">+</span> free.sulfur.dioxide,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">data =</span> train,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="dv">3</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co"># predicting on the test set</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>rf_conf2 <span class="ot">&lt;-</span> <span class="fu">table</span>(test<span class="sc">$</span>quality, rf_pred2)</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>rf_acc2 <span class="ot">&lt;-</span> <span class="fu">class_acc</span>(rf_conf2)</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>rf_err2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rf_acc2</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co"># Building the ROC Curve</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>rf_pred2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">predict</span>(rf2, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>))</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>rf_pred_probs2 <span class="ot">&lt;-</span> rf_pred2[, <span class="dv">2</span>]</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>rf_roc_pred2 <span class="ot">&lt;-</span> <span class="fu">prediction</span>(rf_pred_probs2, test<span class="sc">$</span>quality)</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>rf_perf2 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2,</span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>  <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>  <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>)</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co"># Area under the curve</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>rf_perf22 <span class="ot">&lt;-</span> <span class="fu">performance</span>(rf_roc_pred2, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>rf_auc2 <span class="ot">&lt;-</span> <span class="fu">round</span>(rf_perf22<span class="sc">@</span>y.values[[<span class="dv">1</span>]], <span class="dv">3</span>)</span></code></pre></div>
 <table>
-<caption>
-Confusion matrix for smaller random forest model.
-</caption>
+<caption>Confusion matrix for smaller random forest model.</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-bad
-</th>
-<th style="text-align:right;">
-good
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">bad</th>
+<th align="right">good</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-bad
-</td>
-<td style="text-align:right;">
-228
-</td>
-<td style="text-align:right;">
-130
-</td>
+<tr class="odd">
+<td align="left">bad</td>
+<td align="right">228</td>
+<td align="right">130</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-good
-</td>
-<td style="text-align:right;">
-72
-</td>
-<td style="text-align:right;">
-570
-</td>
+<tr class="even">
+<td align="left">good</td>
+<td align="right">72</td>
+<td align="right">570</td>
 </tr>
 </tbody>
 </table>
@@ -1687,95 +1424,52 @@ dioxide’, ‘volatile acidity’, and ‘alcohol’.
 </p>
 </div>
 <table>
-<caption>
-The final matrix comparing the accuracy rates, error rates, and AUCs for
-all of the models.
-</caption>
+<caption>The final matrix comparing the accuracy rates, error rates, and
+AUCs for all of the models.</caption>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="15%" />
+<col width="8%" />
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Accuracy Rate
-</th>
-<th style="text-align:right;">
-Error Rate
-</th>
-<th style="text-align:right;">
-AUC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Accuracy Rate</th>
+<th align="right">Error Rate</th>
+<th align="right">AUC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Repeated Cross-Validated Decision Tree
-</td>
-<td style="text-align:right;">
-0.739
-</td>
-<td style="text-align:right;">
-0.261
-</td>
-<td style="text-align:right;">
-0.746
-</td>
+<tr class="odd">
+<td align="left">Repeated Cross-Validated Decision Tree</td>
+<td align="right">0.739</td>
+<td align="right">0.261</td>
+<td align="right">0.746</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=10 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.756
-</td>
-<td style="text-align:right;">
-0.244
-</td>
-<td style="text-align:right;">
-0.689
-</td>
+<tr class="even">
+<td align="left">k=10 k-Nearest Neighbors</td>
+<td align="right">0.756</td>
+<td align="right">0.244</td>
+<td align="right">0.689</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-k=35 k-Nearest Neighbors
-</td>
-<td style="text-align:right;">
-0.755
-</td>
-<td style="text-align:right;">
-0.245
-</td>
-<td style="text-align:right;">
-0.741
-</td>
+<tr class="odd">
+<td align="left">k=35 k-Nearest Neighbors</td>
+<td align="right">0.755</td>
+<td align="right">0.245</td>
+<td align="right">0.741</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-full Random Forest
-</td>
-<td style="text-align:right;">
-0.829
-</td>
-<td style="text-align:right;">
-0.171
-</td>
-<td style="text-align:right;">
-0.890
-</td>
+<tr class="even">
+<td align="left">full Random Forest</td>
+<td align="right">0.829</td>
+<td align="right">0.171</td>
+<td align="right">0.890</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-small Random Forest
-</td>
-<td style="text-align:right;">
-0.798
-</td>
-<td style="text-align:right;">
-0.202
-</td>
-<td style="text-align:right;">
-0.854
-</td>
+<tr class="odd">
+<td align="left">small Random Forest</td>
+<td align="right">0.798</td>
+<td align="right">0.202</td>
+<td align="right">0.854</td>
 </tr>
 </tbody>
 </table>

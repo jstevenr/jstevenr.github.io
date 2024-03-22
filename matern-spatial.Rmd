@@ -42,6 +42,8 @@ navbar:
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
+        - text: "Twitter"
+          href: https://twitter.com/jsteven_r/
 
 ---
 
@@ -56,7 +58,7 @@ library(sp)
 library(spdep)
 library(raster) 
 library(maps) # to get map shapefiles
-library(maptools)
+# library(maptools)
 library(spatstat) # spatial statistics
 library(patchwork) # for plotting ggplots
 library(RColorBrewer)
@@ -318,7 +320,7 @@ $$\lambda(s) = \lim_{|\Delta s| \to 0} \frac{E[N(\Delta s)]}{| \Delta s|}$$
 
 In a homogeneous Poisson process the distribution of events is scattered all throughout the space such that there are no clusters anywhere nor any consistent pattern, an example of this can be seen by the following plot.
 
-```{r create-ppp, warning = F}
+```{r create-ppp, warning = F, echo = T}
 # reading the data
 # from readr (part of tidyverse)
 df_9019 <- df %>% 
@@ -346,17 +348,16 @@ ppp_9019 <- ppp(x = df_9019$lon, y = df_9019$lat,
                 marks = df_9019 %>% 
                   filter(!is.na(Preplanned)) %>%
                   dplyr::select(Preplanned))
-```
 
-```{r plot-simulate-ppm}
 # homogenous poisson process
 fit_hpp <- ppm(ppp_9019 ~ 1)
 sim1 <- simulate(fit_hpp)
 # converting to sf for plotting
 sim1_sf <- st_as_sf(sim1) %>% 
   st_set_crs(4269)
+```
 
-
+```{r plot-simulate-ppm}
 csr_plot <- ggplot() + 
   geom_sf(data = us_states) +
   geom_sf(data = sim1_sf) + 
@@ -408,7 +409,7 @@ $$\chi^2 = \sum_{i=1}^n \frac{(O_i - E_i)^2}{E_i}$$
 
 where $O_i$ is the number of observed events, $E_i$ is the number of expected events under the null hypothesis $H_0$ of complete spatial randomness, and $n$ is the total number of events. 
 
-```{r tbl-quadrat-test}
+```{r quadrat-test, echo = T}
 # Ha: the pattern is not a homogeneous Poisson process with CSR
 q_test_CSR <- quadrat.test(ppp_9019, alternative = "two.sided",
   method = "MonteCarlo", nsim = 4999)
@@ -417,7 +418,9 @@ q_test_CSR <- quadrat.test(ppp_9019, alternative = "two.sided",
 # Ha: the PP is clustered
 q_test_clustered <- quadrat.test(ppp_9019, alternative = "clustered",
              method = "MonteCarlo", nsim = 4999)
+```
 
+```{r quadrat-test-tbl}
 # hypotheses
 hyp_null <- c("X is a homogeneous Poisson process")
 hyp_alt1 <- c("X is not a homogeneous Poisson process")
@@ -460,7 +463,7 @@ $$G(r) = 1 - \exp(-\lambda  \pi r^2) = 1 - \exp(-\lambda K(r))$$
 
 We can generate an "envelope" of simulated G-functions based on a spatially random Poisson point pattern, and compare our empirical G-function from the data to ascertain whether the point pattern $X$ has complete spatial randomness or if it is clustered. 
 
-```{r G-envelope}
+```{r G-envelope, echo = T}
 env_G <- envelope(ppp_9019, fun = Gest, verbose = F)
 ```
 
@@ -497,13 +500,13 @@ where $x_j(s), j = 1,...p$ are $p$ covariates, such that the log-likelihood is a
 
 We fit a clustered inhomogeneous Poisson point process model, using the Matern cluster algorithm. We do not use any other covariates other than the coordinates in this model. We can use the same methodology of a quadrat test as we enacted earlier to test the model's appropriateness, except this time the model under the null hypothesis $H_0$ follows that of the estimated intensity function $\lambda(s)$ of our fitted model, rather than that of a homogeneous Poisson process. Our alternative hypothesis $H_A$ is that the true underlying pattern is more clustered than that of the null model. The envelope of the K-function also confirms this, as the K-function is higher than the theoretical fitted K-function.
 
-```{r fit2-kppm}
+```{r fit2-kppm, echo = T}
 ppp_9019_um <- unmark(ppp_9019)
 fit2 <- kppm(ppp_9019_um ~ x + y, "MatClust")
 fit2_sum <- summary(fit2)
 ```
 
-```{r fit2-quadrat-test}
+```{r fit2-quadrat-test, echo = T}
 # H0: the empirical ppp is explained by the intensity function under fit2
 # HA: the ppp is more clustered than the model under the null
 fit2_test <- quadrat.test(ppp_9019, 
@@ -511,6 +514,9 @@ fit2_test <- quadrat.test(ppp_9019,
              method = "MonteCarlo",
              alternative = "clustered")
 
+```
+
+```{r fit2-quadrat-test-tbl}
 col1 <- c("H0", "HA", "Test Statistic", "p-Value", "Conclusion")
 col2 <- c("The pattern is explained by the intensity function of the fitted model.",
           "The pattern is more clustered than that explained by the intensity function of the fitted model.",
@@ -533,7 +539,7 @@ fit2_mat %>%
 
 ```
 
-```{r fit2-diagnostic, cache = T}
+```{r fit2-diagnostic, cache = T, echo = T}
 fit2_env <- envelope(ppp_9019_um, fun = Kinhom,
                      funarges = list(lambda=fit2),
                      global = T, nsim = 3, verbose = F)
@@ -569,7 +575,7 @@ and the theoretical intensity of the process is $\lambda = \kappa \mu$.
 
 Recall that earlier we fit an inhomogeneous Poisson point process model using the Matern cluster algorithm to define the clusters. The model that was fit returned estimates for not only the intensity function $\lambda(s)$, but also $\kappa$, the intensity parameter of the parent points' pattern, and the scale parameter $R$ for the range around which the offspring come from the parent. We can use these fitted values as a starting point from which we can run the model and hopefully converge to a reasonable estimate. For values of $c$ and $w(t)$, we want to opt for $c=0.25$ and a weight function of $w(t) = 1$, as these are well suited to well-clustered data. 
 
-```{r fit-matern-cluster}
+```{r fit-matern-cluster, echo = T}
 fit2_kappa <- fit2$par['kappa'] %>% unname()
 fit2_R <- fit2$par['R'] %>% unname()
 # clustered Matern process model

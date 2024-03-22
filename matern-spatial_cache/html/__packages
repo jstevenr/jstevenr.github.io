@@ -25,6 +25,7 @@ readr
 purrr
 stringr
 forcats
+lubridate
 statnet.common
 network
 sna
@@ -53,15 +54,12 @@ survminer
 gtsummary
 Epi
 gridExtra
-timechange
-lubridate
 sf
 sp
 spData
 spdep
 raster
 maps
-maptools
 spatstat.data
 spatstat.geom
 spatstat.random

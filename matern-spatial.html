@@ -14,7 +14,7 @@
 
 <title>Spatial modeling of school shootings as a Matern clustered point process</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -65,6 +65,111 @@
 
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #232629;
+    color: #7a7c7d;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+div.sourceCode
+  { color: #cfcfc2; background-color: #232629; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #cfcfc2; } /* Normal */
+code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+code span.an { color: #3f8058; } /* Annotation */
+code span.at { color: #2980b9; } /* Attribute */
+code span.bn { color: #f67400; } /* BaseN */
+code span.bu { color: #7f8c8d; } /* BuiltIn */
+code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #3daee9; } /* Char */
+code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+code span.co { color: #7a7c7d; } /* Comment */
+code span.cv { color: #7f8c8d; } /* CommentVar */
+code span.do { color: #a43340; } /* Documentation */
+code span.dt { color: #2980b9; } /* DataType */
+code span.dv { color: #f67400; } /* DecVal */
+code span.er { color: #da4453; text-decoration: underline; } /* Error */
+code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+code span.fl { color: #f67400; } /* Float */
+code span.fu { color: #8e44ad; } /* Function */
+code span.im { color: #27ae60; } /* Import */
+code span.in { color: #c45b00; } /* Information */
+code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+code span.op { color: #cfcfc2; } /* Operator */
+code span.ot { color: #27ae60; } /* Other */
+code span.pp { color: #27ae60; } /* Preprocessor */
+code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #da4453; } /* SpecialString */
+code span.st { color: #f44f4f; } /* String */
+code span.va { color: #27aeae; } /* Variable */
+code span.vs { color: #da4453; } /* VerbatimString */
+code span.wa { color: #da4453; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -378,6 +483,9 @@ div.tocify {
     <li>
       <a href="https://www.linkedin.com/in/jstevenr/">LinkedIn</a>
     </li>
+    <li>
+      <a href="https://twitter.com/jsteven_r/">Twitter</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -489,6 +597,40 @@ property of the spatial point process, is defined as</p>
 scattered all throughout the space such that there are no clusters
 anywhere nor any consistent pattern, an example of this can be seen by
 the following plot.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># reading the data</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># from readr (part of tidyverse)</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>df_9019 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;=</span> <span class="st">&quot;1990-01-1&quot;</span> <span class="sc">&amp;</span> Date <span class="sc">&lt;=</span> <span class="st">&quot;2019-12-31&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Preplanned))</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## getting shapefile of the US</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>us_map <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="st">&quot;usa&quot;</span>,<span class="at">plot=</span>F)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="do">## These are the vectors with the longitudes and latitudes</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>us_boundaries_x <span class="ot">&lt;-</span> us_map<span class="sc">$</span>x</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>us_boundaries_y <span class="ot">&lt;-</span> us_map<span class="sc">$</span>y</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="do">## Creating the matrix with the longitude and latitude of the boundaries</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>us_poly <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">cbind</span>(us_boundaries_x[<span class="dv">1</span><span class="sc">:</span><span class="dv">6886</span>],us_boundaries_y[<span class="dv">1</span><span class="sc">:</span><span class="dv">6886</span>]),</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>                        <span class="at">nrow=</span><span class="dv">6886</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="do">## Creating the window of the spatial point pattern.</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>us_win <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="at">poly=</span>us_poly)</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>test <span class="ot">&lt;-</span> df_9019 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Preplanned))</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co"># creating ppp objects with the coordinates and the windows</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>ppp_9019 <span class="ot">&lt;-</span> <span class="fu">ppp</span>(<span class="at">x =</span> df_9019<span class="sc">$</span>lon, <span class="at">y =</span> df_9019<span class="sc">$</span>lat,</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>                <span class="at">window =</span> us_win,</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>                <span class="at">marks =</span> df_9019 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>                  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Preplanned)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>                  dplyr<span class="sc">::</span><span class="fu">select</span>(Preplanned))</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co"># homogenous poisson process</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>fit_hpp <span class="ot">&lt;-</span> <span class="fu">ppm</span>(ppp_9019 <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>sim1 <span class="ot">&lt;-</span> <span class="fu">simulate</span>(fit_hpp)</span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co"># converting to sf for plotting</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>sim1_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(sim1) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>  <span class="fu">st_set_crs</span>(<span class="dv">4269</span>)</span></code></pre></div>
 <p><img src="matern-spatial_files/figure-html/plot-simulate-ppm-1.png" width="672" /></p>
 <p>We want to test formally that the data does not follow such a
 distribution. We can do this by conducting a quadrat test.</p>
@@ -527,6 +669,14 @@ of expected events under the null hypothesis <span
 class="math inline">\(H_0\)</span> of complete spatial randomness, and
 <span class="math inline">\(n\)</span> is the total number of
 events.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Ha: the pattern is not a homogeneous Poisson process with CSR</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>q_test_CSR <span class="ot">&lt;-</span> <span class="fu">quadrat.test</span>(ppp_9019, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;MonteCarlo&quot;</span>, <span class="at">nsim =</span> <span class="dv">4999</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># Ha: the pattern is </span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co"># Ha: the PP is clustered</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>q_test_clustered <span class="ot">&lt;-</span> <span class="fu">quadrat.test</span>(ppp_9019, <span class="at">alternative =</span> <span class="st">&quot;clustered&quot;</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;MonteCarlo&quot;</span>, <span class="at">nsim =</span> <span class="dv">4999</span>)</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 The results of the quadrat tests of the point process.
@@ -629,6 +779,7 @@ spatially random Poisson point pattern, and compare our empirical
 G-function from the data to ascertain whether the point pattern <span
 class="math inline">\(X\)</span> has complete spatial randomness or if
 it is clustered.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>env_G <span class="ot">&lt;-</span> <span class="fu">envelope</span>(ppp_9019, <span class="at">fun =</span> Gest, <span class="at">verbose =</span> F)</span></code></pre></div>
 <p><img src="matern-spatial_files/figure-html/plot-G-function-1.png" width="672" /></p>
 <p>Contained in this figure we do see a marked difference where the
 empirical G-function exceeds the theoretical G-function up to
@@ -694,6 +845,18 @@ alternative hypothesis <span class="math inline">\(H_A\)</span> is that
 the true underlying pattern is more clustered than that of the null
 model. The envelope of the K-function also confirms this, as the
 K-function is higher than the theoretical fitted K-function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>ppp_9019_um <span class="ot">&lt;-</span> <span class="fu">unmark</span>(ppp_9019)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">kppm</span>(ppp_9019_um <span class="sc">~</span> x <span class="sc">+</span> y, <span class="st">&quot;MatClust&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>fit2_sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># H0: the empirical ppp is explained by the intensity function under fit2</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># HA: the ppp is more clustered than the model under the null</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>fit2_test <span class="ot">&lt;-</span> <span class="fu">quadrat.test</span>(ppp_9019, </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>             <span class="at">lambda =</span> fit2<span class="sc">$</span>lambda,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;MonteCarlo&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>             <span class="at">alternative =</span> <span class="st">&quot;clustered&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>fit2_env <span class="ot">&lt;-</span> <span class="fu">envelope</span>(ppp_9019_um, <span class="at">fun =</span> Kinhom,</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                     <span class="at">funarges =</span> <span class="fu">list</span>(<span class="at">lambda=</span>fit2),</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                     <span class="at">global =</span> T, <span class="at">nsim =</span> <span class="dv">3</span>, <span class="at">verbose =</span> F)</span></code></pre></div>
 <p><img src="matern-spatial_files/figure-html/plot-fit2-envelope-1.png" width="672" /></p>
 <p>With a <span class="math inline">\(\chi^2\)</span> test-statistic of
 <span class="math inline">\(228.81\)</span>, we have a p-value of <span
@@ -755,6 +918,14 @@ class="math inline">\(w(t)\)</span>, we want to opt for <span
 class="math inline">\(c=0.25\)</span> and a weight function of <span
 class="math inline">\(w(t) = 1\)</span>, as these are well suited to
 well-clustered data.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>fit2_kappa <span class="ot">&lt;-</span> fit2<span class="sc">$</span>par[<span class="st">&#39;kappa&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">unname</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>fit2_R <span class="ot">&lt;-</span> fit2<span class="sc">$</span>par[<span class="st">&#39;R&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">unname</span>()</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># clustered Matern process model</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>fit_matclust <span class="ot">&lt;-</span> <span class="fu">matclust.estK</span>(ppp_9019, </span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>                              <span class="at">lambda =</span> fit2<span class="sc">$</span>lambda,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>                              <span class="fu">c</span>(<span class="at">kappa=</span>fit2_kappa, </span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                                <span class="at">scale=</span>fit2_R),</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                              <span class="at">q =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>, <span class="at">p =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="matern-spatial_files/figure-html/plot-matern-process-1.png" width="672" /></p>
 <p>This figure gives the theoretical and empirical K-functions of the
 Matern cluster process model. The cyan line is the homogeneous Poisson

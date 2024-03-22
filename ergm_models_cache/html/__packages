@@ -25,6 +25,7 @@ readr
 purrr
 stringr
 forcats
+lubridate
 statnet.common
 network
 sna
