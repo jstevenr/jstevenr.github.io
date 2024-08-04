@@ -40,7 +40,7 @@ navbar:
           href: https://twitter.com/jsteven_r/
 ---
 
-Data scientist with a strong academic background and expertise in statistical analysis and modeling. With a Master's degree in Statistics and coursework covering advanced statistical methodologies, I am equipped with the skills to handle large volumes of data, analyze complex datasets and provide evidence-based insights. Proficient in various programming languages such as R and Python, I apply my statistical expertise to contribute to meaningful projects that shape public policy and benefit the most vulnerable residents of California. 
+Data scientist with a strong academic background and expertise in statistical analysis and modeling. With a Master's degree in Statistics and coursework covering advanced statistical methodologies, I am equipped with the skills to handle large volumes of data, analyze complex datasets, and provide evidence-based insights. Proficient in various programming languages such as R, Python and SQL, I apply my statistical expertise to contribute to meaningful projects that shape public policy and benefit the most vulnerable residents of California. 
 
 ## Education
 
@@ -54,11 +54,10 @@ Data scientist with a strong academic background and expertise in statistical an
 ## Skills
 
 * **Software Tools and Languages**
-    + R, Python, SQL, SAS, Stata
+    + R, Python, SQL
     + Windows, Linux
-    + Bash Shell, Git, Markdown, LaTeX
-    + Snowflake
-    + Microsoft Excel, Microsoft Power BI, Tableau, SAP Analytics Cloud
+    + Bash, Git, Markdown, LaTeX
+    + Snowflake, Oracle
 * **Languages**
     + Spanish (B1), Portuguese (B1)
 
@@ -71,40 +70,14 @@ Data scientist with a strong academic background and expertise in statistical an
 
 * **Research Data Specialist**, [State of California, Department of Social Services](https://cdss.ca.gov), Dec 2023 - Present
     + Co-developing a data-imbued methodology to counter electronic benefits transfer (EBT) theft.
-    + Utilizing Python, R and SQL and data warehousing platforms such as Snowflake to analyze data.
-    + Developed the `canectar` R package which generates hexagonal choropleth (hexbin) plots for county-level data in the shape of the state of California. 
+    + Utilizing Python, R and SQL and data warehousing platforms such as Snowflake to clean and analyze data and build machine learning models.
+    + Developed the `canectar` R package which generates hexagonal choropleth (hexbin) plots for county-level data in the shape of the state of California.
     + Authoring documentation on the long-term adoption of replicable coding standards.
 * **Water Equity Lab Project Policy Analyst**, [Water Equity Lab, UC Irvine](https://www.uci.edu/), Jul 2022 - Apr 2023
     + Analyzed and processed vector and raster data to identify disparities in access to water infrastructure among minority
 demographics.
     + Developed over 50 R functions utilizing the sf package, resulting in streamlined productivity for the team.
-
 * **Data Analyst**, [Valeo Networks](https://valeonetworks.com), Sep 2018 - Sep 2020
     + Implemented predictive analytics solutions to identify trends and patterns in large datasets, contributing to data-driven decision-making.
     + Created a multiple linear regression pricing model in R, resulting in improved pricing strategies for a client’s business.
     + Developed interactive dashboards using Power BI, SAP Analytics Cloud, and BrightGauge to visualize key performance indicators and track business metrics.
-* **Production Coordinator**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org), Nov 2017 - June 2018
-    + Timely produced excellent public service announcements (PSAs) and event promotions conforming with FCC guidelines.
-    + Organized and trained volunteers to create PSAs and event promotions.
-* **Scientific Computing Data Intern**, [National Center of Ecological Analysis and Synthesis](https://www.nceas.ucsb.edu/), Sep 2016 - Sep 2017
-    + Maintained metadata for an NSF-funded data repository, ensuring accurate documentation and efficient data retrieval processes.
-    + Conducted comprehensive data cleaning and pre-processing tasks on large and small datasets using R, ensuring data quality for analysis.
-    + Facilitated knowledge sharing within the team by providing training and support on efficient programming techniques in R.
-* **Business & Financial Planning Assistant**, [UCSB Housing, Dining & Auxiliary Enterprises](https://www.housing.ucsb.edu/home), May 2016 - Sep 2016
-    + Efficiently memorized reports, wrote checks, tracked spending and prepared documentation.
-    + Noted areas where the department was overspending, resulting in savings.
-
-## Volunteer Experience
-* **Radio Programmer**, [91.9 KCSB-FM in Santa Barbara](https://kcsb.org/), Jun 2017 - Jun 2018
-    + Ran a weekly college radio music show called 'The Company of Lazarus'.
-    + Operated a radio control board.
-* **Secretary**, [oSTEM Inc. @ UC Santa Barbara](https://orgsync.com/66953/chapter), May 2016 - Apr 2017
-    + Reaching out to STEM majors who are part of the LGBTQ community.
-    + Educating on the importance of LGBTQ visibility and inclusivity.
-* **Student Mentor**, Isla Vista Elementary, Sep 2016 - Jun 2017
-    + Acted as a mentor and role model for a 6th grade student for a year.
-* **Panelist**, UCSB Mental Health Conference, 2016, 2017
-    + Took part on a panel to share personal experiences related to mental illness and advise on how to cope and intervene.
-* **Peer Volunteer**, [Life of the Party](https://lifeoftheparty.sa.ucsb.edu/), UCSB Alcohol & Drug Program, Jan 2016 - May 2016
-    + Encouraging the use of safer partying practices in Isla Vista, California.
-    + Collaborated for a campus-wide “Be Safe and Pace” awareness campaign.

@@ -41,11 +41,11 @@ navbar:
 
 ----
 
-<left><img src="images/self_prof.jpg" width="308px" height="410px"></left>
+<left><img src="images/graduation_photo.png" width="400px" height="600px"></left>
 
 # Introduction
 
-My name is J. Steven Raquel. I graduated from the University of California, Irvine with an M.S. in Statistics in 2023, and from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018.
+My name is J. Steven Raquel. I graduated from the University of California, Irvine with an M.S. in Statistics in 2023, and from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018. I am currently employed with the state of California with the classification Research Data Specialist. 
 
 * Pronouns: he/him/his
 * Email: jstevenraquel@proton.me / jsteven.raquel8@gmail.com 
@@ -54,14 +54,18 @@ My name is J. Steven Raquel. I graduated from the University of California, Irvi
 
 ### Frequently Asked Questions (FAQ)
 
-**1) How did you get into the statistics field?**
+**1) How did you end up studying statistics?**
 
-I started out as a pre-economics major when I was a first-year at UC Santa Barbara. At some point I ended up switching into the pre-financial math and statistics track and enjoyed the math/statistics coursework so much that I eventually switched into the full statistics degree. A course on infectious diseases I took as a second-year Masters student inspired me to shift my career focus towards biostatistics and public health.
+I started out as a pre-economics major when I was a first-year at UC Santa Barbara. At some point I ended up switching into the pre-financial math and statistics track and enjoyed the math/statistics coursework so much that I eventually switched into the full statistics degree. 
 
-**2) What does the J in your name stand for? What do you prefer to go by?**
+**2) What lead you to working in public policy?**
 
-Legally, the J has no meaning! "J. Steven" is my legal first name. My paternal grandfather's name was Juan, and his father's name was Esteban, so my name is in honor of both of them. Most of my friends/acquaintances call me J, but my family calls me Steven. Feel free to refer to me as you please.
+During my masters program, under the recommendation of a statistics professor, I started doing research under a public policy professor which inspired me to shift my career focus and showed me ways that I could use my skills and knowledge for the public good. 
 
-**3) What are your other interests / what do you like to do in your free time?**
+**3) What does the 'J' in your name stand for? What do you prefer to go by?**
 
-In my free time I am an avid gamer and I like to study languages such as Spanish and Portuguese. Among my other interests are culture, true crime, chess, and specialty coffee. I am also a proud uncle to my niece and nephew.
+“J. Steven” is my legal first name. My paternal grandfather’s name was Juan, and his father’s name was Esteban, so I was named in honor of both of them. Many of my friends call me J, but my family and colleagues call me Steven. Feel free to refer to me as you please.
+
+**3) What are your other interests?**
+
+In my free time I am an avid PC gamer. Among my other interests are chess, specialty coffee, films, and foreign languages. I am also a proud uncle to my niece and nephew.

@@ -1092,24 +1092,24 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a h
 <span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a>mse_RF <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_RF), <span class="dv">3</span>)</span>
 <span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a>rmse_RF <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_RF), <span class="dv">3</span>)</span>
 <span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_RF))</span></code></pre></div>
-<pre><code>## 30.065 is the Mean Squared Error.</code></pre>
+<pre><code>## 29.791 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb41"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_RF))</span></code></pre></div>
-<pre><code>## 5.483 is the Root Mean Squared Error.</code></pre>
+<pre><code>## 5.458 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb43"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
 <span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>r2_RF <span class="op">=</span> <span class="bu">round</span>(model_RF.score(X_test, y_test), <span class="dv">3</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_RF))</span></code></pre></div>
-<pre><code>## 0.703 is the R-squared.</code></pre>
+<pre><code>## 0.706 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb45"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>    </span>
 <span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
 <span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>residuals_RF <span class="op">=</span> y_test <span class="op">-</span> predictions_RF</span>
 <span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>residual_tests(residuals_RF)</span></code></pre></div>
-<pre><code>## -0.152 is the mean of the residuals.
-## 0.821 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+<pre><code>## -0.122 is the mean of the residuals.
+## 0.82 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
-## 2.116 is the test-statistic for the Durbin-Watson test.
+## 2.114 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb47"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
@@ -1158,24 +1158,24 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a h
 <span id="cb49-15"><a href="#cb49-15" tabindex="-1"></a>mse_XGB <span class="op">=</span> <span class="bu">round</span>(mean_squared_error(y_test, predictions_XGB), <span class="dv">3</span>)</span>
 <span id="cb49-16"><a href="#cb49-16" tabindex="-1"></a>rmse_XGB <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse_XGB), <span class="dv">3</span>)</span>
 <span id="cb49-17"><a href="#cb49-17" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Mean Squared Error.&quot;</span>.<span class="bu">format</span>(mse_XGB))</span></code></pre></div>
-<pre><code>## 29.235 is the Mean Squared Error.</code></pre>
+<pre><code>## 29.844 is the Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb51"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the Root Mean Squared Error.&quot;</span>.<span class="bu">format</span>(rmse_XGB))</span></code></pre></div>
-<pre><code>## 5.407 is the Root Mean Squared Error.</code></pre>
+<pre><code>## 5.463 is the Root Mean Squared Error.</code></pre>
 <div class="sourceCode" id="cb53"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="co"># R-squared</span></span>
 <span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>r2_XGB <span class="op">=</span> <span class="bu">round</span>(model_XGB.score(X_test, y_test), <span class="dv">3</span>)</span>
 <span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st"> is the R-squared.&quot;</span>.<span class="bu">format</span>(r2_XGB))</span></code></pre></div>
-<pre><code>## 0.711 is the R-squared.</code></pre>
+<pre><code>## 0.705 is the R-squared.</code></pre>
 <div class="sourceCode" id="cb55"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>    </span>
 <span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a><span class="co"># Residuals</span></span>
 <span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a>residuals_XGB <span class="op">=</span> y_test <span class="op">-</span> predictions_XGB</span>
 <span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a>residual_tests(residuals_XGB)</span></code></pre></div>
-<pre><code>## 0.324 is the mean of the residuals.
-## 0.801 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
+<pre><code>## 0.177 is the mean of the residuals.
+## 0.818 is the test-statistic for the Shapiro-Wilk test with a p-value of 0.0.
 ## We conclude that the residuals are not Normally distributed.
-## 2.122 is the test-statistic for the Durbin-Watson test.
+## 2.125 is the test-statistic for the Durbin-Watson test.
 ## We conclude there is little to no autocorrelation in the residuals and therefore they are independently distributed.</code></pre>
 <div class="sourceCode" id="cb57"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="co"># Plotting</span></span>
@@ -1278,8 +1278,8 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a h
 <pre><code>##              Algorithm    MSE  RMSE    R2
 ## 0       OLS Regression  38.40  6.20  0.62
 ## 1        Decision Tree  32.84  5.73  0.68
-## 2        Random Forest  30.07  5.48  0.70
-## 3    Gradient Boosting  29.23  5.41  0.71
+## 2        Random Forest  29.79  5.46  0.71
+## 3    Gradient Boosting  29.84  5.46  0.70
 ## 4  k-Nearest Neighbors  31.01  5.57  0.69</code></pre>
 <div class="sourceCode" id="cb70"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a></span>
@@ -1348,7 +1348,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a h
 <span id="cb71-5"><a href="#cb71-5" tabindex="-1"></a>new_data <span class="op">=</span> pd.DataFrame(new_data, columns <span class="op">=</span> [<span class="st">&#39;RM&#39;</span>, <span class="st">&#39;LSTAT&#39;</span>])</span>
 <span id="cb71-6"><a href="#cb71-6" tabindex="-1"></a><span class="co"># Prediction</span></span>
 <span id="cb71-7"><a href="#cb71-7" tabindex="-1"></a>model_XGB.predict(new_data)[<span class="dv">0</span>]</span></code></pre></div>
-<pre><code>## 20.005268</code></pre>
+<pre><code>## 20.145058</code></pre>
 <p><img src="housing-prices_files/figure-html/unnamed-chunk-20-33.png" width="672" /></p>
 <p>As you can see the expected value for <code>MEDV</code> is about 20,
 or $20k.</p>

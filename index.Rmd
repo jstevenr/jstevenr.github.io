@@ -55,6 +55,8 @@ Find out more about [who I am](about_me.html) and [what I've done](resume.html).
 
 ## Projects  
 
+### Graduate
+
 These are some of the projects I've worked on throughout my time studying statistics.
 
 * #### [Modeling human serum albumin's association with mortality among end stage renal disease patients](esrd-survival.html)
@@ -69,20 +71,21 @@ I developed a Matern cluster process model to study the incidence of gun violenc
 
 I applied an exponential random graph model (ERGM) to analyze and simulate the spread of gonorrhea in a First Nations community in Alberta, Canada. Examined network structures and social factors influencing disease transmission.
 
+### Undergraduate
 
 * #### [Classification algorithm comparison for wine quality](wine-classification.html)
 
-I utilized decision tree, k-nearest neighbors, and random forest algorithms in R to predict wine quality based on various wine attributes. Conducted feature selection, model training, and evaluation to develop accurate classification models.
+I utilized decision tree, k-nearest neighbors, and random forest algorithms in R to predict wine quality as good or bad based on various attributes. Conducted feature selection, model training, and evaluation to develop accurate classification models.
 
 * #### [Predicting housing prices in Boston](housing-prices.html)
 
-I utilized various regression algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a regression model using various attributes of the housing market in Boston. 
+I utilized various algorithms including ordinary least squares regression, decision trees, random forests, k-nearest neighbors, and gradient boosting in Python to create a predictive model using various attributes of the housing market in Boston. 
 
 * #### [Time series forecasting cryptocurrency value](bitcoin.html)
 
 I applied the Box-Jenkins ARIMA model using R to several observations of the opening price of the cryptocurrency known as bitcoin. It turned out that the variability of the data was too sporadic and unpredictable, and ultimately I concluded that the GARCH model was most likely better because it accounts for the heteroskedasticity. While I did not fit that GARCH model I did fit a couple of ARIMA models and forecasted with them.
 
-### Packages and Shiny Apps
+### Packages and Apps
 
 * #### canectar: Draw elegant maps of California in the shape of a honeycomb
 
