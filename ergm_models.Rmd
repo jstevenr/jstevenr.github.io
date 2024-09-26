@@ -44,14 +44,12 @@ navbar:
           href: ggomoku.html
     - text: "Contact Me"
       menu:
-        - text: "jsteven.raquel8@gmail.com"
-          href: mailto:jsteven.raquel8@gmail.com
+        - text: "Email"
+          href: mailto:contact@jsrql.mozmail.com
         - text: "GitHub"
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
-        - text: "Twitter"
-          href: https://twitter.com/jsteven_r/
 
 ---
 

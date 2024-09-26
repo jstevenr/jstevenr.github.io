@@ -31,8 +31,8 @@ navbar:
           href: ggomoku.html
     - text: "Contact Me"
       menu:
-        - text: "jsteven.raquel8@gmail.com"
-          href: mailto:jsteven.raquel8@gmail.com
+        - text: "Email"
+          href: mailto:contact@jsrql.mozmail.com
         - text: "GitHub"
           href: https://github.com/jstevenr
         - text: "LinkedIn"
@@ -45,10 +45,10 @@ navbar:
 
 # Introduction
 
-My name is J. Steven Raquel. I graduated from the University of California, Irvine with an M.S. in Statistics in 2023, and from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018. I am currently employed with the state of California with the classification Research Data Specialist. 
+My name is J. Steven Raquel. I graduated from the University of California, Irvine with an M.S. in Statistics in 2023, and from the University of California, Santa Barbara, with a B.S. in Statistical Science in 2018. I am currently employed with the state of California with the classification of Research Data Specialist. 
 
 * Pronouns: he/him/his
-* Email: jstevenraquel@proton.me / jsteven.raquel8@gmail.com 
+* Email: contact@jsrql.mozmail.com
 * GitHub: [jstevenr](https://github.com/jstevenr)
 * LinkedIn: [jstevenr](https://www.linkedin.com/in/jstevenr/)
 

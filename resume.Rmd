@@ -30,14 +30,12 @@ navbar:
           href: ggomoku.html
     - text: "Contact Me"
       menu:
-        - text: "jsteven.raquel8@gmail.com"
-          href: mailto:jsteven.raquel8@gmail.com
+        - text: "Email"
+          href: mailto:contact@jsrql.mozmail.com
         - text: "GitHub"
           href: https://github.com/jstevenr
         - text: "LinkedIn"
           href: https://www.linkedin.com/in/jstevenr/
-        - text: "Twitter"
-          href: https://twitter.com/jsteven_r/
 ---
 
 Data scientist with a strong academic background and expertise in statistical analysis and modeling. With a Master's degree in Statistics and coursework covering advanced statistical methodologies, I am equipped with the skills to handle large volumes of data, analyze complex datasets, and provide evidence-based insights. Proficient in various programming languages such as R, Python and SQL, I apply my statistical expertise to contribute to meaningful projects that shape public policy and benefit the most vulnerable residents of California. 
